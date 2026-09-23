@@ -24,32 +24,32 @@ export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({
     >
       {!isUser && (
         <div
-          className={`flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-xl shadow-xs ${
+          className={`flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-xl shadow-md ${
             message.isError
-              ? 'border border-red-200 bg-red-100 text-red-600'
-              : 'border border-blue-200 bg-gradient-to-tr from-cyan-600 to-blue-600 text-white shadow-blue-500/10'
+              ? 'border-2 border-red-400 bg-red-100 text-red-600'
+              : 'border-2 border-amber-400 bg-gradient-to-tr from-[#8a181b] to-[#6d1013] text-amber-300 ring-2 ring-amber-400/30'
           }`}
         >
           {message.isError ? (
             <AlertCircle className="h-4 w-4" />
           ) : (
-            <Sparkles className="h-4 w-4" />
+            <Sparkles className="h-4 w-4 text-amber-300" />
           )}
         </div>
       )}
 
       <div
-        className={`relative max-w-[85%] rounded-2xl px-4 py-3 sm:max-w-[75%] ${
+        className={`relative max-w-[88%] rounded-2xl px-4 py-3 sm:max-w-[78%] shadow-md ${
           isUser
-            ? 'rounded-tr-xs bg-blue-600 text-white shadow-md shadow-blue-600/10'
+            ? 'rounded-tr-xs bg-gradient-to-r from-[#9c1c1f] via-[#881518] to-[#700f12] text-amber-50 border border-amber-400/50 shadow-red-950/40'
             : message.isError
-            ? 'rounded-tl-xs border border-red-200 bg-red-50 text-red-800 shadow-xs'
-            : 'rounded-tl-xs border border-slate-200 bg-white text-slate-800 shadow-xs'
+            ? 'rounded-tl-xs border-2 border-red-300 bg-red-50 text-red-900 shadow-sm'
+            : 'rounded-tl-xs border-2 border-amber-400/70 bg-[#fffdf8] text-stone-900 shadow-lg'
         }`}
       >
         <div className="prose max-w-none text-sm leading-relaxed break-words text-inherit">
           {isUser ? (
-            <p className="whitespace-pre-wrap">{message.content}</p>
+            <p className="whitespace-pre-wrap font-medium">{message.content}</p>
           ) : (
             <>
               <Markdown
@@ -63,7 +63,7 @@ export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({
                     if (isInline) {
                       return (
                         <code
-                          className="rounded border border-slate-200 bg-slate-100 px-1.5 py-0.5 font-mono text-xs text-blue-700"
+                          className="rounded border border-amber-300/80 bg-amber-50 px-1.5 py-0.5 font-mono text-xs text-[#8a181b] font-semibold"
                           {...rest}
                         >
                           {children}
@@ -77,38 +77,47 @@ export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({
                       </CodeBlock>
                     )
                   },
+                  h1({ children }) {
+                    return <h1 className="mb-2 text-lg font-bold text-[#8a181b]">{children}</h1>
+                  },
+                  h2({ children }) {
+                    return <h2 className="mb-2 text-base font-bold text-[#8a181b]">{children}</h2>
+                  },
+                  h3({ children }) {
+                    return <h3 className="mb-1.5 text-sm font-bold text-[#8a181b]">{children}</h3>
+                  },
                   p({ children }) {
-                    return <p className="mb-3 last:mb-0 text-slate-800">{children}</p>
+                    return <p className="mb-3 last:mb-0 text-stone-850 leading-relaxed">{children}</p>
                   },
                   ul({ children }) {
-                    return <ul className="mb-3 list-disc space-y-1 pl-4 last:mb-0 text-slate-700">{children}</ul>
+                    return <ul className="mb-3 list-disc space-y-1.5 pl-4 last:mb-0 text-stone-800">{children}</ul>
                   },
                   ol({ children }) {
-                    return <ol className="mb-3 list-decimal space-y-1 pl-4 last:mb-0 text-slate-700">{children}</ol>
+                    return <ol className="mb-3 list-decimal space-y-1.5 pl-4 last:mb-0 text-stone-800">{children}</ol>
                   },
                   li({ children }) {
-                    return <li className="text-slate-700">{children}</li>
+                    return <li className="text-stone-800">{children}</li>
                   },
                   table({ children }) {
                     return (
-                      <div className="my-3 overflow-x-auto rounded-lg border border-slate-200">
-                        <table className="w-full text-left text-xs text-slate-700">{children}</table>
+                      <div className="my-3 overflow-x-auto rounded-xl border border-amber-300/80 shadow-xs">
+                        <table className="w-full text-left text-xs text-stone-800">{children}</table>
                       </div>
                     )
                   },
                   th({ children }) {
                     return (
-                      <th className="border-b border-slate-200 bg-slate-100 px-3 py-2 font-semibold text-slate-800">
+                      <th className="border-b-2 border-amber-300 bg-amber-100/70 px-3 py-2 font-bold text-[#8a181b]">
                         {children}
                       </th>
                     )
                   },
                   td({ children }) {
-                    return <td className="border-b border-slate-100 px-3 py-2">{children}</td>
+                    return <td className="border-b border-amber-200/60 px-3 py-2">{children}</td>
                   },
                   blockquote({ children }) {
                     return (
-                      <blockquote className="my-2 border-l-2 border-cyan-600 bg-slate-50/60 pl-3 py-1 italic text-slate-600">
+                      <blockquote className="my-2.5 rounded-r-xl border-l-4 border-amber-500 bg-amber-50/80 px-3.5 py-2 italic text-amber-950 text-xs shadow-xs">
                         {children}
                       </blockquote>
                     )
@@ -118,7 +127,7 @@ export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({
                 {message.content}
               </Markdown>
               {isStreaming && (
-                <span className="inline-block h-3.5 w-1.5 animate-pulse rounded-full bg-blue-600 ml-1 align-middle" />
+                <span className="inline-block h-3.5 w-1.5 animate-pulse rounded-full bg-amber-500 ml-1 align-middle" />
               )}
             </>
           )}
@@ -126,41 +135,41 @@ export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({
 
         {/* RAG Sources Grounding Accordion */}
         {!isUser && message.sources && message.sources.length > 0 && (
-          <div className="mt-3 border-t border-slate-100 pt-2.5">
+          <div className="mt-3.5 border-t border-amber-200/80 pt-2.5">
             <button
               type="button"
               onClick={() => setShowSources(!showSources)}
-              className="flex w-full items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs text-slate-700 transition hover:bg-slate-100 hover:text-blue-700 cursor-pointer"
+              className="flex w-full items-center justify-between rounded-xl border border-amber-300 bg-amber-50/90 px-3 py-1.5 text-xs text-amber-950 transition hover:bg-amber-100 cursor-pointer shadow-xs"
             >
-              <div className="flex items-center gap-1.5">
-                <Database className="h-3.5 w-3.5 text-blue-600" />
-                <span className="font-medium">
-                  {message.sources.length} RAG Chunk{message.sources.length > 1 ? 's' : ''} retrieved (Gemini Embedding 2)
+              <div className="flex items-center gap-1.5 font-medium">
+                <Database className="h-3.5 w-3.5 text-emerald-700" />
+                <span>
+                  {message.sources.length} trích đoạn tư liệu RAG (Gemini Embedding)
                 </span>
               </div>
               {showSources ? (
-                <ChevronUp className="h-3.5 w-3.5 text-slate-500" />
+                <ChevronUp className="h-3.5 w-3.5 text-amber-800" />
               ) : (
-                <ChevronDown className="h-3.5 w-3.5 text-slate-500" />
+                <ChevronDown className="h-3.5 w-3.5 text-amber-800" />
               )}
             </button>
 
             {showSources && (
-              <div className="mt-2 space-y-2">
+              <div className="mt-2.5 space-y-2">
                 {message.sources.map((src, i) => (
                   <div
                     key={src.id}
-                    className="rounded-lg border border-slate-200 bg-slate-50/80 p-2.5 text-xs"
+                    className="rounded-xl border border-amber-300/80 bg-amber-50/60 p-2.5 text-xs shadow-xs"
                   >
-                    <div className="flex items-center justify-between text-slate-800">
-                      <span className="font-semibold text-blue-700">
+                    <div className="flex items-center justify-between text-stone-900 font-medium">
+                      <span className="font-bold text-[#8a181b]">
                         #{i + 1} {src.title}
                       </span>
-                      <span className="rounded-full bg-blue-100 border border-blue-200 px-2 py-0.5 text-[10px] font-mono text-blue-800">
-                        {(src.similarity * 100).toFixed(1)}% match
+                      <span className="rounded-full bg-emerald-100 border border-emerald-300 px-2 py-0.5 text-[10px] font-mono text-emerald-800 font-semibold">
+                        {(src.similarity * 100).toFixed(1)}% khớp
                       </span>
                     </div>
-                    <p className="mt-1 line-clamp-3 text-[11px] text-slate-600">
+                    <p className="mt-1 line-clamp-3 text-[11px] text-stone-700 leading-relaxed">
                       {src.content}
                     </p>
                   </div>
@@ -171,8 +180,8 @@ export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({
         )}
 
         <div
-          className={`mt-1.5 flex items-center justify-end text-[10px] ${
-            isUser ? 'text-blue-100' : 'text-slate-400'
+          className={`mt-1.5 flex items-center justify-end text-[10px] font-medium ${
+            isUser ? 'text-amber-200/80' : 'text-stone-400'
           }`}
         >
           <span>
@@ -185,7 +194,7 @@ export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({
       </div>
 
       {isUser && (
-        <div className="flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 shadow-xs">
+        <div className="flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-xl border border-amber-300/80 bg-amber-400 text-red-950 font-bold shadow-md">
           <User className="h-4 w-4" />
         </div>
       )}

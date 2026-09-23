@@ -41,9 +41,9 @@ export const ChatInput: React.FC<ChatInputProps> = ({
   }
 
   return (
-    <div className="relative border-t border-slate-200 bg-white/95 p-4 backdrop-blur-md">
+    <div className="relative border-t-4 border-amber-400 bg-gradient-to-r from-[#88171a] via-[#751215] to-[#600e11] p-3 sm:p-4 text-white shadow-2xl backdrop-blur-md">
       <div className="mx-auto max-w-4xl">
-        <div className="relative flex items-end rounded-2xl border border-slate-300 bg-slate-50/80 p-2 shadow-xs transition focus-within:border-blue-500 focus-within:bg-white focus-within:ring-2 focus-within:ring-blue-500/20">
+        <div className="relative flex items-end rounded-2xl border-2 border-amber-400/90 bg-[#fffdf9] p-2 shadow-lg transition focus-within:border-amber-300 focus-within:ring-4 focus-within:ring-amber-400/30">
           <textarea
             ref={textareaRef}
             rows={1}
@@ -56,7 +56,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                 ? 'Vui lòng cấu hình API key trong Cài đặt...'
                 : 'Hỏi bất kỳ điều gì về xiếc đương đại Việt Nam... (Enter để gửi, Shift+Enter để xuống dòng)'
             }
-            className="max-h-44 min-h-[44px] w-full resize-none bg-transparent px-3 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none disabled:opacity-50"
+            className="max-h-44 min-h-[44px] w-full resize-none bg-transparent px-3 py-2.5 text-sm font-medium text-stone-900 placeholder-stone-400 focus:outline-none disabled:opacity-50"
           />
 
           <div className="flex shrink-0 items-center gap-1.5 pb-1 pr-1">
@@ -64,7 +64,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
               <button
                 type="button"
                 onClick={onStop}
-                className="flex h-9 w-9 items-center justify-center rounded-xl bg-red-100 text-red-600 transition hover:bg-red-200 active:scale-95 cursor-pointer"
+                className="flex h-9 w-9 items-center justify-center rounded-xl bg-red-800 text-amber-200 border border-amber-400 hover:bg-red-700 transition active:scale-95 cursor-pointer shadow-sm"
                 title="Dừng phản hồi"
               >
                 <Square className="h-4 w-4 fill-current" />
@@ -74,17 +74,17 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                 type="button"
                 onClick={onSend}
                 disabled={!input.trim() || disabled}
-                className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white transition hover:bg-blue-500 disabled:opacity-30 disabled:hover:bg-blue-600 active:scale-95 shadow-xs cursor-pointer"
+                className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-amber-400 to-amber-500 text-red-950 font-bold border border-amber-300 ring-2 ring-amber-400/40 transition hover:from-amber-300 hover:to-amber-400 disabled:opacity-30 disabled:hover:from-amber-400 disabled:hover:to-amber-500 active:scale-95 shadow-md shadow-amber-500/20 cursor-pointer"
                 title="Gửi câu hỏi"
               >
-                <ArrowUp className="h-4 w-4" />
+                <ArrowUp className="h-4 w-4 stroke-[3]" />
               </button>
             )}
           </div>
         </div>
 
-        <p className="mt-2 text-center text-[11px] text-slate-400">
-          Gemini có thể đưa ra câu trả lời cần kiểm chứng lại. Dữ liệu được hỗ trợ bởi RAG tri thức xiếc.
+        <p className="mt-2 text-center text-[11px] font-medium text-amber-200/80">
+          🎪 Rạp Xiếc Bỏ Túi AI • Hỗ trợ bởi RAG Tri Thức Xiếc Việt Nam & Google Gemini
         </p>
       </div>
     </div>

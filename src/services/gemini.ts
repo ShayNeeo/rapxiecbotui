@@ -37,7 +37,7 @@ export async function streamGeminiChat(
     throw new Error('API key is missing. Please provide a valid Gemini API key in Settings.')
   }
 
-  const model = settings.model.trim() || 'gemini-3.5-flash-lite'
+  const model = settings.model.trim() || 'gemini-2.5-flash'
 
   // Format messages for Gemini API
   // Gemini expects roles 'user' and 'model'
