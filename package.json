@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.8",
+    "@react-three/fiber": "^9.7.0",
     "@tailwindcss/vite": "^4.3.3",
     "@types/canvas-confetti": "^1.9.0",
     "@types/three": "^0.186.0",
@@ -26,7 +28,8 @@
     "remark-gfm": "^4.0.1",
     "tailwind-merge": "^3.7.0",
     "tailwindcss": "^4.3.3",
-    "three": "^0.186.0"
+    "three": "^0.186.0",
+    "three-stdlib": "^2.36.1"
   },
   "devDependencies": {
     "@types/node": "^24.13.3",

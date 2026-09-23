@@ -58,7 +58,10 @@ export default defineConfig({
   plugins: [react(), tailwindcss(), logoUploadPlugin()],
   resolve: {
     alias: {
+      '@/lib': path.resolve(import.meta.dirname, 'src/lib'),
+      '@/components': path.resolve(import.meta.dirname, 'src/components'),
       '@': path.resolve(import.meta.dirname, '.'),
     },
   },
 })
+

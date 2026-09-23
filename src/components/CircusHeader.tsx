@@ -267,7 +267,7 @@ export const CircusHeader: React.FC<CircusHeaderProps> = ({
               id: 'circus3d' as CircusActId, 
               label: t.nav.circus3d, 
               icon: Box, 
-              href: 'https://v0.app/rapxiecbotui/chat/rapxiecbotui-maFZD96UUzO' 
+              href: '/3d' 
             },
             { id: 'quiz' as CircusActId, label: t.nav.quiz, icon: HelpCircle },
             { id: 'map' as CircusActId, label: t.nav.map, icon: MapPin },
@@ -293,6 +293,9 @@ export const CircusHeader: React.FC<CircusHeaderProps> = ({
                       circusAudio.playBambooStep();
                       if (tab.id === 'chat') {
                         onUnlockBadge?.('circus-ai-chatbot');
+                      }
+                      if (tab.id === 'circus3d') {
+                        onUnlockBadge?.('circus-3d-explorer');
                       }
                     }}
                     title={tab.label}

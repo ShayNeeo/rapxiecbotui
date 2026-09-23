@@ -1,5 +1,60 @@
 @import "tailwindcss";
 
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+}
+
+:root {
+  --background: #fdfbf7;
+  --foreground: #1c1917;
+  --card: #ffffff;
+  --card-foreground: #1c1917;
+  --popover: #ffffff;
+  --popover-foreground: #1c1917;
+  --primary: #dc2626;
+  --primary-foreground: #ffffff;
+  --secondary: #fef3c7;
+  --secondary-foreground: #78350f;
+  --muted: #f5f5f4;
+  --muted-foreground: #78716c;
+  --accent: #f59e0b;
+  --accent-foreground: #451a03;
+  --border: #e7e5e4;
+}
+
+.circus-3d-root {
+  color-scheme: dark;
+  --background: #140806;
+  --foreground: #f4ead3;
+  --card: #1f0f0c;
+  --card-foreground: #f4ead3;
+  --popover: #24120e;
+  --popover-foreground: #f4ead3;
+  --primary: #c22d26;
+  --primary-foreground: #fffdf5;
+  --secondary: #2e1713;
+  --secondary-foreground: #f4ead3;
+  --muted: #2e1713;
+  --muted-foreground: #d1b89d;
+  --border: rgba(232, 185, 58, 0.25);
+  --accent: #e8b93a;
+  --accent-foreground: #1c0e0b;
+}
+
 @layer base {
   body {
     font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, sans-serif;

@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import * as THREE from "three";
 import { Button } from "@/src/components/ui/button";
 import { circusAudio } from "@/src/utils/audio";
 import { useLanguage } from "@/src/context/LanguageContext";
+import { CIRCUS_3D_URL } from "@/src/lib/constants";
 import confetti from "canvas-confetti";
 import { 
   ArrowLeft, 
@@ -408,16 +410,15 @@ export const Circus3D: React.FC<Circus3DProps> = ({
         </Button>
 
         <div className="flex items-center gap-2">
-          <a
-            href="https://v0.app/rapxiecbotui/chat/rapxiecbotui-maFZD96UUzO"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to={CIRCUS_3D_URL}
+            onClick={() => onUnlockBadge('circus-3d-explorer')}
             className="flex items-center gap-1.5 bg-gradient-to-r from-red-600 to-amber-600 hover:from-red-500 hover:to-amber-500 text-white font-circus text-xs sm:text-sm px-4 py-2 rounded-xl shadow-md border border-amber-300 transition-all hover:scale-105 active:scale-95 cursor-pointer"
             title={isEn ? "Enter 3D Circus" : "Mở Rạp Xiếc 3D"}
           >
             <ExternalLink className="size-3.5" />
             <span>{isEn ? "Enter 3D Circus" : "Vào Rạp Xiếc 3D"}</span>
-          </a>
+          </Link>
 
           <Button
             variant="gold"
@@ -449,16 +450,17 @@ export const Circus3D: React.FC<Circus3DProps> = ({
           </div>
         </div>
 
-        <a
-          href="https://v0.app/rapxiecbotui/chat/rapxiecbotui-maFZD96UUzO"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => circusAudio.playFanfare()}
+        <Link
+          to={CIRCUS_3D_URL}
+          onClick={() => {
+            circusAudio.playFanfare();
+            onUnlockBadge('circus-3d-explorer');
+          }}
           className="shrink-0 flex items-center gap-2 bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 text-red-950 font-circus font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer border border-amber-200"
         >
           <span>{isEn ? "Enter 3D Circus" : "Vào Rạp Xiếc 3D"}</span>
           <ExternalLink className="size-4" />
-        </a>
+        </Link>
       </div>
 
       {/* Main 3D Canvas Box */}
@@ -470,10 +472,9 @@ export const Circus3D: React.FC<Circus3DProps> = ({
         />
 
         {/* Floating Top Badge overlay - Clickable Link */}
-        <a
-          href="https://v0.app/rapxiecbotui/chat/rapxiecbotui-maFZD96UUzO"
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          to={CIRCUS_3D_URL}
+          onClick={() => onUnlockBadge('circus-3d-explorer')}
           title={isEn ? "Click to enter 3D Circus" : "Bấm để vào Rạp Xiếc 3D"}
           className="absolute top-4 left-4 z-10 flex items-center gap-2 bg-black/75 hover:bg-black/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/30 hover:border-amber-400 text-white text-xs hover:text-amber-300 transition-all cursor-pointer shadow-lg group"
         >
@@ -482,7 +483,7 @@ export const Circus3D: React.FC<Circus3DProps> = ({
             {isEn ? "3D Circus Arena • 360° Orbit" : "Mô Hình Rạp Xiếc 3D • Xoay 360°"}
           </span>
           <ExternalLink className="size-3 text-amber-300 opacity-80 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
-        </a>
+        </Link>
 
         {/* Floating Hint */}
         <div className="absolute top-4 right-4 pointer-events-none hidden sm:flex items-center gap-1.5 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 text-amber-300 text-xs font-medium">

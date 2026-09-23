@@ -27,7 +27,8 @@ import {
   Video
 } from "lucide-react";
 import { OFFICIAL_CIRCUS_LOGO } from "@/src/lib/logo";
-import { CHATBOT_AI_URL } from "@/src/lib/constants";
+import { CHATBOT_AI_URL, CIRCUS_3D_URL } from "@/src/lib/constants";
+import { Link } from "react-router-dom";
 import { CircusMediaArchive } from "@/src/components/CircusMediaArchive";
 
 interface CircusStageProps {
@@ -222,16 +223,14 @@ export const CircusStage: React.FC<CircusStageProps> = ({
               <>
                 Online Vietnamese circus cultural showcase:{" "}
                 <span className="text-amber-300 font-semibold">100+ Years History</span>,{" "}
-                <a
-                  href="https://v0.app/rapxiecbotui/chat/rapxiecbotui-maFZD96UUzO"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to={CIRCUS_3D_URL}
                   className="text-amber-300 font-semibold hover:text-white underline decoration-amber-400 decoration-2 underline-offset-4 inline-flex items-center gap-0.5 cursor-pointer transition-colors"
                   title="Open 3D Circus"
                 >
                   <span>Interactive 3D Circus</span>
                   <ExternalLink className="size-3 inline ml-0.5 opacity-80" />
-                </a> 360°,{" "}
+                </Link> 360°,{" "}
                 <span className="text-amber-300 font-semibold">Trivia Quiz</span>, and{" "}
                 <span className="text-amber-300 font-semibold">Venues Map</span> across Vietnam!
               </>
@@ -239,16 +238,14 @@ export const CircusStage: React.FC<CircusStageProps> = ({
               <>
                 Không gian văn hóa xiếc Việt Nam trực tuyến:
                 <span className="text-amber-300 font-semibold"> Lịch Sử</span> trăm năm hào hùng,{" "}
-                <a
-                  href="https://v0.app/rapxiecbotui/chat/rapxiecbotui-maFZD96UUzO"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to={CIRCUS_3D_URL}
                   className="text-amber-300 font-semibold hover:text-white underline decoration-amber-400 decoration-2 underline-offset-4 inline-flex items-center gap-0.5 cursor-pointer transition-colors"
                   title="Mở Rạp Xiếc 3D"
                 >
                   <span> Rạp Xiếc 3D</span>
                   <ExternalLink className="size-3 inline ml-0.5 opacity-80" />
-                </a> sống động 360°,{" "}
+                </Link> sống động 360°,{" "}
                 <span className="text-amber-300 font-semibold"> Quiz Kiến Thức</span> lý thú và{" "}
                 <span className="text-amber-300 font-semibold"> Bản Đồ Rạp Xiếc</span> ba miền!
               </>
@@ -257,10 +254,8 @@ export const CircusStage: React.FC<CircusStageProps> = ({
 
           {/* Stage Action Controls */}
           <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
-            <a
-              href="https://v0.app/rapxiecbotui/chat/rapxiecbotui-maFZD96UUzO"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to={CIRCUS_3D_URL}
               onClick={() => {
                 onUnlockBadge?.('circus-3d-explorer');
                 circusAudio.playFanfare();
@@ -270,7 +265,7 @@ export const CircusStage: React.FC<CircusStageProps> = ({
               <Play className="size-5 fill-current transition-transform group-hover:scale-110" />
               <span>{isEn ? "Enter 3D Circus" : "Vào Rạp Xiếc 3D"}</span>
               <ExternalLink className="size-4 opacity-80 group-hover:opacity-100 ml-0.5" />
-            </a>
+            </Link>
 
             <Button
               variant="secondary"
@@ -300,16 +295,14 @@ export const CircusStage: React.FC<CircusStageProps> = ({
               <span>{isEn ? "Contemporary Circus Arts" : "Nghệ Thuật Xiếc Đương Đại"}</span>
             </div>
             <span>•</span>
-            <a
-              href="https://v0.app/rapxiecbotui/chat/rapxiecbotui-maFZD96UUzO"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to={CIRCUS_3D_URL}
               className="flex items-center gap-1 hover:text-amber-300 transition-colors cursor-pointer group"
             >
               <span className="text-yellow-400 text-base">🎪</span>
               <span className="underline underline-offset-2">{isEn ? "3D Circus 360°" : "Rạp Xiếc 3D 360°"}</span>
               <ExternalLink className="size-3 opacity-70 group-hover:opacity-100" />
-            </a>
+            </Link>
             <span>•</span>
             <div className="flex items-center gap-1">
               <span className="text-amber-400 text-base">🗺️</span>
@@ -697,10 +690,8 @@ export const CircusStage: React.FC<CircusStageProps> = ({
           </div>
 
           {/* Module 4: Rạp Xiếc 3D */}
-          <a
-            href="https://v0.app/rapxiecbotui/chat/rapxiecbotui-maFZD96UUzO"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to={CIRCUS_3D_URL}
             onClick={() => {
               circusAudio.playBambooStep();
               onUnlockBadge?.('circus-3d-explorer');
@@ -733,7 +724,7 @@ export const CircusStage: React.FC<CircusStageProps> = ({
               <span>{isEn ? "Enter 3D Circus" : "Vào Rạp Xiếc 3D"}</span>
               <ArrowRight className="size-4" />
             </div>
-          </a>
+          </Link>
 
           {/* Module 5: Quiz Kiến Thức */}
           <div

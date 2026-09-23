@@ -26,7 +26,8 @@ import {
   RotateCcw
 } from "lucide-react";
 import { OFFICIAL_CIRCUS_LOGO } from "@/src/lib/logo";
-import { CHATBOT_AI_URL } from "@/src/lib/constants";
+import { CHATBOT_AI_URL, CIRCUS_3D_URL } from "@/src/lib/constants";
+import { Link } from "react-router-dom";
 import { Facebook } from "@/src/components/icons/Facebook";
 
 interface CircusTicketProps {
@@ -75,7 +76,7 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
       window.open(CHATBOT_AI_URL, '_blank', 'noopener,noreferrer');
     } else if (badge.id === 'circus-3d-explorer') {
       onUnlockBadge('circus-3d-explorer');
-      window.open('https://v0.app/rapxiecbotui/chat/rapxiecbotui-maFZD96UUzO', '_blank', 'noopener,noreferrer');
+      window.location.assign(CIRCUS_3D_URL);
     } else if (badge.id === 'circus-digital-archive') {
       onUnlockBadge('circus-digital-archive');
       if (onOpenMediaArchive) {
@@ -558,15 +559,13 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
               {isEn ? (
                 <>
                   Circus history,{" "}
-                  <a
-                    href="https://v0.app/rapxiecbotui/chat/rapxiecbotui-maFZD96UUzO"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    to={CIRCUS_3D_URL}
                     className="underline hover:text-emerald-950 font-bold"
                     title="Open 3D Circus"
                   >
                     3D circus arena ↗
-                  </a>
+                  </Link>
                   ,{" "}
                   <a
                     href={CHATBOT_AI_URL}
@@ -582,15 +581,13 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
               ) : (
                 <>
                   Khám phá lịch sử,{" "}
-                  <a
-                    href="https://v0.app/rapxiecbotui/chat/rapxiecbotui-maFZD96UUzO"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    to={CIRCUS_3D_URL}
                     className="underline hover:text-emerald-950 font-bold"
                     title="Mở Rạp Xiếc 3D"
                   >
                     rạp xiếc 3D ↗
-                  </a>
+                  </Link>
                   ,{" "}
                   <a
                     href={CHATBOT_AI_URL}
