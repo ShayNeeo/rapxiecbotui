@@ -55,9 +55,9 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
   const ticketRef = useRef<HTMLDivElement>(null);
   const ticketLogoInputRef = useRef<HTMLInputElement>(null);
 
-  // Active logo resolving from props, local storage or official logo
-  const activeLogo = logoUrl || (typeof window !== 'undefined' ? localStorage.getItem('circus_logo_custom') : null) || OFFICIAL_CIRCUS_LOGO;
-  const isCustomLogo = activeLogo !== OFFICIAL_CIRCUS_LOGO;
+  // Fixed official logo for ticket and export
+  const activeLogo = OFFICIAL_CIRCUS_LOGO;
+  const isCustomLogo = false;
 
   const [visitorName, setVisitorName] = useState(isEn ? "Circus Art Enthusiast" : "Khán Giả Yêu Xiếc");
   const [isEditingName, setIsEditingName] = useState(false);
@@ -409,33 +409,20 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
 
         {/* Top Header Ticket Band - Consistently Centered at Top */}
         <div className="w-full border-b-2 border-dashed border-amber-300 pb-6 flex flex-col items-center justify-center text-center space-y-4 relative z-10">
-          {/* Circus Logo Container with Custom Logo Upload Capability (Consistently Centered at Top) */}
+          {/* Circus Logo Container (Fixed Official Logo) */}
           <div className="relative group/ticketlogo mx-auto flex flex-col items-center justify-center">
             <div 
-              onClick={() => onUploadLogo && ticketLogoInputRef.current?.click()}
-              className="size-24 sm:size-28 rounded-2xl border-2 border-amber-500 overflow-hidden bg-white shadow-md flex items-center justify-center p-1.5 cursor-pointer transition-transform hover:scale-105"
-              title={isEn ? "Circus logo (Click to change)" : "Logo Rạp Xiếc (Bấm để thay đổi)"}
+              className="size-24 sm:size-28 rounded-2xl border-2 border-amber-500 overflow-hidden bg-white shadow-md flex items-center justify-center p-1.5 transition-transform hover:scale-105"
+              title={isEn ? "Pocket Circus Official Logo" : "Logo Chính Thức Rạp Xiếc Bỏ Túi"}
             >
               <img 
-                src={activeLogo} 
+                src={OFFICIAL_CIRCUS_LOGO} 
                 alt="Logo Rạp Xiếc Bỏ Túi" 
                 className="size-full object-contain rounded-xl"
                 loading="eager"
                 decoding="sync"
               />
             </div>
-
-            {onUploadLogo && (
-              <button
-                type="button"
-                onClick={() => ticketLogoInputRef.current?.click()}
-                className="no-print absolute -bottom-1 -right-1 size-7 rounded-full bg-red-700 text-white flex items-center justify-center shadow-md hover:bg-red-800 transition-colors cursor-pointer"
-                title={isEn ? "Upload / change logo for this ticket" : "Tải / đổi logo cho vé này"}
-                aria-label="Upload logo"
-              >
-                <Camera className="size-3.5" />
-              </button>
-            )}
           </div>
 
           {/* Centered Ticket Subtitle & Title */}

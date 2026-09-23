@@ -107,12 +107,12 @@ export const CircusHeader: React.FC<CircusHeaderProps> = ({
         {/* Logo & Identity */}
         <div className="flex items-center gap-3">
           <div 
-            onClick={() => onUploadLogo ? headerFileRef.current?.click() : onSelectAct('stage')}
-            title="Logo Rạp Xiếc Bỏ Túi - Bấm để tải lên/đổi ảnh logo gốc"
+            onClick={() => onSelectAct('stage')}
+            title="Rạp Xiếc Bỏ Túi"
             className="relative size-13 sm:size-14 rounded-full border-2 border-amber-300 bg-amber-950/40 shadow-md shadow-amber-500/20 shrink-0 hover:scale-105 transition-transform overflow-hidden cursor-pointer"
           >
             <img
-              src={logoUrl || OFFICIAL_CIRCUS_LOGO}
+              src={OFFICIAL_CIRCUS_LOGO}
               alt="Rạp Xiếc Bỏ Túi"
               className="size-full rounded-full object-cover scale-[1.06]"
               onError={(e) => {
@@ -120,20 +120,6 @@ export const CircusHeader: React.FC<CircusHeaderProps> = ({
                 (e.target as HTMLElement).style.display = 'none';
               }}
             />
-            {onUploadLogo && (
-              <input
-                ref={headerFileRef}
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) {
-                    onUploadLogo(file);
-                  }
-                }}
-              />
-            )}
           </div>
 
           <div 

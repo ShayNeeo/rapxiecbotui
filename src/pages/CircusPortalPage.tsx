@@ -141,17 +141,8 @@ export default function App() {
   }, [currentAct]);
   const [logoUrl, setLogoUrl] = useState<string>(() => {
     if (typeof window !== 'undefined') {
-      const version = localStorage.getItem('circus_logo_version');
-      if (version !== 'v3') {
-        localStorage.removeItem('circus_logo_custom');
-        localStorage.setItem('circus_logo_version', 'v3');
-        return OFFICIAL_CIRCUS_LOGO;
-      }
-      const saved = localStorage.getItem('circus_logo_custom');
-      if (saved && saved.startsWith('data:image')) {
-        return saved;
-      }
-      return OFFICIAL_CIRCUS_LOGO;
+      localStorage.removeItem('circus_logo_custom');
+      localStorage.removeItem('circus_logo_version');
     }
     return OFFICIAL_CIRCUS_LOGO;
   });
