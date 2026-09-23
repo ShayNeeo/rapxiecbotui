@@ -30,6 +30,7 @@ interface HistoryHomeProps {
   readEras: string[];
   applauseCounts: Record<string, number>;
   isEn: boolean;
+  onSelectMilestone?: (path: string) => void;
 }
 
 export const HistoryHome: React.FC<HistoryHomeProps> = ({
@@ -37,6 +38,7 @@ export const HistoryHome: React.FC<HistoryHomeProps> = ({
   readEras,
   applauseCounts,
   isEn,
+  onSelectMilestone,
 }) => {
   const milestonePaths = ["/moc-1", "/moc-2", "/moc-3", "/moc-4"];
 
@@ -307,14 +309,28 @@ export const HistoryHome: React.FC<HistoryHomeProps> = ({
                       <span>{applauseCount} {isEn ? "applauds" : "lượt tán thưởng"}</span>
                     </span>
 
-                    <Link
-                      to={path}
-                      onClick={() => circusAudio.playBambooStep()}
-                      className="px-4 py-2 rounded-xl bg-gradient-to-r from-red-700 via-red-600 to-amber-600 hover:from-red-600 hover:to-amber-500 text-white font-bold text-xs flex items-center gap-2 shadow-md hover:scale-102 transition-all cursor-pointer border border-amber-300"
-                    >
-                      <span>{isEn ? `Explore Mốc ${era.sectionNumber} →` : `Khám phá Mốc ${era.sectionNumber} →`}</span>
-                      <ArrowRight className="size-3.5" />
-                    </Link>
+                    {onSelectMilestone ? (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          circusAudio.playBambooStep();
+                          onSelectMilestone(path);
+                        }}
+                        className="px-4 py-2 rounded-xl bg-gradient-to-r from-red-700 via-red-600 to-amber-600 hover:from-red-600 hover:to-amber-500 text-white font-bold text-xs flex items-center gap-2 shadow-md hover:scale-102 transition-all cursor-pointer border border-amber-300"
+                      >
+                        <span>{isEn ? `Explore Mốc ${era.sectionNumber} →` : `Khám phá Mốc ${era.sectionNumber} →`}</span>
+                        <ArrowRight className="size-3.5" />
+                      </button>
+                    ) : (
+                      <Link
+                        to={path}
+                        onClick={() => circusAudio.playBambooStep()}
+                        className="px-4 py-2 rounded-xl bg-gradient-to-r from-red-700 via-red-600 to-amber-600 hover:from-red-600 hover:to-amber-500 text-white font-bold text-xs flex items-center gap-2 shadow-md hover:scale-102 transition-all cursor-pointer border border-amber-300"
+                      >
+                        <span>{isEn ? `Explore Mốc ${era.sectionNumber} →` : `Khám phá Mốc ${era.sectionNumber} →`}</span>
+                        <ArrowRight className="size-3.5" />
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>

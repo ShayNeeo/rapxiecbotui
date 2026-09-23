@@ -45,6 +45,7 @@ interface MilestonePageProps {
   isEn: boolean;
   activeSubsectionId: string;
   setActiveSubsectionId: (id: string) => void;
+  onNavigate?: (path: string) => void;
 }
 
 export const MilestonePage: React.FC<MilestonePageProps> = ({
@@ -60,6 +61,7 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
   isEn,
   activeSubsectionId,
   setActiveSubsectionId,
+  onNavigate,
 }) => {
   const isVietnamCentury = era.id === "vietnam-century-circus";
 
@@ -705,35 +707,76 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
       {/* Bottom Navigation Buttons: "← Mốc trước" (hidden on Milestone 1), "Về Trang Chủ Lịch Sử", "Mốc sau →" (hidden on Milestone 4) */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t-2 border-amber-200/80">
         {prevPath ? (
-          <Link
-            to={prevPath}
-            onClick={() => circusAudio.playBambooStep()}
-            className="w-full sm:w-auto px-4 py-2.5 rounded-2xl bg-white hover:bg-amber-50 border-2 border-amber-300 text-amber-950 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs transition-all hover:scale-102 cursor-pointer"
-          >
-            <ArrowLeft className="size-4 text-amber-800" />
-            <span>{isEn ? `← Previous (${prevTitle})` : `← Mốc trước: ${prevTitle}`}</span>
-          </Link>
+          onNavigate ? (
+            <button
+              type="button"
+              onClick={() => {
+                circusAudio.playBambooStep();
+                onNavigate(prevPath);
+              }}
+              className="w-full sm:w-auto px-4 py-2.5 rounded-2xl bg-white hover:bg-amber-50 border-2 border-amber-300 text-amber-950 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs transition-all hover:scale-102 cursor-pointer"
+            >
+              <ArrowLeft className="size-4 text-amber-800" />
+              <span>{isEn ? `← Previous (${prevTitle})` : `← Mốc trước: ${prevTitle}`}</span>
+            </button>
+          ) : (
+            <Link
+              to={prevPath}
+              onClick={() => circusAudio.playBambooStep()}
+              className="w-full sm:w-auto px-4 py-2.5 rounded-2xl bg-white hover:bg-amber-50 border-2 border-amber-300 text-amber-950 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs transition-all hover:scale-102 cursor-pointer"
+            >
+              <ArrowLeft className="size-4 text-amber-800" />
+              <span>{isEn ? `← Previous (${prevTitle})` : `← Mốc trước: ${prevTitle}`}</span>
+            </Link>
+          )
         ) : (
           <div className="hidden sm:block" />
         )}
 
-        <Link
-          to="/"
-          onClick={() => circusAudio.playBambooStep()}
-          className="w-full sm:w-auto px-4 py-2.5 rounded-2xl bg-amber-100 hover:bg-amber-200 border border-amber-300 text-amber-950 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
-        >
-          <span>🏠 {isEn ? "Overview of 4 Milestones" : "Về Trang Chủ Lịch Sử"}</span>
-        </Link>
+        {onNavigate ? (
+          <button
+            type="button"
+            onClick={() => {
+              circusAudio.playBambooStep();
+              onNavigate('/');
+            }}
+            className="w-full sm:w-auto px-4 py-2.5 rounded-2xl bg-amber-100 hover:bg-amber-200 border border-amber-300 text-amber-950 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
+          >
+            <span>🏠 {isEn ? "Overview of 4 Milestones" : "Về Trang Chủ Lịch Sử"}</span>
+          </button>
+        ) : (
+          <Link
+            to="/"
+            onClick={() => circusAudio.playBambooStep()}
+            className="w-full sm:w-auto px-4 py-2.5 rounded-2xl bg-amber-100 hover:bg-amber-200 border border-amber-300 text-amber-950 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
+          >
+            <span>🏠 {isEn ? "Overview of 4 Milestones" : "Về Trang Chủ Lịch Sử"}</span>
+          </Link>
+        )}
 
         {nextPath ? (
-          <Link
-            to={nextPath}
-            onClick={() => circusAudio.playBambooStep()}
-            className="w-full sm:w-auto px-4 py-2.5 rounded-2xl bg-gradient-to-r from-red-600 to-amber-500 hover:from-red-500 hover:to-amber-400 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all hover:scale-102 cursor-pointer border border-amber-300"
-          >
-            <span>{isEn ? `Next (${nextTitle}) →` : `Mốc sau: ${nextTitle} →`}</span>
-            <ArrowRight className="size-4 text-white" />
-          </Link>
+          onNavigate ? (
+            <button
+              type="button"
+              onClick={() => {
+                circusAudio.playBambooStep();
+                onNavigate(nextPath);
+              }}
+              className="w-full sm:w-auto px-4 py-2.5 rounded-2xl bg-gradient-to-r from-red-600 to-amber-500 hover:from-red-500 hover:to-amber-400 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all hover:scale-102 cursor-pointer border border-amber-300"
+            >
+              <span>{isEn ? `Next (${nextTitle}) →` : `Mốc sau: ${nextTitle} →`}</span>
+              <ArrowRight className="size-4 text-white" />
+            </button>
+          ) : (
+            <Link
+              to={nextPath}
+              onClick={() => circusAudio.playBambooStep()}
+              className="w-full sm:w-auto px-4 py-2.5 rounded-2xl bg-gradient-to-r from-red-600 to-amber-500 hover:from-red-500 hover:to-amber-400 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all hover:scale-102 cursor-pointer border border-amber-300"
+            >
+              <span>{isEn ? `Next (${nextTitle}) →` : `Mốc sau: ${nextTitle} →`}</span>
+              <ArrowRight className="size-4 text-white" />
+            </Link>
+          )
         ) : (
           <div className="hidden sm:block" />
         )}

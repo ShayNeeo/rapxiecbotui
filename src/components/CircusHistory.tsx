@@ -1,12 +1,4 @@
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  HashRouter,
-  Routes,
-  Route,
-  Navigate,
-  useLocation,
-  useNavigate
-} from "react-router-dom";
 import { HistoryEra } from "@/src/types";
 import { circusAudio } from "@/src/utils/audio";
 import { Button } from "@/src/components/ui/button";
@@ -488,10 +480,9 @@ const HistoryNavigation: React.FC<{
   onBack: () => void;
   readEras: string[];
   isEn: boolean;
-}> = ({ onBack, readEras, isEn }) => {
-  const location = useLocation();
-  const navigate = useNavigate();
-
+  currentPath: string;
+  onNavigatePath: (path: string) => void;
+}> = ({ onBack, readEras, isEn, currentPath, onNavigatePath }) => {
   const navItems = [
     {
       path: "/",
@@ -581,7 +572,7 @@ const HistoryNavigation: React.FC<{
 
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
           {navItems.map((item) => {
-            const isActive = location.pathname === item.path;
+            const isActive = currentPath === item.path;
             const isRead = item.id !== "overview" && readEras.includes(item.id);
 
             return (
@@ -589,7 +580,7 @@ const HistoryNavigation: React.FC<{
                 key={item.path}
                 onClick={() => {
                   circusAudio.playBambooStep();
-                  navigate(item.path);
+                  onNavigatePath(item.path);
                 }}
                 className={`p-2.5 rounded-2xl border-2 text-left transition-all cursor-pointer flex items-center gap-2.5 ${
                   isActive
@@ -618,26 +609,42 @@ const HistoryNavigation: React.FC<{
   );
 };
 
-// Automatic scroll to top on every route change
-const ScrollToTop: React.FC = () => {
-  const { pathname } = useLocation();
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-    if (typeof document !== "undefined") {
-      if (document.documentElement) document.documentElement.scrollTop = 0;
-      if (document.body) document.body.scrollTop = 0;
-    }
-  }, [pathname]);
-
-  return null;
-};
-
 export const CircusHistory: React.FC<CircusHistoryProps> = ({
   onBack,
   onUnlockBadge,
 }) => {
   const { isEn } = useLanguage();
+
+  const [currentPath, setCurrentPath] = useState<string>(() => {
+    if (typeof window !== "undefined") {
+      const hash = window.location.hash.replace(/^#/, "");
+      if (hash.startsWith("/moc-") || hash === "/") {
+        return hash;
+      }
+    }
+    return "/";
+  });
+
+  const handleNavigatePath = useCallback((path: string) => {
+    setCurrentPath(path);
+    window.location.hash = path;
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    if (typeof document !== "undefined") {
+      if (document.documentElement) document.documentElement.scrollTop = 0;
+      if (document.body) document.body.scrollTop = 0;
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace(/^#/, "");
+      if (hash.startsWith("/moc-") || hash === "/") {
+        setCurrentPath(hash);
+      }
+    };
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
 
   // Read milestones state
   const [readEras, setReadEras] = useState<string[]>(() => {
@@ -715,112 +722,95 @@ export const CircusHistory: React.FC<CircusHistoryProps> = ({
 
   return (
     <div className="w-full max-w-5xl mx-auto space-y-8 pb-16 select-none">
-      <HashRouter>
-        <ScrollToTop />
-        <HistoryNavigation onBack={onBack} readEras={readEras} isEn={isEn} />
+      <HistoryNavigation
+        onBack={onBack}
+        readEras={readEras}
+        isEn={isEn}
+        currentPath={currentPath}
+        onNavigatePath={handleNavigatePath}
+      />
 
-        <Routes>
-          {/* Home Page (/): "100 năm Xiếc Việt" title, general introduction, and 4 large cards */}
-          <Route
-            path="/"
-            element={
-              <HistoryHome
-                eras={HISTORY_ERAS}
-                readEras={readEras}
-                applauseCounts={applauseCounts}
-                isEn={isEn}
-              />
-            }
-          />
+      {currentPath === "/" && (
+        <HistoryHome
+          eras={HISTORY_ERAS}
+          readEras={readEras}
+          applauseCounts={applauseCounts}
+          isEn={isEn}
+          onSelectMilestone={handleNavigatePath}
+        />
+      )}
 
-          {/* Milestone 1 (/moc-1): Ancient Circus */}
-          <Route
-            path="/moc-1"
-            element={
-              <MilestonePage
-                era={HISTORY_ERAS[0]}
-                index={0}
-                prevPath={null}
-                prevTitle={null}
-                nextPath="/moc-2"
-                nextTitle={isEn ? "Classical (1768)" : "Mốc 2: Cổ Điển"}
-                applauseCount={applauseCounts[HISTORY_ERAS[0].id] || 0}
-                onApplause={() => handleApplause(HISTORY_ERAS[0].id)}
-                onMarkRead={handleMarkRead}
-                isEn={isEn}
-                activeSubsectionId={activeSubsectionId}
-                setActiveSubsectionId={setActiveSubsectionId}
-              />
-            }
-          />
+      {currentPath === "/moc-1" && (
+        <MilestonePage
+          era={HISTORY_ERAS[0]}
+          index={0}
+          prevPath={null}
+          prevTitle={null}
+          nextPath="/moc-2"
+          nextTitle={isEn ? "Classical (1768)" : "Mốc 2: Cổ Điển"}
+          applauseCount={applauseCounts[HISTORY_ERAS[0].id] || 0}
+          onApplause={() => handleApplause(HISTORY_ERAS[0].id)}
+          onMarkRead={handleMarkRead}
+          isEn={isEn}
+          activeSubsectionId={activeSubsectionId}
+          setActiveSubsectionId={setActiveSubsectionId}
+          onNavigate={handleNavigatePath}
+        />
+      )}
 
-          {/* Milestone 2 (/moc-2): Classical Circus */}
-          <Route
-            path="/moc-2"
-            element={
-              <MilestonePage
-                era={HISTORY_ERAS[1]}
-                index={1}
-                prevPath="/moc-1"
-                prevTitle={isEn ? "Ancient (2000 BC)" : "Mốc 1: Cổ Đại"}
-                nextPath="/moc-3"
-                nextTitle={isEn ? "Contemporary (1970s)" : "Mốc 3: Đương Đại"}
-                applauseCount={applauseCounts[HISTORY_ERAS[1].id] || 0}
-                onApplause={() => handleApplause(HISTORY_ERAS[1].id)}
-                onMarkRead={handleMarkRead}
-                isEn={isEn}
-                activeSubsectionId={activeSubsectionId}
-                setActiveSubsectionId={setActiveSubsectionId}
-              />
-            }
-          />
+      {currentPath === "/moc-2" && (
+        <MilestonePage
+          era={HISTORY_ERAS[1]}
+          index={1}
+          prevPath="/moc-1"
+          prevTitle={isEn ? "Ancient (2000 BC)" : "Mốc 1: Cổ Đại"}
+          nextPath="/moc-3"
+          nextTitle={isEn ? "Contemporary (1970s)" : "Mốc 3: Đương Đại"}
+          applauseCount={applauseCounts[HISTORY_ERAS[1].id] || 0}
+          onApplause={() => handleApplause(HISTORY_ERAS[1].id)}
+          onMarkRead={handleMarkRead}
+          isEn={isEn}
+          activeSubsectionId={activeSubsectionId}
+          setActiveSubsectionId={setActiveSubsectionId}
+          onNavigate={handleNavigatePath}
+        />
+      )}
 
-          {/* Milestone 3 (/moc-3): Contemporary Circus */}
-          <Route
-            path="/moc-3"
-            element={
-              <MilestonePage
-                era={HISTORY_ERAS[2]}
-                index={2}
-                prevPath="/moc-2"
-                prevTitle={isEn ? "Classical (1768)" : "Mốc 2: Cổ Điển"}
-                nextPath="/moc-4"
-                nextTitle={isEn ? "100 Years of VN Circus" : "Mốc 4: 100 Năm Xiếc Việt"}
-                applauseCount={applauseCounts[HISTORY_ERAS[2].id] || 0}
-                onApplause={() => handleApplause(HISTORY_ERAS[2].id)}
-                onMarkRead={handleMarkRead}
-                isEn={isEn}
-                activeSubsectionId={activeSubsectionId}
-                setActiveSubsectionId={setActiveSubsectionId}
-              />
-            }
-          />
+      {currentPath === "/moc-3" && (
+        <MilestonePage
+          era={HISTORY_ERAS[2]}
+          index={2}
+          prevPath="/moc-2"
+          prevTitle={isEn ? "Classical (1768)" : "Mốc 2: Cổ Điển"}
+          nextPath="/moc-4"
+          nextTitle={isEn ? "100 Years of VN Circus" : "Mốc 4: 100 Năm Xiếc Việt"}
+          applauseCount={applauseCounts[HISTORY_ERAS[2].id] || 0}
+          onApplause={() => handleApplause(HISTORY_ERAS[2].id)}
+          onMarkRead={handleMarkRead}
+          isEn={isEn}
+          activeSubsectionId={activeSubsectionId}
+          setActiveSubsectionId={setActiveSubsectionId}
+          onNavigate={handleNavigatePath}
+        />
+      )}
 
-          {/* Milestone 4 (/moc-4): 100 Years of Vietnamese Circus */}
-          <Route
-            path="/moc-4"
-            element={
-              <MilestonePage
-                era={HISTORY_ERAS[3]}
-                index={3}
-                prevPath="/moc-3"
-                prevTitle={isEn ? "Contemporary (1970s)" : "Mốc 3: Đương Đại"}
-                nextPath={null}
-                nextTitle={null}
-                applauseCount={applauseCounts[HISTORY_ERAS[3].id] || 0}
-                onApplause={() => handleApplause(HISTORY_ERAS[3].id)}
-                onMarkRead={handleMarkRead}
-                isEn={isEn}
-                activeSubsectionId={activeSubsectionId}
-                setActiveSubsectionId={setActiveSubsectionId}
-              />
-            }
-          />
-
-          {/* Catch-all redirect to Home */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </HashRouter>
+      {currentPath === "/moc-4" && (
+        <MilestonePage
+          era={HISTORY_ERAS[3]}
+          index={3}
+          prevPath="/moc-3"
+          prevTitle={isEn ? "Contemporary (1970s)" : "Mốc 3: Đương Đại"}
+          nextPath={null}
+          nextTitle={null}
+          applauseCount={applauseCounts[HISTORY_ERAS[3].id] || 0}
+          onApplause={() => handleApplause(HISTORY_ERAS[3].id)}
+          onMarkRead={handleMarkRead}
+          isEn={isEn}
+          activeSubsectionId={activeSubsectionId}
+          setActiveSubsectionId={setActiveSubsectionId}
+          onNavigate={handleNavigatePath}
+        />
+      )}
     </div>
   );
 };
