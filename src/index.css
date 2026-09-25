@@ -62,7 +62,8 @@
 }
 
 .font-circus {
-  font-family: 'Bungee', cursive, sans-serif;
+  font-family: 'Bungee', 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 800;
 }
 
 .font-hand {
@@ -140,51 +141,151 @@
 
 /* Dedicated High-Fidelity Print Styling for Souvenir Ticket */
 @page {
-  size: A4 landscape;
-  margin: 12mm auto;
+  size: A4 portrait;
+  margin: 10mm;
 }
 
 @media print {
   html, body {
-    background: #ffffff !important;
-    color: #1a1a1a !important;
-    margin: 0 !important;
-    padding: 0 !important;
     width: 100% !important;
     height: 100% !important;
-    min-height: 100vh !important;
+    min-height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+  }
+
+  #root,
+  #root > div,
+  main,
+  main > div {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .no-print,
+  nav,
+  header,
+  footer,
+  button,
+  #circus-contact-section,
+  .collector-badges-container,
+  .ticket-no-print,
+  [role="dialog"],
+  .fixed,
+  aside {
+    display: none !important;
+    visibility: hidden !important;
   }
 
   body * {
-    visibility: hidden !important;
+    visibility: hidden;
   }
 
   #circus-ticket-card,
   #circus-ticket-card * {
-    visibility: visible !important;
+    visibility: visible;
   }
 
   #circus-ticket-card {
-    position: static !important;
-    display: block !important;
-    left: auto !important;
-    top: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    margin: 30px auto !important;
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: auto !important;
     width: 90% !important;
-    max-width: 760px !important;
-    padding: 28px 36px !important;
-    border: 3.5px solid #d97706 !important;
+    max-width: 530px !important;
+    padding: 20px 24px !important;
+    border: 4px solid #f59e0b !important;
     border-radius: 24px !important;
     background: #fffbeb !important;
     background-color: #fffbeb !important;
     box-shadow: none !important;
+    transform: scale(0.85) !important;
+    transform-origin: center center !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+    page-break-before: avoid !important;
+    break-before: avoid !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     color-adjust: exact !important;
+  }
+
+  /* Compact print spacing so ticket easily fits any paper size without overflowing */
+  #circus-ticket-card .border-b-2 {
+    padding-bottom: 10px !important;
+    margin-bottom: 4px !important;
+  }
+
+  #circus-ticket-logo-frame,
+  #circus-ticket-card .size-24,
+  #circus-ticket-card .size-28 {
+    width: 80px !important;
+    height: 80px !important;
+    min-width: 80px !important;
+    min-height: 80px !important;
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    border: 2px solid #d97706 !important;
+    border-radius: 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 3px !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  #circus-ticket-card h2 {
+    font-size: 24px !important;
+    line-height: 1.2 !important;
+    margin-top: 2px !important;
+    margin-bottom: 2px !important;
+  }
+
+  #circus-ticket-card .py-3 {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+  }
+
+  #circus-ticket-card .space-y-6 > * + * {
+    margin-top: 8px !important;
+  }
+
+  #circus-ticket-card .p-4 {
+    padding: 8px 12px !important;
+  }
+
+  #circus-ticket-card .size-20,
+  #circus-ticket-card .size-22 {
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  #circus-ticket-card .border-t-2 {
+    padding-top: 8px !important;
+    margin-top: 4px !important;
   }
 
   #circus-ticket-card * {
@@ -203,18 +304,26 @@
   #circus-ticket-card img {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+    color-adjust: exact !important;
     max-width: 100% !important;
     display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
     image-rendering: -webkit-optimize-contrast;
   }
 
-  .no-print,
-  nav,
-  header,
-  footer,
-  button,
-  .ticket-no-print {
-    display: none !important;
-    visibility: hidden !important;
+  #circus-ticket-logo-frame img,
+  #circus-ticket-card img.ticket-main-logo {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    border-radius: 14px !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 }

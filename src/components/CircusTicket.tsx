@@ -5,6 +5,7 @@ import { circusAudio } from "@/src/utils/audio";
 import { useLanguage } from "@/src/context/LanguageContext";
 import confetti from "canvas-confetti";
 import { toPng } from "html-to-image";
+import { jsPDF } from "jspdf";
 import { 
   ArrowLeft, 
   Printer, 
@@ -14,6 +15,7 @@ import {
   Sparkles,
   Ticket as TicketIcon,
   Download,
+  FileText,
   Mail,
   Copy,
   Check,
@@ -145,27 +147,33 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
         })
       );
 
-      await new Promise((r) => setTimeout(r, 80));
+      const node = ticketRef.current;
+      const width = node.scrollWidth || node.clientWidth;
+      const height = node.scrollHeight || node.clientHeight;
 
       // Explicitly set skipFonts: true & fontEmbedCSS: '' so html-to-image never
       // attempts to inspect remote stylesheets (e.g. Google Fonts), preventing 'cssRules' security errors.
       // cacheBust is set to false to prevent corrupting data: URLs and local assets.
       const options = {
+        width,
+        height,
+        canvasWidth: width * 2,
+        canvasHeight: height * 2,
         quality: 1,
         pixelRatio: 2,
         cacheBust: false,
         skipFonts: true,
         fontEmbedCSS: "",
-        backgroundColor: "#FFF8DC",
-        filter: (node: Node) => {
-          if (node instanceof HTMLElement && (node.classList.contains("no-print") || node.classList.contains("ticket-no-capture"))) {
+        backgroundColor: "#FFFDF7",
+        filter: (n: Node) => {
+          if (n instanceof HTMLElement && (n.classList.contains("no-print") || n.classList.contains("ticket-no-capture"))) {
             return false;
           }
           return true;
         },
       };
 
-      const dataUrl = await toPng(ticketRef.current, options);
+      const dataUrl = await toPng(node, options);
       const res = await fetch(dataUrl);
       const blob = await res.blob();
       setTicketImageUrl(dataUrl);
@@ -221,6 +229,71 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
     }
   };
 
+  const handleDirectDownloadImage = async () => {
+    circusAudio.playApplause();
+    confetti({
+      particleCount: 50,
+      spread: 70,
+      origin: { y: 0.6 },
+    });
+
+    let currentBlob = ticketBlob;
+    let currentUrl = ticketImageUrl;
+    if (!currentBlob || !currentUrl) {
+      const captured = await captureTicketImage();
+      if (captured) {
+        currentBlob = captured.blob;
+        currentUrl = captured.dataUrl;
+      }
+    }
+
+    if (currentUrl) {
+      const fileName = `ve-rap-xiec-bo-tui-${ticketSerial}.png`;
+      const link = document.createElement("a");
+      link.download = fileName;
+      link.href = currentUrl;
+      document.body.appendChild(link);
+      link.click();
+      setTimeout(() => {
+        document.body.removeChild(link);
+      }, 120);
+    }
+  };
+
+  const handleSavePdfDirect = async () => {
+    circusAudio.playApplause();
+    confetti({
+      particleCount: 50,
+      spread: 70,
+      origin: { y: 0.6 },
+    });
+
+    let currentUrl = ticketImageUrl;
+    if (!currentUrl) {
+      const captured = await captureTicketImage();
+      if (captured) {
+        currentUrl = captured.dataUrl;
+      }
+    }
+
+    if (!currentUrl || !ticketRef.current) return;
+
+    const node = ticketRef.current;
+    const width = node.scrollWidth || node.clientWidth;
+    const height = node.scrollHeight || node.clientHeight;
+    const orientation = width > height ? "landscape" : "portrait";
+
+    const pdf = new jsPDF({
+      orientation,
+      unit: "px",
+      format: [width, height],
+      hotfixes: ["px_scaling"],
+    });
+
+    pdf.addImage(currentUrl, "PNG", 0, 0, width, height);
+    pdf.save(`ve-rap-xiec-bo-tui-${ticketSerial}.pdf`);
+  };
+
   const handleSavePhotoDirect = async () => {
     circusAudio.playApplause();
     confetti({
@@ -243,8 +316,12 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
       const fileName = `ve-rap-xiec-bo-tui-${ticketSerial}.png`;
       const file = new File([currentBlob], fileName, { type: "image/png" });
 
-      // Trigger native share if on mobile with files support (allows "Save Image" to phone gallery / Photos album)
-      if (typeof navigator !== "undefined" && navigator.canShare && navigator.canShare({ files: [file] })) {
+      // Only trigger native share on touch mobile devices (iOS/Android)
+      const isTouchMobile = typeof navigator !== "undefined" && 
+        (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || 
+         (navigator.maxTouchPoints && navigator.maxTouchPoints > 1 && !/Windows|Macintosh/i.test(navigator.userAgent)));
+
+      if (isTouchMobile && navigator.canShare && navigator.canShare({ files: [file] })) {
         try {
           await navigator.share({
             files: [file],
@@ -255,17 +332,19 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
           });
           return;
         } catch (shareErr) {
-          console.log("Share sheet closed", shareErr);
+          console.log("Share sheet closed, falling back to direct download", shareErr);
         }
       }
 
-      // Download file directly
+      // Direct file download on computer
       const link = document.createElement("a");
       link.download = fileName;
       link.href = currentUrl;
       document.body.appendChild(link);
       link.click();
-      document.body.removeChild(link);
+      setTimeout(() => {
+        document.body.removeChild(link);
+      }, 120);
     }
   };
 
@@ -366,21 +445,46 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
         </Button>
 
         <div className="flex items-center gap-2 flex-wrap">
-          {/* Print / Save to Album Button */}
+          {/* Direct Download Image Button (Instant save .PNG on computer) */}
           <Button
             variant="carnival"
             size="sm"
-            onClick={handleOpenSaveModal}
+            onClick={handleDirectDownloadImage}
             disabled={isGenerating}
-            className="inline-flex items-center gap-1.5 shadow-xs cursor-pointer text-xs sm:text-sm"
-            title={isEn ? "Save commemorative ticket with your logo to album" : "Lưu ảnh vé kỷ niệm kèm logo vào album điện thoại"}
+            className="inline-flex items-center gap-1.5 shadow-xs cursor-pointer text-xs sm:text-sm font-bold"
+            title={isEn ? "Save high-definition ticket image (.PNG) to computer" : "Lưu ảnh vé kỷ niệm chất lượng cao (.PNG) về máy tính"}
           >
-            {isGenerating && activeModal === 'save' ? (
+            {isGenerating ? (
               <Loader2 className="size-3.5 animate-spin" />
             ) : (
-              <Printer className="size-3.5" />
+              <Download className="size-3.5" />
             )}
-            <span>{isEn ? "Print Ticket (With Logo)" : "In Vé Kỷ Niệm (Kèm Logo)"}</span>
+            <span>{isEn ? "Save Ticket (.PNG)" : "Lưu Ảnh Vé (.PNG)"}</span>
+          </Button>
+
+          {/* Direct Download PDF Button (1 Page vector PDF) */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleSavePdfDirect}
+            disabled={isGenerating}
+            className="inline-flex items-center gap-1.5 bg-white border-amber-300 text-amber-950 hover:bg-amber-100/80 shadow-xs cursor-pointer text-xs sm:text-sm font-semibold"
+            title={isEn ? "Save 1-page PDF file with exact ticket aspect ratio" : "Lưu file PDF trọn vẹn 1 trang đúng tỉ lệ kích thước vé"}
+          >
+            <FileText className="size-3.5 text-red-700" />
+            <span>{isEn ? "Save PDF" : "Lưu File PDF"}</span>
+          </Button>
+
+          {/* Browser Print Button */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleDirectPrint}
+            className="inline-flex items-center gap-1.5 bg-white border-amber-300 text-amber-950 hover:bg-amber-100/80 shadow-xs cursor-pointer text-xs sm:text-sm font-semibold"
+            title={isEn ? "Print ticket directly via browser print dialog" : "In vé trực tiếp qua hộp thoại in của trình duyệt"}
+          >
+            <Printer className="size-3.5 text-neutral-700" />
+            <span>{isEn ? "Print" : "In Vé"}</span>
           </Button>
 
           {/* Share Button */}
@@ -412,13 +516,14 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
           {/* Circus Logo Container (Fixed Official Logo) */}
           <div className="relative group/ticketlogo mx-auto flex flex-col items-center justify-center">
             <div 
+              id="circus-ticket-logo-frame"
               className="size-24 sm:size-28 rounded-2xl border-2 border-amber-500 overflow-hidden bg-white shadow-md flex items-center justify-center p-1.5 transition-transform hover:scale-105"
               title={isEn ? "Pocket Circus Official Logo" : "Logo Chính Thức Rạp Xiếc Bỏ Túi"}
             >
               <img 
                 src={OFFICIAL_CIRCUS_LOGO} 
                 alt="Logo Rạp Xiếc Bỏ Túi" 
-                className="size-full object-contain rounded-xl"
+                className="ticket-main-logo size-full object-contain rounded-xl"
                 loading="eager"
                 decoding="sync"
               />
@@ -430,10 +535,10 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
             <div className="text-[10px] sm:text-[11px] uppercase font-bold tracking-widest text-red-700 flex items-center justify-center gap-1.5 flex-wrap">
               <span>{isEn ? "★ Vietnamese Circus • Honorary Pass ★" : "★ Rạp Xiếc Việt Nam • Vé Danh Dự ★"}</span>
             </div>
-            <h2 className="font-circus text-2xl sm:text-3xl text-red-900 leading-tight">
+            <h2 className="font-circus text-2xl sm:text-3xl text-red-900 leading-normal tracking-wide whitespace-nowrap">
               {isEn ? "POCKET CIRCUS" : "RẠP XIẾC BỎ TÚI"}
             </h2>
-            <div className="flex items-center justify-center gap-2 mt-0.5 flex-wrap">
+            <div className="flex items-center justify-center gap-2 mt-1 flex-wrap">
               <span className="text-[10px] sm:text-[11px] text-amber-900/80 font-medium">
                 {isEn ? "Official Circus Certified" : "Chứng nhận Rạp Xiếc chính thức"}
               </span>
@@ -513,7 +618,7 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
                 </div>
               ) : (
                 <div className="flex items-center justify-center gap-2">
-                  <span className="font-circus text-xl sm:text-2xl text-red-900 tracking-wide">
+                  <span className="font-circus text-xl sm:text-2xl text-red-900 tracking-wide font-bold">
                     {visitorName}
                   </span>
                   <button
@@ -624,7 +729,7 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
       </div>
 
       {/* Collector Badges Section - Renamed to 'Bộ sưu tập huy hiệu khán giả yêu xiếc' */}
-      <div className="w-full max-w-3xl mx-auto bg-white rounded-3xl p-6 sm:p-8 border-2 border-amber-200 shadow-sm">
+      <div className="no-print collector-badges-container w-full max-w-3xl mx-auto bg-white rounded-3xl p-6 sm:p-8 border-2 border-amber-200 shadow-sm">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
             <h3 className="font-circus text-xl sm:text-2xl text-neutral-900 flex items-center gap-2">
@@ -713,7 +818,7 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
       {/* Contact Information / Thông tin liên hệ */}
       <div 
         id="circus-contact-section"
-        className="w-full max-w-2xl mx-auto bg-gradient-to-br from-[#2b0808] via-[#1f0606] to-[#120303] rounded-3xl p-6 sm:p-8 border-2 border-amber-400 shadow-xl text-white relative overflow-hidden"
+        className="no-print w-full max-w-2xl mx-auto bg-gradient-to-br from-[#2b0808] via-[#1f0606] to-[#120303] rounded-3xl p-6 sm:p-8 border-2 border-amber-400 shadow-xl text-white relative overflow-hidden"
       >
         {/* Decorative corner stars and circus flourishes */}
         <div className="absolute top-3 right-4 text-amber-400/20 text-4xl select-none pointer-events-none">
@@ -835,21 +940,34 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
                 className="w-full flex items-center justify-center gap-2 py-3 cursor-pointer text-sm font-bold shadow-md"
               >
                 <Download className="size-4.5" />
-                <span>{isEn ? "Save Ticket Photo to Device (.PNG)" : "Lưu Ảnh Vé Vào Thiết Bị (.PNG)"}</span>
+                <span>{isEn ? "Save Ticket Photo (.PNG)" : "Lưu Ảnh Vé Vào Thiết Bị (.PNG)"}</span>
               </Button>
 
               <div className="grid grid-cols-2 gap-2.5">
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={handleDirectPrint}
+                  onClick={handleSavePdfDirect}
                   className="flex items-center justify-center gap-1.5 bg-white border-amber-300 text-amber-950 hover:bg-amber-100/80 cursor-pointer text-xs py-2 shadow-xs font-semibold"
-                  title={isEn ? "Print or save centered PDF on computer" : "In vé hoặc lưu file PDF căn giữa trang"}
+                  title={isEn ? "Save uncropped 1-page PDF" : "Lưu file PDF trọn vẹn 1 trang"}
                 >
-                  <Printer className="size-3.5 text-neutral-700" />
-                  <span>{isEn ? "Print / Save PDF (Centered)" : "In Vé / Lưu PDF (Căn Giữa)"}</span>
+                  <FileText className="size-3.5 text-red-700" />
+                  <span>{isEn ? "Save PDF (.PDF)" : "Lưu File PDF (.PDF)"}</span>
                 </Button>
 
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleDirectPrint}
+                  className="flex items-center justify-center gap-1.5 bg-white border-amber-300 text-amber-950 hover:bg-amber-100/80 cursor-pointer text-xs py-2 shadow-xs font-semibold"
+                  title={isEn ? "Print via browser dialog" : "In vé trực tiếp qua trình duyệt"}
+                >
+                  <Printer className="size-3.5 text-neutral-700" />
+                  <span>{isEn ? "Print Ticket" : "In Vé (Hộp thoại in)"}</span>
+                </Button>
+              </div>
+
+              <div className="grid grid-cols-1 gap-2">
                 <Button
                   variant="outline"
                   size="sm"
@@ -867,7 +985,7 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
 
               <div className="flex flex-col sm:flex-row items-center justify-between gap-2 pt-2 border-t border-amber-200/80 text-xs">
                 <span className="text-neutral-500 text-[11px] text-center sm:text-left">
-                  {isEn ? "💡 Tip: Ticket is centered in Landscape print/PDF" : "💡 Mẹo: Vé được căn giữa trang giấy khi in hoặc lưu PDF"}
+                  {isEn ? "💡 Tip: Ticket is scaled to fit cleanly on 1 page (A4 portrait)" : "💡 Mẹo: Vé được căn chỉnh tự động vừa vặn trọn vẹn trên 1 trang A4"}
                 </span>
 
                 <button

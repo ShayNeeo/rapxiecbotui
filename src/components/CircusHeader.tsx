@@ -82,7 +82,7 @@ export const CircusHeader: React.FC<CircusHeaderProps> = ({
   };
 
   return (
-    <header className="relative w-full bg-gradient-to-b from-red-700 via-red-800 to-red-900 text-white shadow-xl border-b-4 border-amber-400 select-none overflow-hidden">
+    <header className="no-print relative w-full bg-gradient-to-b from-red-700 via-red-800 to-red-900 text-white shadow-xl border-b-4 border-amber-400 select-none overflow-hidden">
       {/* Decorative Bunting Pennants Banner */}
       <div className="flex w-full justify-between items-start overflow-hidden pointer-events-none absolute top-0 left-0 right-0 h-7 z-10">
         {[

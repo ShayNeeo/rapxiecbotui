@@ -91,8 +91,12 @@ export default function App() {
   const [currentAct, setCurrentAct] = useState<CircusActId>(() => {
     if (typeof window !== 'undefined') {
       const hash = window.location.hash;
+      const search = window.location.search;
       if (hash.startsWith('#/moc-') || hash === '#/') {
         return 'history';
+      }
+      if (hash === '#ticket' || hash === '#/ticket' || search.includes('act=ticket')) {
+        return 'ticket';
       }
     }
     return 'stage';
@@ -409,7 +413,7 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full bg-[#1e0707] text-amber-200/90 border-t-4 border-amber-400 py-7 sm:py-9 px-4 sm:px-6 text-center mt-auto">
+      <footer className="no-print w-full bg-[#1e0707] text-amber-200/90 border-t-4 border-amber-400 py-7 sm:py-9 px-4 sm:px-6 text-center mt-auto">
         <div className="max-w-2xl mx-auto space-y-4 sm:space-y-5">
           <div className="flex items-center justify-center gap-2 font-circus text-base sm:text-lg text-amber-300 tracking-wider">
             <span className="text-amber-400 text-sm">★</span>
