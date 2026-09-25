@@ -501,21 +501,6 @@ export const CircusMap: React.FC<CircusMapProps> = ({
         
         {/* Interactive Stylized Cartoon Map of Vietnam (7 cols - Bigger & Clearer) */}
         <div className="lg:col-span-7 bg-white rounded-3xl p-5 sm:p-6 border border-stone-200/90 shadow-xl relative overflow-hidden">
-          {/* Hidden File Input for Custom Map Upload */}
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file && onUploadMap) {
-                onUploadMap(file);
-              }
-              e.target.value = '';
-            }}
-          />
-
           <div className="flex flex-wrap items-center justify-between border-b border-stone-100 pb-3 mb-3 gap-2">
             <div className="flex items-center gap-2.5">
               <div className="size-8 rounded-full bg-red-50 flex items-center justify-center border border-red-200/70">
@@ -526,9 +511,7 @@ export const CircusMap: React.FC<CircusMapProps> = ({
                   {isEn ? "VIETNAM CIRCUS MAP" : "BẢN ĐỒ RẠP XIẾC VIỆT NAM"}
                 </span>
                 <span className="text-[11px] text-neutral-500 font-medium">
-                  {isCustomMapActive 
-                    ? (isEn ? "Custom map image loaded" : "Đang dùng ảnh bản đồ tự nạp")
-                    : (isEn ? "Official circus map" : "Ảnh bản đồ gốc chính thức")}
+                  {isEn ? "Official circus heritage map" : "Bản đồ di sản rạp xiếc Việt Nam"}
                 </span>
               </div>
             </div>
@@ -537,110 +520,11 @@ export const CircusMap: React.FC<CircusMapProps> = ({
             </span>
           </div>
 
-          {/* Map Image Control Panel (Upload your own map image / Reset to original map) */}
-          <div className="mb-3 p-3 rounded-2xl bg-gradient-to-r from-amber-50 via-orange-50 to-amber-100/60 border border-amber-300 flex flex-wrap items-center justify-between gap-2.5 shadow-2xs">
-            <div className="flex items-center gap-2.5">
-              <div className="size-8 rounded-xl bg-gradient-to-br from-red-700 to-amber-600 text-white flex items-center justify-center shadow-xs shrink-0">
-                <MapPin className="size-4" />
-              </div>
-              <div>
-                <div className="flex items-center gap-1.5">
-                  <span className="text-xs font-bold text-red-950">
-                    {isEn ? "Map Image Customizer" : "Tùy Chỉnh Ảnh Bản Đồ"}
-                  </span>
-                  {isCustomMapActive && (
-                    <span className="text-[10px] font-bold bg-amber-400 text-amber-950 px-2 py-0.5 rounded-full">
-                      {isEn ? "CUSTOM ACTIVE" : "ẢNH TỰ NẠP"}
-                    </span>
-                  )}
-                </div>
-                <p className="text-[11px] text-neutral-600">
-                  {isEn 
-                    ? "Upload your map picture or drag & drop onto the map" 
-                    : "Nạp ảnh bản đồ của bạn hoặc kéo thả trực tiếp lên bản đồ"}
-                </p>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2">
-              {/* Refined Background Tone Quick Picker */}
-              <div className="flex items-center gap-1 bg-white/90 p-1 rounded-xl border border-amber-200/90 shadow-2xs">
-                <span className="text-[10px] font-semibold text-neutral-600 px-1.5 uppercase tracking-wider">
-                  {isEn ? "Tone:" : "Tông nền:"}
-                </span>
-                {[
-                  { hex: '#FFF8DC', label: isEn ? 'Cornsilk Yellow' : 'Vàng ngô' },
-                  { hex: '#FBF0D2', label: isEn ? 'Golden Yellow' : 'Vàng ấm' },
-                  { hex: '#F7EACA', label: isEn ? 'Parchment Yellow' : 'Vàng giấy cổ' },
-                  { hex: '#FAF9F6', label: isEn ? 'Light White' : 'Trắng ngà' }
-                ].map((tone) => (
-                  <button
-                    key={tone.hex}
-                    type="button"
-                    onClick={() => handleSetMapTone(tone.hex)}
-                    className={`px-2.5 py-0.5 rounded-lg text-[11px] font-medium border transition-all cursor-pointer flex items-center gap-1.5 ${
-                      mapBgColor === tone.hex
-                        ? 'bg-amber-200 text-amber-950 border-amber-500 font-bold shadow-2xs ring-1 ring-amber-400/50'
-                        : 'bg-white text-neutral-600 border-neutral-200 hover:bg-neutral-50'
-                    }`}
-                    title={tone.label}
-                  >
-                    <span 
-                      className="size-2.5 rounded-full border border-black/15 shrink-0 shadow-2xs" 
-                      style={{ backgroundColor: tone.hex }} 
-                    />
-                    <span>{tone.label}</span>
-                  </button>
-                ))}
-              </div>
-
-              {onUploadMap && (
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  className="inline-flex items-center gap-1.5 bg-gradient-to-r from-red-600 to-amber-600 hover:from-red-500 hover:to-amber-500 text-white font-semibold text-xs px-3 py-1.5 rounded-xl shadow-xs hover:shadow-md cursor-pointer transition active:scale-95"
-                  title={isEn ? "Upload map image (PNG, JPG)" : "Tải ảnh bản đồ mới (PNG, JPG)"}
-                >
-                  <Upload className="size-3.5" />
-                  <span>{isEn ? "Upload Map" : "Tải Ảnh Bản Đồ"}</span>
-                </button>
-              )}
-
-              {isCustomMapActive && onResetMap && (
-                <button
-                  type="button"
-                  onClick={onResetMap}
-                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-white hover:bg-neutral-100 text-red-700 text-xs font-semibold border border-amber-300 shadow-2xs cursor-pointer transition"
-                  title={isEn ? "Restore official original map" : "Khôi phục lại ảnh bản đồ gốc ban đầu"}
-                >
-                  <RotateCcw className="size-3 text-red-700" />
-                  <span>{isEn ? "Original Map" : "Về Ảnh Gốc"}</span>
-                </button>
-              )}
-            </div>
-          </div>
-
           {/* Stylized Vietnam Map Canvas SVG Container - Warm Golden Yellow Base */}
           <div 
             className="relative w-full h-[760px] sm:h-[820px] lg:h-[880px] flex items-center justify-center rounded-2xl overflow-hidden border border-amber-300/80 shadow-inner group transition-colors duration-200"
             style={{ backgroundColor: mapBgColor }}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
           >
-            {/* Drag & Drop Visual Indicator */}
-            {isDragging && (
-              <div className="absolute inset-0 z-40 bg-amber-950/85 backdrop-blur-xs flex flex-col items-center justify-center text-center p-6 border-4 border-dashed border-amber-400 rounded-2xl animate-in fade-in duration-150">
-                <Upload className="size-12 text-amber-300 animate-bounce mb-3" />
-                <h4 className="font-circus text-xl text-amber-200">
-                  {isEn ? "Drop your map image here!" : "Thả ảnh bản đồ vào đây!"}
-                </h4>
-                <p className="text-xs text-amber-100/90 mt-1">
-                  {isEn ? "Accepts PNG, JPG, WEBP formats" : "Hỗ trợ định dạng PNG, JPG, WEBP"}
-                </p>
-              </div>
-            )}
-
             <svg
               viewBox="0 0 520 720"
               className="w-full h-full max-h-[880px] select-none"

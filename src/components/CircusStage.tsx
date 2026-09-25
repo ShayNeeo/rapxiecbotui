@@ -150,68 +150,16 @@ export const CircusStage: React.FC<CircusStageProps> = ({
 
             {/* The circular image container - tight fit with gold border to eliminate white borders */}
             <div 
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
-              onDrop={handleDrop}
-              onClick={() => onUploadLogo && fileInputRef.current?.click()}
-              title={isEn ? "Pocket Circus Official Logo - Click or Drag & Drop logo image here" : "Logo chính thức Rạp Xiếc Bỏ Túi - Bấm hoặc Kéo Thả ảnh logo gốc vào đây"}
-              className={`relative size-64 sm:size-76 md:size-84 rounded-full overflow-hidden mx-auto cursor-pointer border-4 border-amber-400/90 shadow-[0_0_24px_rgba(251,191,36,0.35)] bg-amber-950/40 transition-all duration-300 ${
-                isDragging 
-                  ? 'ring-4 ring-yellow-300 scale-105' 
-                  : 'hover:scale-[1.01]'
-              }`}
+              title={isEn ? "Pocket Circus Official Logo" : "Logo chính thức Rạp Xiếc Bỏ Túi"}
+              className="relative size-64 sm:size-76 md:size-84 rounded-full overflow-hidden mx-auto border-4 border-amber-400/90 shadow-[0_0_24px_rgba(251,191,36,0.35)] bg-amber-950/40 transition-transform duration-300 hover:scale-[1.01]"
             >
               <img
-                src={logoUrl || OFFICIAL_CIRCUS_LOGO}
+                src={OFFICIAL_CIRCUS_LOGO}
                 alt={isEn ? "Pocket Circus - Official Logo" : "Rạp Xiếc Bỏ Túi - Logo Gốc Chính Thức"}
                 style={{ transform: "scale(1.06)" }}
                 className="size-full rounded-full object-cover origin-center transition-transform duration-300"
               />
-
-              {/* Drag over overlay */}
-              {isDragging && (
-                <div className="absolute inset-0 bg-amber-950/80 backdrop-blur-xs flex flex-col items-center justify-center text-center p-4">
-                  <Upload className="size-12 text-yellow-300 animate-bounce mb-2" />
-                  <p className="text-yellow-200 font-bold text-sm">
-                    {isEn ? "Drop logo file here" : "Thả file logo vào đây"}
-                  </p>
-                  <p className="text-amber-100/80 text-xs">
-                    {isEn ? "Apply full colors & artistic details" : "Áp dụng trọn vẹn nét vẽ & màu sắc"}
-                  </p>
-                </div>
-              )}
             </div>
-
-            {/* Hidden original file input */}
-            {onUploadLogo && (
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) {
-                    onUploadLogo(file);
-                  }
-                }}
-              />
-            )}
-
-            {/* Quick logo action panel */}
-            {onUploadLogo && (
-              <div className="flex flex-wrap items-center justify-center gap-2 mt-3 text-xs">
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-red-600 hover:from-amber-400 hover:to-red-500 text-yellow-100 font-semibold px-3 py-1 rounded-full shadow-xs border border-yellow-300/60 cursor-pointer transition transform hover:scale-105 active:scale-95 text-[11px]"
-                  title={isEn ? "Upload another logo image" : "Thay đổi ảnh logo khác nếu cần"}
-                >
-                  <Upload className="size-3" />
-                  <span>{isEn ? "Change image" : "Đổi ảnh khác"}</span>
-                </button>
-              </div>
-            )}
           </div>
 
           {/* Main Title & Slogan */}

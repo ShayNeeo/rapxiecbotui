@@ -500,232 +500,145 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
         </div>
       </div>
 
-      {/* The Souvenir Circus Ticket (Perforated Retro Aesthetic - Flex Column Centered) */}
+      {/* The Souvenir Circus Ticket (Perforated Retro Aesthetic - Exact Match to Reference Image) */}
       <div 
         id="circus-ticket-card"
         ref={ticketRef}
-        className="relative w-full max-w-2xl mx-auto bg-gradient-to-b from-amber-50 via-yellow-50 to-amber-100 rounded-3xl p-6 sm:p-9 border-4 border-amber-400 shadow-2xl overflow-hidden ticket-edge-left ticket-edge-right flex flex-col items-center justify-center text-center space-y-6">
-        
-        {/* Background Watermark Tent (Centered) */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none text-9xl select-none">
+        className="relative w-full max-w-[460px] mx-auto bg-[#FFFDF8] rounded-[28px] p-6 sm:p-7 border-4 border-amber-400 shadow-2xl overflow-hidden ticket-edge-left ticket-edge-right flex flex-col space-y-4 text-neutral-900"
+      >
+        {/* Background Watermark Tent (Bottom Right, matching reference image) */}
+        <div className="absolute -bottom-4 -right-4 opacity-15 pointer-events-none select-none text-8xl">
           🎪
         </div>
 
-        {/* Top Header Ticket Band - Consistently Centered at Top */}
-        <div className="w-full border-b-2 border-dashed border-amber-300 pb-6 flex flex-col items-center justify-center text-center space-y-4 relative z-10">
-          {/* Circus Logo Container (Fixed Official Logo) */}
-          <div className="relative group/ticketlogo mx-auto flex flex-col items-center justify-center">
-            <div 
-              id="circus-ticket-logo-frame"
-              className="size-24 sm:size-28 rounded-2xl border-2 border-amber-500 overflow-hidden bg-white shadow-md flex items-center justify-center p-1.5 transition-transform hover:scale-105"
-              title={isEn ? "Pocket Circus Official Logo" : "Logo Chính Thức Rạp Xiếc Bỏ Túi"}
-            >
-              <img 
-                src={OFFICIAL_CIRCUS_LOGO} 
-                alt="Logo Rạp Xiếc Bỏ Túi" 
-                className="ticket-main-logo size-full object-contain rounded-xl"
-                loading="eager"
-                decoding="sync"
-              />
-            </div>
+        {/* Top Header Ticket Band (Logo on Left, Title & Subtitle on Right) */}
+        <div className="w-full flex items-center gap-3.5 sm:gap-4 text-left relative z-10">
+          {/* Left: Circus Logo Container (Fixed Official Logo in Square Frame) */}
+          <div 
+            id="circus-ticket-logo-frame"
+            className="size-20 sm:size-22 rounded-2xl border-2 border-amber-400 overflow-hidden bg-white shadow-xs flex items-center justify-center p-1 shrink-0"
+            title={isEn ? "Pocket Circus Official Logo" : "Logo Chính Thức Rạp Xiếc Bỏ Túi"}
+          >
+            <img 
+              src={OFFICIAL_CIRCUS_LOGO} 
+              alt="Logo Rạp Xiếc Bỏ Túi" 
+              className="ticket-main-logo size-full object-contain rounded-xl"
+              loading="eager"
+              decoding="sync"
+            />
           </div>
 
-          {/* Centered Ticket Subtitle & Title */}
-          <div className="flex flex-col items-center justify-center text-center space-y-1.5">
-            <div className="text-[10px] sm:text-[11px] uppercase font-bold tracking-widest text-red-700 flex items-center justify-center gap-1.5 flex-wrap">
-              <span>{isEn ? "★ Vietnamese Circus • Honorary Pass ★" : "★ Rạp Xiếc Việt Nam • Vé Danh Dự ★"}</span>
+          {/* Right: Subtitle & Title */}
+          <div className="flex flex-col justify-center min-w-0">
+            <div className="text-[11px] sm:text-xs uppercase font-bold tracking-wider text-red-800 truncate">
+              {isEn ? "★ Vietnamese Circus • Honorary Pass ★" : "RẠP XIẾC VIỆT NAM • VÉ DANH DỰ"}
             </div>
-            <h2 className="font-circus text-2xl sm:text-3xl text-red-900 leading-normal tracking-wide whitespace-nowrap">
+            <h2 className="font-circus text-2xl sm:text-3xl text-red-900 leading-tight tracking-wide whitespace-nowrap">
               {isEn ? "POCKET CIRCUS" : "RẠP XIẾC BỎ TÚI"}
             </h2>
-            <div className="flex items-center justify-center gap-2 mt-1 flex-wrap">
-              <span className="text-[10px] sm:text-[11px] text-amber-900/80 font-medium">
-                {isEn ? "Official Circus Certified" : "Chứng nhận Rạp Xiếc chính thức"}
-              </span>
-              {isCustomLogo && onResetLogo && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    onResetLogo();
-                    setTicketImageUrl(null);
-                    setTicketBlob(null);
-                  }}
-                  className="no-print text-[10px] text-amber-800 hover:text-red-700 underline font-medium cursor-pointer inline-flex items-center gap-0.5"
-                  title={isEn ? "Restore official logo" : "Khôi phục logo gốc"}
-                >
-                  <RotateCcw className="size-2.5" />
-                  <span>{isEn ? "Reset logo" : "Khôi phục logo gốc"}</span>
-                </button>
-              )}
-            </div>
-          </div>
-
-          {/* Ticket Serial & VIP Tier Badge (Centered) */}
-          <div className="flex items-center justify-center gap-2.5 text-xs flex-wrap pt-1">
-            <div className="font-mono font-bold text-amber-950 bg-amber-200/90 px-3.5 py-1 rounded-full border border-amber-300 shadow-xs">
-              {ticketSerial}
-            </div>
-            <div className="text-[11px] font-semibold text-red-800 bg-red-100/80 px-3 py-1 rounded-full border border-red-200">
-              {isEn ? "TIER: SPECIAL VIP" : "HẠNG VÉ: VIP ĐẶC BIỆT"}
+            <div className="text-[11px] sm:text-xs text-stone-600 font-medium mt-0.5">
+              {isEn ? "Official Circus Certified" : "Chứng nhận Rạp Xiếc chính thức"}
             </div>
           </div>
         </div>
 
-        {/* Hidden File Input for Ticket Logo Customization */}
-        {onUploadLogo && (
-          <input 
-            ref={ticketLogoInputRef}
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file && onUploadLogo) {
-                onUploadLogo(file);
-                setTicketImageUrl(null);
-                setTicketBlob(null);
-              }
-            }}
-          />
-        )}
+        {/* Ticket Serial & VIP Tier Badge */}
+        <div className="w-full flex flex-col items-center justify-center gap-1 pt-1 relative z-10">
+          <div className="font-mono font-bold text-amber-950 bg-amber-200/90 px-4 py-0.5 rounded-full border border-amber-300 text-sm shadow-2xs">
+            {ticketSerial}
+          </div>
+          <div className="text-xs font-semibold text-neutral-700">
+            {isEn ? "Tier: SPECIAL VIP" : "Hạng vé: VIP ĐẶC BIỆT"}
+          </div>
+        </div>
 
-        {/* Ticket Body Content - Centered Flex Column with Improved Spacing */}
-        <div className="w-full py-3 flex flex-col items-center justify-center text-center space-y-6 relative z-10">
-          
-          {/* Visitor Name & Info (Centered) */}
-          <div className="flex flex-col items-center justify-center text-center space-y-1.5 w-full">
-            <span className="text-[11px] font-bold text-neutral-500 uppercase tracking-wider">
-              {isEn ? "HONORARY GUEST" : "Khán Giả Danh Dự"}
+        {/* Dashed Separator */}
+        <div className="w-full border-b border-dashed border-amber-300/90 relative z-10" />
+
+        {/* Visitor Name & Info */}
+        <div className="w-full flex flex-col text-left space-y-1 relative z-10">
+          <span className="text-[11px] font-bold text-neutral-500 uppercase tracking-wider">
+            {isEn ? "HONORARY GUEST" : "KHÁN GIẢ DANH DỰ"}
+          </span>
+          <div>
+            <span className="font-circus text-xl sm:text-2xl text-red-900 tracking-wide font-bold">
+              {visitorName}
             </span>
-            <div className="flex items-center justify-center gap-2 flex-wrap">
-              {isEditingName ? (
-                <div className="flex items-center justify-center gap-2 flex-wrap">
-                  <input
-                    type="text"
-                    value={visitorName}
-                    onChange={(e) => setVisitorName(e.target.value)}
-                    className="border-2 border-amber-400 rounded-lg px-3 py-1 text-base font-bold text-neutral-900 bg-white text-center focus:outline-none focus:ring-2 focus:ring-amber-500"
-                    maxLength={25}
-                    autoFocus
-                  />
-                  <Button
-                    size="xs"
-                    variant="default"
-                    onClick={() => setIsEditingName(false)}
-                  >
-                    {isEn ? "Save" : "Lưu"}
-                  </Button>
-                </div>
-              ) : (
-                <div className="flex items-center justify-center gap-2">
-                  <span className="font-circus text-xl sm:text-2xl text-red-900 tracking-wide font-bold">
-                    {visitorName}
-                  </span>
-                  <button
-                    onClick={() => setIsEditingName(true)}
-                    className="no-print text-xs text-amber-700 underline font-semibold cursor-pointer hover:text-red-700"
-                  >
-                    {isEn ? "Edit name" : "Đổi tên"}
-                  </button>
-                </div>
-              )}
-            </div>
           </div>
+        </div>
 
-          {/* Seat location & Performance date (Centered card with improved spacing) */}
-          <div className="w-full max-w-lg mx-auto grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6 text-xs bg-amber-100/75 p-4 rounded-2xl border border-amber-300/80 text-center shadow-xs">
-            <div className="flex flex-col items-center justify-center">
-              <span className="text-neutral-500 font-medium">{isEn ? "Seat location:" : "Vị trí chỗ ngồi:"}</span>
-              <p className="font-bold text-neutral-900 text-sm mt-0.5">{isEn ? "Row A • Seat 01 (Center Ring)" : "Hàng A • Ghế Số 01 (Sân Trung Tâm)"}</p>
-            </div>
-            <div className="flex flex-col items-center justify-center">
-              <span className="text-neutral-500 font-medium">{isEn ? "Performance date:" : "Ngày biểu diễn:"}</span>
-              <p className="font-bold text-neutral-900 text-sm mt-0.5">{currentDate}</p>
-            </div>
+        {/* Seat location & Performance date (2 columns) */}
+        <div className="w-full grid grid-cols-2 gap-4 text-left pt-1 relative z-10">
+          <div>
+            <span className="text-xs text-neutral-500 font-medium block">
+              {isEn ? "Seat location:" : "Vị trí chỗ ngồi:"}
+            </span>
+            <p className="font-bold text-neutral-900 text-sm mt-0.5">
+              {isEn ? "Row A • Seat 01 (Center Ring)" : "Hàng A • Ghế Số 01 (Sân Trung Tâm)"}
+            </p>
           </div>
+          <div>
+            <span className="text-xs text-neutral-500 font-medium block">
+              {isEn ? "Performance date:" : "Ngày biểu diễn:"}
+            </span>
+            <p className="font-bold text-neutral-900 text-sm mt-0.5">
+              {currentDate}
+            </p>
+          </div>
+        </div>
 
-          {/* Privileges (Centered) */}
-          <div className="w-full max-w-xl mx-auto text-xs text-neutral-600 flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 text-center">
-            <span className="font-bold text-neutral-700 shrink-0">🎟️ {isEn ? "Privileges:" : "Quyền lợi:"}</span>
-            <span className="font-medium text-emerald-800">
+        {/* Privileges */}
+        <div className="w-full flex items-start gap-2 text-left pt-1 text-xs relative z-10">
+          <div className="flex items-center gap-1 shrink-0 font-bold text-neutral-800">
+            <span className="text-xs">🎟️</span>
+            <span>{isEn ? "Privileges:" : "Quyền lợi:"}</span>
+          </div>
+          <p className="font-medium text-emerald-800 leading-relaxed">
+            {isEn ? (
+              <>
+                Circus history,{" "}
+                <Link to={CIRCUS_3D_URL} className="underline hover:text-emerald-950 font-bold">3D circus ↗</Link>,{" "}
+                <a href={CHATBOT_AI_URL} target="_blank" rel="noopener noreferrer" className="underline hover:text-emerald-950 font-bold">chatbot AI ↗</a>, quiz & venues map
+              </>
+            ) : (
+              <>
+                Khám phá lịch sử,{" "}
+                <Link to={CIRCUS_3D_URL} className="underline hover:text-emerald-950 font-bold">rạp xiếc 3D ↗</Link>,{" "}
+                <a href={CHATBOT_AI_URL} target="_blank" rel="noopener noreferrer" className="underline hover:text-emerald-950 font-bold">chatbot AI ↗</a>, quiz kiến thức & bản đồ rạp xiếc toàn quốc
+              </>
+            )}
+          </p>
+        </div>
+
+        {/* Large Golden Yellow Box with Red Wax Stamp */}
+        <div className="w-full bg-[#FEF3C7]/70 rounded-2xl p-4 sm:p-5 border border-amber-300 flex flex-col items-center justify-center my-1 relative shadow-2xs z-10">
+          <div className="size-20 sm:size-22 rounded-full border-4 border-red-700 bg-red-700 text-yellow-300 flex flex-col items-center justify-center shadow-lg transform rotate-[-4deg] hover:rotate-0 transition-transform">
+            <span className="text-base">★</span>
+            <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-tighter text-center leading-tight">
               {isEn ? (
-                <>
-                  Circus history,{" "}
-                  <Link
-                    to={CIRCUS_3D_URL}
-                    className="underline hover:text-emerald-950 font-bold"
-                    title="Open 3D Circus"
-                  >
-                    3D circus arena ↗
-                  </Link>
-                  ,{" "}
-                  <a
-                    href={CHATBOT_AI_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline hover:text-emerald-950 font-bold"
-                    title="Open Chatbot AI"
-                  >
-                    chatbot AI ↗
-                  </a>
-                  , knowledge quiz & national circus map
-                </>
+                <>POCKET<br/>CIRCUS<br/>CERTIFIED</>
               ) : (
-                <>
-                  Khám phá lịch sử,{" "}
-                  <Link
-                    to={CIRCUS_3D_URL}
-                    className="underline hover:text-emerald-950 font-bold"
-                    title="Mở Rạp Xiếc 3D"
-                  >
-                    rạp xiếc 3D ↗
-                  </Link>
-                  ,{" "}
-                  <a
-                    href={CHATBOT_AI_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline hover:text-emerald-950 font-bold"
-                    title="Mở Chatbot AI"
-                  >
-                    chatbot AI ↗
-                  </a>
-                  , quiz kiến thức & bản đồ rạp xiếc toàn quốc
-                </>
+                <>RẠP XIẾC<br/>BỎ TÚI<br/>CHỨNG NHẬN</>
               )}
             </span>
           </div>
-
-          {/* Golden Seal of Circus Authenticity (Wax stamp Centered) */}
-          <div className="flex flex-col items-center justify-center p-3 rounded-2xl bg-amber-200/60 border-2 border-amber-300/90 text-center relative mx-auto my-1">
-            {/* Wax stamp effect */}
-            <div className="size-20 sm:size-22 rounded-full border-4 border-red-700 bg-red-700 text-yellow-300 flex flex-col items-center justify-center shadow-lg transform rotate-[-4deg] hover:rotate-0 transition-transform">
-              <span className="text-lg">★</span>
-              <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-tighter text-center leading-none">
-                {isEn ? (
-                  <>POCKET<br/>CIRCUS<br/>CERTIFIED</>
-                ) : (
-                  <>RẠP XIẾC<br/>BỎ TÚI<br/>CHỨNG NHẬN</>
-                )}
-              </span>
-            </div>
-            <span className="text-[9px] font-bold text-red-800 uppercase mt-2">
-              {isEn ? "Official Wax Seal" : "Dấu Mộc Chính Thức"}
-            </span>
-          </div>
-
+          <span className="text-[10px] font-bold text-amber-950 uppercase tracking-wider mt-2">
+            {isEn ? "Official Wax Seal" : "DẤU MỘC CHÍNH THỨC"}
+          </span>
         </div>
 
-        {/* Ticket Perforated Barcode Footer (Centered with improved spacing) */}
-        <div className="w-full border-t-2 border-dashed border-amber-300 pt-5 pb-1 flex flex-col items-center justify-center gap-2 text-xs text-neutral-500 text-center relative z-10">
-          <div className="flex items-center justify-center gap-1 font-mono tracking-widest text-xs text-neutral-700">
+        {/* Dashed Separator */}
+        <div className="w-full border-b border-dashed border-amber-300/90 relative z-10" />
+
+        {/* Ticket Perforated Barcode Footer */}
+        <div className="w-full flex flex-col items-center justify-center gap-1.5 text-center pt-1 pb-1 relative z-10">
+          <div className="font-mono tracking-widest text-xs text-neutral-700">
             ||| | |||| || ||| |||| | || ||||| |
           </div>
-          <div className="text-[10px] text-neutral-600">
+          <p className="text-[10px] sm:text-[11px] text-neutral-600">
             {isEn ? "Thank you for accompanying Pocket Circus Vietnam!" : "Cảm ơn quý khán giả đã đồng hành cùng Rạp Xiếc Bỏ Túi Việt Nam!"}
-          </div>
+          </p>
         </div>
-
       </div>
 
       {/* Collector Badges Section - Renamed to 'Bộ sưu tập huy hiệu khán giả yêu xiếc' */}
