@@ -64,6 +64,21 @@ export const MODERN_CIRCUS_MEDIA: MediaItem[] = [
     descriptionEn: "Peak Britain's Got Talent Grand Final performance of the Giang Brothers (Quốc Cơ & Quốc Nghiệp) with their legendary leap of faith head-to-head balancing act.",
     year: "2018",
     tags: ["Quốc Cơ Quốc Nghiệp", "Got Talent", "Chung Kết", "Kỷ Lục"]
+  },
+  {
+    id: "media-phong-su-vo-dien-mo-show",
+    type: "video",
+    title: "Phóng sự vở diễn 'Mơ Show' - Bản giao hưởng thị giác và xiếc đương đại Việt Nam",
+    titleEn: "Documentary Feature: 'Dreamscape Show' (Mơ Show) - Visual Symphony of Vietnamese Contemporary Circus",
+    troupe: "Nhà Hát Nghệ Thuật Phương Nam",
+    category: "bamboo",
+    thumbnail: "https://img.youtube.com/vi/mLlYRMPFkIc/hqdefault.jpg",
+    videoUrl: "https://youtu.be/mLlYRMPFkIc?si=e_MfcwhtGIJn_PQN",
+    duration: "4:15",
+    description: "Thước phim phóng sự đặc sắc về vở diễn 'Mơ Show' (Dreamscape Show) tại Rạp xiếc Phú Thọ, tôn vinh nghệ thuật xiếc đương đại Việt Nam hòa quyện cùng âm nhạc dân tộc, múa rối và kỹ xảo ánh sáng huyền ảo.",
+    descriptionEn: "Special documentary feature on 'Dreamscape Show' (Mơ Show) at Phu Tho Circus Arena, celebrating Vietnamese contemporary circus blending indigenous puppetry, music, and surreal visual artistry.",
+    year: "2024",
+    tags: ["Mơ Show", "Xiếc Đương Đại", "Phóng Sự", "Nhà Hát Phương Nam"]
   }
 ];
 
