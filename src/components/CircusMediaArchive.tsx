@@ -159,12 +159,32 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
       const saved = localStorage.getItem("pocket_circus_user_media");
       if (!saved) return [];
       const parsed: MediaItem[] = JSON.parse(saved);
-      return parsed.filter(item => 
-        item.id !== "media-ao-show-1" && 
-        item.id !== "media-lang-toi-bamboo" &&
-        !item.title?.toLowerCase().includes("à ố") &&
-        !item.title?.toLowerCase().includes("làng tôi")
-      );
+      const filtered = parsed.filter(item => {
+        const titleLower = (item.title || "").toLowerCase();
+        const troupeLower = (item.troupe || "").toLowerCase();
+        const tags = (item.tags || []).map(t => t.toLowerCase());
+
+        // Remove old dummy Mơ Show item with "nghệ sĩ xiếc tự do" and tags #tự tạo, #xiếc việt
+        const isOldMoShow = titleLower.includes("mơ show") && (
+          troupeLower.includes("tự do") || 
+          troupeLower.includes("independent") ||
+          tags.some(t => t.includes("tự tạo")) ||
+          tags.some(t => t.includes("xiếc việt"))
+        );
+        if (isOldMoShow) return false;
+
+        return (
+          item.id !== "media-ao-show-1" && 
+          item.id !== "media-lang-toi-bamboo" &&
+          !titleLower.includes("à ố") &&
+          !titleLower.includes("làng tôi")
+        );
+      });
+
+      if (filtered.length !== parsed.length) {
+        localStorage.setItem("pocket_circus_user_media", JSON.stringify(filtered));
+      }
+      return filtered;
     } catch {
       return [];
     }
@@ -188,7 +208,19 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
 
   // Exclude deleted media items
   const visibleDefaultMedia = MODERN_CIRCUS_MEDIA.filter(item => !deletedMediaIds.includes(item.id));
-  const allMediaList = [...userUploadedMedia, ...visibleDefaultMedia];
+  const allMediaList = [...userUploadedMedia, ...visibleDefaultMedia].filter(item => {
+    const titleLower = (item.title || "").toLowerCase();
+    const troupeLower = (item.troupe || "").toLowerCase();
+    const tags = (item.tags || []).map(t => t.toLowerCase());
+
+    const isOldMoShow = titleLower.includes("mơ show") && (
+      troupeLower.includes("tự do") || 
+      troupeLower.includes("independent") ||
+      tags.some(t => t.includes("tự tạo")) ||
+      tags.some(t => t.includes("xiếc việt"))
+    );
+    return !isOldMoShow;
+  });
 
   const filteredMedia = allMediaList.filter((item) => {
     if (selectedCategory === "all") return true;
