@@ -24,34 +24,34 @@ const STORAGE_KEY_MESSAGES = 'gemini_chat_history_v2'
 
 const STARTER_PROMPTS = [
   {
-    icon: '📜',
-    title: 'Lịch sử Cụ Tạ Duy Hiển',
-    prompt: 'NSND Tạ Duy Hiển có vai trò và đóng góp gì cho xiếc Việt Nam?',
-  },
-  {
-    icon: '🎋',
-    title: 'Xiếc Tre À Ố Show',
-    prompt: 'À Ố Show diễn ở đâu tại TP.HCM và sử dụng những đạo cụ gì?',
-  },
-  {
     icon: '🤹',
     title: 'Xiếc đương đại vs truyền thống',
-    prompt: 'Xiếc đương đại khác biệt thế nào so với xiếc truyền thống?',
+    prompt: 'Sự khác biệt giữa xiếc truyền thống và xiếc đương đại?',
   },
   {
-    icon: '🦁',
-    title: 'Xu hướng bảo vệ động vật',
-    prompt: 'Vì sao các chương trình xiếc ngày nay không còn sử dụng động vật?',
+    icon: '⏱️',
+    title: 'Trở thành diễn viên xiếc',
+    prompt: 'Mất bao lâu để trở thành diễn viên xiếc đương đại?',
   },
   {
-    icon: '🏆',
-    title: 'Kỷ lục Quốc Cơ - Quốc Nghiệp',
-    prompt: 'Những kỷ lục Guinness thế giới phi thường của anh em Quốc Cơ - Quốc Nghiệp là gì?',
+    icon: '💪',
+    title: 'Khó khăn & Thách thức',
+    prompt: 'Khó khăn và thách thức nhất của một diễn viên xiếc?',
+  },
+  {
+    icon: '✨',
+    title: 'Giá trị xiếc đương đại',
+    prompt: 'Những yếu tố nào quyết định giá trị nghệ thuật của một tác phẩm xiếc đương đại?',
   },
   {
     icon: '📍',
     title: 'Địa điểm biểu diễn xiếc',
     prompt: 'Các đoàn xiếc Việt Nam thường biểu diễn ở đâu?',
+  },
+  {
+    icon: '🎟️',
+    title: 'Mua vé xem xiếc',
+    prompt: 'mua vé ở đâu',
   },
 ]
 

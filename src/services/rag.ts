@@ -1,10 +1,6 @@
 import rawKnowledgeBase from '../data/rag_knowledge_base.json'
 import type { RAGChunk, RetrievedSource } from '../types/chat'
-import {
-  CIRCUS_VENUES_AND_TICKETS_ANSWER,
-  CIRCUS_VENUES_SOURCE,
-  matchCircusVenuesQuestion,
-} from './predefinedAnswers'
+import { getPredefinedAnswer } from './predefinedAnswers'
 
 const knowledgeBase = rawKnowledgeBase as RAGChunk[]
 
@@ -146,8 +142,9 @@ export function retrieveRelevantChunksLocally(
 ): RetrievedSource[] {
   if (!query.trim() || knowledgeBase.length === 0) return []
 
-  if (matchCircusVenuesQuestion(query)) {
-    return [CIRCUS_VENUES_SOURCE]
+  const predefined = getPredefinedAnswer(query)
+  if (predefined) {
+    return predefined.sources
   }
 
   const terms = query
@@ -209,8 +206,9 @@ export function generateLocalCircusAnswer(
   query: string,
   sources: RetrievedSource[]
 ): string {
-  if (matchCircusVenuesQuestion(query)) {
-    return CIRCUS_VENUES_AND_TICKETS_ANSWER
+  const predefined = getPredefinedAnswer(query)
+  if (predefined) {
+    return predefined.answer
   }
 
   if (sources.length === 0) {

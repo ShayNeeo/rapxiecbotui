@@ -17,6 +17,7 @@ import {
   ExternalLink
 } from "lucide-react";
 import { CHATBOT_AI_URL } from "@/src/lib/constants";
+import { getPredefinedAnswer } from "@/src/services/predefinedAnswers";
 
 interface Message {
   id: string;
@@ -33,46 +34,46 @@ interface CircusChatProps {
 
 const SAMPLE_QUESTIONS = [
   {
-    label: "Lịch sử & Cụ Tạ Duy Hiển",
-    labelEn: "History & Tạ Duy Hiển",
-    prompt: "Xiếc Việt Nam ra đời năm nào và ai là người sáng lập gánh xiếc đầu tiên?",
-    promptEn: "When was Vietnamese circus founded and who established the very first troupe?",
-    icon: "📜",
+    label: "Xiếc đương đại vs truyền thống",
+    labelEn: "Traditional vs Contemporary",
+    prompt: "Sự khác biệt giữa xiếc truyền thống và xiếc đương đại?",
+    promptEn: "What is the difference between traditional and contemporary circus?",
+    icon: "🤹",
   },
   {
-    label: "Các rạp xiếc lớn 3 miền",
-    labelEn: "Venues Across 3 Regions",
-    prompt: "Có những rạp xiếc nào nổi tiếng ở Hà Nội và TP. Hồ Chí Minh? Địa chỉ ở đâu?",
-    promptEn: "What are famous circus theaters in Hanoi and Ho Chi Minh City? Where are their locations?",
+    label: "Trở thành diễn viên xiếc",
+    labelEn: "Circus Artist Training",
+    prompt: "Mất bao lâu để trở thành diễn viên xiếc đương đại",
+    promptEn: "How long does it take to become a contemporary circus artist?",
+    icon: "⏱️",
+  },
+  {
+    label: "Khó khăn & Thách thức",
+    labelEn: "Artist Challenges",
+    prompt: "Khó khăn và thách thức nhất của một diễn viên xiếc?",
+    promptEn: "What are the biggest challenges faced by a circus performer?",
+    icon: "💪",
+  },
+  {
+    label: "Giá trị xiếc đương đại",
+    labelEn: "Contemporary Circus Value",
+    prompt: "Những yếu tố nào quyết định giá trị nghệ thuật của một tác phẩm xiếc đương đại?",
+    promptEn: "What factors determine the artistic value of a contemporary circus work?",
+    icon: "✨",
+  },
+  {
+    label: "Địa điểm biểu diễn xiếc",
+    labelEn: "Performance Venues",
+    prompt: "Các đoàn xiếc Việt Nam thường biểu diễn ở đâu?",
+    promptEn: "Where do Vietnamese circus troupes usually perform?",
     icon: "📍",
   },
   {
-    label: "Kỷ lục Quốc Cơ - Quốc Nghiệp",
-    labelEn: "Quốc Cơ - Quốc Nghiệp Records",
-    prompt: "Những kỷ lục Guinness thế giới phi thường của anh em Quốc Cơ - Quốc Nghiệp là gì?",
-    promptEn: "What extraordinary Guinness World Records do brothers Quốc Cơ and Quốc Nghiệp hold?",
-    icon: "🏆",
-  },
-  {
-    label: "Nghệ thuật Xiếc Tre",
-    labelEn: "Contemporary Bamboo Circus",
-    prompt: "Xiếc tre đương đại Việt Nam như À Ố Show, Làng Tôi có điểm gì độc đáo khiến thế giới thán phục?",
-    promptEn: "What makes Vietnamese contemporary bamboo circus like À Ố Show and Teh Dar so unique?",
-    icon: "🎋",
-  },
-  {
-    label: "Giá vé & Kinh nghiệm xem",
-    labelEn: "Tickets & Best Seats",
-    prompt: "Giá vé xem xiếc hiện nay khoảng bao nhiêu và nên chọn chỗ ngồi nào đẹp cho gia đình?",
-    promptEn: "What is the typical circus ticket price and which seats provide the best view for families?",
+    label: "Mua vé xem xiếc",
+    labelEn: "Tickets & Booking",
+    prompt: "mua vé ở đâu",
+    promptEn: "Where can I buy circus tickets?",
     icon: "🎟️",
-  },
-  {
-    label: "Xu hướng Xiếc Thú",
-    labelEn: "Animal Welfare Transition",
-    prompt: "Xiếc thú tại Việt Nam hiện nay đang chuyển dịch như thế nào để bảo vệ động vật hoang dã?",
-    promptEn: "How is Vietnamese circus transitioning away from wild animals toward humane acrobatics?",
-    icon: "🦁",
   },
 ];
 
@@ -155,6 +156,24 @@ export const CircusChat: React.FC<CircusChatProps> = ({ onBack, onUnlockBadge })
 
     if (onUnlockBadge) {
       onUnlockBadge("circus-scholar");
+    }
+
+    // Predefined exact answers for circus queries
+    const predefined = getPredefinedAnswer(query);
+    if (predefined) {
+      setTimeout(() => {
+        const assistantMessage: Message = {
+          id: "assistant-" + Date.now(),
+          role: "assistant",
+          content: predefined.answer,
+          timestamp: new Date().toLocaleTimeString(isEn ? "en-US" : "vi-VN", { hour: "2-digit", minute: "2-digit" }),
+          source: "gemini",
+        };
+        setMessages((prev) => [...prev, assistantMessage]);
+        setIsLoading(false);
+        circusAudio.playBambooStep();
+      }, 250);
+      return;
     }
 
     try {
