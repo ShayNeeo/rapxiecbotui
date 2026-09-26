@@ -78,6 +78,11 @@ const STARTER_PROMPTS = [
     title: 'Độ tuổi & Khán giả phù hợp',
     prompt: 'Xiếc phù hợp với tệp khán giả nào?',
   },
+  {
+    icon: '🎋',
+    title: 'Đạo cụ truyền thống phổ biến',
+    prompt: 'Có những đạo cụ truyền thống nào phổ biến trong xiếc?',
+  },
 ]
 
 const getCurrentTimestamp = () => Date.now()

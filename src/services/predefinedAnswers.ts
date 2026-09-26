@@ -144,6 +144,27 @@ export const CIRCUS_AUDIENCE_AGE_ANSWER = `Xiếc ngày nay là một loại hì
 Xiếc bao trùm rất nhiều thứ, không chỉ đơn thuần như xiếc truyền thống ngày xưa.`
 
 /**
+ * ==============================================================================
+ * CÂU TRẢ LỜI CỐ ĐỊNH 12: ĐẠO CỤ TRUYỀN THỐNG VÀ PHỔ BIẾN TRONG XIẾC
+ * ==============================================================================
+ */
+export const CIRCUS_PROPS_ANSWER = `Các loại đạo cụ phổ biến trong nghệ thuật xiếc:
+
+🎋 **Tre, nứa:**
+Đây là đạo cụ cốt lõi trong nhiều vở xiếc đương đại Việt Nam (như À Ố Show), được biến tấu thành cột, thuyền, thúng hoặc giàn giáo để diễn viên leo trèo và nhào lộn.
+
+🧺 **Vật dụng đời thường:**
+Thúng, mẹt, quang gánh, chiếu, hay các vật dụng lao động nông nghiệp được cách điệu thành công cụ kể chuyện.
+
+⚙️ **Thiết bị chuyển động mới:**
+Các cấu trúc khung sắt độc lạ, vòng tròn khổng lồ, dây lụa treo hoặc các khối hình học tối giản được thiết kế riêng theo ý đồ của từng đạo diễn và nghệ sĩ.
+
+🎬 **Tham khảo các vở diễn nghệ thuật xiếc đương đại sử dụng đạo cụ tại đây:**
+• À Ố SHOW: https://youtu.be/gT8aKTdl60Q?si=zvA8EIiKjPkVLmAj
+• Vùng Đất Kỳ Bí: https://youtu.be/8xG2LWSfTBQ?si=uvwLanUx9cgnptTk
+• MƠ SHOW: https://youtu.be/4Tk5-QjyLr0?si=DetX7vEW9YLB353W`
+
+/**
  * Chuẩn hóa chuỗi tiếng Việt không dấu, loại bỏ ký tự đặc biệt để so khớp chính xác
  */
 export function normalizeVietnamese(str: string): string {
@@ -685,6 +706,52 @@ export function matchCircusAudienceAgeQuestion(query: string): boolean {
   return false
 }
 
+/**
+ * 12. Khớp câu hỏi: Có những đạo cụ truyền thống nào phổ biến trong xiếc / đạo cụ thường sử dụng
+ */
+export function matchCircusPropsQuestion(query: string): boolean {
+  const norm = normalizeVietnamese(query)
+  if (!norm) return false
+
+  const exactPatterns = [
+    'co nhung dao cu truyen thong nao pho bien trong xiec',
+    'nhung dao cu truyen thong nao pho bien trong xiec',
+    'dao cu truyen thong nao pho bien trong xiec',
+    'dao cu truyen thong pho bien trong xiec',
+    'dao cu thuong su dung trong xiec',
+    'dao cu thuong dung trong xiec',
+    'dao cu su dung trong xiec',
+    'dao cu pho bien trong xiec',
+    'cac loai dao cu pho bien trong xiec',
+    'cac loai dao cu pho bien',
+    'dao cu pho bien',
+    'dao cu trong xiec',
+    'dao cu xiec',
+    'dao cu xiec duong dai',
+    'dao cu bieu dien xiec',
+    'xiec thuong dung dao cu gi',
+    'xiec su dung dao cu gi',
+    'xiec dung dao cu gi',
+    'co nhung dao cu nao trong xiec',
+  ]
+
+  for (const pattern of exactPatterns) {
+    if (norm === pattern || norm.includes(pattern)) {
+      return true
+    }
+  }
+
+  const hasProps = norm.includes('dao cu')
+  const hasCircus = norm.includes('xiec') || norm.includes('a o show') || norm.includes('mo show')
+  const hasContext = norm.includes('truyen thong') || norm.includes('pho bien') || norm.includes('su dung') || norm.includes('dung') || norm.includes('loai')
+
+  if (hasProps && (hasCircus || hasContext)) {
+    return true
+  }
+
+  return false
+}
+
 export const CIRCUS_VENUES_SOURCE: RetrievedSource = {
   id: 'circus-venues-and-tickets-official',
   title: 'Địa điểm biểu diễn và hướng dẫn mua vé các Rạp Xiếc Việt Nam',
@@ -771,6 +838,14 @@ export const CIRCUS_AUDIENCE_AGE_SOURCE: RetrievedSource = {
   category: 'knowledge',
   similarity: 1.0,
   content: CIRCUS_AUDIENCE_AGE_ANSWER,
+}
+
+export const CIRCUS_PROPS_SOURCE: RetrievedSource = {
+  id: 'circus-props-traditional-modern-official',
+  title: 'Các loại đạo cụ truyền thống và hiện đại phổ biến trong xiếc',
+  category: 'knowledge',
+  similarity: 1.0,
+  content: CIRCUS_PROPS_ANSWER,
 }
 
 /**
@@ -860,7 +935,15 @@ export function getPredefinedAnswer(query: string): {
     }
   }
 
-  // 11. Nhóm Địa điểm & Mua vé
+  // 11. Nhóm Đạo cụ phổ biến trong xiếc
+  if (matchCircusPropsQuestion(query)) {
+    return {
+      answer: CIRCUS_PROPS_ANSWER,
+      sources: [CIRCUS_PROPS_SOURCE],
+    }
+  }
+
+  // 12. Nhóm Địa điểm & Mua vé
   if (matchCircusVenuesQuestion(query)) {
     return {
       answer: CIRCUS_VENUES_AND_TICKETS_ANSWER,

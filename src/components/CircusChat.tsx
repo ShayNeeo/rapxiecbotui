@@ -18,6 +18,8 @@ import {
 } from "lucide-react";
 import { CHATBOT_AI_URL } from "@/src/lib/constants";
 import { getPredefinedAnswer } from "@/src/services/predefinedAnswers";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface Message {
   id: string;
@@ -109,6 +111,13 @@ const SAMPLE_QUESTIONS = [
     prompt: "Xiếc phù hợp với tệp khán giả nào?",
     promptEn: "Which audience age group is circus suitable for?",
     icon: "👥",
+  },
+  {
+    label: "Đạo cụ truyền thống phổ biến",
+    labelEn: "Traditional Circus Props",
+    prompt: "Có những đạo cụ truyền thống nào phổ biến trong xiếc?",
+    promptEn: "What are the common traditional props in circus?",
+    icon: "🎋",
   },
 ];
 
@@ -418,8 +427,42 @@ export const CircusChat: React.FC<CircusChatProps> = ({ onBack, onUnlockBadge })
                   </div>
 
                   {/* Body Content */}
-                  <div className="text-xs sm:text-sm leading-relaxed whitespace-pre-wrap font-sans">
-                    {message.content}
+                  <div className="text-xs sm:text-sm leading-relaxed font-sans">
+                    {isUser ? (
+                      <p className="whitespace-pre-wrap">{message.content}</p>
+                    ) : (
+                      <Markdown
+                        remarkPlugins={[remarkGfm]}
+                        components={{
+                          p({ children }) {
+                            return <p className="mb-2.5 last:mb-0 leading-relaxed whitespace-pre-line">{children}</p>;
+                          },
+                          a({ href, children }) {
+                            return (
+                              <a
+                                href={href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="font-semibold text-red-700 underline decoration-amber-400 hover:text-red-900 transition-colors break-all"
+                              >
+                                {children}
+                              </a>
+                            );
+                          },
+                          strong({ children }) {
+                            return <strong className="font-bold text-neutral-900">{children}</strong>;
+                          },
+                          ul({ children }) {
+                            return <ul className="list-disc pl-4 space-y-1 mb-2.5">{children}</ul>;
+                          },
+                          li({ children }) {
+                            return <li className="leading-relaxed">{children}</li>;
+                          },
+                        }}
+                      >
+                        {message.content}
+                      </Markdown>
+                    )}
                   </div>
 
                   {/* Copy Action Button (on assistant messages) */}
