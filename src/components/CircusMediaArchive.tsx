@@ -1,6 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useLanguage } from "@/src/context/LanguageContext";
 import { circusAudio } from "@/src/utils/audio";
+import duNon4NuImg from "@/src/assets/images/du_non_4_nu_silver_idol.jpg";
+import vungDatKyBiImg1 from "@/src/assets/images/vung_dat_ky_bi_thap_nguoi_1.jpg";
+import vungDatKyBiImg2 from "@/src/assets/images/vung_dat_ky_bi_khong_gian_2.jpg";
+import khaiMacTaiNangImg from "@/src/assets/images/khai_mac_tai_nang_xiec_du_non_ao_dai.jpg";
+import cauBeRungXanhImg from "@/src/assets/images/cau_be_tro_ve_tu_rung_xanh.jpg";
 import { Button } from "@/src/components/ui/button";
 import { 
   Film, 
@@ -15,6 +20,7 @@ import {
   Volume2, 
   VolumeX, 
   Check,
+  ChevronLeft,
   ChevronRight,
   ArrowLeft,
   Filter,
@@ -39,8 +45,11 @@ export interface MediaItem {
   troupe: string;
   category: 'bamboo' | 'acrobatics' | 'aerial' | 'backstage';
   thumbnail: string;
+  galleryImages?: string[];
   videoUrl?: string;
   driveUrl?: string;
+  articleUrl?: string;
+  articleSource?: string;
   duration?: string;
   description: string;
   descriptionEn: string;
@@ -50,6 +59,67 @@ export interface MediaItem {
 }
 
 export const MODERN_CIRCUS_MEDIA: MediaItem[] = [
+  {
+    id: "media-cau-be-tro-ve-tu-rung-xanh-baovanhoa",
+    type: "image",
+    title: "Xiếc Việt kể chuyện Trung thu bằng 'Cậu bé trở về từ rừng xanh'",
+    titleEn: "Vietnamese Circus Mid-Autumn Tale: 'The Boy Returning from the Green Jungle'",
+    troupe: "Liên Đoàn Xiếc Việt Nam",
+    category: "acrobatics",
+    thumbnail: cauBeRungXanhImg,
+    articleUrl: "https://baovanhoa.vn/nghe-thuat/xiec-viet-ke-chuyen-trung-thu-bang-cau-be-tro-ve-tu-rung-xanh-170335.html",
+    articleSource: "Báo Văn Hóa",
+    year: "2024",
+    tags: ["Cậu Bé Rừng Xanh", "Xiếc Trung Thu", "Liên Đoàn Xiếc", "Rạp Xiếc Trung Ương"],
+    description: "Vở kịch xiếc 'Cậu bé trở về từ rừng xanh' do Liên đoàn Xiếc Việt Nam công diễn tại Rạp Xiếc Trung ương dịp Tết Trung thu. Tác phẩm dàn dựng kỳ công, kết hợp xiếc nhào lộn, uốn dẻo, xiếc thú vui nhộn và hiệu ứng sân khấu huyền ảo, truyền tải thông điệp nhân văn về tình yêu gia đình và bảo vệ thiên nhiên muôn loài.",
+    descriptionEn: "The circus spectacle 'The Boy Returning from the Green Jungle', presented by the Vietnam Circus Federation at the Central Circus Arena for Mid-Autumn Festival, combines acrobatics, contortion, animal acts, and magical staging to celebrate family bonds and nature conservation."
+  },
+  {
+    id: "media-vung-dat-ky-bi-le-ich-dien-sggp",
+    type: "image",
+    title: "Vở đại vũ kịch xiếc 'Vùng Đất Kỳ Bí' (Nhà hát Phương Nam) - Đột phá xiếc TP.HCM",
+    titleEn: "'The Mystic Land' Grand Circus Spectacle (Phuong Nam Theatre) - A Breakthrough for HCMC Circus",
+    troupe: "Nhà Hát Nghệ Thuật Phương Nam",
+    category: "acrobatics",
+    thumbnail: vungDatKyBiImg1,
+    galleryImages: [vungDatKyBiImg1, vungDatKyBiImg2],
+    articleUrl: "https://www.sggp.org.vn/dao-dien-nsut-le-ich-dien-buoc-dem-cho-phat-trien-xiec-tphcm-post784148.html",
+    articleSource: "Báo SGGP",
+    year: "2025",
+    tags: ["Vùng Đất Kỳ Bí", "Nhà Hát Phương Nam", "NSƯT Lê Ích Diễn", "Xiếc TP.HCM", "Bộ Ảnh Sân Khấu"],
+    description: "Vở đại vũ kịch xiếc 'Vùng Đất Kỳ Bí' do Nhà hát Nghệ thuật Phương Nam dàn dựng dưới sự chỉ đạo của đạo diễn - NSƯT Lê Ích Diễn đã tạo nên hiện tượng 'cháy vé' tại TP.HCM. Tác phẩm kết hợp ngoạn mục giữa kỹ thuật xiếc thăng bằng tháp người đỉnh cao, âm thanh ánh sáng kỳ ảo và múa rối khổng lồ, mở ra bước tiến mới cho nghệ thuật xiếc đương đại thành phố.",
+    descriptionEn: "The grand circus spectacle 'The Mystic Land', produced by Phuong Nam Theatre under Director - Meritorious Artist Le Ich Dien, became a sold-out phenomenon in Ho Chi Minh City. Blending towering human pyramid acrobatics, mystical lighting, and colossal puppetry, it marks a breakthrough for contemporary circus art."
+  },
+  {
+    id: "media-khai-mac-tai-nang-xiec-2018-laodong",
+    type: "image",
+    title: "Nghẹt thở màn khai mạc Đu nón kết hợp Áo dài - Cuộc thi Tài năng Diễn viên Xiếc Toàn quốc",
+    titleEn: "Breathtaking Opening: Aerial Conical Hat & Traditional Ao Dai - National Circus Talent Contest",
+    troupe: "Liên Đoàn Xiếc Việt Nam",
+    category: "aerial",
+    thumbnail: khaiMacTaiNangImg,
+    articleUrl: "https://laodong.vn/van-hoa/nghet-tho-truoc-man-khai-mac-cuoc-thi-tai-nang-dien-vien-xiec-644910.ldo",
+    articleSource: "Báo Lao Động",
+    year: "2018",
+    tags: ["Tài Năng Xiếc", "Đu Nón Lá", "Áo Dài", "Khai Mạc", "Liên Đoàn Xiếc"],
+    description: "Đêm khai mạc mãn nhãn của Cuộc thi Tài năng Diễn viên Xiếc Toàn quốc mở màn bằng tiết mục đu nón lá trên không kết hợp cùng tà áo dài truyền thống thướt tha và dàn múa nón hoành tráng trên đấu trường xiếc tròn rực rỡ sắc màu.",
+    descriptionEn: "The spectacular opening night of the National Circus Talent Contest captivated audiences with an aerial conical hat performance harmonized with traditional Vietnamese Ao Dai and vibrant round arena choreography."
+  },
+  {
+    id: "media-du-non-4-nu-giai-bac-the-gioi",
+    type: "image",
+    title: "Màn 'Đu nón 4 nữ' đoạt giải Bạc tại Liên hoan Xiếc Thế giới IDOL (Moskva)",
+    titleEn: "Silver Award '4-Female Conical Hat Aerial Act' at IDOL World Circus Festival (Moscow)",
+    troupe: "Liên Đoàn Xiếc Việt Nam",
+    category: "aerial",
+    thumbnail: duNon4NuImg,
+    articleUrl: "https://vnexpress.net/man-du-non-4-nu-doat-giai-bac-tai-lien-hoan-xiec-the-gioi-4773445.html",
+    articleSource: "VnExpress",
+    year: "2024",
+    tags: ["Đu Nón 4 Nữ", "Giải Bạc Thế Giới", "Liên Đoàn Xiếc", "IDOL Moskva"],
+    description: "Tiết mục 'Đu nón 4 nữ' của Liên đoàn Xiếc Việt Nam xuất sắc giành giải Bạc danh giá tại Liên hoan Xiếc Thế giới IDOL 2024 ở Moskva (Nga), tôn vinh vẻ đẹp nón lá truyền thống và bản lĩnh phi thường của nữ nghệ sĩ xiếc Việt trên đấu trường quốc tế.",
+    descriptionEn: "The breathtaking '4-Female Conical Hat' aerial act by the Vietnam Circus Federation won the prestigious Silver Award at the 2024 IDOL World Circus Festival in Moscow, honoring Vietnamese traditional conical hats and world-class aerial artistry."
+  },
   {
     id: "media-quoc-co-quoc-nghiep-got-talent",
     type: "video",
@@ -223,6 +293,7 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
 
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
+  const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -338,6 +409,7 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
 
   const handleOpenItem = (item: MediaItem) => {
     setSelectedMedia(item);
+    setActiveImageIndex(0);
     setIsPlaying(item.type === "video");
     circusAudio.playBambooStep();
   };
@@ -859,11 +931,22 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
                         isVideo ? "bg-red-600" : "bg-emerald-600"
                       }`}>
                         {isVideo ? <Film className="size-3" /> : <Camera className="size-3" />}
-                        <span>{isVideo ? (isEn ? "Short Video" : "Video Ngắn") : (isEn ? "Photo" : "Ảnh")}</span>
+                        <span>
+                          {isVideo 
+                            ? (isEn ? "Short Video" : "Video Ngắn") 
+                            : (item.galleryImages && item.galleryImages.length > 1 
+                                ? `${item.galleryImages.length} ${isEn ? "Photos" : "Ảnh"}` 
+                                : (isEn ? "Photo" : "Ảnh"))}
+                        </span>
                       </span>
                       {item.videoUrl && (item.videoUrl.includes("youtu.be") || item.videoUrl.includes("youtube.com")) && (
                         <span className="px-2 py-0.5 rounded-full bg-red-700 text-white font-bold text-[10px] shadow-sm flex items-center gap-1 border border-red-500">
                           <span>YouTube</span>
+                        </span>
+                      )}
+                      {item.articleUrl && (
+                        <span className="px-2 py-0.5 rounded-full bg-red-700 text-white font-bold text-[10px] shadow-sm flex items-center gap-1 border border-red-500">
+                          <span>{item.articleSource || "Báo chí"}</span>
                         </span>
                       )}
                       {isVideo && item.duration && (
@@ -931,7 +1014,7 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
                         ))}
                       </div>
                       <span className="text-red-700 font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                        <span>{isVideo ? (isEn ? "Play" : "Xem Clip") : (isEn ? "Detail" : "Chi Tiết")}</span>
+                        <span>{isVideo ? (isEn ? "Play" : "Xem Clip") : (isEn ? "View Photo" : "Xem Ảnh")}</span>
                         <ChevronRight className="size-3.5" />
                       </span>
                     </div>
@@ -979,11 +1062,62 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
                     className="size-full object-contain" 
                   />
                 ) : (
-                  <img
-                    src={selectedMedia.thumbnail}
-                    alt={isEn ? selectedMedia.titleEn : selectedMedia.title}
-                    className="size-full object-contain"
-                  />
+                  <div className="relative size-full flex items-center justify-center p-2 bg-neutral-950">
+                    <img
+                      src={(selectedMedia.galleryImages && selectedMedia.galleryImages[activeImageIndex]) || selectedMedia.thumbnail}
+                      alt={isEn ? selectedMedia.titleEn : selectedMedia.title}
+                      className="max-h-[62vh] w-auto max-w-full object-contain rounded-lg shadow-2xl transition-all duration-300"
+                    />
+
+                    {/* Gallery Navigation Controls if Multiple Images */}
+                    {selectedMedia.galleryImages && selectedMedia.galleryImages.length > 1 && (
+                      <>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            circusAudio.playBambooStep();
+                            setActiveImageIndex((prev) => (prev > 0 ? prev - 1 : selectedMedia.galleryImages!.length - 1));
+                          }}
+                          className="absolute left-3 top-1/2 -translate-y-1/2 size-10 rounded-full bg-black/70 hover:bg-red-600 text-white flex items-center justify-center cursor-pointer transition-all border border-white/20 shadow-lg hover:scale-105"
+                          title={isEn ? "Previous image" : "Ảnh trước"}
+                        >
+                          <ChevronLeft className="size-5" />
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            circusAudio.playBambooStep();
+                            setActiveImageIndex((prev) => (prev < selectedMedia.galleryImages!.length - 1 ? prev + 1 : 0));
+                          }}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 size-10 rounded-full bg-black/70 hover:bg-red-600 text-white flex items-center justify-center cursor-pointer transition-all border border-white/20 shadow-lg hover:scale-105"
+                          title={isEn ? "Next image" : "Ảnh tiếp theo"}
+                        >
+                          <ChevronRight className="size-5" />
+                        </button>
+
+                        {/* Pagination indicator and thumbnails */}
+                        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-full bg-black/80 backdrop-blur-md text-xs font-bold text-amber-300 border border-white/20 flex items-center gap-2.5 shadow-xl">
+                          <span>{activeImageIndex + 1} / {selectedMedia.galleryImages.length}</span>
+                          <div className="flex items-center gap-1.5">
+                            {selectedMedia.galleryImages.map((_, idx) => (
+                              <button
+                                key={idx}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  circusAudio.playBambooStep();
+                                  setActiveImageIndex(idx);
+                                }}
+                                className={`size-2.5 rounded-full transition-all cursor-pointer ${
+                                  idx === activeImageIndex ? 'bg-amber-400 scale-125 ring-2 ring-white/60' : 'bg-white/40 hover:bg-white/80'
+                                }`}
+                                title={`${isEn ? "Image" : "Ảnh"} ${idx + 1}`}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
                 )}
 
                 {/* Simulated Interactive Video Overlay if Video without direct blob and not YouTube */}
@@ -1053,6 +1187,31 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
                     </h3>
                   </div>
                   <div className="flex items-center gap-2">
+                    {selectedMedia.articleUrl && (
+                      <a
+                        href={selectedMedia.articleUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-md cursor-pointer"
+                        title={isEn ? `Read article on ${selectedMedia.articleSource || "Newspaper"}` : `Đọc bài viết trên ${selectedMedia.articleSource || "Báo chí"}`}
+                      >
+                        <FileText className="size-3.5" />
+                        <span>{selectedMedia.articleSource || (isEn ? "Article" : "Bài Báo")}</span>
+                        <ExternalLink className="size-3" />
+                      </a>
+                    )}
+                    {selectedMedia.type === "image" && (
+                      <a
+                        href={(selectedMedia.galleryImages && selectedMedia.galleryImages[activeImageIndex]) || selectedMedia.thumbnail}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-3 py-1.5 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-200 hover:text-white font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer border border-neutral-700"
+                        title={isEn ? "Open full resolution photo" : "Mở xem ảnh gốc độ phân giải cao"}
+                      >
+                        <Maximize2 className="size-3.5" />
+                        <span>{isEn ? "HD Photo" : "Xem Ảnh Gốc"}</span>
+                      </a>
+                    )}
                     {selectedMedia.videoUrl && (selectedMedia.videoUrl.includes("youtu.be") || selectedMedia.videoUrl.includes("youtube.com")) && (
                       <a
                         href={selectedMedia.videoUrl}
@@ -1084,7 +1243,7 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
                       className="text-xs cursor-pointer"
                     >
                       <Share2 className="size-3.5 mr-1" />
-                      <span>{copied ? (isEn ? "Link Copied!" : "Đã Sao Chép!") : (isEn ? "Share Clip" : "Chia Sẻ Clip")}</span>
+                      <span>{copied ? (isEn ? "Link Copied!" : "Đã Sao Chép!") : (isEn ? "Share" : "Chia Sẻ")}</span>
                     </Button>
                   </div>
                 </div>
