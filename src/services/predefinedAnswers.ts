@@ -55,21 +55,73 @@ Các bạn có thể xem ví dụ:
  * CÂU TRẢ LỜI CỐ ĐỊNH 3: THỜI GIAN ĐỂ TRỞ THÀNH DIỄN VIÊN XIẾC ĐƯƠNG ĐẠI
  * ==============================================================================
  */
-export const CIRCUS_DURATION_ANSWER = `Tôi bắt đầu học xiếc năm 11 tuổi, sau đó trải qua 5 năm tập luyện để có thể được đứng trên sân khấu, nên tính cả tập luyện và biểu diễn là hơn 20 năm. Lần đầu tiên thì tôi là diễn viên của Đoàn xiếc TPHCM (được hơn 3 năm) sau đó chuyển qua Đoàn xiếc Đương đại (À ố show) ( theo nghệ sĩ xiếc đương đại Nguyễn Khánh Linh)`
+export const CIRCUS_DURATION_ANSWER = `Tôi bắt đầu học xiếc năm 11 tuổi, sau đó trải qua 5 năm tập luyện để có thể được đứng trên sân khấu, nên tính cả tập luyện và biểu diễn là hơn 20 năm.
+
+Lần đầu tiên thì tôi là diễn viên của Đoàn xiếc TPHCM (được hơn 3 năm) sau đó chuyển qua Đoàn xiếc Đương đại (À ố show). (theo nghệ sĩ xiếc đương đại Nguyễn Khánh Linh)`
 
 /**
  * ==============================================================================
  * CÂU TRẢ LỜI CỐ ĐỊNH 4: KHÓ KHĂN VÀ THÁCH THỨC CỦA DIỄN VIÊN XIẾC
  * ==============================================================================
  */
-export const CIRCUS_CHALLENGES_ANSWER = `“Điều khó khăn nhất trong lúc luyện tập là phải khổ luyện khắc nghiệt, nhưng trong công việc thì điều khó khăn nhất là làm việc nhóm. Vì mọi thứ phải thật nhịp nhàng và chính xác, việc mọi người xảy ra xung đột là điều hiển nhiên nhưng mục đích cuối cùng mọi người hướng tới là cùng mục tiêu hoàn thành bài diễn một cách tốt nhất nên mọi thứ sẽ không còn là vấn đề quá lớn nữa” (theo nghệ sĩ xiếc đương đại Nguyễn Khánh Linh)`
+export const CIRCUS_CHALLENGES_ANSWER = `“Điều khó khăn nhất trong lúc luyện tập là phải khổ luyện khắc nghiệt, nhưng trong công việc thì điều khó khăn nhất là làm việc nhóm.
+
+Vì mọi thứ phải thật nhịp nhàng và chính xác, việc mọi người xảy ra xung đột là điều hiển nhiên nhưng mục đích cuối cùng mọi người hướng tới là cùng mục tiêu hoàn thành bài diễn một cách tốt nhất nên mọi thứ sẽ không còn là vấn đề quá lớn nữa.” (theo nghệ sĩ xiếc đương đại Nguyễn Khánh Linh)`
 
 /**
  * ==============================================================================
  * CÂU TRẢ LỜI CỐ ĐỊNH 5: YẾU TỐ QUYẾT ĐỊNH GIÁ TRỊ NGHỆ THUẬT XIẾC ĐƯƠNG ĐẠI
  * ==============================================================================
  */
-export const CIRCUS_FACTORS_ANSWER = `“Là sự kết hợp giữa kỹ thuật biểu diễn và cảm xúc mà tiết mục mang lại. Tôi nhớ có nhiều lần khi xong vở diễn khán giả đã khóc, khóc ở đây là vì vở diễn chạm vào cảm xúc của họ, và điều thứ hai là khi mà vở diễn tái hiện được cái khung cảnh làng quê (À Ố SHOW), thì làm họ gợi nhớ được những ký ức tuổi thơ của mình, cái gì đó chạm được vào thì họ sẽ bật được cái cảm xúc của mình ra, và tất nhiên là kỹ thuật thì cũng rất là quan trọng vì nó phải đủ bất ngờ thì mới gọi là xiếc, nên nếu nói về xiếc đương đại thì cả hai yếu tố trên đều quan trọng, cân bằng với nhau” (trích lời từ phỏng vấn nghệ sĩ xiếc đương đại - Nguyễn Khánh Linh)`
+export const CIRCUS_FACTORS_ANSWER = `“Là sự kết hợp giữa kỹ thuật biểu diễn và cảm xúc mà tiết mục mang lại.
+
+Tôi nhớ có nhiều lần khi xong vở diễn khán giả đã khóc, khóc ở đây là vì vở diễn chạm vào cảm xúc của họ, và điều thứ hai là khi mà vở diễn tái hiện được cái khung cảnh làng quê (À Ố SHOW), thì làm họ gợi nhớ được những ký ức tuổi thơ của mình, cái gì đó chạm được vào thì họ sẽ bật được cái cảm xúc của mình ra.
+
+Và tất nhiên là kỹ thuật thì cũng rất là quan trọng vì nó phải đủ bất ngờ thì mới gọi là xiếc, nên nếu nói về xiếc đương đại thì cả hai yếu tố trên đều quan trọng, cân bằng với nhau.” (trích lời từ phỏng vấn nghệ sĩ xiếc đương đại - Nguyễn Khánh Linh)`
+
+/**
+ * ==============================================================================
+ * CÂU TRẢ LỜI CỐ ĐỊNH 6: KỸ THUẬT KHÓ CÓ QUYẾT ĐỊNH MỘT TIẾT MỤC HAY HAY KHÔNG?
+ * ==============================================================================
+ */
+export const CIRCUS_HARD_SKILL_ANSWER = `Có nhưng chưa đủ.
+
+Để có một màn biểu diễn nghệ thuật xiếc đương đại hay thì phải kết hợp giữa kỹ thuật biểu diễn và cảm xúc mà tiết mục mang lại.
+
+“Tôi nhớ có nhiều lần khi xong vở diễn khán giả đã khóc, khóc ở đây là vì vở diễn chạm vào cảm xúc của họ, và điều thứ hai là khi mà vở diễn tái hiện được cái khung cảnh làng quê (À Ố SHOW), thì làm họ gợi nhớ được những ký ức tuổi thơ của mình.” (theo nghệ sĩ xiếc đương đại - Nguyễn Khánh Linh)`
+
+/**
+ * ==============================================================================
+ * CÂU TRẢ LỜI CỐ ĐỊNH 7: XIẾC VIỆT NAM CHỊU ẢNH HƯỞNG TỪ NỀN VĂN HÓA NÀO?
+ * ==============================================================================
+ */
+export const CIRCUS_CULTURAL_INFLUENCE_ANSWER = `Nền nghệ thuật xiếc lâu đời như Nga, Trung Quốc…
+
+Nhưng trải qua hơn 100 năm, xiếc đã được nhiều thế hệ diễn viên, nghệ sĩ, đạo diễn của nước nhà bồi đắp bằng nhiều màu sắc, đường nét mang đặc trưng của văn hóa dân tộc.`
+
+/**
+ * ==============================================================================
+ * CÂU TRẢ LỜI CỐ ĐỊNH 8: XIẾC BẮT ĐẦU TỪ KHI NÀO / TỪ ĐÂU?
+ * ==============================================================================
+ */
+export const CIRCUS_ORIGIN_ANSWER = `Vào thế kỷ XVIII, tại châu Âu, xiếc bắt đầu bước sang một giai đoạn mới. Philip Astley - một nghệ sĩ cưỡi ngựa người Anh, được xem là một trong những người đặt nền móng cho xiếc hiện đại.
+
+Năm 1768, ông bắt đầu biểu diễn tại London với những màn cưỡi ngựa đầy kỹ thuật trong một vòng diễn hình tròn.
+
+Sau đó, Astley đưa thêm các tiết mục như nhào lộn, tung hứng, đi dây và hài kịch vào chương trình, dần tạo nên một hình thức biểu diễn tổng hợp rất gần với xiếc mà chúng ta biết ngày nay. 🎠🎭`
+
+/**
+ * ==============================================================================
+ * CÂU TRẢ LỜI CỐ ĐỊNH 9: TỪNG GIAI ĐOẠN PHÁT TRIỂN TRONG XIẾC VIỆT NAM
+ * ==============================================================================
+ */
+export const CIRCUS_STAGES_VN_ANSWER = `Trước sự kiện của Đoàn xiếc phương Tây ồ ạt vào Việt Nam, các nghệ nhân xiếc trong nước đã tập hợp nhau lại mở lò luyện xiếc, góp vốn mở các gánh xiếc như gánh xiếc Năm Tú ở Mỹ Tho (1918), Sáu Súng ở Nam Bộ (1919), gánh xiếc Tân Nam Việt ở Sài Gòn (1922), ở Hà Nội có xiếc Việt Nam của Tạ Duy Hiển (1922), Xiếc Đại Nam của Lưu Khánh Vân (1924),... và nhiều tốp xiếc nhỏ khác rải rác tại miền Trung.
+
+Dần dần, các gánh xiếc được mở rộng nhiều hơn. Ngày 05/12/1922, cụ Tạ Duy Hiển - cụ tổ ngành Xiếc Việt Nam đã công diễn tại chợ Hàng Da, mở đầu cho trào lưu xiếc bản địa có quy mô lớn với dàn diễn viên đông đảo cùng đoàn xiếc thú gồm: Voi, hổ, gấu, ngựa, dê, chó, khỉ,... báo hiệu sự bắt đầu cho một thời kỳ mới của xiếc Việt Nam – Xiếc Việt Nam hiện đại.
+
+Ngày nay, với sự phát triển của ngành xiếc, xiếc hiện nay không chỉ dừng lại ở xiếc thú, nhào lộn, tung hứng... mà đã được biến tấu thành một sân khấu xiếc kết hợp với múa rối (MƠ SHOW), các vật dụng gắn liền với văn hóa đậm chất Việt Nam (À Ố SHOW)... cùng với kịch bản được dàn dựng tỉ mỉ, chi tiết, được thổi hồn vào những câu chuyện đời thường sâu lắng chạm đến trái tim khán giả.
+
+Và đó gọi là Nghệ thuật xiếc đương đại Việt Nam.`
 
 /**
  * Chuẩn hóa chuỗi tiếng Việt không dấu, loại bỏ ký tự đặc biệt để so khớp chính xác
@@ -294,6 +346,11 @@ export function matchCircusFactorsQuestion(query: string): boolean {
   const norm = normalizeVietnamese(query)
   if (!norm) return false
 
+  // Không khớp nếu đang hỏi về kỹ thuật khó (nhóm 6)
+  if (norm.includes('ky thuat kho') || norm.includes('tiet muc hay')) {
+    return false
+  }
+
   const exactPatterns = [
     'nhung yeu to nao quyet dinh gia tri nghe thuat cua mot tac pham xiec duong dai',
     'yeu to nao quyet dinh gia tri nghe thuat cua mot tac pham xiec duong dai',
@@ -327,6 +384,188 @@ export function matchCircusFactorsQuestion(query: string): boolean {
     (norm.includes('xiec') && norm.includes('trinh dien'))
 
   if (hasFactors && hasContemporary && norm.includes('xiec')) {
+    return true
+  }
+
+  return false
+}
+
+/**
+ * 6. Khớp câu hỏi: Kỹ thuật khó có quyết định một tiết mục hay hay không?
+ */
+export function matchCircusHardSkillQuestion(query: string): boolean {
+  const norm = normalizeVietnamese(query)
+  if (!norm) return false
+
+  const exactPatterns = [
+    'ky thuat kho co quyet dinh mot tiet muc hay hay khong',
+    'ky thuat kho co quyet dinh mot tiet muc hay khong',
+    'ky thuat kho co quyet dinh tiet muc hay khong',
+    'ky thuat kho co quyet dinh tiet muc hay hay khong',
+    'ky thuat co quyet dinh mot tiet muc hay hay khong',
+    'ky thuat co quyet dinh mot tiet muc hay khong',
+    'ky thuat co quyet dinh tiet muc hay khong',
+    'ky thuat kho co lam nen tiet muc hay khong',
+    'tiet muc hay co phu thuoc vao ky thuat kho khong',
+    'tiet muc hay co can ky thuat kho khong',
+    'ky thuat kho trong xiec',
+    'ky thuat kho co quyet dinh',
+  ]
+
+  for (const pattern of exactPatterns) {
+    if (norm === pattern || norm.includes(pattern)) {
+      return true
+    }
+  }
+
+  const hasHardSkill = norm.includes('ky thuat kho') || norm.includes('ky thuat')
+  const hasGoodShow =
+    norm.includes('tiet muc hay') ||
+    norm.includes('man trinh dien hay') ||
+    (norm.includes('quyet dinh') && norm.includes('hay'))
+
+  if (hasHardSkill && hasGoodShow) {
+    return true
+  }
+
+  return false
+}
+
+/**
+ * 7. Khớp câu hỏi: Xiếc Việt Nam chịu ảnh hưởng từ những nền văn hóa nào?
+ */
+export function matchCircusCulturalInfluenceQuestion(query: string): boolean {
+  const norm = normalizeVietnamese(query)
+  if (!norm) return false
+
+  const exactPatterns = [
+    'xiec viet nam chiu anh huong tu nhung nen van hoa nao',
+    'xiec viet nam chiu anh huong tu nen van hoa nao',
+    'xiec viet nam chiu anh huong boi nen van hoa nao',
+    'xiec viet nam chiu anh huong tu dau',
+    'xiec viet nam chiu anh huong cua nuoc nao',
+    'xiec viet nam chiu anh huong cua nen van hoa nao',
+    'anh huong van hoa den xiec viet nam',
+    'anh huong cua cac nen van hoa den xiec viet nam',
+    'xiec viet nam hoc hoi tu nuoc nao',
+    'xiec viet nam du nhap tu dau',
+  ]
+
+  for (const pattern of exactPatterns) {
+    if (norm === pattern || norm.includes(pattern)) {
+      return true
+    }
+  }
+
+  const hasInfluence = norm.includes('anh huong') || norm.includes('du nhap')
+  const hasCultureOrCountry =
+    norm.includes('van hoa') ||
+    norm.includes('nuoc nao') ||
+    norm.includes('tu dau') ||
+    norm.includes('nga') ||
+    norm.includes('trung quoc')
+
+  if (norm.includes('xiec') && hasInfluence && hasCultureOrCountry) {
+    return true
+  }
+
+  return false
+}
+
+/**
+ * 8. Khớp câu hỏi: Xiếc bắt đầu từ khi nào / xiếc bắt đầu từ đâu
+ */
+export function matchCircusOriginQuestion(query: string): boolean {
+  const norm = normalizeVietnamese(query)
+  if (!norm) return false
+
+  // Tránh nhầm với diễn viên ("Tôi bắt đầu học xiếc lúc 11 tuổi")
+  if (norm.includes('dien vien') || norm.includes('hoc xiec')) {
+    return false
+  }
+
+  const exactPatterns = [
+    'xiec bat dau tu khi nao',
+    'xiec bat dau tu dau',
+    'xiec bat dau khi nao',
+    'xiec bat dau o dau',
+    'xiec ra doi tu khi nao',
+    'xiec ra doi khi nao',
+    'xiec ra doi o dau',
+    'xiec co tu khi nao',
+    'nguon goc cua xiec',
+    'nguon goc xiec',
+    'lich su ra doi cua xiec',
+    'lich su hinh thanh xiec',
+    'xiec the gioi ra doi khi nao',
+    'nguon goc nghe thuat xiec',
+  ]
+
+  for (const pattern of exactPatterns) {
+    if (norm === pattern || norm.includes(pattern)) {
+      return true
+    }
+  }
+
+  const hasOriginAction =
+    norm.includes('bat dau') ||
+    norm.includes('ra doi') ||
+    norm.includes('nguon goc') ||
+    norm.includes('hinh thanh')
+  const hasTimeOrPlace =
+    norm.includes('khi nao') ||
+    norm.includes('tu dau') ||
+    norm.includes('o dau') ||
+    norm.includes('nam nao') ||
+    norm.includes('the ky')
+
+  if (norm.includes('xiec') && hasOriginAction && hasTimeOrPlace && !norm.includes('viet nam')) {
+    return true
+  }
+
+  return false
+}
+
+/**
+ * 9. Khớp câu hỏi: Từng giai đoạn phát triển trong xiếc Việt Nam / xiếc phát triển như thế nào ở Việt Nam
+ */
+export function matchCircusStagesVNQuestion(query: string): boolean {
+  const norm = normalizeVietnamese(query)
+  if (!norm) return false
+
+  const exactPatterns = [
+    'tung giai doan phat trien trong xiec viet nam',
+    'tung giai doan phat trien cua xiec viet nam',
+    'cac giai doan phat trien trong xiec viet nam',
+    'cac giai doan phat trien cua xiec viet nam',
+    'cac giai doan cua xiec viet nam',
+    'cac giai doan xiec viet nam',
+    'xiec phat trien nhu the nao o viet nam',
+    'xiec viet nam phat trien nhu the nao',
+    'lich su phat trien cua xiec viet nam',
+    'lich su phat trien xiec viet nam',
+    'tien trinh phat trien cua xiec viet nam',
+    'tien trinh phat trien xiec viet nam',
+    'qua trinh phat trien cua xiec viet nam',
+    'qua trinh phat trien xiec viet nam',
+  ]
+
+  for (const pattern of exactPatterns) {
+    if (norm === pattern || norm.includes(pattern)) {
+      return true
+    }
+  }
+
+  const hasStage =
+    norm.includes('giai doan') ||
+    norm.includes('tien trinh') ||
+    norm.includes('qua trinh') ||
+    norm.includes('lich su phat trien')
+  const hasDevelopVN =
+    norm.includes('phat trien') &&
+    (norm.includes('viet nam') || norm.includes('o viet nam') || norm.includes('nhu the nao'))
+
+  if (norm.includes('xiec') && (hasStage || hasDevelopVN)) {
     return true
   }
 
@@ -373,6 +612,38 @@ export const CIRCUS_FACTORS_SOURCE: RetrievedSource = {
   content: CIRCUS_FACTORS_ANSWER,
 }
 
+export const CIRCUS_HARD_SKILL_SOURCE: RetrievedSource = {
+  id: 'circus-hard-skill-decision-official',
+  title: 'Kỹ thuật khó có quyết định một tiết mục hay hay không',
+  category: 'artist-interview',
+  similarity: 1.0,
+  content: CIRCUS_HARD_SKILL_ANSWER,
+}
+
+export const CIRCUS_CULTURAL_INFLUENCE_SOURCE: RetrievedSource = {
+  id: 'circus-cultural-influence-official',
+  title: 'Xiếc Việt Nam và ảnh hưởng từ các nền văn hóa',
+  category: 'history',
+  similarity: 1.0,
+  content: CIRCUS_CULTURAL_INFLUENCE_ANSWER,
+}
+
+export const CIRCUS_ORIGIN_SOURCE: RetrievedSource = {
+  id: 'circus-world-origin-official',
+  title: 'Nguồn gốc và thời điểm ra đời của nghệ thuật xiếc',
+  category: 'history',
+  similarity: 1.0,
+  content: CIRCUS_ORIGIN_ANSWER,
+}
+
+export const CIRCUS_STAGES_VN_SOURCE: RetrievedSource = {
+  id: 'circus-stages-development-vn-official',
+  title: 'Từng giai đoạn phát triển trong xiếc Việt Nam',
+  category: 'history',
+  similarity: 1.0,
+  content: CIRCUS_STAGES_VN_ANSWER,
+}
+
 /**
  * Trả về câu trả lời cố định chính xác 100% nếu câu hỏi người dùng khớp với danh mục định trước
  */
@@ -380,15 +651,47 @@ export function getPredefinedAnswer(query: string): {
   answer: string
   sources: RetrievedSource[]
 } | null {
-  // 1. Nhóm Địa điểm & Mua vé
-  if (matchCircusVenuesQuestion(query)) {
+  // 1. Nhóm Kỹ thuật khó có quyết định tiết mục hay không
+  if (matchCircusHardSkillQuestion(query)) {
     return {
-      answer: CIRCUS_VENUES_AND_TICKETS_ANSWER,
-      sources: [CIRCUS_VENUES_SOURCE],
+      answer: CIRCUS_HARD_SKILL_ANSWER,
+      sources: [CIRCUS_HARD_SKILL_SOURCE],
     }
   }
 
-  // 2. Nhóm Khác biệt xiếc truyền thống vs đương đại
+  // 2. Nhóm Yếu tố quyết định giá trị nghệ thuật xiếc đương đại
+  if (matchCircusFactorsQuestion(query)) {
+    return {
+      answer: CIRCUS_FACTORS_ANSWER,
+      sources: [CIRCUS_FACTORS_SOURCE],
+    }
+  }
+
+  // 3. Nhóm Xiếc Việt Nam chịu ảnh hưởng từ những nền văn hóa nào
+  if (matchCircusCulturalInfluenceQuestion(query)) {
+    return {
+      answer: CIRCUS_CULTURAL_INFLUENCE_ANSWER,
+      sources: [CIRCUS_CULTURAL_INFLUENCE_SOURCE],
+    }
+  }
+
+  // 4. Nhóm Xiếc bắt đầu từ khi nào / xiếc bắt đầu từ đâu
+  if (matchCircusOriginQuestion(query)) {
+    return {
+      answer: CIRCUS_ORIGIN_ANSWER,
+      sources: [CIRCUS_ORIGIN_SOURCE],
+    }
+  }
+
+  // 5. Nhóm Từng giai đoạn phát triển trong xiếc Việt Nam
+  if (matchCircusStagesVNQuestion(query)) {
+    return {
+      answer: CIRCUS_STAGES_VN_ANSWER,
+      sources: [CIRCUS_STAGES_VN_SOURCE],
+    }
+  }
+
+  // 6. Nhóm Khác biệt xiếc truyền thống vs đương đại
   if (matchCircusDiffQuestion(query)) {
     return {
       answer: CIRCUS_DIFF_ANSWER,
@@ -396,7 +699,7 @@ export function getPredefinedAnswer(query: string): {
     }
   }
 
-  // 3. Nhóm Thời gian đào tạo diễn viên xiếc
+  // 7. Nhóm Thời gian đào tạo diễn viên xiếc
   if (matchCircusDurationQuestion(query)) {
     return {
       answer: CIRCUS_DURATION_ANSWER,
@@ -404,7 +707,7 @@ export function getPredefinedAnswer(query: string): {
     }
   }
 
-  // 4. Nhóm Khó khăn & Thách thức
+  // 8. Nhóm Khó khăn & Thách thức
   if (matchCircusChallengesQuestion(query)) {
     return {
       answer: CIRCUS_CHALLENGES_ANSWER,
@@ -412,11 +715,11 @@ export function getPredefinedAnswer(query: string): {
     }
   }
 
-  // 5. Nhóm Yếu tố quyết định giá trị nghệ thuật xiếc đương đại
-  if (matchCircusFactorsQuestion(query)) {
+  // 9. Nhóm Địa điểm & Mua vé
+  if (matchCircusVenuesQuestion(query)) {
     return {
-      answer: CIRCUS_FACTORS_ANSWER,
-      sources: [CIRCUS_FACTORS_SOURCE],
+      answer: CIRCUS_VENUES_AND_TICKETS_ANSWER,
+      sources: [CIRCUS_VENUES_SOURCE],
     }
   }
 

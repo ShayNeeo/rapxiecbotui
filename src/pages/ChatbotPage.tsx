@@ -29,9 +29,29 @@ const STARTER_PROMPTS = [
     prompt: 'Sự khác biệt giữa xiếc truyền thống và xiếc đương đại?',
   },
   {
+    icon: '🎯',
+    title: 'Kỹ thuật khó & Tiết mục hay',
+    prompt: 'Kỹ thuật khó có quyết định một tiết mục hay hay không?',
+  },
+  {
+    icon: '🌏',
+    title: 'Ảnh hưởng văn hóa xiếc',
+    prompt: 'Xiếc Việt Nam chịu ảnh hưởng từ những nền văn hóa nào?',
+  },
+  {
+    icon: '🎪',
+    title: 'Nguồn gốc nghệ thuật xiếc',
+    prompt: 'Xiếc bắt đầu từ khi nào',
+  },
+  {
+    icon: '📜',
+    title: 'Giai đoạn phát triển xiếc Việt',
+    prompt: 'Từng giai đoạn phát triển trong xiếc Việt Nam',
+  },
+  {
     icon: '⏱️',
     title: 'Trở thành diễn viên xiếc',
-    prompt: 'Mất bao lâu để trở thành diễn viên xiếc đương đại?',
+    prompt: 'Mất bao lâu để trở thành diễn viên xiếc đương đại',
   },
   {
     icon: '💪',
@@ -40,18 +60,13 @@ const STARTER_PROMPTS = [
   },
   {
     icon: '✨',
-    title: 'Giá trị xiếc đương đại',
+    title: 'Giá trị nghệ thuật xiếc',
     prompt: 'Những yếu tố nào quyết định giá trị nghệ thuật của một tác phẩm xiếc đương đại?',
   },
   {
     icon: '📍',
-    title: 'Địa điểm biểu diễn xiếc',
+    title: 'Địa điểm biểu diễn & Mua vé',
     prompt: 'Các đoàn xiếc Việt Nam thường biểu diễn ở đâu?',
-  },
-  {
-    icon: '🎟️',
-    title: 'Mua vé xem xiếc',
-    prompt: 'mua vé ở đâu',
   },
 ]
 
