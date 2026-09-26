@@ -63,7 +63,7 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
           <div>
             <div className="flex flex-wrap items-center gap-2">
               <h1 className="font-circus text-base tracking-wide text-amber-300 drop-shadow-sm">
-                Rạp Xiếc Bỏ Túi AI
+                Tư vấn viên AI
               </h1>
               <span className="flex items-center gap-1 rounded-full border border-amber-400/40 bg-red-950/60 px-2.5 py-0.5 text-xs font-medium text-amber-200">
                 <Cpu className="h-3 w-3 text-amber-400" />

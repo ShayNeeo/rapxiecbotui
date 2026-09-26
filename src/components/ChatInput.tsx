@@ -84,7 +84,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
         </div>
 
         <p className="mt-2 text-center text-[11px] font-medium text-amber-200/80">
-          🎪 Rạp Xiếc Bỏ Túi AI • Hỗ trợ bởi RAG Tri Thức Xiếc Việt Nam & Google Gemini
+          🎪 Tư vấn viên AI • Hỗ trợ bởi RAG Tri Thức Xiếc Việt Nam & Google Gemini
         </p>
       </div>
     </div>

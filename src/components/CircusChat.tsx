@@ -377,7 +377,7 @@ export const CircusChat: React.FC<CircusChatProps> = ({ onBack, onUnlockBadge })
                     }`}
                   >
                     <span className="font-bold uppercase tracking-wider">
-                      {isUser ? (isEn ? "You" : "Bạn") : (isEn ? "AI Circus Assistant" : "Trợ Lý Rạp Xiếc Bỏ Túi")}
+                      {isUser ? (isEn ? "You" : "Bạn") : (isEn ? "AI Circus Assistant" : "Tư vấn viên AI")}
                     </span>
                     <span className="opacity-80">{message.timestamp}</span>
                   </div>
