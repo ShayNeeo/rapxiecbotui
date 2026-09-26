@@ -201,6 +201,12 @@
     visibility: visible;
   }
 
+  #circus-ticket-card .no-print,
+  #circus-ticket-card [data-html2canvas-ignore="true"] {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
   #circus-ticket-card {
     position: relative !important;
     display: flex !important;

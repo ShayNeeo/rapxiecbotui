@@ -58,8 +58,15 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
   const activeLogo = OFFICIAL_CIRCUS_LOGO;
   const isCustomLogo = false;
 
-  const [visitorName, setVisitorName] = useState(isEn ? "Circus Art Enthusiast" : "Khán Giả Yêu Xiếc");
+  const [visitorName, setVisitorName] = useState(() => {
+    try {
+      const saved = localStorage.getItem("pocket_circus_visitor_name");
+      if (saved) return saved;
+    } catch {}
+    return isEn ? "Circus Art Enthusiast" : "Khán Giả Yêu Xiếc";
+  });
   const [isEditingName, setIsEditingName] = useState(false);
+  const [tempName, setTempName] = useState(visitorName);
   const [isStamped, setIsStamped] = useState(true);
   const [copied, setCopied] = useState(false);
   const [copiedImage, setCopiedImage] = useState(false);
@@ -482,11 +489,73 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
           <span className="text-[11px] font-bold text-neutral-500 uppercase tracking-wider">
             {isEn ? "HONORARY GUEST" : "KHÁN GIẢ DANH DỰ"}
           </span>
-          <div>
-            <span className="font-circus text-xl sm:text-2xl text-red-900 tracking-wide font-bold">
-              {visitorName}
-            </span>
-          </div>
+          {!isEditingName ? (
+            <div className="flex items-center justify-between gap-3">
+              <span className="font-circus text-xl sm:text-2xl text-red-900 tracking-wide font-bold">
+                {visitorName}
+              </span>
+              <button
+                type="button"
+                onClick={() => {
+                  setTempName(visitorName);
+                  setIsEditingName(true);
+                  circusAudio.playBambooStep();
+                }}
+                className="no-print text-red-900 hover:text-red-700 underline text-xs sm:text-sm font-bold cursor-pointer transition-colors"
+                title={isEn ? "Change ticket guest name" : "Đổi tên khán giả trên vé"}
+                data-html2canvas-ignore="true"
+              >
+                {isEn ? "Change name" : "Đổi tên"}
+              </button>
+            </div>
+          ) : (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const trimmed = tempName.trim();
+                if (trimmed) {
+                  setVisitorName(trimmed);
+                  try {
+                    localStorage.setItem("pocket_circus_visitor_name", trimmed);
+                  } catch {}
+                  circusAudio.playApplause();
+                }
+                setIsEditingName(false);
+              }}
+              className="no-print flex items-center gap-2 pt-0.5"
+              data-html2canvas-ignore="true"
+            >
+              <input
+                type="text"
+                value={tempName}
+                onChange={(e) => setTempName(e.target.value)}
+                autoFocus
+                placeholder={isEn ? "Enter your name..." : "Nhập tên khán giả..."}
+                maxLength={32}
+                className="flex-1 bg-amber-50/90 border-2 border-amber-400 rounded-lg px-2.5 py-1 text-sm font-bold text-neutral-900 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-inner"
+              />
+              <Button
+                type="submit"
+                variant="carnival"
+                size="sm"
+                className="text-xs px-2.5 py-1 h-8 font-bold cursor-pointer"
+              >
+                {isEn ? "Save" : "Lưu"}
+              </Button>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  setTempName(visitorName);
+                  setIsEditingName(false);
+                }}
+                className="text-xs px-2 py-1 h-8 cursor-pointer text-neutral-600 hover:bg-neutral-100"
+              >
+                {isEn ? "Cancel" : "Hủy"}
+              </Button>
+            </form>
+          )}
         </div>
 
         {/* Seat location & Performance date (2 columns) */}
