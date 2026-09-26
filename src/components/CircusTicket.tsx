@@ -5,17 +5,14 @@ import { circusAudio } from "@/src/utils/audio";
 import { useLanguage } from "@/src/context/LanguageContext";
 import confetti from "canvas-confetti";
 import { toPng } from "html-to-image";
-import { jsPDF } from "jspdf";
 import { 
   ArrowLeft, 
-  Printer, 
   Share2, 
   Award, 
   CheckCircle2, 
   Sparkles,
   Ticket as TicketIcon,
   Download,
-  FileText,
   Mail,
   Copy,
   Check,
@@ -187,22 +184,6 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
     }
   };
 
-  const handleDirectPrint = () => {
-    circusAudio.playApplause();
-    confetti({
-      particleCount: 50,
-      spread: 70,
-      origin: { y: 0.6 },
-    });
-    if (isEditingName) {
-      setIsEditingName(false);
-    }
-    // Allow state to settle, then open browser print dialog
-    setTimeout(() => {
-      window.print();
-    }, 120);
-  };
-
   const handleOpenSaveModal = async () => {
     circusAudio.playApplause();
     confetti({
@@ -258,40 +239,6 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
         document.body.removeChild(link);
       }, 120);
     }
-  };
-
-  const handleSavePdfDirect = async () => {
-    circusAudio.playApplause();
-    confetti({
-      particleCount: 50,
-      spread: 70,
-      origin: { y: 0.6 },
-    });
-
-    let currentUrl = ticketImageUrl;
-    if (!currentUrl) {
-      const captured = await captureTicketImage();
-      if (captured) {
-        currentUrl = captured.dataUrl;
-      }
-    }
-
-    if (!currentUrl || !ticketRef.current) return;
-
-    const node = ticketRef.current;
-    const width = node.scrollWidth || node.clientWidth;
-    const height = node.scrollHeight || node.clientHeight;
-    const orientation = width > height ? "landscape" : "portrait";
-
-    const pdf = new jsPDF({
-      orientation,
-      unit: "px",
-      format: [width, height],
-      hotfixes: ["px_scaling"],
-    });
-
-    pdf.addImage(currentUrl, "PNG", 0, 0, width, height);
-    pdf.save(`ve-rap-xiec-bo-tui-${ticketSerial}.pdf`);
   };
 
   const handleSavePhotoDirect = async () => {
@@ -460,31 +407,6 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
               <Download className="size-3.5" />
             )}
             <span>{isEn ? "Save Ticket (.PNG)" : "Lưu Ảnh Vé (.PNG)"}</span>
-          </Button>
-
-          {/* Direct Download PDF Button (1 Page vector PDF) */}
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleSavePdfDirect}
-            disabled={isGenerating}
-            className="inline-flex items-center gap-1.5 bg-white border-amber-300 text-amber-950 hover:bg-amber-100/80 shadow-xs cursor-pointer text-xs sm:text-sm font-semibold"
-            title={isEn ? "Save 1-page PDF file with exact ticket aspect ratio" : "Lưu file PDF trọn vẹn 1 trang đúng tỉ lệ kích thước vé"}
-          >
-            <FileText className="size-3.5 text-red-700" />
-            <span>{isEn ? "Save PDF" : "Lưu File PDF"}</span>
-          </Button>
-
-          {/* Browser Print Button */}
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleDirectPrint}
-            className="inline-flex items-center gap-1.5 bg-white border-amber-300 text-amber-950 hover:bg-amber-100/80 shadow-xs cursor-pointer text-xs sm:text-sm font-semibold"
-            title={isEn ? "Print ticket directly via browser print dialog" : "In vé trực tiếp qua hộp thoại in của trình duyệt"}
-          >
-            <Printer className="size-3.5 text-neutral-700" />
-            <span>{isEn ? "Print" : "In Vé"}</span>
           </Button>
 
           {/* Share Button */}
@@ -856,30 +778,6 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
                 <span>{isEn ? "Save Ticket Photo (.PNG)" : "Lưu Ảnh Vé Vào Thiết Bị (.PNG)"}</span>
               </Button>
 
-              <div className="grid grid-cols-2 gap-2.5">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleSavePdfDirect}
-                  className="flex items-center justify-center gap-1.5 bg-white border-amber-300 text-amber-950 hover:bg-amber-100/80 cursor-pointer text-xs py-2 shadow-xs font-semibold"
-                  title={isEn ? "Save uncropped 1-page PDF" : "Lưu file PDF trọn vẹn 1 trang"}
-                >
-                  <FileText className="size-3.5 text-red-700" />
-                  <span>{isEn ? "Save PDF (.PDF)" : "Lưu File PDF (.PDF)"}</span>
-                </Button>
-
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleDirectPrint}
-                  className="flex items-center justify-center gap-1.5 bg-white border-amber-300 text-amber-950 hover:bg-amber-100/80 cursor-pointer text-xs py-2 shadow-xs font-semibold"
-                  title={isEn ? "Print via browser dialog" : "In vé trực tiếp qua trình duyệt"}
-                >
-                  <Printer className="size-3.5 text-neutral-700" />
-                  <span>{isEn ? "Print Ticket" : "In Vé (Hộp thoại in)"}</span>
-                </Button>
-              </div>
-
               <div className="grid grid-cols-1 gap-2">
                 <Button
                   variant="outline"
@@ -898,7 +796,7 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
 
               <div className="flex flex-col sm:flex-row items-center justify-between gap-2 pt-2 border-t border-amber-200/80 text-xs">
                 <span className="text-neutral-500 text-[11px] text-center sm:text-left">
-                  {isEn ? "💡 Tip: Ticket is scaled to fit cleanly on 1 page (A4 portrait)" : "💡 Mẹo: Vé được căn chỉnh tự động vừa vặn trọn vẹn trên 1 trang A4"}
+                  {isEn ? "💡 Tip: You can save high-definition ticket image or copy it directly" : "💡 Mẹo: Bạn có thể lưu ảnh vé chất lượng cao hoặc sao chép ảnh nhanh"}
                 </span>
 
                 <button
