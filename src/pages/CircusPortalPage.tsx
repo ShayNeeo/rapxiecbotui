@@ -44,8 +44,8 @@ const INITIAL_BADGES: CircusBadge[] = [
     name: 'AI Chatbot Companion',
     vietnameseName: 'Bạn Đồng Hành Chatbot AI',
     icon: '🤖',
-    description: 'Bấm vào Chatbot AI để trò chuyện cùng Nghệ sĩ xiếc trên Poe',
-    descriptionEn: 'Click the AI Chatbot to chat with the Circus Artist on Poe',
+    description: 'Bấm vào Chatbot AI để trò chuyện và khám phá nghệ thuật xiếc',
+    descriptionEn: 'Click the AI Chatbot to chat and explore circus arts',
     unlocked: false,
   },
   {
@@ -473,7 +473,7 @@ export default function App() {
               rel="noopener noreferrer"
               onClick={() => circusAudio.playBambooStep()}
               className="text-xs text-amber-300 hover:text-white bg-white/10 hover:bg-white/20 px-3 py-1 rounded-full border border-amber-400/30 transition-colors cursor-pointer inline-flex items-center gap-1"
-              title={isEn ? "Open Chatbot AI on Poe" : "Mở Chatbot AI trên Poe"}
+              title={isEn ? "Open Chatbot AI" : "Mở Chatbot AI"}
             >
               <span>Chatbot AI</span>
               <ExternalLink className="size-3 text-amber-300" />

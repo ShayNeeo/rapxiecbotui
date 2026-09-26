@@ -87,7 +87,19 @@ export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({
                     return <h3 className="mb-1.5 text-sm font-bold text-[#8a181b]">{children}</h3>
                   },
                   p({ children }) {
-                    return <p className="mb-3 last:mb-0 text-stone-850 leading-relaxed">{children}</p>
+                    return <p className="mb-3 last:mb-0 text-stone-850 leading-relaxed whitespace-pre-line">{children}</p>
+                  },
+                  a({ href, children }) {
+                    return (
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-medium text-[#8a181b] underline decoration-amber-400 hover:text-amber-800 transition-colors break-all"
+                      >
+                        {children}
+                      </a>
+                    )
                   },
                   ul({ children }) {
                     return <ul className="mb-3 list-disc space-y-1.5 pl-4 last:mb-0 text-stone-800">{children}</ul>

@@ -89,8 +89,6 @@ Tôi là **Trợ Lý Rạp Xiếc Thông Minh (AI Circus Assistant)**. Bạn có
 - 🏆 **Kỷ lục thế giới**: Anh em NSƯT Quốc Cơ - Quốc Nghiệp, các giải thưởng Monte Carlo.
 - 🎟️ **Kinh nghiệm xem xiếc**: Giá vé, lịch diễn, cách chọn vị trí ngồi đẹp cho trẻ em.
 
-🔗 Bạn cũng có thể trò chuyện chuyên sâu trực tiếp cùng **[Chatbot AI Nghệ Sĩ Xiếc Đương Đại trên Poe](https://poe.com/_nghesixiecduongdai1)**!
-
 *Hãy gõ câu hỏi vào ô bên dưới hoặc bấm vào các gợi ý có sẵn để bắt đầu nhé!* ✨`,
   timestamp: "Vừa xong",
 };
@@ -107,8 +105,6 @@ I am your **AI Circus Assistant**. Feel free to ask me anything about Vietnamese
 - 🤹 **Circus Disciplines**: Flying trapeze, balancing, contortion, magic, bamboo circus, clowning...
 - 🏆 **World Guinness Records**: Giang Brothers (Quốc Cơ - Quốc Nghiệp), Monte Carlo honors.
 - 🎟️ **Audience Tips**: Ticket pricing, schedules, and optimal seating for families.
-
-🔗 You can also chat directly with our **[Contemporary Circus Artist Chatbot on Poe](https://poe.com/_nghesixiecduongdai1)**!
 
 *Type your question below or click any suggested prompt to begin!* ✨`,
   timestamp: "Just now",
@@ -269,15 +265,12 @@ export const CircusChat: React.FC<CircusChatProps> = ({ onBack, onUnlockBadge })
 
           <div className="flex items-center gap-2 self-end md:self-auto flex-wrap">
             <a
-              href={CHATBOT_AI_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/chatbot"
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 text-red-950 text-xs font-bold shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer border border-amber-200"
-              title={isEn ? "Open Chatbot AI on Poe" : "Mở Chatbot AI trên Poe"}
+              title={isEn ? "Open AI Chatbot" : "Mở Chatbot AI"}
             >
               <span>🤖</span>
-              <span>{isEn ? "Chatbot on Poe" : "Mở Bot Trên Poe"}</span>
-              <ExternalLink className="size-3.5" />
+              <span>{isEn ? "Chatbot AI" : "Mở Chatbot AI"}</span>
             </a>
 
             <button
@@ -290,43 +283,6 @@ export const CircusChat: React.FC<CircusChatProps> = ({ onBack, onUnlockBadge })
             </button>
           </div>
         </div>
-      </div>
-
-      {/* Poe Chatbot Callout Banner */}
-      <div className="bg-gradient-to-r from-amber-950 via-red-950 to-neutral-900 text-white rounded-2xl p-4 sm:p-5 border-2 border-amber-400 shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-3.5">
-          <div className="size-12 rounded-xl bg-amber-400 text-red-950 flex items-center justify-center text-2xl font-bold shrink-0 shadow-md">
-            🤖
-          </div>
-          <div>
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-[10px] font-black uppercase tracking-wider bg-amber-400 text-red-950 px-2 py-0.5 rounded-full">
-                POE CHATBOT
-              </span>
-              <span className="text-xs text-amber-200 font-medium">
-                @_nghesixiecduongdai1
-              </span>
-            </div>
-            <h3 className="font-circus text-base sm:text-lg text-amber-300 mt-1">
-              {isEn ? "Contemporary Circus Artist AI Assistant" : "Chatbot AI: Nghệ Sĩ Xiếc Đương Đại"}
-            </h3>
-            <p className="text-xs text-neutral-300">
-              {isEn
-                ? "Connect and converse directly with our dedicated AI on Poe for in-depth insights into performance arts."
-                : "Kết nối và trò chuyện tương tác trực tiếp cùng bot AI trên nền tảng Poe để hiểu sâu hơn về thế giới xiếc."}
-            </p>
-          </div>
-        </div>
-
-        <a
-          href={CHATBOT_AI_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 text-red-950 font-circus font-bold text-xs sm:text-sm shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer border border-amber-200"
-        >
-          <span>{isEn ? "Open Poe Chatbot" : "Trò Chuyện Trên Poe"}</span>
-          <ExternalLink className="size-4" />
-        </a>
       </div>
 
       {/* Suggested Questions Carousel / Chips */}

@@ -11,9 +11,10 @@ import {
   buildRAGSystemInstruction,
   getKnowledgeBaseStats,
 } from '../services/rag'
+import { getPredefinedAnswer } from '../services/predefinedAnswers'
 import { circusAudio } from '../utils/audio'
 import type { ChatMessage, ChatSettings, RetrievedSource } from '../types/chat'
-import { Sparkles, AlertTriangle, ExternalLink, Compass } from 'lucide-react'
+import { Sparkles, AlertTriangle, Compass } from 'lucide-react'
 
 const DEFAULT_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || ''
 const DEFAULT_MODEL = import.meta.env.VITE_GEMINI_MODEL || 'gemini-2.5-flash'
@@ -49,8 +50,8 @@ const STARTER_PROMPTS = [
   },
   {
     icon: '📍',
-    title: 'Các rạp xiếc 3 miền',
-    prompt: 'Có những rạp xiếc nào nổi tiếng ở Hà Nội và TP. Hồ Chí Minh? Địa chỉ ở đâu?',
+    title: 'Địa điểm biểu diễn xiếc',
+    prompt: 'Các đoàn xiếc Việt Nam thường biểu diễn ở đâu?',
   },
 ]
 
@@ -155,6 +156,27 @@ export const ChatbotPage: React.FC<ChatbotPageProps> = ({ onBackToPortal }) => {
     setMessages([...updatedMessages, assistantPlaceholder])
     setInput('')
     setIsLoading(true)
+
+    // Predefined answers: Always output exact response for circus venue & ticket inquiries
+    const predefined = getPredefinedAnswer(textToSend)
+    if (predefined) {
+      setTimeout(() => {
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.id === assistantPlaceholderId
+              ? {
+                  ...msg,
+                  content: predefined.answer,
+                  sources: predefined.sources,
+                }
+              : msg
+          )
+        )
+        setIsLoading(false)
+        circusAudio.playBambooStep()
+      }, 300)
+      return
+    }
 
     // Mode 1: No API Key configured -> Use local knowledge base retrieval & synthesis
     if (!settings.apiKey.trim()) {
@@ -367,19 +389,6 @@ export const ChatbotPage: React.FC<ChatbotPageProps> = ({ onBackToPortal }) => {
               <p className="mt-2.5 max-w-lg text-xs sm:text-sm text-amber-100/90 leading-relaxed font-medium">
                 Khám phá kho tư liệu 100 năm nghệ thuật xiếc, các vở diễn đặc sắc (À Ố Show, Mơ Show), nghệ sĩ Cụ Tạ Duy Hiển, kỷ lục Quốc Cơ - Quốc Nghiệp và địa chỉ các rạp xiếc lớn.
               </p>
-
-              {/* Direct Link to Poe Circus Bot */}
-              <div className="mt-4">
-                <a
-                  href="https://poe.com/_nghesixiecduongdai1"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-amber-400/50 bg-amber-400/20 px-4 py-1.5 text-xs font-semibold text-amber-200 transition hover:bg-amber-400/30 hover:text-white shadow-xs"
-                >
-                  <span>Trò chuyện trực tiếp cùng Nghệ Sĩ Xiếc Đương Đại trên Poe</span>
-                  <ExternalLink className="h-3.5 w-3.5" />
-                </a>
-              </div>
 
               {/* Grid of Starter Prompts */}
               <div className="mt-8 grid w-full max-w-3xl grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">

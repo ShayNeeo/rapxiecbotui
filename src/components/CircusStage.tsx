@@ -764,7 +764,7 @@ export const CircusStage: React.FC<CircusStageProps> = ({
                   {isEn ? "Chatbot AI" : "Chatbot AI"}
                 </span>
                 <span className="text-[11px] text-amber-800 font-semibold">
-                  {isEn ? "Poe Assistant" : "Nghệ sĩ xiếc đương đại"}
+                  {isEn ? "AI Assistant" : "Nghệ sĩ xiếc đương đại"}
                 </span>
               </div>
               <h3 className="font-circus text-lg text-neutral-900 group-hover:text-red-700 transition-colors flex items-center justify-between">
@@ -773,8 +773,8 @@ export const CircusStage: React.FC<CircusStageProps> = ({
               </h3>
               <p className="text-xs text-neutral-600 leading-relaxed">
                 {isEn
-                  ? "Chat with the Contemporary Circus Artist AI on Poe to explore circus history, acrobatics, and behind-the-scenes stories."
-                  : "Trò chuyện trực tiếp cùng Chatbot AI 'Nghệ sĩ xiếc đương đại' trên Poe để khám phá câu chuyện nghề, lịch sử và kỹ thuật biểu diễn."}
+                  ? "Chat with the Contemporary Circus Artist AI to explore circus history, acrobatics, and behind-the-scenes stories."
+                  : "Trò chuyện trực tiếp cùng Chatbot AI 'Nghệ sĩ xiếc đương đại' để khám phá câu chuyện nghề, lịch sử và kỹ thuật biểu diễn."}
               </p>
             </div>
             <div className="mt-4 pt-3 border-t border-amber-200/60 flex items-center justify-between text-xs font-bold text-red-700 group-hover:translate-x-1 transition-transform">
