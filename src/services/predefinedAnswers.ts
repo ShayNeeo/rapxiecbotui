@@ -122,6 +122,28 @@ Ngày nay, với sự phát triển của ngành xiếc, xiếc hiện nay khôn
 Và đó gọi là Nghệ thuật xiếc đương đại Việt Nam.`
 
 /**
+ * ==============================================================================
+ * CÂU TRẢ LỜI CỐ ĐỊNH 10: VÌ SAO NHIỀU CHƯƠNG TRÌNH XIẾC KHÔNG CÒN SỬ DỤNG ĐỘNG VẬT
+ * ==============================================================================
+ */
+export const CIRCUS_ANIMAL_WELFARE_ANSWER = `Năm 1960, các rạp xiếc truyền thống dần mất đi sức hút do sự bùng nổ của truyền hình và điện ảnh.
+
+Đồng thời, làn sóng bảo vệ quyền động vật dâng cao khiến công chúng không còn mặn mà với các màn xiếc thú hoang dã.
+
+Các nghệ sĩ trẻ mong muốn tìm kiếm một hướng đi mới, biến xiếc từ một hình thức giải trí tạp kỹ thành một bộ môn nghệ thuật biểu diễn có chiều sâu.
+
+Và từ đó, xiếc được biến tấu thành một sân khấu được dàn dựng hoành tráng, kịch bản tỉ mỉ kết hợp với kỹ thuật xiếc mãn nhãn, gọi là nghệ thuật xiếc đương đại.`
+
+/**
+ * ==============================================================================
+ * CÂU TRẢ LỜI CỐ ĐỊNH 11: XIẾC PHÙ HỢP VỚI TỆP KHÁN GIẢ NÀO / ĐỘ TUỔI NÀO
+ * ==============================================================================
+ */
+export const CIRCUS_AUDIENCE_AGE_ANSWER = `Xiếc ngày nay là một loại hình nghệ thuật biểu đạt cảm xúc và kể chuyện, người xem ở mọi lứa tuổi đều có thể xem và cảm nhận được ý của mỗi tác phẩm muốn truyền đạt tới.
+
+Xiếc bao trùm rất nhiều thứ, không chỉ đơn thuần như xiếc truyền thống ngày xưa.`
+
+/**
  * Chuẩn hóa chuỗi tiếng Việt không dấu, loại bỏ ký tự đặc biệt để so khớp chính xác
  */
 export function normalizeVietnamese(str: string): string {
@@ -570,6 +592,99 @@ export function matchCircusStagesVNQuestion(query: string): boolean {
   return false
 }
 
+/**
+ * 10. Khớp câu hỏi: Vì sao ngày nay nhiều chương trình xiếc không còn sử dụng động vật
+ */
+export function matchCircusAnimalWelfareQuestion(query: string): boolean {
+  const norm = normalizeVietnamese(query)
+  if (!norm) return false
+
+  const exactPatterns = [
+    'vi sao ngay nay nhieu chuong trinh xiec khong con su dung dong vat',
+    'vi sao nhieu chuong trinh xiec khong con su dung dong vat',
+    'vi sao cac chuong trinh xiec khong con su dung dong vat',
+    'vi sao xiec khong con su dung dong vat',
+    'vi sao xiec khong su dung dong vat',
+    'vi sao xiec khong dung dong vat',
+    'tai sao xiec khong con su dung dong vat',
+    'tai sao xiec khong dung dong vat',
+    'tai sao xiec khong con dung dong vat',
+    'tai sao xiec khong dung thu',
+    'vi sao xiec khong con xiec thu',
+    'tai sao xiec khong con xiec thu',
+    'vi sao khong con xiec thu',
+    'tai sao khong con xiec thu',
+    'khong con su dung dong vat',
+    'khong con dung dong vat',
+    'xiec khong dung dong vat',
+    'xiec khong su dung dong vat',
+  ]
+
+  for (const pattern of exactPatterns) {
+    if (norm === pattern || norm.includes(pattern)) {
+      return true
+    }
+  }
+
+  const hasCircus = norm.includes('xiec')
+  const hasAnimal = norm.includes('dong vat') || norm.includes('xiec thu') || norm.includes('thu')
+  const hasNoUse = norm.includes('khong con') || norm.includes('khong dung') || norm.includes('khong su dung') || norm.includes('bo xiec thu')
+  const hasWhy = norm.includes('vi sao') || norm.includes('tai sao') || norm.includes('ly do')
+
+  if (hasCircus && hasAnimal && (hasNoUse || hasWhy)) {
+    return true
+  }
+
+  return false
+}
+
+/**
+ * 11. Khớp câu hỏi: Xiếc phù hợp với tệp khán giả nào / độ tuổi nào
+ */
+export function matchCircusAudienceAgeQuestion(query: string): boolean {
+  const norm = normalizeVietnamese(query)
+  if (!norm) return false
+
+  const exactPatterns = [
+    'xiec phu hop voi tep khan gia nao',
+    'xiec phu hop voi doi tuong nao',
+    'xiec phu hop voi ai',
+    'xiec danh cho ai',
+    'xiec phu hop voi do tuoi nao',
+    'bao nhieu tuoi thi coi duoc xiec',
+    'bao nhieu tuoi thi xem duoc xiec',
+    'bao nhieu tuoi coi duoc xiec',
+    'bao nhieu tuoi xem duoc xiec',
+    'may tuoi thi xem duoc xiec',
+    'may tuoi thi coi duoc xiec',
+    'do tuoi xem xiec',
+    'do tuoi coi xiec',
+    'tep khan gia cua xiec',
+    'tep khan gia xem xiec',
+    'doi tuong khan gia xem xiec',
+    'ai co the xem xiec',
+    'ai coi duoc xiec',
+    'ai xem duoc xiec',
+  ]
+
+  for (const pattern of exactPatterns) {
+    if (norm === pattern || norm.includes(pattern)) {
+      return true
+    }
+  }
+
+  const hasCircus = norm.includes('xiec')
+  const hasAudience = norm.includes('khan gia') || norm.includes('doi tuong') || norm.includes('ai')
+  const hasAge = norm.includes('bao nhieu tuoi') || norm.includes('do tuoi') || norm.includes('lua tuoi') || norm.includes('may tuoi')
+  const hasFit = norm.includes('phu hop') || norm.includes('coi duoc') || norm.includes('xem duoc')
+
+  if (hasCircus && (hasAge || (hasAudience && (hasFit || norm.includes('tep'))))) {
+    return true
+  }
+
+  return false
+}
+
 export const CIRCUS_VENUES_SOURCE: RetrievedSource = {
   id: 'circus-venues-and-tickets-official',
   title: 'Địa điểm biểu diễn và hướng dẫn mua vé các Rạp Xiếc Việt Nam',
@@ -640,6 +755,22 @@ export const CIRCUS_STAGES_VN_SOURCE: RetrievedSource = {
   category: 'history',
   similarity: 1.0,
   content: CIRCUS_STAGES_VN_ANSWER,
+}
+
+export const CIRCUS_ANIMAL_WELFARE_SOURCE: RetrievedSource = {
+  id: 'circus-animal-welfare-transition-official',
+  title: 'Lý do các chương trình xiếc ngày nay không còn sử dụng động vật',
+  category: 'history',
+  similarity: 1.0,
+  content: CIRCUS_ANIMAL_WELFARE_ANSWER,
+}
+
+export const CIRCUS_AUDIENCE_AGE_SOURCE: RetrievedSource = {
+  id: 'circus-audience-target-age-official',
+  title: 'Đối tượng khán giả và độ tuổi phù hợp thưởng thức xiếc',
+  category: 'knowledge',
+  similarity: 1.0,
+  content: CIRCUS_AUDIENCE_AGE_ANSWER,
 }
 
 /**
@@ -713,7 +844,23 @@ export function getPredefinedAnswer(query: string): {
     }
   }
 
-  // 9. Nhóm Địa điểm & Mua vé
+  // 9. Nhóm Vì sao không còn sử dụng động vật
+  if (matchCircusAnimalWelfareQuestion(query)) {
+    return {
+      answer: CIRCUS_ANIMAL_WELFARE_ANSWER,
+      sources: [CIRCUS_ANIMAL_WELFARE_SOURCE],
+    }
+  }
+
+  // 10. Nhóm Tệp khán giả / độ tuổi xem xiếc
+  if (matchCircusAudienceAgeQuestion(query)) {
+    return {
+      answer: CIRCUS_AUDIENCE_AGE_ANSWER,
+      sources: [CIRCUS_AUDIENCE_AGE_SOURCE],
+    }
+  }
+
+  // 11. Nhóm Địa điểm & Mua vé
   if (matchCircusVenuesQuestion(query)) {
     return {
       answer: CIRCUS_VENUES_AND_TICKETS_ANSWER,

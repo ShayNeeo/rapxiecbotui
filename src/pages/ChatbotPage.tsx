@@ -68,6 +68,16 @@ const STARTER_PROMPTS = [
     title: 'Địa điểm biểu diễn & Mua vé',
     prompt: 'Các đoàn xiếc Việt Nam thường biểu diễn ở đâu?',
   },
+  {
+    icon: '🐾',
+    title: 'Vì sao không còn xiếc thú?',
+    prompt: 'Vì sao ngày nay nhiều chương trình xiếc không còn sử dụng động vật',
+  },
+  {
+    icon: '👥',
+    title: 'Độ tuổi & Khán giả phù hợp',
+    prompt: 'Xiếc phù hợp với tệp khán giả nào?',
+  },
 ]
 
 const getCurrentTimestamp = () => Date.now()

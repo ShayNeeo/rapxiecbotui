@@ -96,6 +96,20 @@ const SAMPLE_QUESTIONS = [
     promptEn: "Where do Vietnamese circus troupes usually perform?",
     icon: "📍",
   },
+  {
+    label: "Vì sao không còn xiếc thú?",
+    labelEn: "Why No Circus Animals?",
+    prompt: "Vì sao ngày nay nhiều chương trình xiếc không còn sử dụng động vật",
+    promptEn: "Why do modern circus shows no longer use animals?",
+    icon: "🐾",
+  },
+  {
+    label: "Độ tuổi & Khán giả phù hợp",
+    labelEn: "Target Audience & Age",
+    prompt: "Xiếc phù hợp với tệp khán giả nào?",
+    promptEn: "Which audience age group is circus suitable for?",
+    icon: "👥",
+  },
 ];
 
 const INITIAL_GREETING_VI: Message = {
