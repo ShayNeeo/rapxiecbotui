@@ -60,8 +60,8 @@ const STARTER_PROMPTS = [
   },
   {
     icon: '✨',
-    title: 'Giá trị nghệ thuật xiếc',
-    prompt: 'Những yếu tố nào quyết định giá trị nghệ thuật của một tác phẩm xiếc đương đại?',
+    title: 'Yếu tố quyết định xiếc',
+    prompt: 'Yếu tố quyết định của một màn trình diễn xiếc đương đại',
   },
   {
     icon: '📍',

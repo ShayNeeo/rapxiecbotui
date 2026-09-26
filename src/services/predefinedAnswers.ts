@@ -75,9 +75,7 @@ Vì mọi thứ phải thật nhịp nhàng và chính xác, việc mọi ngư�
  */
 export const CIRCUS_FACTORS_ANSWER = `“Là sự kết hợp giữa kỹ thuật biểu diễn và cảm xúc mà tiết mục mang lại.
 
-Tôi nhớ có nhiều lần khi xong vở diễn khán giả đã khóc, khóc ở đây là vì vở diễn chạm vào cảm xúc của họ, và điều thứ hai là khi mà vở diễn tái hiện được cái khung cảnh làng quê (À Ố SHOW), thì làm họ gợi nhớ được những ký ức tuổi thơ của mình, cái gì đó chạm được vào thì họ sẽ bật được cái cảm xúc của mình ra.
-
-Và tất nhiên là kỹ thuật thì cũng rất là quan trọng vì nó phải đủ bất ngờ thì mới gọi là xiếc, nên nếu nói về xiếc đương đại thì cả hai yếu tố trên đều quan trọng, cân bằng với nhau.” (trích lời từ phỏng vấn nghệ sĩ xiếc đương đại - Nguyễn Khánh Linh)`
+Tôi nhớ có nhiều lần khi xong vở diễn khán giả đã khóc, khóc ở đây là vì vở diễn chạm vào cảm xúc của họ, và điều thứ hai là khi mà vở diễn tái hiện được cái khung cảnh làng quê (À Ố SHOW), thì làm họ gợi nhớ được những ký ức tuổi thơ của mình, cái gì đó chạm được vào thì họ sẽ bật được cái cảm xúc của mình ra, và tất nhiên là kỹ thuật thì cũng rất là quan trọng vì nó phải đủ bất ngờ thì mới gọi là xiếc, nên nếu nói về xiếc đương đại thì cả hai yếu tố trên đều quan trọng, cân bằng với nhau” (trích lời từ phỏng vấn nghệ sĩ xiếc đương đại - Nguyễn Khánh Linh)`
 
 /**
  * ==============================================================================

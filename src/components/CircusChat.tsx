@@ -83,10 +83,10 @@ const SAMPLE_QUESTIONS = [
     icon: "💪",
   },
   {
-    label: "Giá trị nghệ thuật xiếc",
-    labelEn: "Artistic Value",
-    prompt: "Những yếu tố nào quyết định giá trị nghệ thuật của một tác phẩm xiếc đương đại?",
-    promptEn: "What factors determine the artistic value of a contemporary circus work?",
+    label: "Yếu tố quyết định xiếc",
+    labelEn: "Crucial Performance Factors",
+    prompt: "Yếu tố quyết định của một màn trình diễn xiếc đương đại",
+    promptEn: "What factors determine a contemporary circus performance?",
     icon: "✨",
   },
   {
