@@ -195,7 +195,13 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
               <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
                 <span className="text-[11px] font-bold text-white bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 flex items-center gap-1.5 shadow-sm pointer-events-auto">
                   <ImageIcon className="size-3 text-amber-300" />
-                  <span>{isEn ? `Cover • Milestone ${era.sectionNumber}` : `Ảnh bìa • Cột mốc ${era.sectionNumber}`}</span>
+                  <span>
+                    {era.id === "ancient-circus"
+                      ? (isEn ? "Cover Photo for Milestone 1" : "Thêm ảnh bìa cho cột mốc 1")
+                      : era.id === "classical-circus"
+                      ? (isEn ? "Cover Photo for Milestone 2" : "Thêm ảnh bìa cho cột mốc 2")
+                      : (isEn ? `Cover • Milestone ${era.sectionNumber}` : `Ảnh bìa • Cột mốc ${era.sectionNumber}`)}
+                  </span>
                 </span>
 
                 <div className="flex items-center gap-2 pointer-events-auto">
@@ -233,11 +239,45 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
                 </div>
               </div>
 
-              {/* Caption on Bottom */}
-              <div className="absolute bottom-3 left-3 right-3 text-white space-y-1">
-                <p className="text-xs sm:text-sm font-semibold drop-shadow-md text-amber-100/95 leading-relaxed">
-                  📷 {isEn ? (era.titleEn || era.title) : era.title}
-                </p>
+              {/* Caption & Source Citation on Bottom */}
+              <div className="absolute bottom-3 left-3 right-3 text-white flex flex-col sm:flex-row sm:items-end justify-between gap-2 pointer-events-none">
+                <div className="space-y-0.5 pointer-events-auto max-w-xl">
+                  <p className="text-xs sm:text-sm font-bold drop-shadow-md text-amber-100/95 leading-relaxed">
+                    📷 {era.id === "ancient-circus" 
+                      ? (isEn ? "Cover Photo for Milestone 1: Origin of Circus & Classical Ring Origins" : "Thêm ảnh bìa cho cột mốc 1: Nguồn gốc xiếc thời cổ đại") 
+                      : era.id === "classical-circus"
+                      ? (isEn ? "Cover Photo for Milestone 2: Classical Circus & Hanoi Heritage 1936" : "Thêm ảnh bìa cho cột mốc 2: Nguồn gốc xiếc cổ điển")
+                      : (isEn ? (era.titleEn || era.title) : era.title)}
+                  </p>
+                </div>
+
+                {/* Image source citation in small corner */}
+                {era.id === "ancient-circus" && (
+                  <a
+                    href="https://en.baodanang.vn/nguoi-sang-tao-rap-xiec-hien-dai-3282905.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="self-end inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/80 hover:bg-red-700 backdrop-blur-md text-amber-200 hover:text-white text-[11px] font-semibold transition-all border border-amber-400/40 hover:border-red-400 shadow-md cursor-pointer pointer-events-auto shrink-0"
+                    title={isEn ? "Source: Danang Today (en.baodanang.vn)" : "Nguồn ảnh: Báo Đà Nẵng"}
+                  >
+                    <span>{isEn ? "Source: en.baodanang.vn" : "Nguồn ảnh: Báo Đà Nẵng"}</span>
+                    <ExternalLink className="size-3" />
+                  </a>
+                )}
+                {era.id === "classical-circus" && (
+                  <a
+                    href="https://36pho.com/xiec-o-ha-noi-xua-1936.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="self-end inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/80 hover:bg-red-700 backdrop-blur-md text-amber-200 hover:text-white text-[11px] font-semibold transition-all border border-amber-400/40 hover:border-red-400 shadow-md cursor-pointer pointer-events-auto shrink-0"
+                    title={isEn ? "Source: 36pho.com" : "Nguồn ảnh: 36pho.com"}
+                  >
+                    <span>{isEn ? "Source: 36pho.com" : "Nguồn ảnh: 36pho.com"}</span>
+                    <ExternalLink className="size-3" />
+                  </a>
+                )}
               </div>
             </div>
           </div>

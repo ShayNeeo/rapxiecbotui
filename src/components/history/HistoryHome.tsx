@@ -13,7 +13,8 @@ import {
   Plus,
   Trash2,
   Edit2,
-  Image as ImageIcon
+  Image as ImageIcon,
+  ExternalLink
 } from "lucide-react";
 import { 
   getOverviewCover, 
@@ -241,9 +242,43 @@ export const HistoryHome: React.FC<HistoryHomeProps> = ({
                     </div>
 
                     {/* Bottom Indicator */}
-                    <div className="absolute bottom-2.5 left-3 right-3 text-[11px] text-amber-200/90 font-medium truncate drop-shadow flex items-center gap-1.5">
-                      <ImageIcon className="size-3" />
-                      <span>{isEn ? "Custom cover photo active" : "Ảnh bìa đã cài đặt cho cột mốc"}</span>
+                    <div className="absolute bottom-2.5 left-3 right-3 text-[11px] text-amber-200/90 font-medium truncate drop-shadow flex items-center justify-between gap-1.5">
+                      <div className="flex items-center gap-1.5 truncate">
+                        <ImageIcon className="size-3 shrink-0" />
+                        <span className="truncate">
+                          {era.id === "ancient-circus" 
+                            ? (isEn ? "Cover Photo for Milestone 1" : "Thêm ảnh bìa cho cột mốc 1") 
+                            : era.id === "classical-circus"
+                            ? (isEn ? "Cover Photo for Milestone 2" : "Thêm ảnh bìa cho cột mốc 2")
+                            : (isEn ? "Custom cover photo active" : "Ảnh bìa đã cài đặt cho cột mốc")}
+                        </span>
+                      </div>
+                      {era.id === "ancient-circus" && (
+                        <a
+                          href="https://en.baodanang.vn/nguoi-sang-tao-rap-xiec-hien-dai-3282905.html"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="text-[10px] text-amber-300 hover:text-white underline decoration-amber-400/60 flex items-center gap-1 shrink-0 bg-black/60 px-2 py-0.5 rounded backdrop-blur-xs"
+                          title={isEn ? "Source: en.baodanang.vn" : "Nguồn ảnh: Báo Đà Nẵng"}
+                        >
+                          <span>{isEn ? "Source: en.baodanang.vn" : "Nguồn: Báo Đà Nẵng"}</span>
+                          <ExternalLink className="size-2.5" />
+                        </a>
+                      )}
+                      {era.id === "classical-circus" && (
+                        <a
+                          href="https://36pho.com/xiec-o-ha-noi-xua-1936.html"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="text-[10px] text-amber-300 hover:text-white underline decoration-amber-400/60 flex items-center gap-1 shrink-0 bg-black/60 px-2 py-0.5 rounded backdrop-blur-xs"
+                          title={isEn ? "Source: 36pho.com" : "Nguồn ảnh: 36pho.com"}
+                        >
+                          <span>{isEn ? "Source: 36pho.com" : "Nguồn: 36pho.com"}</span>
+                          <ExternalLink className="size-2.5" />
+                        </a>
+                      )}
                     </div>
                   </div>
                 ) : (
