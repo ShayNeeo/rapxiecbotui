@@ -235,79 +235,79 @@ interface VenueMapLayout {
 const VENUE_LAYOUTS: Record<string, VenueMapLayout> = {
   // Hanoi 1: West of Hanoi (Left side bar)
   "doan-xiec-ha-noi": {
-    pinX: 216,
-    pinY: 115,
-    barX: 12,
-    barY: 98,
-    barWidth: 164,
+    pinX: 204,
+    pinY: 155,
+    barX: 18,
+    barY: 130,
+    barWidth: 168,
     barHeight: 32,
-    connX: 176,
-    connY: 114,
+    connX: 186,
+    connY: 146,
     shortName: "Xiếc & Tạp Kỹ Hà Nội",
     shortNameEn: "Hanoi Variety Circus",
   },
   // Hanoi 2: East of Hanoi (Right side bar)
   "rap-xiec-trung-uong": {
-    pinX: 242,
-    pinY: 130,
-    barX: 342,
-    barY: 114,
-    barWidth: 166,
+    pinX: 228,
+    pinY: 145,
+    barX: 282,
+    barY: 130,
+    barWidth: 168,
     barHeight: 32,
-    connX: 342,
-    connY: 130,
+    connX: 282,
+    connY: 146,
     shortName: "Rạp Xiếc Trung Ương",
     shortNameEn: "National Circus",
   },
   // HCMC 1: Upper West of HCMC (Left side bar, top)
   "rap-xiec-cong-vien-gia-dinh": {
-    pinX: 284,
-    pinY: 546,
-    barX: 12,
-    barY: 528,
-    barWidth: 172,
+    pinX: 295,
+    pinY: 635,
+    barX: 18,
+    barY: 610,
+    barWidth: 176,
     barHeight: 32,
-    connX: 184,
-    connY: 544,
+    connX: 194,
+    connY: 626,
     shortName: "Rạp Xiếc Gia Định",
     shortNameEn: "Gia Dinh Circus Top",
   },
-  // HCMC 2: Lower West of HCMC (Left side bar, bottom - 28px separation gap)
+  // HCMC 2: Lower West of HCMC (Left side bar, bottom)
   "rap-xiec-dam-sen": {
-    pinX: 268,
-    pinY: 590,
-    barX: 12,
-    barY: 588,
-    barWidth: 172,
+    pinX: 280,
+    pinY: 655,
+    barX: 18,
+    barY: 665,
+    barWidth: 176,
     barHeight: 32,
-    connX: 184,
-    connY: 604,
+    connX: 194,
+    connY: 681,
     shortName: "Rạp Xiếc Đầm Sen",
     shortNameEn: "Dam Sen Park Circus",
   },
   // HCMC 3: Upper East of HCMC (Right side bar, top)
   "rap-xiec-phu-tho": {
-    pinX: 312,
-    pinY: 564,
-    barX: 340,
-    barY: 546,
-    barWidth: 168,
+    pinX: 308,
+    pinY: 648,
+    barX: 375,
+    barY: 575,
+    barWidth: 176,
     barHeight: 32,
-    connX: 340,
-    connY: 562,
+    connX: 375,
+    connY: 591,
     shortName: "Rạp Đa Năng Phú Thọ",
     shortNameEn: "Phu Tho Circus Arena",
   },
-  // HCMC 4: Lower East of HCMC (Right side bar, bottom - 28px separation gap)
+  // HCMC 4: Lower East of HCMC (Right side bar, bottom)
   "nha-hat-thanh-pho": {
-    pinX: 334,
-    pinY: 606,
-    barX: 340,
-    barY: 606,
-    barWidth: 168,
+    pinX: 325,
+    pinY: 640,
+    barX: 375,
+    barY: 630,
+    barWidth: 176,
     barHeight: 32,
-    connX: 340,
-    connY: 622,
+    connX: 375,
+    connY: 646,
     shortName: "Nhà Hát Thành Phố",
     shortNameEn: "Saigon Opera House",
   },
@@ -342,9 +342,11 @@ export const CircusMap: React.FC<CircusMapProps> = ({
   });
   const [mapBgColor, setMapBgColor] = useState<string>(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('circus_map_bg_color') || '#FFF8DC';
+      const saved = localStorage.getItem('circus_map_bg_color');
+      if (saved && saved !== '#FFF8DC') return saved;
+      return '#FFFDF0';
     }
-    return '#FFF8DC';
+    return '#FFFDF0';
   });
 
   const handleSetMapTone = (hex: string) => {
@@ -526,50 +528,45 @@ export const CircusMap: React.FC<CircusMapProps> = ({
             style={{ backgroundColor: mapBgColor }}
           >
             <svg
-              viewBox="0 0 520 720"
+              viewBox="0 0 736 870"
               className="w-full h-full max-h-[880px] select-none"
             >
-              {/* Solid Warm Yellow Canvas Background */}
-              <rect width="520" height="720" fill={mapBgColor} />
+              {/* Solid Light Warm Yellow Canvas Background */}
+              <rect width="736" height="870" fill={mapBgColor} />
 
               {/* Map Image: Original OFFICIAL_CIRCUS_MAP or User Uploaded Custom Map */}
               <image
                 href={mapUrl || OFFICIAL_CIRCUS_MAP}
                 x="0"
                 y="0"
-                width="520"
-                height="720"
+                width="736"
+                height="870"
                 preserveAspectRatio="xMidYMid meet"
               />
 
               {/* Subtle Decorative North Compass Indicator */}
-              <g transform="translate(488, 38)" opacity="0.85">
+              <g transform="translate(685, 48)" opacity="0.85">
                 <circle cx="0" cy="0" r="14" fill="#ffffff" stroke="#d97706" strokeWidth="1" />
                 <polygon points="0,-10 3,2 0,0 -3,2" fill="#dc2626" />
                 <polygon points="0,10 3,0 0,0 -3,0" fill="#78350f" />
                 <text x="0" y="-11" fontSize="7" fontWeight="bold" fill="#dc2626" textAnchor="middle">N</text>
               </g>
 
-              {/* ISLANDS: HOÀNG SA & TRƯỜNG SA (Positioned clearly in open sea without overlapping bars) */}
-              <g transform="translate(432, 285)">
-                <circle cx="0" cy="0" r="5" fill="#dc2626" stroke="#991b1b" strokeWidth="1" />
-                <circle cx="12" cy="5" r="4.5" fill="#dc2626" stroke="#991b1b" strokeWidth="1" />
-                <circle cx="6" cy="12" r="4" fill="#dc2626" stroke="#991b1b" strokeWidth="1" />
-                <rect x="-38" y="18" width="88" height="16" rx="4" fill="#ffffff" stroke="#ca8a04" strokeWidth="0.9" opacity="0.95" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.1))" />
-                <text x="6" y="29.5" fill="#b91c1c" fontSize="8" fontWeight="bold" textAnchor="middle">
-                  {isEn ? "Paracel Islands" : "QĐ. Hoàng Sa"}
-                </text>
+              {/* INTERACTIVE SOVEREIGNTY REGIONS FOR HOÀNG SA & TRƯỜNG SA */}
+              <g 
+                className="cursor-pointer"
+                onClick={() => circusAudio.playBambooStep()}
+              >
+                <circle cx="585" cy="445" r="55" fill="transparent" />
+                <title>{isEn ? "Paracel Islands (Hoàng Sa) - Sacred Sovereignty of Vietnam" : "Quần đảo Hoàng Sa - Chủ quyền thiêng liêng của Việt Nam"}</title>
               </g>
 
-              <g transform="translate(420, 665)">
-                <circle cx="0" cy="0" r="5" fill="#dc2626" stroke="#991b1b" strokeWidth="1" />
-                <circle cx="13" cy="5" r="4.5" fill="#dc2626" stroke="#991b1b" strokeWidth="1" />
-                <circle cx="7" cy="15" r="4" fill="#dc2626" stroke="#991b1b" strokeWidth="1" />
-                <circle cx="19" cy="19" r="4" fill="#dc2626" stroke="#991b1b" strokeWidth="1" />
-                <rect x="-34" y="26" width="88" height="16" rx="4" fill="#ffffff" stroke="#ca8a04" strokeWidth="0.9" opacity="0.95" filter="drop-shadow(0 1px 2px rgba(0,0,0,0.1))" />
-                <text x="10" y="37.5" fill="#b91c1c" fontSize="8" fontWeight="bold" textAnchor="middle">
-                  {isEn ? "Spratly Islands" : "QĐ. Trường Sa"}
-                </text>
+              <g 
+                className="cursor-pointer"
+                onClick={() => circusAudio.playBambooStep()}
+              >
+                <circle cx="550" cy="760" r="65" fill="transparent" />
+                <title>{isEn ? "Spratly Islands (Trường Sa) - Sacred Sovereignty of Vietnam" : "Quần đảo Trường Sa - Chủ quyền thiêng liêng của Việt Nam"}</title>
               </g>
 
               {/* DYNAMIC CIRCUS VENUE MAP PINS & CLEARLY SEPARATED LOCATION BARS */}
