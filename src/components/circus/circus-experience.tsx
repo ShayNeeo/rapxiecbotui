@@ -5,8 +5,6 @@ import { Link } from 'react-router-dom'
 import { Canvas } from '@react-three/fiber'
 import { Loader } from '@react-three/drei'
 import {
-  Volume2,
-  VolumeX,
   RotateCcw,
   MousePointer2,
   Ticket,
@@ -15,7 +13,6 @@ import {
 } from 'lucide-react'
 import { Scene } from './scene'
 import { InfoPanel } from './info-panel'
-import { useAmbientAudio } from './use-ambient-audio'
 import { HOTSPOTS, DEFAULT_CAMERA } from '@/lib/circus-data'
 import { Button } from '@/components/ui/button'
 
@@ -23,7 +20,6 @@ export function CircusExperience() {
   const [activeId, setActiveId] = useState<string | null>(null)
   const [intro, setIntro] = useState(true)
   const [mounted, setMounted] = useState(false)
-  const { enabled: audioOn, toggle: toggleAudio } = useAmbientAudio()
 
   useEffect(() => {
     setMounted(true)
@@ -86,24 +82,8 @@ export function CircusExperience() {
           </div>
         </div>
 
-        {/* Right Audio & View Controls */}
+        {/* Right View Controls */}
         <div className="pointer-events-auto flex gap-2">
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={toggleAudio}
-            aria-label={audioOn ? 'Tắt âm thanh' : 'Bật âm thanh'}
-            className="backdrop-blur-md border border-border bg-card/85 text-foreground hover:bg-accent hover:text-accent-foreground cursor-pointer px-3"
-          >
-            {audioOn ? (
-              <Volume2 className="h-4 w-4 text-emerald-400" />
-            ) : (
-              <VolumeX className="h-4 w-4" />
-            )}
-            <span className="hidden sm:inline text-xs font-medium ml-1">
-              {audioOn ? 'Âm thanh bật' : 'Bật âm'}
-            </span>
-          </Button>
           {activeId && (
             <Button
               variant="secondary"
@@ -162,17 +142,12 @@ export function CircusExperience() {
               <span className="font-semibold text-accent">+</span> để khám phá
               sân khấu, nghệ sĩ, ánh sáng và trò chuyện cùng hướng dẫn viên AI.
             </p>
-            <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:justify-center">
+            <div className="mt-6 flex justify-center">
               <Button
-                onClick={() => {
-                  setIntro(false)
-                  if (!audioOn) toggleAudio()
-                }}
+                onClick={() => setIntro(false)}
+                className="bg-primary text-primary-foreground hover:bg-primary/90 px-6 cursor-pointer"
               >
-                Bắt đầu với âm thanh
-              </Button>
-              <Button variant="secondary" onClick={() => setIntro(false)}>
-                Tham quan yên lặng
+                Bắt đầu khám phá
               </Button>
             </div>
           </div>

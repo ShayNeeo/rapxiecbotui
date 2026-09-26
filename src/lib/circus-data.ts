@@ -32,8 +32,6 @@ export const HOTSPOTS: Hotspot[] = [
       'Viền sân khấu: tích hợp đèn LED đổi màu theo tiết mục',
       'Mặt sàn: được làm bằng gỗ chống trơn, đàn hồi nhẹ để đỡ lực nghệ sĩ khi tiếp đất. ',
     ],
-    image: '/images/circus-stage.png',
-    imageAlt: 'Sân khấu trung tâm rạp xiếc',
   },
   {
     id: 'nghe-si',
@@ -48,8 +46,6 @@ export const HOTSPOTS: Hotspot[] = [
       'Họ phối hợp với bạn diễn qua nhịp thở và lực căng cơ.',
       'Trí nhớ cơ bắp điều khiển mọi động tác mạo hiểm tốc độ cao.',
     ],
-    image: '/images/circus-performers.png',
-    imageAlt: 'Nghệ sĩ biểu diễn xiếc',
   },
   {
     id: 'du-day',
@@ -64,8 +60,6 @@ export const HOTSPOTS: Hotspot[] = [
       'Không dây bảo hiểm: Nghệ sĩ tự dùng lực cơ thể để khóa mình vào dải lụa.',
       'Tính toán chính xác: Mỗi động tác đều được tính lực tỉ mỉ để bảo vệ cơ khớp.',
     ],
-    image: '/images/circus-aerial.png',
-    imageAlt: 'Nhào lộn trên không & đu dây',
   },
   {
     id: 'anh-sang',
@@ -80,8 +74,6 @@ export const HOTSPOTS: Hotspot[] = [
       'Ánh sáng khán đài: Đèn khán đài được hạ dịu xuống để tăng chiều sâu sân khấu.',
       'Biến đổi linh hoạt: Màu sắc và cường độ sáng luôn thay đổi theo cảm xúc tiết mục.',
     ],
-    image: '/images/circus-lighting.png',
-    imageAlt: 'Hiệu ứng ánh sáng rạp xiếc',
   },
   {
     id: 'am-thanh',
@@ -96,8 +88,6 @@ export const HOTSPOTS: Hotspot[] = [
       'Âm thanh phủ đều : Hệ thống loa được bố trí để âm thanh truyền đến nhiều khu vực khán đài.',
       'Hiệu ứng trên sân khấu : Khói, ánh sáng và các hiệu ứng đặc biệt góp phần tạo điểm nhấn và tăng sức cuốn hút cho tiết mục.',
     ],
-    image: '/images/circus-sound.png',
-    imageAlt: 'Âm thanh & thiết bị biểu diễn',
   },
   {
     id: 'khan-dai',
@@ -112,8 +102,6 @@ export const HOTSPOTS: Hotspot[] = [
       'Ngồi đâu cũng dễ xem : Ghế được xếp theo tầng, giúp hạn chế che khuất tầm nhìn.',
       'Góc nhìn 360°: Sân khấu trung tâm giúp khán giả có thể theo dõi tiết mục từ nhiều hướng.',
     ],
-    image: '/images/circus-seating.png',
-    imageAlt: 'Khán đài và ghế ngồi',
   },
 ]
 

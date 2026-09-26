@@ -5,9 +5,6 @@ import { CircusActId } from "@/src/types";
 import { useLanguage } from "@/src/context/LanguageContext";
 import { TRANSLATIONS } from "@/src/i18n/translations";
 import { 
-  Music, 
-  Volume2, 
-  VolumeX, 
   Sparkles, 
   Ticket, 
   PartyPopper,
@@ -51,28 +48,9 @@ export const CircusHeader: React.FC<CircusHeaderProps> = ({
 }) => {
   const { language, setLanguage, isEn } = useLanguage();
   const t = TRANSLATIONS[language];
-  const [isMuted, setIsMuted] = useState(circusAudio.getMuted());
-  const [isPlayingBgm, setIsPlayingBgm] = useState(false);
   const headerFileRef = React.useRef<HTMLInputElement>(null);
 
-  const toggleSound = () => {
-    const muted = circusAudio.toggleMute();
-    setIsMuted(muted);
-    setIsPlayingBgm(circusAudio.isBgmActive());
-  };
-
-  const toggleBgm = () => {
-    if (isPlayingBgm) {
-      circusAudio.stopBgm();
-      setIsPlayingBgm(false);
-    } else {
-      circusAudio.startCircusBgm();
-      setIsPlayingBgm(true);
-    }
-  };
-
   const triggerFanfare = () => {
-    circusAudio.playFanfare();
     confetti({
       particleCount: 40,
       spread: 60,
@@ -194,29 +172,6 @@ export const CircusHeader: React.FC<CircusHeaderProps> = ({
           >
             <PartyPopper className="size-3.5 text-red-700 animate-bounce" />
             <span>{t.actions.fanfare}</span>
-          </button>
-
-          {/* BGM Toggle */}
-          <button
-            onClick={toggleBgm}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border cursor-pointer active:scale-95 ${
-              isPlayingBgm 
-                ? 'bg-emerald-600 border-emerald-400 text-white shadow-emerald-700/50 shadow-sm' 
-                : 'bg-red-850 border-red-700/80 text-amber-200 hover:bg-red-800'
-            }`}
-            title={t.actions.bgmTitle}
-          >
-            <Music className={`size-3.5 ${isPlayingBgm ? 'animate-spin' : ''}`} />
-            <span>{isPlayingBgm ? t.actions.bgmOff : t.actions.bgmOn}</span>
-          </button>
-
-          {/* Mute SFX Toggle */}
-          <button
-            onClick={toggleSound}
-            className="p-1.5 rounded-lg bg-red-850 hover:bg-red-800 text-amber-200 border border-red-700/80 cursor-pointer transition-colors"
-            title={isMuted ? t.actions.unmuteSfx : t.actions.muteSfx}
-          >
-            {isMuted ? <VolumeX className="size-4 text-red-300" /> : <Volume2 className="size-4 text-amber-300" />}
           </button>
 
           {/* Badge Counter */}

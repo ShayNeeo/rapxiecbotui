@@ -2,7 +2,7 @@
 
 class CircusAudioEngine {
   private ctx: AudioContext | null = null;
-  private isMuted: boolean = false;
+  private isMuted: boolean = true;
   private isPlayingBgm: boolean = false;
   private bgmTimeoutId: number | null = null;
 
