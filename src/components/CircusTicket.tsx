@@ -29,6 +29,25 @@ import { CHATBOT_AI_URL, CIRCUS_3D_URL } from "@/src/lib/constants";
 import { Link } from "react-router-dom";
 import { Facebook } from "@/src/components/icons/Facebook";
 
+// ponytail: cache Google Fonts CSS for export so each capture skips re-fetch.
+let ticketFontCSSCache: string | null = null;
+const TICKET_FONT_CSS_URL =
+  "https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Bungee&family=Patrick+Hand&display=swap";
+
+async function getTicketFontEmbedCSS(): Promise<string | null> {
+  if (ticketFontCSSCache) return ticketFontCSSCache;
+  try {
+    const res = await fetch(TICKET_FONT_CSS_URL);
+    if (!res.ok) return null;
+    const css = await res.text();
+    if (!css.includes("url(")) return null;
+    ticketFontCSSCache = css;
+    return css;
+  } catch {
+    return null;
+  }
+}
+
 interface CircusTicketProps {
   onBack: () => void;
   badges: CircusBadge[];
@@ -152,23 +171,31 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
       );
 
       const node = ticketRef.current;
-      const width = node.scrollWidth || node.clientWidth;
+      // ponytail: clamp to visible width. scrollWidth includes offscreen
+      // overflow on narrow viewports and rasterized a double-wide capture.
+      const width = node.clientWidth;
       const height = node.scrollHeight || node.clientHeight;
 
-      // Explicitly set skipFonts: true & fontEmbedCSS: '' so html-to-image never
-      // attempts to inspect remote stylesheets (e.g. Google Fonts), preventing 'cssRules' security errors.
-      // cacheBust is set to false to prevent corrupting data: URLs and local assets.
+      // ponytail: single scale factor. canvasWidth*2 + pixelRatio 2 multiplied
+      // to 4x output and OOM'd mobile browsers; pixelRatio alone sets resolution.
+      // Floored at 2 so DPR=1 desktops still export a print-grade PNG.
+      const scale = Math.max(2, Math.min(typeof window !== "undefined" ? window.devicePixelRatio : 2, 3));
+      // Cached Google Fonts CSS: correct Bungee/Be Vietnam glyphs in export
+      // without inspecting cross-origin stylesheets (avoids cssRules errors).
+      const fontCSS = await getTicketFontEmbedCSS();
       const options = {
         width,
         height,
-        canvasWidth: width * 2,
-        canvasHeight: height * 2,
+        pixelRatio: scale,
         quality: 1,
-        pixelRatio: 2,
         cacheBust: false,
         skipFonts: true,
-        fontEmbedCSS: "",
-        backgroundColor: "#FFFDF7",
+        fontEmbedCSS: fontCSS ?? "",
+        backgroundColor: "#FFFDF8",
+        // ponytail: zero the auto margins. html-to-image clones the card into a
+        // foreignObject whose container width differs from the page, so `mx-auto`
+        // re-centered it ~205px right and clipped every right-anchored string.
+        style: { margin: "0" },
         filter: (n: Node) => {
           if (n instanceof HTMLElement && (n.classList.contains("no-print") || n.classList.contains("ticket-no-capture"))) {
             return false;
@@ -199,9 +226,10 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
       origin: { y: 0.6 },
     });
     setActiveModal('save');
-    if (!ticketImageUrl) {
-      await captureTicketImage();
-    }
+    // ponytail: always re-capture (~200ms). A PNG cached from a previous
+    // viewport served stale double-wide captures; invalidating by width would
+    // need a width key we don't track.
+    await captureTicketImage();
   };
 
   const handleOpenShareModal = async () => {
@@ -212,9 +240,8 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
       origin: { y: 0.6 },
     });
     setActiveModal('share');
-    if (!ticketImageUrl) {
-      await captureTicketImage();
-    }
+    // ponytail: same always-fresh rule as the save modal.
+    await captureTicketImage();
   };
 
   const downloadBlobToComputer = async (blob: Blob, fileName: string) => {
@@ -484,10 +511,10 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
 
           {/* Right: Subtitle & Title */}
           <div className="flex flex-col justify-center min-w-0">
-            <div className="text-[11px] sm:text-xs uppercase font-bold tracking-wider text-red-800 truncate">
+            <div className="text-[11px] sm:text-xs uppercase font-bold tracking-wider text-red-800">
               {isEn ? "★ Vietnamese Circus • Honorary Pass ★" : "RẠP XIẾC VIỆT NAM • VÉ DANH DỰ"}
             </div>
-            <h2 className="font-circus text-2xl sm:text-3xl text-red-900 leading-tight tracking-wide whitespace-nowrap">
+            <h2 className="font-circus text-2xl sm:text-3xl text-red-900 leading-tight tracking-wide">
               {isEn ? "POCKET CIRCUS" : "RẠP XIẾC BỎ TÚI"}
             </h2>
             <div className="text-[11px] sm:text-xs text-stone-600 font-medium mt-0.5">
@@ -843,14 +870,14 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
                   <span>{isEn ? "Creating high-definition ticket image..." : "Đang tạo ảnh vé chất lượng cao..."}</span>
                 </div>
               ) : ticketImageUrl ? (
-                <div className="space-y-2 w-full flex flex-col items-center">
+                <div className="space-y-2 w-full min-w-0 flex flex-col items-center">
                   <img
                     src={ticketImageUrl}
                     alt="Vé kỷ niệm Rạp Xiếc Bỏ Túi"
-                    className="w-full max-h-[230px] sm:max-h-[270px] object-contain rounded-xl border border-amber-300/80 shadow-md"
+                    className="max-h-[230px] sm:max-h-[270px] w-auto max-w-full h-auto object-contain rounded-xl border border-amber-300/80 shadow-md"
                   />
                   <span className="text-[11px] text-amber-800 font-medium">
-                    {isEn ? "✓ High-definition 2X PNG Ticket Photo" : "✓ Ảnh vé chất lượng cao 2X (.PNG)"}
+                    {isEn ? "✓ High-definition PNG ticket photo" : "✓ Ảnh vé chất lượng cao (.PNG)"}
                   </span>
                 </div>
               ) : (
@@ -946,11 +973,11 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
                   <span>{isEn ? "Preparing ticket for sharing..." : "Đang chuẩn bị ảnh vé..."}</span>
                 </div>
               ) : ticketImageUrl ? (
-                <div className="space-y-2 w-full flex flex-col items-center">
+                <div className="space-y-2 w-full min-w-0 flex flex-col items-center">
                   <img
                     src={ticketImageUrl}
                     alt="Vé kỷ niệm Rạp Xiếc Bỏ Túi"
-                    className="w-full max-h-[220px] sm:max-h-[260px] object-contain rounded-xl border border-amber-300/80 shadow-md"
+                    className="max-h-[220px] sm:max-h-[260px] w-auto max-w-full h-auto object-contain rounded-xl border border-amber-300/80 shadow-md"
                   />
                   <span className="text-[11px] text-amber-800 font-medium">
                     {isEn ? "✓ Ready to share across platforms" : "✓ Sẵn sàng chia sẻ đến bạn bè"}

@@ -27,3 +27,20 @@
 - `rtk pnpm run build`: Succeeded in 838ms (`tsc -b && vite build` passed with zero errors, producing production bundle).
 - `rtk pnpm run lint`: Succeeded with 0 errors (`oxlint`).
 - **GitHub Public Repository**: Created and pushed to [https://github.com/ShayNeeo/rapxiecbotui](https://github.com/ShayNeeo/rapxiecbotui) with clean git commit history, untracked local secrets (`.env.local`), and active `main` branch.
+
+### Ticket PNG export geometry (2026-09-27)
+- **What changed** (`src/components/CircusTicket.tsx` only):
+  - `toPng` scale: `canvasWidth*2` + `pixelRatio: 2` multiplied to 4x output and OOM'd mobile browsers. Now a single `pixelRatio: Math.max(2, Math.min(devicePixelRatio, 3))`. The `Math.max(2, ...)` floor matters: a bare `Math.min(dpr, 3)` collapses DPR=1 desktops to 1x, turning a 452px card into a 452px PNG.
+  - `toPng` `style: { margin: "0" }` — root cause of the clipped captures. The card's `mx-auto` was re-centering ~205px right inside html-to-image's foreignObject (whose container width differs from the page), cutting every right-anchored string: masthead, serial, date column, benefits, seal, footer.
+  - Capture width measured with `clientWidth`, not `scrollWidth` (scrollWidth includes offscreen overflow and rasterized a double-wide capture).
+  - Cached Google Fonts embed CSS (`getTicketFontEmbedCSS`) so each capture skips the refetch and never inspects cross-origin stylesheets.
+  - Save and share modals always re-capture on open (~200ms). A PNG cached from a previous viewport served stale double-wide captures; keying the cache on width would need state we don't track.
+  - Preview `<img>` sized by height (`w-auto max-w-full h-auto`) with a `min-w-0` parent — `w-full` letterboxed portrait captures.
+  - Header no longer truncates: dropped `truncate` / `whitespace-nowrap`.
+  - Added `styling.md` (visual contract: fonts, palette, spacing for future screens).
+- **Decisions / tradeoffs**: took upstream's `CircusTicket.tsx` wholesale rather than resolving the rebase conflict line-by-line. An earlier local commit also removed the rename/logo state as "dead" — that was wrong: upstream has a live `Đổi tên` UI (`isEditingName`/`tempName`, persisted to `pocket_circus_visitor_name`) and `CircusHeader`/`CircusStage`/`CircusPromo` still consume `logoUrl`/`onUploadLogo`/`onResetLogo`. Only the capture-geometry fixes were re-applied; the rename UI and every logo prop are untouched.
+- **Verification**:
+  - `rtk pnpm run build`: clean, 1.08s, zero TS errors.
+  - `rtk pnpm run lint`: 0 errors (pre-existing warnings unchanged, none new).
+  - CDP DOM geometry at 1280x900 / 390x844 / 320x700: 12/12 pass. `naturalWidth / card.clientWidth == 2.0` exactly (904/452, 652/326, 512/256); one preview image, no page overflow, modal present. DOM geometry rather than vision reads — at preview scale vision invents ticket text that isn't there.
+  - Two harness gotchas worth keeping: the main save button goes through `showSaveFilePicker`, which never resolves headless, so the check asserts on the share modal (identical `captureTicketImage()` path). And the user's long-lived debug Chrome already holds CDP port 9222 — a checker bound to 9222 silently attaches to that browser and reports false failures; use a free port.
