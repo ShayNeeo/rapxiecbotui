@@ -1,6 +1,8 @@
 import bannerImg from "@/src/assets/images/circus_history_banner_1790173992374.jpg";
 import milestone1CoverImg from "@/src/assets/images/milestone_1_ancient_circus_cover.jpg";
 import milestone2CoverImg from "@/src/assets/images/milestone_2_classical_circus_cover.jpg";
+import milestone3CoverImg from "@/src/assets/images/milestone_3_contemporary_circus_cover.jpg";
+import milestone4CoverImg from "@/src/assets/images/milestone_4_vietnam_century_circus_cover.jpg";
 
 export interface HistoryPhoto {
   id: string;
@@ -19,6 +21,8 @@ export const DEFAULT_OVERVIEW_COVER = bannerImg;
 export const DEFAULT_MILESTONE_COVERS: Record<string, string> = {
   "ancient-circus": milestone1CoverImg,
   "classical-circus": milestone2CoverImg,
+  "contemporary-circus": milestone3CoverImg,
+  "vietnam-century-circus": milestone4CoverImg,
 };
 
 // Default milestone gallery photos
@@ -27,8 +31,8 @@ export const DEFAULT_MILESTONE_PHOTOS: Record<string, HistoryPhoto[]> = {
     {
       id: "photo-milestone-1-cover",
       url: milestone1CoverImg,
-      caption: "Thêm ảnh bìa cho cột mốc 1: Nguồn gốc xiếc thời cổ đại",
-      captionEn: "Cover photo for milestone 1: Ancient circus origins",
+      caption: "Nguồn gốc xiếc thời cổ đại",
+      captionEn: "Ancient circus origins",
       sourceUrl: "https://en.baodanang.vn/nguoi-sang-tao-rap-xiec-hien-dai-3282905.html",
       eraId: "ancient-circus",
       isCover: true,
@@ -39,16 +43,38 @@ export const DEFAULT_MILESTONE_PHOTOS: Record<string, HistoryPhoto[]> = {
     {
       id: "photo-milestone-2-cover",
       url: milestone2CoverImg,
-      caption: "Thêm ảnh bìa cho cột mốc 2: Nguồn gốc xiếc cổ điển",
-      captionEn: "Cover photo for milestone 2: Classical circus origins",
+      caption: "Nguồn gốc xiếc cổ điển",
+      captionEn: "Classical circus origins",
       sourceUrl: "https://36pho.com/xiec-o-ha-noi-xua-1936.html",
       eraId: "classical-circus",
       isCover: true,
       isDefault: true,
     }
   ],
-  "contemporary-circus": [],
-  "vietnam-century-circus": [],
+  "contemporary-circus": [
+    {
+      id: "photo-milestone-3-cover",
+      url: milestone3CoverImg,
+      caption: "Nguồn gốc xiếc đương đại",
+      captionEn: "Contemporary circus origins",
+      sourceUrl: "https://chinhsachcuocsong.vnanet.vn/nghe-thuat-xiec-qua-goc-nhin-cua-nghe-sy-nhiep-anh-nha-bao-thanh-ha/16876.html",
+      eraId: "contemporary-circus",
+      isCover: true,
+      isDefault: true,
+    }
+  ],
+  "vietnam-century-circus": [
+    {
+      id: "photo-milestone-4-cover",
+      url: milestone4CoverImg,
+      caption: "Hành trình 100 năm: Sự hình thành các gánh xiếc bản địa",
+      captionEn: "100-Year Journey: Formation of Indigenous Vietnamese Circus Troupes",
+      sourceUrl: "https://arttimes.vn/san-khau-dien-anh/ky-niem-100-nam-xiec-viet-nam-ton-vinh-ong-to-cua-nganh-xiec-chuyen-nghiep-c17a18668.html",
+      eraId: "vietnam-century-circus",
+      isCover: true,
+      isDefault: true,
+    }
+  ],
 };
 
 const STORAGE_KEY_COVER = "circus_history_custom_cover";

@@ -118,8 +118,8 @@ export const AddPhotoDialog: React.FC<AddPhotoDialogProps> = ({
   const dialogTitle = customTitle || (
     isCoverMode
       ? initialEraId === "overview"
-        ? isEn ? "Change Overview Cover Photo" : "Đổi Ảnh Bìa Ngoài Triển Lãm"
-        : isEn ? "Add Milestone Cover Photo" : "Thêm / Thay Đổi Ảnh Bìa Cột Mốc"
+        ? isEn ? "Overview Photo" : "Tư Liệu Ảnh Triển Lãm"
+        : isEn ? "Milestone Photo" : "Tư Liệu Ảnh Cột Mốc"
       : isEn ? "Add Historical Photo" : "Thêm Ảnh Tư Liệu Lịch Sử"
   );
 
@@ -300,7 +300,7 @@ export const AddPhotoDialog: React.FC<AddPhotoDialogProps> = ({
             <Sparkles className="size-3.5" />
             <span>
               {isCoverMode
-                ? isEn ? "Save Cover Photo" : "Lưu Làm Ảnh Bìa"
+                ? isEn ? "Save Photo" : "Lưu Ảnh"
                 : isEn ? "Add Photo" : "Lưu Ảnh"}
             </span>
           </button>

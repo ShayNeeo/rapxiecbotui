@@ -16,7 +16,6 @@ import {
   Quote,
   Camera,
   Maximize2,
-  Trash2,
   Plus,
   Image as ImageIcon
 } from "lucide-react";
@@ -196,11 +195,7 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
                 <span className="text-[11px] font-bold text-white bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 flex items-center gap-1.5 shadow-sm pointer-events-auto">
                   <ImageIcon className="size-3 text-amber-300" />
                   <span>
-                    {era.id === "ancient-circus"
-                      ? (isEn ? "Cover Photo for Milestone 1" : "Thêm ảnh bìa cho cột mốc 1")
-                      : era.id === "classical-circus"
-                      ? (isEn ? "Cover Photo for Milestone 2" : "Thêm ảnh bìa cho cột mốc 2")
-                      : (isEn ? `Cover • Milestone ${era.sectionNumber}` : `Ảnh bìa • Cột mốc ${era.sectionNumber}`)}
+                    {isEn ? (era.titleEn || era.title) : era.title}
                   </span>
                 </span>
 
@@ -211,7 +206,7 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
                       setActiveLightboxPhoto({
                         id: `cover-${era.id}`,
                         url: milestoneCover,
-                        caption: isEn ? `Cover Photo: ${era.titleEn || era.title}` : `Ảnh bìa: ${era.title}`,
+                        caption: isEn ? (era.titleEn || era.title) : era.title,
                         eraId: era.id,
                       });
                     }}
@@ -220,22 +215,6 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
                   >
                     <Maximize2 className="size-3.5" />
                   </button>
-
-                  <button
-                    onClick={handleOpenCoverDialog}
-                    className="px-3 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-amber-950 font-bold text-xs flex items-center gap-1.5 transition-all shadow-md cursor-pointer border border-amber-500"
-                  >
-                    <Camera className="size-3.5" />
-                    <span>{isEn ? "Change Cover" : "Đổi ảnh bìa"}</span>
-                  </button>
-
-                  <button
-                    onClick={handleDeleteCover}
-                    className="p-2 rounded-xl bg-red-600/80 hover:bg-red-600 text-white transition-all cursor-pointer shadow-md"
-                    title={isEn ? "Remove cover photo" : "Xóa ảnh bìa"}
-                  >
-                    <Trash2 className="size-3.5" />
-                  </button>
                 </div>
               </div>
 
@@ -243,11 +222,7 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
               <div className="absolute bottom-3 left-3 right-3 text-white flex flex-col sm:flex-row sm:items-end justify-between gap-2 pointer-events-none">
                 <div className="space-y-0.5 pointer-events-auto max-w-xl">
                   <p className="text-xs sm:text-sm font-bold drop-shadow-md text-amber-100/95 leading-relaxed">
-                    📷 {era.id === "ancient-circus" 
-                      ? (isEn ? "Cover Photo for Milestone 1: Origin of Circus & Classical Ring Origins" : "Thêm ảnh bìa cho cột mốc 1: Nguồn gốc xiếc thời cổ đại") 
-                      : era.id === "classical-circus"
-                      ? (isEn ? "Cover Photo for Milestone 2: Classical Circus & Hanoi Heritage 1936" : "Thêm ảnh bìa cho cột mốc 2: Nguồn gốc xiếc cổ điển")
-                      : (isEn ? (era.titleEn || era.title) : era.title)}
+                    📷 {isEn ? (era.titleEn || era.title) : era.title}
                   </p>
                 </div>
 
@@ -278,6 +253,32 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
                     <ExternalLink className="size-3" />
                   </a>
                 )}
+                {era.id === "contemporary-circus" && (
+                  <a
+                    href="https://chinhsachcuocsong.vnanet.vn/nghe-thuat-xiec-qua-goc-nhin-cua-nghe-sy-nhiep-anh-nha-bao-thanh-ha/16876.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="self-end inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/80 hover:bg-red-700 backdrop-blur-md text-amber-200 hover:text-white text-[11px] font-semibold transition-all border border-amber-400/40 hover:border-red-400 shadow-md cursor-pointer pointer-events-auto shrink-0"
+                    title={isEn ? "Source: TTXVN / Thanh Ha" : "Nguồn ảnh: TTXVN (Thanh Hà)"}
+                  >
+                    <span>{isEn ? "Source: TTXVN (vnanet.vn)" : "Nguồn ảnh: TTXVN"}</span>
+                    <ExternalLink className="size-3" />
+                  </a>
+                )}
+                {era.id === "vietnam-century-circus" && (
+                  <a
+                    href="https://arttimes.vn/san-khau-dien-anh/ky-niem-100-nam-xiec-viet-nam-ton-vinh-ong-to-cua-nganh-xiec-chuyen-nghiep-c17a18668.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="self-end inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/80 hover:bg-red-700 backdrop-blur-md text-amber-200 hover:text-white text-[11px] font-semibold transition-all border border-amber-400/40 hover:border-red-400 shadow-md cursor-pointer pointer-events-auto shrink-0"
+                    title={isEn ? "Source: arttimes.vn" : "Nguồn ảnh: arttimes.vn"}
+                  >
+                    <span>{isEn ? "Source: Arttimes.vn" : "Nguồn ảnh: Arttimes.vn"}</span>
+                    <ExternalLink className="size-3" />
+                  </a>
+                )}
               </div>
             </div>
           </div>
@@ -293,12 +294,12 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
 
             <div className="space-y-1 max-w-md">
               <h4 className="font-circus text-base sm:text-lg text-neutral-900 group-hover/addcover:text-red-700 transition-colors">
-                {isEn ? `Add Cover Photo for Milestone ${era.sectionNumber}` : `Thêm Ảnh Bìa cho Cột Mốc ${era.sectionNumber}`}
+                {isEn ? `Milestone ${era.sectionNumber}` : `Cột Mốc ${era.sectionNumber}`}
               </h4>
               <p className="text-xs text-neutral-600 leading-relaxed">
                 {isEn 
                   ? "This milestone currently has no cover photo. Click to upload an authentic image from your device or paste an image URL."
-                  : "Cột mốc này hiện chưa có ảnh bìa. Bấm vào đây để tải ảnh từ máy tính / điện thoại hoặc dán link URL để tự thiết lập ảnh bìa theo ý muốn."}
+                  : "Cột mốc này hiện chưa có ảnh tư liệu. Bấm vào đây để tải ảnh từ máy tính / điện thoại hoặc dán link URL để tự thiết lập ảnh theo ý muốn."}
               </p>
             </div>
 
@@ -307,7 +308,7 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
               className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-700 to-amber-600 hover:from-red-600 hover:to-amber-500 text-white font-bold text-xs shadow-md flex items-center gap-2 border border-amber-300 pointer-events-none mt-1"
             >
               <Plus className="size-4" />
-              <span>{isEn ? "Upload / Add Cover Photo" : "Tải lên / Thêm ảnh bìa"}</span>
+              <span>{isEn ? "Upload Photo" : "Tải lên tư liệu ảnh"}</span>
             </button>
           </div>
         )}
@@ -340,13 +341,6 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
                   className="group relative shrink-0 rounded-xl overflow-hidden border-2 border-amber-200 hover:border-amber-400 w-28 h-20 bg-neutral-900 cursor-pointer shadow-2xs"
                 >
                   <img src={p.url} alt={p.caption} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
-                  <button
-                    onClick={(e) => handleDeletePhoto(p.id, e)}
-                    className="absolute top-1 right-1 p-1 rounded-md bg-red-600/90 text-white opacity-0 group-hover:opacity-100 transition-opacity"
-                    title={isEn ? "Delete photo" : "Xóa ảnh"}
-                  >
-                    <Trash2 className="size-2.5" />
-                  </button>
                 </div>
               ))}
             </div>
@@ -830,8 +824,8 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
         customTitle={
           dialogMode === "cover"
             ? (isEn 
-                ? `Add Cover Photo for Milestone ${era.sectionNumber}` 
-                : `Thêm / Thay Đổi Ảnh Bìa cho Mốc ${era.sectionNumber}`)
+                ? `Milestone ${era.sectionNumber}` 
+                : `Tư Liệu Cột Mốc ${era.sectionNumber}`)
             : (isEn ? "Add Historical Photo" : "Thêm Ảnh Tư Liệu Lịch Sử")
         }
         onClose={() => setIsAddPhotoOpen(false)}

@@ -9,10 +9,7 @@ import {
   ArrowRight,
   BookOpen,
   Camera,
-  RotateCcw,
   Plus,
-  Trash2,
-  Edit2,
   Image as ImageIcon,
   ExternalLink
 } from "lucide-react";
@@ -102,10 +99,10 @@ export const HistoryHome: React.FC<HistoryHomeProps> = ({
 
   const targetEraObj = eras.find((e) => e.id === targetEraForCover);
   const dialogCustomTitle = targetEraForCover === "overview"
-    ? (isEn ? "Change Overview Cover Photo" : "Đổi Ảnh Bìa Ngoài Triển Lãm")
+    ? (isEn ? "Overview Photo" : "Tư Liệu Ảnh Triển Lãm")
     : (isEn 
-        ? `Add Cover Photo for Milestone ${targetEraObj?.sectionNumber || ""}`
-        : `Thêm / Đổi Ảnh Bìa cho Mốc ${targetEraObj?.sectionNumber || ""}`);
+        ? `Milestone ${targetEraObj?.sectionNumber || ""}`
+        : `Tư Liệu Cột Mốc ${targetEraObj?.sectionNumber || ""}`);
 
   return (
     <div className="space-y-10 animate-in fade-in duration-300">
@@ -127,25 +124,6 @@ export const HistoryHome: React.FC<HistoryHomeProps> = ({
             <div className="inline-flex items-center gap-2 bg-amber-400 text-red-950 text-xs font-black uppercase px-3 py-1.5 rounded-full shadow-sm w-fit">
               <HistoryIcon className="size-3.5" />
               <span>{isEn ? "Discovering Historical Documents" : "Khám Phá Tư Liệu Lịch Sử"}</span>
-            </div>
-
-            {/* Change / Reset Cover Photo Controls */}
-            <div className="flex items-center gap-2">
-              <button
-                onClick={handleOpenCoverDialog}
-                className="px-3 py-1.5 rounded-xl bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/40 text-amber-200 hover:text-white text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
-                title={isEn ? "Change outside cover photo" : "Thay đổi ảnh bìa bên ngoài"}
-              >
-                <Camera className="size-3.5" />
-                <span>{isEn ? "Change Cover Photo" : "Đổi Ảnh Bìa Ngoài"}</span>
-              </button>
-              <button
-                onClick={handleResetCover}
-                className="p-1.5 rounded-xl bg-black/30 hover:bg-black/50 border border-white/20 text-neutral-300 hover:text-white transition-all cursor-pointer"
-                title={isEn ? "Reset to default cover" : "Đặt lại ảnh bìa mặc định"}
-              >
-                <RotateCcw className="size-3.5" />
-              </button>
             </div>
           </div>
 
@@ -222,35 +200,12 @@ export const HistoryHome: React.FC<HistoryHomeProps> = ({
                       </span>
                     </div>
 
-                    {/* Change / Delete Cover Controls */}
-                    <div className="absolute top-3 right-3 flex items-center gap-1.5">
-                      <button
-                        onClick={(e) => handleOpenMilestoneCoverDialog(era.id, e)}
-                        className="px-2.5 py-1 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md text-amber-300 hover:text-white text-[11px] font-bold border border-white/20 flex items-center gap-1 shadow-md cursor-pointer transition-all"
-                        title={isEn ? "Change cover photo" : "Đổi ảnh bìa"}
-                      >
-                        <Edit2 className="size-3" />
-                        <span>{isEn ? "Change" : "Đổi ảnh"}</span>
-                      </button>
-                      <button
-                        onClick={(e) => handleDeleteMilestoneCover(era.id, e)}
-                        className="p-1 rounded-full bg-red-600/80 hover:bg-red-700 text-white shadow-md cursor-pointer transition-all"
-                        title={isEn ? "Remove cover photo" : "Xóa ảnh bìa"}
-                      >
-                        <Trash2 className="size-3" />
-                      </button>
-                    </div>
-
                     {/* Bottom Indicator */}
                     <div className="absolute bottom-2.5 left-3 right-3 text-[11px] text-amber-200/90 font-medium truncate drop-shadow flex items-center justify-between gap-1.5">
                       <div className="flex items-center gap-1.5 truncate">
                         <ImageIcon className="size-3 shrink-0" />
                         <span className="truncate">
-                          {era.id === "ancient-circus" 
-                            ? (isEn ? "Cover Photo for Milestone 1" : "Thêm ảnh bìa cho cột mốc 1") 
-                            : era.id === "classical-circus"
-                            ? (isEn ? "Cover Photo for Milestone 2" : "Thêm ảnh bìa cho cột mốc 2")
-                            : (isEn ? "Custom cover photo active" : "Ảnh bìa đã cài đặt cho cột mốc")}
+                          {isEn ? (era.titleEn || era.title) : era.title}
                         </span>
                       </div>
                       {era.id === "ancient-circus" && (
@@ -279,6 +234,32 @@ export const HistoryHome: React.FC<HistoryHomeProps> = ({
                           <ExternalLink className="size-2.5" />
                         </a>
                       )}
+                      {era.id === "contemporary-circus" && (
+                        <a
+                          href="https://chinhsachcuocsong.vnanet.vn/nghe-thuat-xiec-qua-goc-nhin-cua-nghe-sy-nhiep-anh-nha-bao-thanh-ha/16876.html"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="text-[10px] text-amber-300 hover:text-white underline decoration-amber-400/60 flex items-center gap-1 shrink-0 bg-black/60 px-2 py-0.5 rounded backdrop-blur-xs"
+                          title={isEn ? "Source: TTXVN" : "Nguồn ảnh: TTXVN"}
+                        >
+                          <span>{isEn ? "Source: TTXVN" : "Nguồn: TTXVN"}</span>
+                          <ExternalLink className="size-2.5" />
+                        </a>
+                      )}
+                      {era.id === "vietnam-century-circus" && (
+                        <a
+                          href="https://arttimes.vn/san-khau-dien-anh/ky-niem-100-nam-xiec-viet-nam-ton-vinh-ong-to-cua-nganh-xiec-chuyen-nghiep-c17a18668.html"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="text-[10px] text-amber-300 hover:text-white underline decoration-amber-400/60 flex items-center gap-1 shrink-0 bg-black/60 px-2 py-0.5 rounded backdrop-blur-xs"
+                          title={isEn ? "Source: Arttimes.vn" : "Nguồn ảnh: Arttimes.vn"}
+                        >
+                          <span>{isEn ? "Source: Arttimes.vn" : "Nguồn: Arttimes"}</span>
+                          <ExternalLink className="size-2.5" />
+                        </a>
+                      )}
                     </div>
                   </div>
                 ) : (
@@ -303,7 +284,7 @@ export const HistoryHome: React.FC<HistoryHomeProps> = ({
                     <div className="space-y-0.5">
                       <span className="text-xs font-bold text-amber-950 flex items-center justify-center gap-1 group-hover/cover:text-red-700 transition-colors">
                         <Plus className="size-3.5" />
-                        {isEn ? `Add cover photo for Milestone ${era.sectionNumber}` : `Thêm ảnh bìa cho Mốc ${era.sectionNumber}`}
+                        {isEn ? `Milestone ${era.sectionNumber}` : `Cột Mốc ${era.sectionNumber}`}
                       </span>
                       <span className="text-[11px] text-neutral-500 block">
                         {isEn ? "Click to upload from device or paste image URL" : "Bấm vào đây để tải ảnh từ máy hoặc dán link URL"}
