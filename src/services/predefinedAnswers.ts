@@ -165,6 +165,23 @@ Các cấu trúc khung sắt độc lạ, vòng tròn khổng lồ, dây lụa t
 • MƠ SHOW: https://youtu.be/4Tk5-QjyLr0?si=DetX7vEW9YLB353W`
 
 /**
+ * ==============================================================================
+ * CÂU TRẢ LỜI CỐ ĐỊNH 13: THÔNG TIN VỀ XIẾC ĐƯƠNG ĐẠI VIỆT NAM / XIẾC ĐƯƠNG ĐẠI LÀ GÌ
+ * ==============================================================================
+ */
+export const CIRCUS_CONTEMPORARY_INFO_ANSWER = `👉🏻🎪 Tại Việt Nam, nghệ thuật xiếc bắt đầu hình thành và phát triển từ đầu thế kỷ XX. Trong tiến trình xây dựng nền xiếc chuyên nghiệp, NSND Tạ Duy Hiển (1889–1967) được ghi nhận là người đặt nền móng cho nghệ thuật xiếc Việt Nam hiện đại.
+
+📜 Năm 1922, ông thành lập gánh xiếc do người Việt tổ chức và biểu diễn chuyên nghiệp đầu tiên, mở ra bước phát triển mới cho nghệ thuật xiếc nước ta. Sau Cách mạng Tháng Tám, ông tiếp tục tham gia xây dựng Đoàn Xiếc Thống Nhất, tiền thân của Liên đoàn Xiếc Việt Nam, góp phần đào tạo nhiều thế hệ nghệ sĩ và đặt nền tảng cho sự phát triển của nghệ thuật xiếc chuyên nghiệp tại Việt Nam.
+
+✨ Những đóng góp của ông Tạ Duy Hiển có ý nghĩa quan trọng trong việc bảo tồn, phát huy nghệ thuật xiếc dân tộc và tạo tiền đề để xiếc Việt Nam từng bước hội nhập với xu hướng phát triển của nghệ thuật xiếc thế giới.
+
+📍 Xem video tại đây: https://youtu.be/rS_aUw4UvKg?si=0t4_YsM47xUs5kRG
+
+🎟️🤹‍♀️ Trên cơ sở kế thừa những giá trị của xiếc truyền thống, từ cuối thập niên 1960 và phát triển mạnh từ những năm 1970, một xu hướng đổi mới trong nghệ thuật xiếc bắt đầu hình thành tại châu Âu với tên gọi **xiếc đương đại** (Contemporary Circus hoặc Contemporary Circus Arts).
+
+🎭 Loại hình này chịu ảnh hưởng từ phong trào Nouveau Cirque tại Pháp, hướng đến việc đổi mới tư duy sáng tạo trong nghệ thuật biểu diễn, giảm dần sự phụ thuộc vào các tiết mục trình diễn động vật và tăng cường khả năng biểu đạt của cơ thể con người thông qua sự kết hợp giữa kỹ thuật xiếc với các yếu tố sân khấu, múa đương đại, âm nhạc, mỹ thuật, ánh sáng và nghệ thuật kể chuyện.`
+
+/**
  * Chuẩn hóa chuỗi tiếng Việt không dấu, loại bỏ ký tự đặc biệt để so khớp chính xác
  */
 export function normalizeVietnamese(str: string): string {
@@ -752,6 +769,64 @@ export function matchCircusPropsQuestion(query: string): boolean {
   return false
 }
 
+/**
+ * 13. Khớp câu hỏi: Thông tin về xiếc đương đại Việt Nam / thông tin về xiếc / xiếc đương đại là gì
+ */
+export function matchCircusContemporaryInfoQuestion(query: string): boolean {
+  const norm = normalizeVietnamese(query)
+  if (!norm) return false
+
+  // Tránh xung đột với các câu hỏi đặc thù khác
+  if (norm.includes('khac biet') || norm.includes('khac nhau') || norm.includes('so sanh') || norm.includes('truyen thong va duong dai')) {
+    return false
+  }
+  if (norm.includes('yeu to') || norm.includes('quyet dinh') || norm.includes('ky thuat kho') || norm.includes('dao cu')) {
+    return false
+  }
+
+  const exactPatterns = [
+    'thong tin ve xiec duong dai viet nam',
+    'thong tin ve xiec duong dai',
+    'thong tin xiec duong dai',
+    'thong tin ve xiec',
+    'thong tin xiec',
+    'xiec duong dai la gi',
+    'xiec duong dai viet nam la gi',
+    'xiec duong dai viet nam',
+    'xiec duong dai',
+    'the nao la xiec duong dai',
+    'the nao la xiec duong dai viet nam',
+    'dinh nghia xiec duong dai',
+    'khai niem xiec duong dai',
+    'gioi thieu ve xiec duong dai',
+    'gioi thieu xiec duong dai',
+    'tim hieu ve xiec duong dai',
+    'tim hieu xiec duong dai',
+    'xiec la gi',
+    'nghe thuat xiec la gi',
+    'tong quan ve xiec',
+    'tong quan ve xiec duong dai',
+    'tim hieu ve xiec',
+    'thong tin ve xiec viet nam',
+  ]
+
+  for (const pattern of exactPatterns) {
+    if (norm === pattern || norm.includes(pattern)) {
+      return true
+    }
+  }
+
+  const hasCircus = norm.includes('xiec')
+  const hasContemporary = norm.includes('duong dai')
+  const hasInfo = norm.includes('thong tin') || norm.includes('la gi') || norm.includes('the nao') || norm.includes('khai niem') || norm.includes('gioi thieu') || norm.includes('tim hieu')
+
+  if (hasCircus && (hasContemporary || hasInfo)) {
+    return true
+  }
+
+  return false
+}
+
 export const CIRCUS_VENUES_SOURCE: RetrievedSource = {
   id: 'circus-venues-and-tickets-official',
   title: 'Địa điểm biểu diễn và hướng dẫn mua vé các Rạp Xiếc Việt Nam',
@@ -846,6 +921,14 @@ export const CIRCUS_PROPS_SOURCE: RetrievedSource = {
   category: 'knowledge',
   similarity: 1.0,
   content: CIRCUS_PROPS_ANSWER,
+}
+
+export const CIRCUS_CONTEMPORARY_INFO_SOURCE: RetrievedSource = {
+  id: 'circus-contemporary-vietnam-info-official',
+  title: 'Thông tin về nghệ thuật xiếc đương đại Việt Nam và thế giới',
+  category: 'knowledge',
+  similarity: 1.0,
+  content: CIRCUS_CONTEMPORARY_INFO_ANSWER,
 }
 
 /**
@@ -943,7 +1026,15 @@ export function getPredefinedAnswer(query: string): {
     }
   }
 
-  // 12. Nhóm Địa điểm & Mua vé
+  // 12. Nhóm Thông tin về xiếc đương đại Việt Nam / xiếc đương đại là gì
+  if (matchCircusContemporaryInfoQuestion(query)) {
+    return {
+      answer: CIRCUS_CONTEMPORARY_INFO_ANSWER,
+      sources: [CIRCUS_CONTEMPORARY_INFO_SOURCE],
+    }
+  }
+
+  // 13. Nhóm Địa điểm & Mua vé
   if (matchCircusVenuesQuestion(query)) {
     return {
       answer: CIRCUS_VENUES_AND_TICKETS_ANSWER,

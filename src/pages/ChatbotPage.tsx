@@ -83,6 +83,11 @@ const STARTER_PROMPTS = [
     title: 'Đạo cụ truyền thống phổ biến',
     prompt: 'Có những đạo cụ truyền thống nào phổ biến trong xiếc?',
   },
+  {
+    icon: '🎪',
+    title: 'Xiếc đương đại là gì?',
+    prompt: 'Thông tin về xiếc đương đại Việt Nam',
+  },
 ]
 
 const getCurrentTimestamp = () => Date.now()

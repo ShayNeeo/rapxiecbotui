@@ -119,6 +119,13 @@ const SAMPLE_QUESTIONS = [
     promptEn: "What are the common traditional props in circus?",
     icon: "🎋",
   },
+  {
+    label: "Xiếc đương đại là gì?",
+    labelEn: "What is Contemporary Circus?",
+    prompt: "Thông tin về xiếc đương đại Việt Nam",
+    promptEn: "Information about Vietnamese contemporary circus",
+    icon: "🎪",
+  },
 ];
 
 const INITIAL_GREETING_VI: Message = {
