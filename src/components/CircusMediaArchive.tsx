@@ -870,40 +870,6 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
         {/* Media Grid / Content Area */}
         <div className={`flex-1 space-y-6 ${isFullPage ? "p-5 sm:p-8" : "overflow-y-auto p-4 sm:p-6"}`}>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-            {/* Blank Template Card */}
-            <div
-              onClick={() => {
-                circusAudio.playBambooStep();
-                setShowBlankTemplateModal(true);
-              }}
-              className="group relative bg-gradient-to-br from-amber-50/90 via-white to-orange-50/90 rounded-2xl overflow-hidden border-2 border-dashed border-amber-400 hover:border-red-600 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between p-5 min-h-[290px]"
-            >
-              <div className="flex flex-col items-center text-center my-auto py-2">
-                <div className="size-14 rounded-2xl bg-gradient-to-tr from-red-700 to-amber-500 text-white flex items-center justify-center shadow-md group-hover:scale-110 transition-transform mb-3 border-2 border-amber-200">
-                  <Plus className="size-7" />
-                </div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-red-700 bg-red-100 border border-red-200 px-2.5 py-0.5 rounded-full mb-1.5">
-                  {isEn ? "BLANK TEMPLATE" : "MẪU TRẮNG TƯ LIỆU SỐ"}
-                </span>
-                <h3 className="font-circus text-base sm:text-lg text-neutral-900 group-hover:text-red-700 transition-colors">
-                  {isEn ? "+ Create Cover & Custom Title" : "+ Tự Thêm Bìa & Viết Tiêu Đề"}
-                </h3>
-                <p className="text-xs text-neutral-600 mt-2 max-w-[240px] leading-relaxed">
-                  {isEn 
-                    ? "Upload your custom cover image, write your own title, and attach your video or picture."
-                    : "Tải ảnh bìa tùy ý, tự viết tiêu đề tiết mục, tên nghệ sĩ và đính kèm video clip hoặc ảnh biểu diễn."}
-                </p>
-              </div>
-
-              <div className="pt-3 border-t border-amber-200/80 flex items-center justify-center">
-                <span className="px-3.5 py-1.5 rounded-xl bg-amber-400 group-hover:bg-red-600 group-hover:text-white text-amber-950 font-bold text-xs flex items-center gap-1.5 transition-all shadow-sm">
-                  <FileText className="size-3.5" />
-                  <span>{isEn ? "Open Blank Template" : "Mở Mẫu Trắng"}</span>
-                  <ChevronRight className="size-3.5 ml-0.5" />
-                </span>
-              </div>
-            </div>
-
             {filteredMedia.map((item) => {
               const isVideo = item.type === "video";
               const isDrive = item.isDriveSource || Boolean(item.driveUrl);
