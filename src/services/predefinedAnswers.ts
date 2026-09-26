@@ -55,93 +55,93 @@ Các bạn có thể xem ví dụ:
  * CÂU TRẢ LỜI CỐ ĐỊNH 3: THỜI GIAN ĐỂ TRỞ THÀNH DIỄN VIÊN XIẾC ĐƯƠNG ĐẠI
  * ==============================================================================
  */
-export const CIRCUS_DURATION_ANSWER = `Tôi bắt đầu học xiếc năm 11 tuổi, sau đó trải qua 5 năm tập luyện để có thể được đứng trên sân khấu, nên tính cả tập luyện và biểu diễn là hơn 20 năm.
+export const CIRCUS_DURATION_ANSWER = `🤸‍♂️ Tôi bắt đầu học xiếc năm 11 tuổi, sau đó trải qua 5 năm tập luyện để có thể được đứng trên sân khấu, nên tính cả tập luyện và biểu diễn là hơn 20 năm.
 
-Lần đầu tiên thì tôi là diễn viên của Đoàn xiếc TPHCM (được hơn 3 năm) sau đó chuyển qua Đoàn xiếc Đương đại (À ố show). (theo nghệ sĩ xiếc đương đại Nguyễn Khánh Linh)`
+🎪 Lần đầu tiên thì tôi là diễn viên của Đoàn xiếc TPHCM (được hơn 3 năm) sau đó chuyển qua Đoàn xiếc Đương đại (À ố show). (theo nghệ sĩ xiếc đương đại Nguyễn Khánh Linh)`
 
 /**
  * ==============================================================================
  * CÂU TRẢ LỜI CỐ ĐỊNH 4: KHÓ KHĂN VÀ THÁCH THỨC CỦA DIỄN VIÊN XIẾC
  * ==============================================================================
  */
-export const CIRCUS_CHALLENGES_ANSWER = `“Điều khó khăn nhất trong lúc luyện tập là phải khổ luyện khắc nghiệt, nhưng trong công việc thì điều khó khăn nhất là làm việc nhóm.
+export const CIRCUS_CHALLENGES_ANSWER = `🤸‍♀️ “Điều khó khăn nhất trong lúc luyện tập là phải khổ luyện khắc nghiệt, nhưng trong công việc thì điều khó khăn nhất là làm việc nhóm.
 
-Vì mọi thứ phải thật nhịp nhàng và chính xác, việc mọi người xảy ra xung đột là điều hiển nhiên nhưng mục đích cuối cùng mọi người hướng tới là cùng mục tiêu hoàn thành bài diễn một cách tốt nhất nên mọi thứ sẽ không còn là vấn đề quá lớn nữa.” (theo nghệ sĩ xiếc đương đại Nguyễn Khánh Linh)`
+🤝 Vì mọi thứ phải thật nhịp nhàng và chính xác, việc mọi người xảy ra xung đột là điều hiển nhiên nhưng mục đích cuối cùng mọi người hướng tới là cùng mục tiêu hoàn thành bài diễn một cách tốt nhất nên mọi thứ sẽ không còn là vấn đề quá lớn nữa.” (theo nghệ sĩ xiếc đương đại Nguyễn Khánh Linh)`
 
 /**
  * ==============================================================================
  * CÂU TRẢ LỜI CỐ ĐỊNH 5: YẾU TỐ QUYẾT ĐỊNH GIÁ TRỊ NGHỆ THUẬT XIẾC ĐƯƠNG ĐẠI
  * ==============================================================================
  */
-export const CIRCUS_FACTORS_ANSWER = `“Là sự kết hợp giữa kỹ thuật biểu diễn và cảm xúc mà tiết mục mang lại.
+export const CIRCUS_FACTORS_ANSWER = `✨ “Là sự kết hợp giữa kỹ thuật biểu diễn và cảm xúc mà tiết mục mang lại.
 
-Tôi nhớ có nhiều lần khi xong vở diễn khán giả đã khóc, khóc ở đây là vì vở diễn chạm vào cảm xúc của họ, và điều thứ hai là khi mà vở diễn tái hiện được cái khung cảnh làng quê (À Ố SHOW), thì làm họ gợi nhớ được những ký ức tuổi thơ của mình, cái gì đó chạm được vào thì họ sẽ bật được cái cảm xúc của mình ra, và tất nhiên là kỹ thuật thì cũng rất là quan trọng vì nó phải đủ bất ngờ thì mới gọi là xiếc, nên nếu nói về xiếc đương đại thì cả hai yếu tố trên đều quan trọng, cân bằng với nhau” (trích lời từ phỏng vấn nghệ sĩ xiếc đương đại - Nguyễn Khánh Linh)`
+🎭 Tôi nhớ có nhiều lần khi xong vở diễn khán giả đã khóc, khóc ở đây là vì vở diễn chạm vào cảm xúc của họ, và điều thứ hai là khi mà vở diễn tái hiện được cái khung cảnh làng quê (À Ố SHOW), thì làm họ gợi nhớ được những ký ức tuổi thơ của mình, cái gì đó chạm được vào thì họ sẽ bật được cái cảm xúc của mình ra, và tất nhiên là kỹ thuật thì cũng rất là quan trọng vì nó phải đủ bất ngờ thì mới gọi là xiếc, nên nếu nói về xiếc đương đại thì cả hai yếu tố trên đều quan trọng, cân bằng với nhau” (trích lời từ phỏng vấn nghệ sĩ xiếc đương đại - Nguyễn Khánh Linh)`
 
 /**
  * ==============================================================================
  * CÂU TRẢ LỜI CỐ ĐỊNH 6: KỸ THUẬT KHÓ CÓ QUYẾT ĐỊNH MỘT TIẾT MỤC HAY HAY KHÔNG?
  * ==============================================================================
  */
-export const CIRCUS_HARD_SKILL_ANSWER = `Có nhưng chưa đủ.
+export const CIRCUS_HARD_SKILL_ANSWER = `🎯 Có nhưng chưa đủ.
 
-Để có một màn biểu diễn nghệ thuật xiếc đương đại hay thì phải kết hợp giữa kỹ thuật biểu diễn và cảm xúc mà tiết mục mang lại.
+🤹‍♀️ Để có một màn biểu diễn nghệ thuật xiếc đương đại hay thì phải kết hợp giữa kỹ thuật biểu diễn và cảm xúc mà tiết mục mang lại.
 
-“Tôi nhớ có nhiều lần khi xong vở diễn khán giả đã khóc, khóc ở đây là vì vở diễn chạm vào cảm xúc của họ, và điều thứ hai là khi mà vở diễn tái hiện được cái khung cảnh làng quê (À Ố SHOW), thì làm họ gợi nhớ được những ký ức tuổi thơ của mình.” (theo nghệ sĩ xiếc đương đại - Nguyễn Khánh Linh)`
+🎭 “Tôi nhớ có nhiều lần khi xong vở diễn khán giả đã khóc, khóc ở đây là vì vở diễn chạm vào cảm xúc của họ, và điều thứ hai là khi mà vở diễn tái hiện được cái khung cảnh làng quê (À Ố SHOW), thì làm họ gợi nhớ được những ký ức tuổi thơ của mình.” (theo nghệ sĩ xiếc đương đại - Nguyễn Khánh Linh)`
 
 /**
  * ==============================================================================
  * CÂU TRẢ LỜI CỐ ĐỊNH 7: XIẾC VIỆT NAM CHỊU ẢNH HƯỞNG TỪ NỀN VĂN HÓA NÀO?
  * ==============================================================================
  */
-export const CIRCUS_CULTURAL_INFLUENCE_ANSWER = `Nền nghệ thuật xiếc lâu đời như Nga, Trung Quốc…
+export const CIRCUS_CULTURAL_INFLUENCE_ANSWER = `🌏 Nền nghệ thuật xiếc lâu đời như Nga, Trung Quốc…
 
-Nhưng trải qua hơn 100 năm, xiếc đã được nhiều thế hệ diễn viên, nghệ sĩ, đạo diễn của nước nhà bồi đắp bằng nhiều màu sắc, đường nét mang đặc trưng của văn hóa dân tộc.`
+🇻🇳🎪 Nhưng trải qua hơn 100 năm, xiếc đã được nhiều thế hệ diễn viên, nghệ sĩ, đạo diễn của nước nhà bồi đắp bằng nhiều màu sắc, đường nét mang đặc trưng của văn hóa dân tộc.`
 
 /**
  * ==============================================================================
  * CÂU TRẢ LỜI CỐ ĐỊNH 8: XIẾC BẮT ĐẦU TỪ KHI NÀO / TỪ ĐÂU?
  * ==============================================================================
  */
-export const CIRCUS_ORIGIN_ANSWER = `Vào thế kỷ XVIII, tại châu Âu, xiếc bắt đầu bước sang một giai đoạn mới. Philip Astley - một nghệ sĩ cưỡi ngựa người Anh, được xem là một trong những người đặt nền móng cho xiếc hiện đại.
+export const CIRCUS_ORIGIN_ANSWER = `📜 Vào thế kỷ XVIII, tại châu Âu, xiếc bắt đầu bước sang một giai đoạn mới. Philip Astley - một nghệ sĩ cưỡi ngựa người Anh, được xem là một trong những người đặt nền móng cho xiếc hiện đại.
 
-Năm 1768, ông bắt đầu biểu diễn tại London với những màn cưỡi ngựa đầy kỹ thuật trong một vòng diễn hình tròn.
+🎠 Năm 1768, ông bắt đầu biểu diễn tại London với những màn cưỡi ngựa đầy kỹ thuật trong một vòng diễn hình tròn.
 
-Sau đó, Astley đưa thêm các tiết mục như nhào lộn, tung hứng, đi dây và hài kịch vào chương trình, dần tạo nên một hình thức biểu diễn tổng hợp rất gần với xiếc mà chúng ta biết ngày nay. 🎠🎭`
+🤹🎪 Sau đó, Astley đưa thêm các tiết mục như nhào lộn, tung hứng, đi dây và hài kịch vào chương trình, dần tạo nên một hình thức biểu diễn tổng hợp rất gần với xiếc mà chúng ta biết ngày nay.`
 
 /**
  * ==============================================================================
  * CÂU TRẢ LỜI CỐ ĐỊNH 9: TỪNG GIAI ĐOẠN PHÁT TRIỂN TRONG XIẾC VIỆT NAM
  * ==============================================================================
  */
-export const CIRCUS_STAGES_VN_ANSWER = `Trước sự kiện của Đoàn xiếc phương Tây ồ ạt vào Việt Nam, các nghệ nhân xiếc trong nước đã tập hợp nhau lại mở lò luyện xiếc, góp vốn mở các gánh xiếc như gánh xiếc Năm Tú ở Mỹ Tho (1918), Sáu Súng ở Nam Bộ (1919), gánh xiếc Tân Nam Việt ở Sài Gòn (1922), ở Hà Nội có xiếc Việt Nam của Tạ Duy Hiển (1922), Xiếc Đại Nam của Lưu Khánh Vân (1924),... và nhiều tốp xiếc nhỏ khác rải rác tại miền Trung.
+export const CIRCUS_STAGES_VN_ANSWER = `🎪 Trước sự kiện của Đoàn xiếc phương Tây ồ ạt vào Việt Nam, các nghệ nhân xiếc trong nước đã tập hợp nhau lại mở lò luyện xiếc, góp vốn mở các gánh xiếc như gánh xiếc Năm Tú ở Mỹ Tho (1918), Sáu Súng ở Nam Bộ (1919), gánh xiếc Tân Nam Việt ở Sài Gòn (1922), ở Hà Nội có xiếc Việt Nam của Tạ Duy Hiển (1922), Xiếc Đại Nam của Lưu Khánh Vân (1924),... và nhiều tốp xiếc nhỏ khác rải rác tại miền Trung.
 
-Dần dần, các gánh xiếc được mở rộng nhiều hơn. Ngày 05/12/1922, cụ Tạ Duy Hiển - cụ tổ ngành Xiếc Việt Nam đã công diễn tại chợ Hàng Da, mở đầu cho trào lưu xiếc bản địa có quy mô lớn với dàn diễn viên đông đảo cùng đoàn xiếc thú gồm: Voi, hổ, gấu, ngựa, dê, chó, khỉ,... báo hiệu sự bắt đầu cho một thời kỳ mới của xiếc Việt Nam – Xiếc Việt Nam hiện đại.
+🐘 Dần dần, các gánh xiếc được mở rộng nhiều hơn. Ngày 05/12/1922, cụ Tạ Duy Hiển - cụ tổ ngành Xiếc Việt Nam đã công diễn tại chợ Hàng Da, mở đầu cho trào lưu xiếc bản địa có quy mô lớn với dàn diễn viên đông đảo cùng đoàn xiếc thú gồm: Voi, hổ, gấu, ngựa, dê, chó, khỉ,... báo hiệu sự bắt đầu cho một thời kỳ mới của xiếc Việt Nam – Xiếc Việt Nam hiện đại.
 
-Ngày nay, với sự phát triển của ngành xiếc, xiếc hiện nay không chỉ dừng lại ở xiếc thú, nhào lộn, tung hứng... mà đã được biến tấu thành một sân khấu xiếc kết hợp với múa rối (MƠ SHOW), các vật dụng gắn liền với văn hóa đậm chất Việt Nam (À Ố SHOW)... cùng với kịch bản được dàn dựng tỉ mỉ, chi tiết, được thổi hồn vào những câu chuyện đời thường sâu lắng chạm đến trái tim khán giả.
+🎭 Ngày nay, với sự phát triển của ngành xiếc, xiếc hiện nay không chỉ dừng lại ở xiếc thú, nhào lộn, tung hứng... mà đã được biến tấu thành một sân khấu xiếc kết hợp với múa rối (MƠ SHOW), các vật dụng gắn liền với văn hóa đậm chất Việt Nam (À Ố SHOW)... cùng với kịch bản được dàn dựng tỉ mỉ, chi tiết, được thổi hồn vào những câu chuyện đời thường sâu lắng chạm đến trái tim khán giả.
 
-Và đó gọi là Nghệ thuật xiếc đương đại Việt Nam.`
+✨ Và đó gọi là Nghệ thuật xiếc đương đại Việt Nam.`
 
 /**
  * ==============================================================================
  * CÂU TRẢ LỜI CỐ ĐỊNH 10: VÌ SAO NHIỀU CHƯƠNG TRÌNH XIẾC KHÔNG CÒN SỬ DỤNG ĐỘNG VẬT
  * ==============================================================================
  */
-export const CIRCUS_ANIMAL_WELFARE_ANSWER = `Năm 1960, các rạp xiếc truyền thống dần mất đi sức hút do sự bùng nổ của truyền hình và điện ảnh.
+export const CIRCUS_ANIMAL_WELFARE_ANSWER = `📻 Năm 1960, các rạp xiếc truyền thống dần mất đi sức hút do sự bùng nổ của truyền hình và điện ảnh.
 
-Đồng thời, làn sóng bảo vệ quyền động vật dâng cao khiến công chúng không còn mặn mà với các màn xiếc thú hoang dã.
+🐾 Đồng thời, làn sóng bảo vệ quyền động vật dâng cao khiến công chúng không còn mặn mà với các màn xiếc thú hoang dã.
 
-Các nghệ sĩ trẻ mong muốn tìm kiếm một hướng đi mới, biến xiếc từ một hình thức giải trí tạp kỹ thành một bộ môn nghệ thuật biểu diễn có chiều sâu.
+🤸‍♂️ Các nghệ sĩ trẻ mong muốn tìm kiếm một hướng đi mới, biến xiếc từ một hình thức giải trí tạp kỹ thành một bộ môn nghệ thuật biểu diễn có chiều sâu.
 
-Và từ đó, xiếc được biến tấu thành một sân khấu được dàn dựng hoành tráng, kịch bản tỉ mỉ kết hợp với kỹ thuật xiếc mãn nhãn, gọi là nghệ thuật xiếc đương đại.`
+🎪✨ Và từ đó, xiếc được biến tấu thành một sân khấu được dàn dựng hoành tráng, kịch bản tỉ mỉ kết hợp với kỹ thuật xiếc mãn nhãn, gọi là nghệ thuật xiếc đương đại.`
 
 /**
  * ==============================================================================
  * CÂU TRẢ LỜI CỐ ĐỊNH 11: XIẾC PHÙ HỢP VỚI TỆP KHÁN GIẢ NÀO / ĐỘ TUỔI NÀO
  * ==============================================================================
  */
-export const CIRCUS_AUDIENCE_AGE_ANSWER = `Xiếc ngày nay là một loại hình nghệ thuật biểu đạt cảm xúc và kể chuyện, người xem ở mọi lứa tuổi đều có thể xem và cảm nhận được ý của mỗi tác phẩm muốn truyền đạt tới.
+export const CIRCUS_AUDIENCE_AGE_ANSWER = `👨‍👩‍👧‍👦🎨 Xiếc ngày nay là một loại hình nghệ thuật biểu đạt cảm xúc và kể chuyện, người xem ở mọi lứa tuổi đều có thể xem và cảm nhận được ý của mỗi tác phẩm muốn truyền đạt tới.
 
-Xiếc bao trùm rất nhiều thứ, không chỉ đơn thuần như xiếc truyền thống ngày xưa.`
+🎪✨ Xiếc bao trùm rất nhiều thứ, không chỉ đơn thuần như xiếc truyền thống ngày xưa.`
 
 /**
  * ==============================================================================
