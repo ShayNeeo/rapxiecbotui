@@ -217,6 +217,46 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
     }
   };
 
+  const downloadBlobToComputer = async (blob: Blob, fileName: string) => {
+    // 1. Modern File System Access API on desktop (allows selecting album/folder directly)
+    if (typeof window !== "undefined" && "showSaveFilePicker" in window) {
+      try {
+        const handle = await (window as any).showSaveFilePicker({
+          suggestedName: fileName,
+          types: [
+            {
+              description: "PNG Ticket Image",
+              accept: { "image/png": [".png"] },
+            },
+          ],
+        });
+        const writable = await handle.createWritable();
+        await writable.write(blob);
+        await writable.close();
+        return true;
+      } catch (pickerErr: any) {
+        if (pickerErr.name === "AbortError") {
+          return false; // User closed picker
+        }
+        // Fallback to blob download
+      }
+    }
+
+    // 2. Reliable Blob URL download (works universally on macOS Safari, Chrome, Edge)
+    const blobUrl = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.download = fileName;
+    link.href = blobUrl;
+    link.rel = "noopener";
+    document.body.appendChild(link);
+    link.click();
+    setTimeout(() => {
+      document.body.removeChild(link);
+      URL.revokeObjectURL(blobUrl);
+    }, 2000);
+    return true;
+  };
+
   const handleDirectDownloadImage = async () => {
     circusAudio.playApplause();
     confetti({
@@ -225,26 +265,20 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
       origin: { y: 0.6 },
     });
 
-    let currentBlob = ticketBlob;
-    let currentUrl = ticketImageUrl;
-    if (!currentBlob || !currentUrl) {
+    try {
+      setIsGenerating(true);
       const captured = await captureTicketImage();
-      if (captured) {
-        currentBlob = captured.blob;
-        currentUrl = captured.dataUrl;
-      }
-    }
+      const currentBlob = captured?.blob || ticketBlob;
 
-    if (currentUrl) {
-      const fileName = `ve-rap-xiec-bo-tui-${ticketSerial}.png`;
-      const link = document.createElement("a");
-      link.download = fileName;
-      link.href = currentUrl;
-      document.body.appendChild(link);
-      link.click();
-      setTimeout(() => {
-        document.body.removeChild(link);
-      }, 120);
+      if (currentBlob) {
+        const fileName = `ve-rap-xiec-bo-tui-${ticketSerial}.png`;
+        await downloadBlobToComputer(currentBlob, fileName);
+        setActiveModal('save');
+      }
+    } catch (err) {
+      console.error("Error saving ticket image:", err);
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -257,16 +291,14 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
     });
 
     let currentBlob = ticketBlob;
-    let currentUrl = ticketImageUrl;
-    if (!currentBlob || !currentUrl) {
+    if (!currentBlob) {
       const captured = await captureTicketImage();
       if (captured) {
         currentBlob = captured.blob;
-        currentUrl = captured.dataUrl;
       }
     }
 
-    if (currentUrl && currentBlob) {
+    if (currentBlob) {
       const fileName = `ve-rap-xiec-bo-tui-${ticketSerial}.png`;
       const file = new File([currentBlob], fileName, { type: "image/png" });
 
@@ -291,14 +323,7 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
       }
 
       // Direct file download on computer
-      const link = document.createElement("a");
-      link.download = fileName;
-      link.href = currentUrl;
-      document.body.appendChild(link);
-      link.click();
-      setTimeout(() => {
-        document.body.removeChild(link);
-      }, 120);
+      await downloadBlobToComputer(currentBlob, fileName);
     }
   };
 

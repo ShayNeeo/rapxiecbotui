@@ -235,21 +235,26 @@
     color-adjust: exact !important;
   }
 
-  #circus-ticket-logo-frame {
-    width: 72px !important;
-    height: 72px !important;
-    min-width: 72px !important;
-    min-height: 72px !important;
+  #circus-ticket-card #circus-ticket-logo-frame {
+    width: 76px !important;
+    height: 76px !important;
+    min-width: 76px !important;
+    min-height: 76px !important;
+    max-width: 76px !important;
+    max-height: 76px !important;
+    aspect-ratio: 1 / 1 !important;
     background-color: #ffffff !important;
     background: #ffffff !important;
-    border: 2px solid #f59e0b !important;
-    border-radius: 16px !important;
+    border: 2.5px solid #f59e0b !important;
+    border-radius: 18px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     padding: 3px !important;
+    box-sizing: border-box !important;
     box-shadow: none !important;
     overflow: hidden !important;
+    flex-shrink: 0 !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     color-adjust: exact !important;
@@ -273,12 +278,6 @@
 
   #circus-ticket-card .p-4 {
     padding: 8px 12px !important;
-  }
-
-  #circus-ticket-card .size-20,
-  #circus-ticket-card .size-22 {
-    width: 60px !important;
-    height: 60px !important;
   }
 
   #circus-ticket-card .border-t-2 {
