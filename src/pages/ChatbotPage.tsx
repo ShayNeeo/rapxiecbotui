@@ -409,10 +409,10 @@ export const ChatbotPage: React.FC<ChatbotPageProps> = ({ onBackToPortal }) => {
                 <span className="text-3xl">🎪</span>
               </div>
               <h2 className="font-circus text-2xl sm:text-3xl tracking-wide text-amber-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)]">
-                TRỢ LÝ XIẾC ĐƯƠNG ĐẠI VIỆT NAM
+                TƯ VẤN VIÊN AI
               </h2>
               <p className="mt-2.5 max-w-lg text-xs sm:text-sm text-amber-100/90 leading-relaxed font-medium">
-                Khám phá kho tư liệu 100 năm nghệ thuật xiếc, các vở diễn đặc sắc (À Ố Show, Mơ Show), nghệ sĩ Cụ Tạ Duy Hiển, kỷ lục Quốc Cơ - Quốc Nghiệp và địa chỉ các rạp xiếc lớn.
+                Thông tin về nghệ thuật xiếc khá rộng lớn nhưng bạn vẫn chưa giải đáp được? Hãy đến đây, chúng tôi sẽ trả lời tất tần tật các câu hỏi của bạn!
               </p>
 
               {/* Grid of Starter Prompts */}
