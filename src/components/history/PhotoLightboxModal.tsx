@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Icon } from "@/src/components/Icon";
 import { HistoryPhoto } from "@/src/lib/historyImages";
 import { X, ZoomIn, Download, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -50,7 +51,7 @@ export const PhotoLightboxModal: React.FC<PhotoLightboxModalProps> = ({
         <div className="w-full flex items-center justify-between px-6 py-4 bg-neutral-950/80 border-b border-neutral-800 text-white z-10">
           <div className="flex items-center gap-2">
             <span className="text-amber-400 font-bold text-xs sm:text-sm">
-              📷 {isEn ? "Historical Image Viewer" : "Xem Ảnh Tư Liệu Lịch Sử"}
+              <Icon name="bi bi-camera" /> {isEn ? "Historical Image Viewer" : "Xem Ảnh Tư Liệu Lịch Sử"}
             </span>
             {allPhotos.length > 1 && (
               <span className="text-neutral-400 text-xs bg-neutral-800 px-2.5 py-0.5 rounded-full">

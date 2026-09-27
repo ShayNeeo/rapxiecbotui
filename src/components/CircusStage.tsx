@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Icon } from "@/src/components/Icon";
 import { CircusActId } from "@/src/types";
 import { Button } from "@/src/components/ui/button";
 import { circusAudio } from "@/src/utils/audio";
@@ -239,7 +240,7 @@ export const CircusStage: React.FC<CircusStageProps> = ({
           {/* Cultural Base Decoration */}
           <div className="flex items-center justify-center gap-4 mt-8 pt-4 border-t border-red-800/60 text-xs text-amber-200/80">
             <div className="flex items-center gap-1">
-              <span className="text-pink-400 text-base">🪷</span>
+              <span className="text-pink-400 text-base"><Icon name="bi bi-flower1" /></span>
               <span>{isEn ? "Contemporary Circus Arts" : "Nghệ Thuật Xiếc Đương Đại"}</span>
             </div>
             <span>•</span>
@@ -253,7 +254,7 @@ export const CircusStage: React.FC<CircusStageProps> = ({
             </Link>
             <span>•</span>
             <div className="flex items-center gap-1">
-              <span className="text-amber-400 text-base">🗺️</span>
+              <span className="text-amber-400 text-base"><Icon name="bi bi-map" /></span>
               <span>{isEn ? "Three Regions Venues Map" : "Bản Đồ Rạp Xiếc Ba Miền"}</span>
             </div>
           </div>
@@ -429,7 +430,7 @@ export const CircusStage: React.FC<CircusStageProps> = ({
               : '"Một brochure nhỏ dành cho bạn và những vị khách muốn khám phá vẻ đẹp của nghệ thuật xiếc Việt Nam."'}
           </p>
           <div className="mt-2.5 sm:mt-3 inline-flex items-center gap-2 text-sm sm:text-base font-circus font-normal text-amber-300 group-hover:text-yellow-200 tracking-wide transition-colors">
-            <span>{isEn ? "✨ Click here to view the publication on Canva" : "✨ Nhấn vào đây để mở ấn phẩm trên Canva"}</span>
+            <span>{isEn ? <><Icon name="bi bi-stars" /> Click here to view the publication on Canva</> : <><Icon name="bi bi-stars" /> Nhấn vào đây để mở ấn phẩm trên Canva</>}</span>
             <ExternalLink className="size-4 sm:size-4.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </div>
         </a>
@@ -541,7 +542,7 @@ export const CircusStage: React.FC<CircusStageProps> = ({
           >
             <div className="space-y-3">
               <div className="size-12 rounded-xl bg-rose-100 border border-rose-200 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                📢
+                <Icon name="bi bi-megaphone" />
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-[11px] font-bold uppercase tracking-wider text-rose-700 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200">
@@ -575,7 +576,7 @@ export const CircusStage: React.FC<CircusStageProps> = ({
           >
             <div className="space-y-3">
               <div className="size-12 rounded-xl bg-amber-100 border border-amber-300 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                🎬
+                <Icon name="bi bi-camera-reels" />
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-[11px] font-bold uppercase tracking-wider text-amber-900 bg-amber-100 px-2 py-0.5 rounded-full border border-amber-300">
@@ -612,7 +613,7 @@ export const CircusStage: React.FC<CircusStageProps> = ({
           >
             <div className="space-y-3">
               <div className="size-12 rounded-xl bg-red-100 border border-red-200 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                📜
+                <Icon name="bi bi-file-earmark-text" />
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-[11px] font-bold uppercase tracking-wider text-red-700 bg-red-50 px-2 py-0.5 rounded-full border border-red-200">
@@ -684,7 +685,7 @@ export const CircusStage: React.FC<CircusStageProps> = ({
           >
             <div className="space-y-3">
               <div className="size-12 rounded-xl bg-emerald-100 border border-emerald-200 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                🧠
+                <Icon name="bi bi-cpu" />
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
@@ -719,7 +720,7 @@ export const CircusStage: React.FC<CircusStageProps> = ({
           >
             <div className="space-y-3">
               <div className="size-12 rounded-xl bg-amber-100 border border-amber-200 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                🗺️
+                <Icon name="bi bi-map" />
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-[11px] font-bold uppercase tracking-wider text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
@@ -757,7 +758,7 @@ export const CircusStage: React.FC<CircusStageProps> = ({
           >
             <div className="space-y-3">
               <div className="size-12 rounded-xl bg-red-100 border border-red-200 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                🤖
+                <Icon name="bi bi-robot" />
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-[11px] font-bold uppercase tracking-wider text-red-700 bg-red-50 px-2 py-0.5 rounded-full border border-red-200">

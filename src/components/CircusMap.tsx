@@ -5,11 +5,12 @@ import { Button } from "@/src/components/ui/button";
 import { useLanguage } from "@/src/context/LanguageContext";
 import confetti from "canvas-confetti";
 import { OFFICIAL_CIRCUS_MAP } from "@/src/lib/map";
-import { 
-  ArrowLeft, 
-  MapPin, 
-  Sparkles, 
-  Navigation, 
+import { Icon } from "@/src/components/Icon";
+import {
+  ArrowLeft,
+  MapPin,
+  Sparkles,
+  Navigation,
   Building2,
   CheckCircle2,
   Bookmark,
@@ -88,7 +89,7 @@ const CIRCUS_VENUES: CircusVenue[] = [
     ],
     description: "Thánh đường xiếc bạt tròn thân thương giữa không gian xanh của Công viên Gia Định, nơi gắn liền với tuổi thơ của hàng triệu khán giả và là cái nôi nghệ thuật của các thế hệ nghệ sĩ Nhà Hát Nghệ Thuật Phương Nam.",
     descriptionEn: "An affectionate circus sanctuary enveloped by the green canopies of Gia Dinh Park, cherished by generations of children and home to artists of Phuong Nam Art Theater.",
-    icon: "🎭",
+    icon: "bi bi-emoji-smile",
     latRatio: 0.77,
     lonRatio: 0.57,
     mapUrl: "https://maps.app.goo.gl/A8933G8p7LjdwKXV8?g_st=ipc",
@@ -120,7 +121,7 @@ const CIRCUS_VENUES: CircusVenue[] = [
     ],
     description: "Cơ quan đầu ngành của xiếc Việt Nam, thành lập năm 1956 theo quyết định của Bác Hồ, quy tụ các nghệ sĩ nhân dân, nghệ sĩ ưu tú với những vở xiếc lịch sử hào hùng.",
     descriptionEn: "The flagship institution of Vietnamese circus, established in 1956 by decree of President Ho Chi Minh, uniting People's Artists and national champions in celebrated productions.",
-    icon: "⭐",
+    icon: "bi bi-star-fill",
     latRatio: 0.17,
     lonRatio: 0.44,
     mapUrl: "https://maps.app.goo.gl/zi3RkNzbFGENHH737?g_st=ipc",
@@ -150,7 +151,7 @@ const CIRCUS_VENUES: CircusVenue[] = [
     ],
     description: "Cái nôi đào tạo nhiều lứa nghệ sĩ trẻ năng động, tiền thân từ các đoàn văn công xung kích trong kháng chiến chống Mỹ cứu nước.",
     descriptionEn: "A cradle for vibrant youth talent, originally born from vanguard art brigades performing for troops during wartime struggles.",
-    icon: "🤹",
+    icon: "bi bi-person-arms-up",
     latRatio: 0.15,
     lonRatio: 0.41,
     mapUrl: "https://maps.app.goo.gl/MkSpPy2LpmKy2Zi5A?g_st=ipc",
@@ -182,7 +183,7 @@ const CIRCUS_VENUES: CircusVenue[] = [
     ],
     description: "À Ố Show được biểu diễn tại nhà hát này. Nhà hát Thành phố Hồ Chí Minh là công trình kiến trúc nghệ thuật cổ kính biểu tượng, nơi những vở xiếc tre đương đại đặc sắc như À Ố Show hòa quyện cùng âm nhạc dân tộc, tái hiện sinh động văn hóa làng quê và đời sống Việt Nam đến khán giả toàn cầu.",
     descriptionEn: "Home venue for the renowned À Ố Show. The historic Saigon Opera House pairs French Belle Époque architecture with poetic contemporary bamboo circus, bridging rural Vietnamese folklore with modern urban theater for global audiences.",
-    icon: "🏛️",
+    icon: "bi bi-bank",
     latRatio: 0.82,
     lonRatio: 0.59,
     mapUrl: "https://maps.app.goo.gl/WWLX2kTfvQx3e65L8?g_st=ip",
@@ -212,7 +213,7 @@ const CIRCUS_VENUES: CircusVenue[] = [
     ],
     description: "Sân khấu xiếc quen thuộc gắn liền với tuổi thơ của hàng triệu thế hệ thiếu nhi Sài Gòn và du khách các tỉnh phương Nam tại Công viên Văn hóa Đầm Sen.",
     descriptionEn: "A popular family stage entwined with childhood memories of millions of Saigon children and visitors at Dam Sen Cultural Park.",
-    icon: "🎈",
+    icon: "bi bi-balloon",
     latRatio: 0.83,
     lonRatio: 0.51,
     mapUrl: "https://maps.app.goo.gl/RAFRuHhQpeE1mLsQ7?g_st=ipc",
@@ -874,7 +875,7 @@ export const CircusMap: React.FC<CircusMapProps> = ({
                         : 'bg-neutral-50 hover:bg-amber-50/50 border-neutral-200'
                     }`}
                   >
-                    <span className="text-xl shrink-0">{venue.icon}</span>
+                    <span className="text-xl shrink-0"><Icon name={venue.icon} /></span>
                     <div className="min-w-0 flex-1">
                       <div className="text-xs text-neutral-900 truncate font-semibold">
                         {isEn ? (venue.nameEn || venue.name) : venue.name}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
+import { Icon } from "@/src/components/Icon";
 import { CircusActId, CircusBadge } from "@/src/types";
 import { CircusHeader } from "@/src/components/CircusHeader";
 import { CircusStage } from "@/src/components/CircusStage";
@@ -25,7 +26,7 @@ const INITIAL_BADGES: CircusBadge[] = [
     id: 'circus-scholar',
     name: 'Circus Scholar',
     vietnameseName: 'Sử Học Rạp Xiếc',
-    icon: '📜',
+    icon: 'bi bi-file-earmark-text',
     description: 'Khám phá trọn vẹn 4 cột mốc tư liệu lịch sử từ cổ đại, cổ điển đến 100 năm xiếc Việt Nam',
     descriptionEn: 'Explore all 4 historical document milestones from ancient, classical to 100 years of Vietnamese circus',
     unlocked: false,
@@ -43,7 +44,7 @@ const INITIAL_BADGES: CircusBadge[] = [
     id: 'circus-ai-chatbot',
     name: 'AI Chatbot Companion',
     vietnameseName: 'Bạn Đồng Hành Chatbot AI',
-    icon: '🤖',
+    icon: 'bi bi-robot',
     description: 'Bấm vào Chatbot AI để trò chuyện và khám phá nghệ thuật xiếc',
     descriptionEn: 'Click the AI Chatbot to chat and explore circus arts',
     unlocked: false,
@@ -52,7 +53,7 @@ const INITIAL_BADGES: CircusBadge[] = [
     id: 'circus-digital-archive',
     name: 'Digital Archive Explorer',
     vietnameseName: 'Khám Phá Kho Tư Liệu Số',
-    icon: '🎞️',
+    icon: 'bi bi-film',
     description: 'Bấm vào kho tư liệu số để thưởng thức video, ảnh và thước phim quý',
     descriptionEn: 'Click the digital archive to enjoy videos, photos and footage',
     unlocked: false,
@@ -61,7 +62,7 @@ const INITIAL_BADGES: CircusBadge[] = [
     id: 'circus-map-explorer',
     name: 'Heritage Map Explorer',
     vietnameseName: 'Hành Trình Di Sản Bản Đồ',
-    icon: '🗺️',
+    icon: 'bi bi-map',
     description: 'Khám phá và xem trọn vẹn toàn bộ các địa điểm rạp xiếc trên bản đồ',
     descriptionEn: 'Explore and finish viewing all circus venues on the map',
     unlocked: false,
@@ -70,7 +71,7 @@ const INITIAL_BADGES: CircusBadge[] = [
     id: 'circus-quiz-master',
     name: 'Quiz Master 20/20',
     vietnameseName: 'Bậc Thầy 20 Câu Hỏi Quiz',
-    icon: '🧠',
+    icon: 'bi bi-cpu',
     description: 'Hoàn thành trọn vẹn 20 câu hỏi thử tài kiến thức rạp xiếc',
     descriptionEn: 'Complete all 20 circus trivia quiz questions',
     unlocked: false,
@@ -79,7 +80,7 @@ const INITIAL_BADGES: CircusBadge[] = [
     id: 'circus-vip',
     name: 'Honorary VIP Guest',
     vietnameseName: 'Khán Giả Danh Dự VIP',
-    icon: '🎟️',
+    icon: 'bi bi-ticket-perforated',
     description: 'Nhận tấm vé danh dự chính thức của Rạp Xiếc Bỏ Túi',
     descriptionEn: 'Claim your official honorary guest ticket of Pocket Circus',
     unlocked: false,
@@ -295,7 +296,7 @@ export default function App() {
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed top-20 right-4 z-50 bg-amber-400 text-amber-950 px-4 py-2.5 rounded-2xl shadow-xl border-2 border-amber-300 font-bold text-xs sm:text-sm flex items-center gap-2 animate-in slide-in-from-top-4 duration-300">
-          <span>🏆</span>
+          <span><Icon name="bi bi-trophy" /></span>
           <span>{toastMessage}</span>
         </div>
       )}
@@ -520,11 +521,11 @@ export default function App() {
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 text-[11px] sm:text-xs text-amber-200/80 pt-3.5 border-t border-amber-400/20 font-medium">
-            <span>{isEn ? "🇻🇳 Folk Arts" : "🇻🇳 Nghệ Thuật Dân Gian"}</span>
+            <span>{isEn ? <><Icon name="bi bi-flag-fill" /> Folk Arts</> : <><Icon name="bi bi-flag-fill" /> Nghệ Thuật Dân Gian</>}</span>
             <span className="text-amber-500/60">•</span>
             <span>🎪 Pocket Circus Web</span>
             <span className="text-amber-500/60">•</span>
-            <span>{isEn ? "✨ Interactive Web Audio" : "✨ Âm Thanh Tương Tác Web Audio"}</span>
+            <span>{isEn ? <><Icon name="bi bi-stars" /> Interactive Web Audio</> : <><Icon name="bi bi-stars" /> Âm Thanh Tương Tác Web Audio</>}</span>
           </div>
         </div>
       </footer>

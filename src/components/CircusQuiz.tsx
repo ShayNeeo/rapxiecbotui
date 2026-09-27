@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Icon } from "@/src/components/Icon";
 import { QuizQuestion } from "@/src/types";
 import { circusAudio } from "@/src/utils/audio";
 import { Button } from "@/src/components/ui/button";
@@ -758,9 +759,9 @@ export const CircusQuiz: React.FC<CircusQuizProps> = ({
               <span className="text-xs text-neutral-500 font-medium">{isEn ? "Your Title" : "Danh hiệu của bạn"}</span>
               <p className="font-bold text-sm text-amber-900 mt-1">
                 {score >= 160
-                  ? (isEn ? "Grandmaster 🏆" : "Xuất Sắc 🏆")
+                  ? (isEn ? <>Grandmaster <Icon name="bi bi-trophy" /></> : <>Xuất Sắc <Icon name="bi bi-trophy" /></>)
                   : score >= 120
-                  ? (isEn ? "Expert ⭐" : "Khá Giỏi ⭐")
+                  ? (isEn ? <>Expert <Icon name="bi bi-star-fill" /></> : <>Khá Giỏi <Icon name="bi bi-star-fill" /></>)
                   : (isEn ? "Apprentice 🎪" : "Tập Sự 🎪")}
               </p>
             </div>

@@ -1,0 +1,45 @@
+/* Bootstrap Icons v1.11.3 (MIT) - https://icons.getbootstrap.com/
+ * Self-hosted, trimmed to the icons this app uses.
+ * Self-hosting is required because html-to-image cannot read
+ * cross-origin cssRules, so the .bi-*::before content never reaches
+ * the ticket PNG capture without it. */
+@font-face{font-display:block;font-family:bootstrap-icons;src:url("/fonts/bootstrap-icons.woff2") format("woff2"),url("fonts/bootstrap-icons.woff") format("woff")}
+
+.bi-balloon::before{content:"\f709"}
+.bi-bank::before{content:"\f62e"}
+.bi-bullseye::before{content:"\f1de"}
+.bi-camera::before{content:"\f220"}
+.bi-camera-reels::before{content:"\f21b"}
+.bi-cpu::before{content:"\f2d6"}
+.bi-emoji-smile::before{content:"\f327"}
+.bi-exclamation-triangle::before{content:"\f33b"}
+.bi-file-earmark-text::before{content:"\f38b"}
+.bi-film::before{content:"\f3c3"}
+.bi-fire::before{content:"\f7f6"}
+.bi-flag-fill::before{content:"\f3cb"}
+.bi-flower1::before{content:"\f3cd"}
+.bi-flower2::before{content:"\f3ce"}
+.bi-geo-alt::before{content:"\f3e8"}
+.bi-globe-americas::before{content:"\f882"}
+.bi-globe2::before{content:"\f3ef"}
+.bi-hand-thumbs-up::before{content:"\f407"}
+.bi-house::before{content:"\f425"}
+.bi-lightbulb::before{content:"\f46b"}
+.bi-lightning-charge::before{content:"\f46d"}
+.bi-map::before{content:"\f47f"}
+.bi-megaphone::before{content:"\f484"}
+.bi-mortarboard::before{content:"\f6fe"}
+.bi-music-note-beamed::before{content:"\f49e"}
+.bi-people::before{content:"\f4d0"}
+.bi-people-fill::before{content:"\f4cf"}
+.bi-person::before{content:"\f4e1"}
+.bi-person-arms-up::before{content:"\f8f6"}
+.bi-robot::before{content:"\f6b1"}
+.bi-star-fill::before{content:"\f586"}
+.bi-stars::before{content:"\f589"}
+.bi-stopwatch::before{content:"\f597"}
+.bi-ticket-perforated::before{content:"\f6ca"}
+.bi-tree::before{content:"\f5e2"}
+.bi-trophy::before{content:"\f5e7"}
+.bi-universal-access::before{content:"\f826"}
+.bi-vinyl::before{content:"\f608"}

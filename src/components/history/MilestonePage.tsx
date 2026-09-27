@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Icon } from "@/src/components/Icon";
 import { Link } from "react-router-dom";
 import { HistoryEra } from "@/src/types";
 import { circusAudio } from "@/src/utils/audio";
@@ -169,7 +170,7 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
               onClick={onApplause}
               className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-neutral-950 text-xs sm:text-sm font-black flex items-center gap-2.5 transition-all shadow-md hover:scale-105 active:scale-95 border-2 border-amber-600 cursor-pointer"
             >
-              <span className="text-lg">👏</span>
+              <span className="text-lg"><Icon name="bi bi-hand-thumbs-up" /></span>
               <span>{isEn ? "Applaud" : "Tán thưởng"}</span>
               <span className="bg-white/90 px-2.5 py-0.5 rounded-full text-xs font-black text-amber-950 border border-amber-300 shadow-2xs">
                 {applauseCount}
@@ -222,7 +223,7 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
               <div className="absolute bottom-3 left-3 right-3 text-white flex flex-col sm:flex-row sm:items-end justify-between gap-2 pointer-events-none">
                 <div className="space-y-0.5 pointer-events-auto max-w-xl">
                   <p className="text-xs sm:text-sm font-bold drop-shadow-md text-amber-100/95 leading-relaxed">
-                    📷 {isEn ? (era.titleEn || era.title) : era.title}
+                    <Icon name="bi bi-camera" /> {isEn ? (era.titleEn || era.title) : era.title}
                   </p>
                 </div>
 
@@ -776,7 +777,7 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
             }}
             className="w-full sm:w-auto px-4 py-2.5 rounded-2xl bg-amber-100 hover:bg-amber-200 border border-amber-300 text-amber-950 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
           >
-            <span>🏠 {isEn ? "Overview of 4 Milestones" : "Về Trang Chủ Lịch Sử"}</span>
+            <span><Icon name="bi bi-house" /> {isEn ? "Overview of 4 Milestones" : "Về Trang Chủ Lịch Sử"}</span>
           </button>
         ) : (
           <Link
@@ -784,7 +785,7 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
             onClick={() => circusAudio.playBambooStep()}
             className="w-full sm:w-auto px-4 py-2.5 rounded-2xl bg-amber-100 hover:bg-amber-200 border border-amber-300 text-amber-950 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
           >
-            <span>🏠 {isEn ? "Overview of 4 Milestones" : "Về Trang Chủ Lịch Sử"}</span>
+            <span><Icon name="bi bi-house" /> {isEn ? "Overview of 4 Milestones" : "Về Trang Chủ Lịch Sử"}</span>
           </Link>
         )}
 

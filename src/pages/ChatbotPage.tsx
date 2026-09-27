@@ -15,6 +15,7 @@ import { getPredefinedAnswer } from '../services/predefinedAnswers'
 import { circusAudio } from '../utils/audio'
 import type { ChatMessage, ChatSettings, RetrievedSource } from '../types/chat'
 import { Sparkles, AlertTriangle, Compass } from 'lucide-react'
+import { Icon } from "@/src/components/Icon";
 
 const DEFAULT_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || ''
 const DEFAULT_MODEL = import.meta.env.VITE_GEMINI_MODEL || 'gemini-2.5-flash'
@@ -24,17 +25,17 @@ const STORAGE_KEY_MESSAGES = 'gemini_chat_history_v2'
 
 const STARTER_PROMPTS = [
   {
-    icon: '🤹',
+    icon: 'bi bi-person-arms-up',
     title: 'Xiếc đương đại vs truyền thống',
     prompt: 'Sự khác biệt giữa xiếc truyền thống và xiếc đương đại?',
   },
   {
-    icon: '🎯',
+    icon: 'bi bi-bullseye',
     title: 'Kỹ thuật khó & Tiết mục hay',
     prompt: 'Kỹ thuật khó có quyết định một tiết mục hay hay không?',
   },
   {
-    icon: '🌏',
+    icon: 'bi bi-globe-americas',
     title: 'Ảnh hưởng văn hóa xiếc',
     prompt: 'Xiếc Việt Nam chịu ảnh hưởng từ những nền văn hóa nào?',
   },
@@ -44,42 +45,42 @@ const STARTER_PROMPTS = [
     prompt: 'Xiếc bắt đầu từ khi nào',
   },
   {
-    icon: '📜',
+    icon: 'bi bi-file-earmark-text',
     title: 'Giai đoạn phát triển xiếc Việt',
     prompt: 'Từng giai đoạn phát triển trong xiếc Việt Nam',
   },
   {
-    icon: '⏱️',
+    icon: 'bi bi-stopwatch',
     title: 'Trở thành diễn viên xiếc',
     prompt: 'Mất bao lâu để trở thành diễn viên xiếc đương đại',
   },
   {
-    icon: '💪',
+    icon: 'bi bi-lightning-charge',
     title: 'Khó khăn & Thách thức',
     prompt: 'Khó khăn và thách thức nhất của một diễn viên xiếc?',
   },
   {
-    icon: '✨',
+    icon: 'bi bi-stars',
     title: 'Yếu tố quyết định xiếc',
     prompt: 'Yếu tố quyết định của một màn trình diễn xiếc đương đại',
   },
   {
-    icon: '📍',
+    icon: 'bi bi-geo-alt',
     title: 'Địa điểm biểu diễn & Mua vé',
     prompt: 'Các đoàn xiếc Việt Nam thường biểu diễn ở đâu?',
   },
   {
-    icon: '🐾',
+    icon: 'bi bi-universal-access',
     title: 'Vì sao không còn xiếc thú?',
     prompt: 'Vì sao ngày nay nhiều chương trình xiếc không còn sử dụng động vật',
   },
   {
-    icon: '👥',
+    icon: 'bi bi-people',
     title: 'Độ tuổi & Khán giả phù hợp',
     prompt: 'Xiếc phù hợp với tệp khán giả nào?',
   },
   {
-    icon: '🎋',
+    icon: 'bi bi-tree',
     title: 'Đạo cụ truyền thống phổ biến',
     prompt: 'Có những đạo cụ truyền thống nào phổ biến trong xiếc?',
   },
@@ -435,7 +436,7 @@ export const ChatbotPage: React.FC<ChatbotPageProps> = ({ onBackToPortal }) => {
                     className="flex flex-col items-start gap-1.5 rounded-2xl border-2 border-amber-400/40 bg-[#8c1c1f]/85 p-4 text-left text-amber-100 shadow-md transition-all duration-200 hover:border-amber-300 hover:bg-[#9e1f24] hover:text-white group cursor-pointer active:scale-98"
                   >
                     <div className="flex items-center gap-2">
-                      <span className="text-lg">{item.icon}</span>
+                      <span className="text-lg"><Icon name={item.icon} /></span>
                       <span className="font-bold text-amber-300 group-hover:text-amber-200 text-xs">
                         {item.title}
                       </span>

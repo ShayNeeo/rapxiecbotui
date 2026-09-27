@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { Icon } from "@/src/components/Icon";
 import { Button } from "@/src/components/ui/button";
 import { CircusBadge } from "@/src/types";
 import { circusAudio } from "@/src/utils/audio";
@@ -33,19 +34,40 @@ import { Facebook } from "@/src/components/icons/Facebook";
 let ticketFontCSSCache: string | null = null;
 const TICKET_FONT_CSS_URL =
   "https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Bungee&family=Patrick+Hand&display=swap";
+// The ticket uses CDN Bootstrap Icons, and the capture path sets skipFonts:true,
+// so the icon font must be embedded explicitly or glyphs rasterize as tofu.
+const TICKET_ICON_CSS_URL =
+  "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css";
+const TICKET_ICON_CSS_BASE =
+  "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/";
 
-async function getTicketFontEmbedCSS(): Promise<string | null> {
-  if (ticketFontCSSCache) return ticketFontCSSCache;
+async function fetchCss(url: string, absolutizeFrom?: string): Promise<string | null> {
   try {
-    const res = await fetch(TICKET_FONT_CSS_URL);
+    const res = await fetch(url);
     if (!res.ok) return null;
     const css = await res.text();
     if (!css.includes("url(")) return null;
-    ticketFontCSSCache = css;
+    // The icon stylesheet references its woff2 as a RELATIVE url(fonts/...).
+    // Once inlined into the capture's <foreignObject>, that resolves against the
+    // page origin instead of the CDN, the font never loads, and every icon
+    // rasterizes as tofu. Rewrite to absolute before embedding.
+    if (absolutizeFrom) {
+      return css.replace(/url\((["']?)fonts\//g, `url($1${absolutizeFrom}`);
+    }
     return css;
   } catch {
     return null;
   }
+}
+
+async function getTicketFontEmbedCSS(): Promise<string | null> {
+  if (ticketFontCSSCache) return ticketFontCSSCache;
+  const [text, icons] = await Promise.all([
+    fetchCss(TICKET_FONT_CSS_URL),
+    fetchCss(TICKET_ICON_CSS_URL, TICKET_ICON_CSS_BASE),
+  ]);
+  ticketFontCSSCache = [text, icons].filter(Boolean).join("\n") || null;
+  return ticketFontCSSCache;
 }
 
 interface CircusTicketProps {
@@ -633,7 +655,7 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
         {/* Privileges */}
         <div className="w-full flex items-start gap-2 text-left pt-1 text-xs relative z-10">
           <div className="flex items-center gap-1 shrink-0 font-bold text-neutral-800">
-            <span className="text-xs">🎟️</span>
+            <span className="text-xs"><Icon name="bi bi-ticket-perforated" /></span>
             <span>{isEn ? "Privileges:" : "Quyền lợi:"}</span>
           </div>
           <p className="font-medium text-emerald-800 leading-relaxed">
@@ -917,7 +939,7 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
 
               <div className="flex flex-col sm:flex-row items-center justify-between gap-2 pt-2 border-t border-amber-200/80 text-xs">
                 <span className="text-neutral-500 text-[11px] text-center sm:text-left">
-                  {isEn ? "💡 Tip: You can save high-definition ticket image or copy it directly" : "💡 Mẹo: Bạn có thể lưu ảnh vé chất lượng cao hoặc sao chép ảnh nhanh"}
+                  {isEn ? <><Icon name="bi bi-lightbulb" /> Tip: You can save high-definition ticket image or copy it directly</> : <><Icon name="bi bi-lightbulb" /> Mẹo: Bạn có thể lưu ảnh vé chất lượng cao hoặc sao chép ảnh nhanh</>}
                 </span>
 
                 <button

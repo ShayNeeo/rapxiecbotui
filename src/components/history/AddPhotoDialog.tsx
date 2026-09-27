@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { Icon } from "@/src/components/Icon";
 import { X, Upload, Link as LinkIcon, Sparkles } from "lucide-react";
 import { circusAudio } from "@/src/utils/audio";
 import confetti from "canvas-confetti";
@@ -136,7 +137,7 @@ export const AddPhotoDialog: React.FC<AddPhotoDialogProps> = ({
         <div className="flex items-center justify-between border-b border-amber-100 pb-3">
           <div className="flex items-center gap-2">
             <span className="size-8 rounded-xl bg-amber-400 text-amber-950 flex items-center justify-center text-base font-bold shadow-xs">
-              📷
+              <Icon name="bi bi-camera" />
             </span>
             <div>
               <h3 className="font-circus text-lg sm:text-xl text-neutral-900">
@@ -278,7 +279,7 @@ export const AddPhotoDialog: React.FC<AddPhotoDialogProps> = ({
         {/* Error message */}
         {errorMsg && (
           <p className="text-xs text-red-600 bg-red-50 p-2.5 rounded-xl border border-red-200 font-medium">
-            ⚠️ {errorMsg}
+            <Icon name="bi bi-exclamation-triangle" /> {errorMsg}
           </p>
         )}
 

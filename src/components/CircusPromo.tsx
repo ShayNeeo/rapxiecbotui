@@ -20,6 +20,7 @@ import {
   Printer
 } from "lucide-react";
 import { OFFICIAL_CIRCUS_LOGO } from "@/src/lib/logo";
+import { Icon } from "@/src/components/Icon";
 
 interface CircusPromoProps {
   onBack: () => void;
@@ -152,7 +153,7 @@ export const CircusPromo: React.FC<CircusPromoProps> = ({
               }
             </p>
             <div className="mt-2.5 sm:mt-3 inline-flex items-center gap-2 text-sm sm:text-base font-circus font-normal text-amber-300 group-hover:text-yellow-200 tracking-wide transition-colors">
-              <span>{isEn ? "✨ Click here to open publication on Canva" : "✨ Nhấn vào đây để mở ấn phẩm trên Canva"}</span>
+              <span>{isEn ? <><Icon name="bi bi-stars" /> Click here to open publication on Canva</> : <><Icon name="bi bi-stars" /> Nhấn vào đây để mở ấn phẩm trên Canva</>}</span>
               <ExternalLink className="size-4 sm:size-4.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </div>
           </a>
@@ -183,10 +184,10 @@ export const CircusPromo: React.FC<CircusPromoProps> = ({
       {/* Brochure Navigation Tabs */}
       <div className="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-2 scrollbar-none">
         {[
-          { id: 'overview', label: isEn ? '1. Unique Identity' : '1. Nét Độc Bản Xiếc Việt', icon: '🇻🇳' },
-          { id: 'contemporary', label: isEn ? '2. Contemporary Bamboo' : '2. Xiếc Đương Đại & Cây Tre', icon: '🎋' },
-          { id: 'shows', label: isEn ? '3. Acclaimed Masterpieces' : '3. Tác Phẩm Vang Danh', icon: '🌟' },
-          { id: 'guide', label: isEn ? '4. Audience Guide' : '4. Cẩm Nang Khán Giả Trẻ', icon: '🎓' },
+          { id: 'overview', label: isEn ? '1. Unique Identity' : '1. Nét Độc Bản Xiếc Việt', icon: 'bi bi-flag-fill' },
+          { id: 'contemporary', label: isEn ? '2. Contemporary Bamboo' : '2. Xiếc Đương Đại & Cây Tre', icon: 'bi bi-tree' },
+          { id: 'shows', label: isEn ? '3. Acclaimed Masterpieces' : '3. Tác Phẩm Vang Danh', icon: 'bi bi-star-fill' },
+          { id: 'guide', label: isEn ? '4. Audience Guide' : '4. Cẩm Nang Khán Giả Trẻ', icon: 'bi bi-mortarboard' },
         ].map((tab) => {
           const isActive = activeTab === tab.id;
           return (
@@ -202,7 +203,7 @@ export const CircusPromo: React.FC<CircusPromoProps> = ({
                   : 'bg-white text-neutral-700 border-amber-200 hover:border-amber-400 hover:bg-amber-50'
               }`}
             >
-              <span>{tab.icon}</span>
+              <span><Icon name={tab.icon} /></span>
               <span>{tab.label}</span>
             </button>
           );
@@ -214,7 +215,9 @@ export const CircusPromo: React.FC<CircusPromoProps> = ({
         <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-amber-300/80 shadow-sm space-y-6 animate-in fade-in-50 duration-200">
           <div className="flex items-center gap-3 border-b border-amber-200 pb-4">
             <div className="size-12 rounded-2xl bg-amber-100 border border-amber-300 flex items-center justify-center text-2xl">
-              🇻🇳
+              {/* Not an emoji flag: regional-indicator pairs render as the
+                  letters "VN" on Windows, so the icon font is used instead. */}
+              <Icon name="bi bi-globe-americas" />
             </div>
             <div>
               <span className="text-xs font-bold text-red-700 uppercase tracking-wider">
@@ -265,7 +268,7 @@ export const CircusPromo: React.FC<CircusPromoProps> = ({
         <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-amber-300/80 shadow-sm space-y-6 animate-in fade-in-50 duration-200">
           <div className="flex items-center gap-3 border-b border-amber-200 pb-4">
             <div className="size-12 rounded-2xl bg-emerald-100 border border-emerald-300 flex items-center justify-center text-2xl">
-              🎋
+              <Icon name="bi bi-tree" />
             </div>
             <div>
               <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider">
@@ -283,7 +286,7 @@ export const CircusPromo: React.FC<CircusPromoProps> = ({
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="p-5 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-2">
-              <span className="text-2xl">🎍</span>
+              <span className="text-2xl"><Icon name="bi bi-flower2" /></span>
               <h4 className="font-circus text-base text-emerald-950">Chất Liệu Thuần Việt</h4>
               <p className="text-xs text-neutral-600 leading-relaxed">
                 Những thân tre dài, thúng tròn, gậy mây, rơm rạ được biến hóa thành cầu thăng bằng, đu bay, mái nhà, con thuyền một cách tài tình.
@@ -291,7 +294,7 @@ export const CircusPromo: React.FC<CircusPromoProps> = ({
             </div>
 
             <div className="p-5 rounded-2xl bg-amber-50 border border-amber-200 space-y-2">
-              <span className="text-2xl">🎵</span>
+              <span className="text-2xl"><Icon name="bi bi-music-note-beamed" /></span>
               <h4 className="font-circus text-base text-amber-950">Âm Nhạc Ngũ Cung Trực Tiếp</h4>
               <p className="text-xs text-neutral-600 leading-relaxed">
                 Các nghệ sĩ biểu diễn cùng dàn nhạc sống: đàn bầu, đàn tranh, sáo trúc, cồng chiêng tạo nên bản hòa ca mộc mạc lay động lòng người.
@@ -299,7 +302,7 @@ export const CircusPromo: React.FC<CircusPromoProps> = ({
             </div>
 
             <div className="p-5 rounded-2xl bg-rose-50 border border-rose-200 space-y-2">
-              <span className="text-2xl">🎭</span>
+              <span className="text-2xl"><Icon name="bi bi-emoji-smile" /></span>
               <h4 className="font-circus text-base text-rose-950">Kịch Hình Thể & Cảm Xúc</h4>
               <p className="text-xs text-neutral-600 leading-relaxed">
                 Mỗi động tác nhào lộn, uốn dẻo không đơn thuần phô diễn kỹ xảo mà kể một câu chuyện cảm xúc về con người và đất nước Việt Nam.
@@ -314,7 +317,7 @@ export const CircusPromo: React.FC<CircusPromoProps> = ({
         <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-amber-300/80 shadow-sm space-y-6 animate-in fade-in-50 duration-200">
           <div className="flex items-center gap-3 border-b border-amber-200 pb-4">
             <div className="size-12 rounded-2xl bg-red-100 border border-red-300 flex items-center justify-center text-2xl">
-              🌟
+              <Icon name="bi bi-star-fill" />
             </div>
             <div>
               <span className="text-xs font-bold text-red-700 uppercase tracking-wider">
@@ -392,7 +395,7 @@ export const CircusPromo: React.FC<CircusPromoProps> = ({
         <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-amber-300/80 shadow-sm space-y-6 animate-in fade-in-50 duration-200">
           <div className="flex items-center gap-3 border-b border-amber-200 pb-4">
             <div className="size-12 rounded-2xl bg-amber-100 border border-amber-300 flex items-center justify-center text-2xl">
-              🎓
+              <Icon name="bi bi-mortarboard" />
             </div>
             <div>
               <span className="text-xs font-bold text-amber-800 uppercase tracking-wider">
@@ -428,7 +431,7 @@ export const CircusPromo: React.FC<CircusPromoProps> = ({
 
             <div className="space-y-3">
               <h4 className="font-circus text-base text-red-900 flex items-center gap-1.5">
-                <span>💡</span>
+                <span><Icon name="bi bi-lightbulb" /></span>
                 <span>Mẹo Nhỏ Khi Đi Xem Xiếc</span>
               </h4>
               <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 space-y-2.5 text-xs text-neutral-700">

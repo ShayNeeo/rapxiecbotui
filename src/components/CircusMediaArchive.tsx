@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { Icon } from "@/src/components/Icon";
 import { useLanguage } from "@/src/context/LanguageContext";
 import { circusAudio } from "@/src/utils/audio";
 import duNon4NuImg from "@/src/assets/images/du_non_4_nu_silver_idol.jpg";
@@ -722,7 +723,7 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
         {/* Subtitle / Intro Banner */}
         <div className="bg-amber-100/70 border-b border-amber-300/60 px-5 py-2.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs text-neutral-700 shrink-0">
           <div className="flex items-center gap-2">
-            <span className="text-amber-800 font-bold">✨ {isEn ? "Highlights:" : "Điểm nhấn:"}</span>
+            <span className="text-amber-800 font-bold"><Icon name="bi bi-stars" /> {isEn ? "Highlights:" : "Điểm nhấn:"}</span>
             <span>
               {isEn
                 ? "Where viewers can admire numerous vivid pictures and dynamic short videos of modern Vietnamese circus."
@@ -1380,14 +1381,14 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
                           onClick={() => setBlankCoverImage("https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1000&q=80")}
                           className="text-[10px] py-1 px-1.5 rounded-lg bg-white hover:bg-amber-200 border border-amber-300 text-amber-950 font-medium transition-colors cursor-pointer truncate"
                         >
-                          🎋 {isEn ? "Bamboo" : "Xiếc Tre"}
+                          <Icon name="bi bi-tree" /> {isEn ? "Bamboo" : "Xiếc Tre"}
                         </button>
                         <button
                           type="button"
                           onClick={() => setBlankCoverImage("https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1000&q=80")}
                           className="text-[10px] py-1 px-1.5 rounded-lg bg-white hover:bg-amber-200 border border-amber-300 text-amber-950 font-medium transition-colors cursor-pointer truncate"
                         >
-                          🔥 {isEn ? "Fire" : "Xiếc Lửa"}
+                          <Icon name="bi bi-fire" /> {isEn ? "Fire" : "Xiếc Lửa"}
                         </button>
                         <button
                           type="button"
@@ -1687,7 +1688,7 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
                       : `Bạn có chắc chắn muốn xoá "${confirmDeleteMedia.title}" khỏi kho tư liệu số không?`}
                   </p>
                   <span className="inline-block mt-2 text-[11px] text-amber-900 bg-amber-100 border border-amber-300 px-2 py-0.5 rounded-md font-medium">
-                    💡 {isEn ? "Default items can be restored anytime from the top banner." : "Các video gốc có thể khôi phục lại bất kỳ lúc nào từ thanh phía trên."}
+                    <Icon name="bi bi-lightbulb" /> {isEn ? "Default items can be restored anytime from the top banner." : "Các video gốc có thể khôi phục lại bất kỳ lúc nào từ thanh phía trên."}
                   </span>
                 </div>
               </div>

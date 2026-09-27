@@ -9,6 +9,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Bungee&family=Patrick+Hand&display=swap" rel="stylesheet" crossorigin="anonymous">
+    <!-- Bootstrap Icons: self-hosted (trimmed to the icons this app uses).
+         Self-hosted, not CDN, because html-to-image cannot read cross-origin
+         cssRules: the .bi-*:before content never reaches the cloned node, so
+         every icon rasterizes as a tofu box in the ticket PNG export. -->
+    <link rel="stylesheet" href="/fonts/bootstrap-icons-local.css">
   </head>
   <body class="bg-[#FFFDF7] text-neutral-900 antialiased selection:bg-amber-300 selection:text-red-900">
     <div id="root"></div>

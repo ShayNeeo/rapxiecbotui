@@ -20,6 +20,7 @@ import { CHATBOT_AI_URL } from "@/src/lib/constants";
 import { getPredefinedAnswer } from "@/src/services/predefinedAnswers";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { Icon } from "@/src/components/Icon";
 
 interface Message {
   id: string;
@@ -40,21 +41,21 @@ const SAMPLE_QUESTIONS = [
     labelEn: "Traditional vs Contemporary",
     prompt: "Sự khác biệt giữa xiếc truyền thống và xiếc đương đại?",
     promptEn: "What is the difference between traditional and contemporary circus?",
-    icon: "🤹",
+    icon: "bi bi-person-arms-up",
   },
   {
     label: "Kỹ thuật khó & Tiết mục hay",
     labelEn: "Technique & Show Quality",
     prompt: "Kỹ thuật khó có quyết định một tiết mục hay hay không?",
     promptEn: "Does difficult technique determine whether a performance is good?",
-    icon: "🎯",
+    icon: "bi bi-bullseye",
   },
   {
     label: "Ảnh hưởng văn hóa xiếc",
     labelEn: "Cultural Influences",
     prompt: "Xiếc Việt Nam chịu ảnh hưởng từ những nền văn hóa nào?",
     promptEn: "Which cultures have influenced Vietnamese circus?",
-    icon: "🌏",
+    icon: "bi bi-globe-americas",
   },
   {
     label: "Nguồn gốc nghệ thuật xiếc",
@@ -68,56 +69,56 @@ const SAMPLE_QUESTIONS = [
     labelEn: "Development Stages",
     prompt: "Từng giai đoạn phát triển trong xiếc Việt Nam",
     promptEn: "What are the developmental stages of Vietnamese circus?",
-    icon: "📜",
+    icon: "bi bi-file-earmark-text",
   },
   {
     label: "Trở thành diễn viên xiếc",
     labelEn: "Circus Artist Training",
     prompt: "Mất bao lâu để trở thành diễn viên xiếc đương đại",
     promptEn: "How long does it take to become a contemporary circus artist?",
-    icon: "⏱️",
+    icon: "bi bi-stopwatch",
   },
   {
     label: "Khó khăn & Thách thức",
     labelEn: "Artist Challenges",
     prompt: "Khó khăn và thách thức nhất của một diễn viên xiếc?",
     promptEn: "What are the biggest challenges faced by a circus performer?",
-    icon: "💪",
+    icon: "bi bi-lightning-charge",
   },
   {
     label: "Yếu tố quyết định xiếc",
     labelEn: "Crucial Performance Factors",
     prompt: "Yếu tố quyết định của một màn trình diễn xiếc đương đại",
     promptEn: "What factors determine a contemporary circus performance?",
-    icon: "✨",
+    icon: "bi bi-stars",
   },
   {
     label: "Địa điểm biểu diễn & Mua vé",
     labelEn: "Venues & Tickets",
     prompt: "Các đoàn xiếc Việt Nam thường biểu diễn ở đâu?",
     promptEn: "Where do Vietnamese circus troupes usually perform?",
-    icon: "📍",
+    icon: "bi bi-geo-alt",
   },
   {
     label: "Vì sao không còn xiếc thú?",
     labelEn: "Why No Circus Animals?",
     prompt: "Vì sao ngày nay nhiều chương trình xiếc không còn sử dụng động vật",
     promptEn: "Why do modern circus shows no longer use animals?",
-    icon: "🐾",
+    icon: "bi bi-universal-access",
   },
   {
     label: "Độ tuổi & Khán giả phù hợp",
     labelEn: "Target Audience & Age",
     prompt: "Xiếc phù hợp với tệp khán giả nào?",
     promptEn: "Which audience age group is circus suitable for?",
-    icon: "👥",
+    icon: "bi bi-people",
   },
   {
     label: "Đạo cụ truyền thống phổ biến",
     labelEn: "Traditional Circus Props",
     prompt: "Có những đạo cụ truyền thống nào phổ biến trong xiếc?",
     promptEn: "What are the common traditional props in circus?",
-    icon: "🎋",
+    icon: "bi bi-tree",
   },
   {
     label: "Xiếc đương đại là gì?",
@@ -339,7 +340,7 @@ export const CircusChat: React.FC<CircusChatProps> = ({ onBack, onUnlockBadge })
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 text-red-950 text-xs font-bold shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer border border-amber-200"
               title={isEn ? "Open AI Chatbot" : "Mở Chatbot AI"}
             >
-              <span>🤖</span>
+              <span><Icon name="bi bi-robot" /></span>
               <span>{isEn ? "Chatbot AI" : "Mở Chatbot AI"}</span>
             </a>
 
@@ -376,7 +377,7 @@ export const CircusChat: React.FC<CircusChatProps> = ({ onBack, onUnlockBadge })
               className="p-3 text-left rounded-2xl bg-white hover:bg-amber-50/80 border-2 border-amber-200 hover:border-red-500 shadow-xs hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between text-xs disabled:opacity-50"
             >
               <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-lg group-hover:scale-110 transition-transform">{item.icon}</span>
+                <span className="text-lg group-hover:scale-110 transition-transform"><Icon name={item.icon} /></span>
                 <span className="font-bold text-neutral-800 line-clamp-1 group-hover:text-red-700">
                   {isEn ? item.labelEn : item.label}
                 </span>
@@ -410,7 +411,7 @@ export const CircusChat: React.FC<CircusChatProps> = ({ onBack, onUnlockBadge })
                       : "bg-amber-400 text-red-950 border border-amber-300"
                   }`}
                 >
-                  {isUser ? "👤" : "🎪"}
+                  {isUser ? <Icon name="bi bi-person" /> : "🎪"}
                 </div>
 
                 {/* Message Bubble */}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Icon } from "@/src/components/Icon";
 import { Link } from "react-router-dom";
 import { circusAudio } from "@/src/utils/audio";
 import { CircusActId } from "@/src/types";
@@ -141,7 +142,7 @@ export const CircusHeader: React.FC<CircusHeaderProps> = ({
               }`}
               title="Tiếng Việt (Mặc định)"
             >
-              <span>🇻🇳</span>
+              <span><Icon name="bi bi-flag-fill" /></span>
               <span>VI</span>
             </button>
             <button
@@ -159,7 +160,7 @@ export const CircusHeader: React.FC<CircusHeaderProps> = ({
               }`}
               title="English mode"
             >
-              <span>🇬🇧</span>
+              <span><Icon name="bi bi-flag-fill" /></span>
               <span>EN</span>
             </button>
           </div>
@@ -188,7 +189,10 @@ export const CircusHeader: React.FC<CircusHeaderProps> = ({
 
       {/* Navigation Act Tabs */}
       <div className="bg-red-950/60 border-t border-red-800/80 backdrop-blur-xs">
-        <div className="max-w-6xl mx-auto px-2 flex items-center justify-start sm:justify-center gap-1.5 overflow-x-auto py-2 scrollbar-none">
+        {/* Wrap rather than scroll: 10 tabs need ~1228px and max-w-6xl is 1152px,
+            so a single clipped row was guaranteed at every viewport. `scrollbar-none`
+            was never defined in index.css, so the overflow was silent. */}
+        <div className="max-w-6xl mx-auto px-2 flex flex-wrap items-center justify-center gap-1.5 py-2">
           {[
             { id: 'stage' as CircusActId, label: t.nav.stage, icon: Sparkles },
             { id: 'about' as CircusActId, label: t.nav.about, icon: Users },

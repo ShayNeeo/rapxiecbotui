@@ -1,4 +1,5 @@
 import React from "react";
+import { Icon } from "@/src/components/Icon";
 import { Button } from "@/src/components/ui/button";
 import { circusAudio } from "@/src/utils/audio";
 import { useLanguage } from "@/src/context/LanguageContext";
@@ -279,7 +280,7 @@ export const CircusAbout: React.FC<CircusAboutProps> = ({
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
           <div className="p-5 rounded-2xl bg-amber-50 border border-amber-200/80 space-y-2">
-            <div className="text-3xl">🎋</div>
+            <div className="text-3xl"><Icon name="bi bi-tree" /></div>
             <h4 className="font-circus text-base text-red-900">
               {isEn ? "Heritage Essence" : "Tinh Hoa Bản Sắc"}
             </h4>
@@ -291,7 +292,7 @@ export const CircusAbout: React.FC<CircusAboutProps> = ({
           </div>
 
           <div className="p-5 rounded-2xl bg-red-50 border border-red-200/80 space-y-2">
-            <div className="text-3xl">🌐</div>
+            <div className="text-3xl"><Icon name="bi bi-globe2" /></div>
             <h4 className="font-circus text-base text-red-900">
               {isEn ? "Digital Innovation" : "Sáng Tạo Số Hóa"}
             </h4>
@@ -303,7 +304,7 @@ export const CircusAbout: React.FC<CircusAboutProps> = ({
           </div>
 
           <div className="p-5 rounded-2xl bg-emerald-50 border border-emerald-200/80 space-y-2">
-            <div className="text-3xl">🤝</div>
+            <div className="text-3xl"><Icon name="bi bi-people-fill" /></div>
             <h4 className="font-circus text-base text-red-900">
               {isEn ? "Connecting Generations" : "Kết Nối Thế Hệ"}
             </h4>

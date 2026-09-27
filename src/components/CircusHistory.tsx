@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { HistoryHome } from "@/src/components/history/HistoryHome";
 import { MilestonePage } from "@/src/components/history/MilestonePage";
+import { Icon } from "@/src/components/Icon";
 
 interface CircusHistoryProps {
   onBack: () => void;
@@ -58,7 +59,7 @@ export const HISTORY_ERAS: HistoryEra[] = [
     ],
     quote: "Trò diễn cổ đại sau này chính là nguồn chất liệu kỹ thuật để Philip Astley tổng hợp thành mô hình Rạp Xiếc Cổ điển vào năm 1768 tại Anh.",
     quoteEn: "Ancient spectacles provided the vital technical repertoire for Philip Astley to synthesize into the Classical Circus model in 1768 in England.",
-    imageIcon: "🏛️"
+    imageIcon: "bi bi-bank"
   },
   {
     id: "classical-circus",
@@ -95,7 +96,7 @@ export const HISTORY_ERAS: HistoryEra[] = [
     ],
     quote: "Philip Astley đã sáng tạo nên vòng diễn tròn 13 mét định hình rạp xiếc cổ điển cho toàn nhân loại suốt hơn 250 năm qua.",
     quoteEn: "Philip Astley created the 13-meter circular ring that defined classical circus for all humanity for over 250 years.",
-    imageIcon: "🎠"
+    imageIcon: "bi bi-vinyl"
   },
   {
     id: "contemporary-circus",
@@ -211,7 +212,7 @@ export const HISTORY_ERAS: HistoryEra[] = [
         contextEn: "Forging distinctive national identity in contemporary circus"
       }
     ],
-    imageIcon: "🎋",
+    imageIcon: "bi bi-tree",
     videoUrl: "https://youtu.be/df-9MrHOTaU?si=f9WHCBRHIVn5ECxn",
     videoTitle: "Màn trình diễn đỉnh cao ở đêm chung kết Got Talent của hai anh em Quốc Cơ - Quốc Nghiệp",
     subsections: [
@@ -261,7 +262,7 @@ export const HISTORY_ERAS: HistoryEra[] = [
         titleEn: "Academic Training (1950 - 1980)",
         period: "1950 - 1980",
         periodEn: "1950 - 1980",
-        icon: "🎓",
+        icon: "bi bi-mortarboard",
         description: "Ngày 16/1/1956, Đội Xiếc Trung ương (tiền thân của Liên đoàn Xiếc Việt Nam ngày nay) chính thức được thành lập theo quyết định của Bác Hồ và Nhà nước.\n\nTrong thập niên 1960–1980, hàng loạt thế hệ nghệ sĩ xiếc Việt Nam được cử sang đào tạo bài bản tại Trường Xiếc Mátxcơva (Liên Xô) và các nước Đông Âu, mang kỹ thuật xiếc hàn lâm chuẩn quốc tế về phục vụ đất nước. Các nghệ sĩ đã đem tiếng cười và tinh thần lạc quan quả cảm phục vụ đồng bào, chiến sĩ tại chiến hào Điện Biên, đường Trường Sơn và các mặt trận khói lửa.",
         descriptionEn: "On January 16, 1956, the Central Circus Troupe (precursor to today's Vietnam Circus Federation) was officially established under the vision of President Ho Chi Minh and the government.\n\nFrom the 1960s to the 1980s, generations of talented Vietnamese circus artists were sent to the world-renowned Moscow State Circus School (USSR) and Eastern European academies, acquiring international classical standards to serve the nation. Artists courageously performed in trenches, along the Ho Chi Minh Trail, and in evacuated areas to uplift national morale.",
         highlights: [
@@ -303,7 +304,7 @@ export const HISTORY_ERAS: HistoryEra[] = [
         titleEn: "Modern Artistic Era (Contemporary Arts & World Records)",
         period: "Hiện Đại & Đương Đại",
         periodEn: "Modern & Contemporary Era",
-        icon: "🏆",
+        icon: "bi bi-trophy",
         description: "Ngày nay, với sự phát triển của ngành xiếc, xiếc hiện nay không chỉ dừng lại ở xiếc thú, nhào lộn, tung hứng… mà đã được biến tấu thành một sân khấu xiếc kết hợp với múa rối (MƠ SHOW), các vật dụng gắn liền với văn hóa đậm chất Việt Nam (À Ố SHOW, Làng Tôi, Teh Dar)... cùng với kịch bản được dàn dựng tỉ mỉ, chi tiết, được thổi hồn vào những câu chuyện đời thường sâu lắng chạm đến trái tim khán giả. Và đó gọi là Nghệ thuật Xiếc đương đại Việt Nam.\n\nĐồng thời, Xiếc Việt Nam đã vươn ra thế giới với nhiều kỷ lục Guinness và giải thưởng danh giá tại các liên hoan quốc tế đỉnh cao, được bạn bè năm châu thán phục.",
         descriptionEn: "Today, Vietnamese circus extends far beyond traditional stunts into theatrical visual productions combining circus with puppetry (MƠ SHOW), iconic Vietnamese cultural elements (À Ố SHOW, My Village, Teh Dar with bamboo poles, woven baskets, and gongs), and meticulously crafted storylines touching the deepest emotions of audiences. This is Vietnamese Contemporary Circus.\n\nConcurrently, Vietnamese circus artists have conquered the world stage with legendary Guinness World Records and top international festival awards, earning global admiration.",
         structuredSections: [
@@ -313,7 +314,7 @@ export const HISTORY_ERAS: HistoryEra[] = [
             titleEn: "Vietnamese Contemporary Circus Art",
             categoryBadge: "Nghệ Thuật Xiếc Đương Đại",
             categoryBadgeEn: "Contemporary Circus Art",
-            icon: "🎋",
+            icon: "bi bi-tree",
             summary: "Ngày nay, với sự phát triển của ngành xiếc, xiếc hiện nay không chỉ dừng lại ở xiếc thú, nhào lộn, tung hứng… mà đã được biến tấu thành một sân khấu xiếc kết hợp với múa rối (MƠ SHOW), các vật dụng gắn liền với văn hóa đậm chất Việt Nam (À Ố SHOW, Làng Tôi, Teh Dar)... cùng với kịch bản được dàn dựng tỉ mỉ, chi tiết, được thổi hồn vào những câu chuyện đời thường sâu lắng chạm đến trái tim khán giả. Và đó gọi là Nghệ thuật Xiếc đương đại Việt Nam.",
             summaryEn: "Today, with the advancement of circus arts, circus no longer confines itself to animal acts, acrobatics, or juggling... but has transformed into a theatrical circus stage combined with puppetry (MƠ SHOW), and objects deeply rooted in Vietnamese culture (À Ố SHOW, My Village, Teh Dar)... paired with meticulously crafted storylines breathing soul into touching everyday stories that reach the hearts of audiences. And that is called Vietnamese Contemporary Circus Art.",
             items: [
@@ -345,7 +346,7 @@ export const HISTORY_ERAS: HistoryEra[] = [
             titleEn: "World Records & Prestigious International Awards",
             categoryBadge: "Kỷ Lục & Giải Thưởng Đỉnh Cao",
             categoryBadgeEn: "World Records & Top Honors",
-            icon: "🏆",
+            icon: "bi bi-trophy",
             summary: "Xiếc Việt Nam không chỉ kế thừa truyền thống mà còn vươn ra thế giới với nhiều kỷ lục Guinness và giải thưởng danh giá tại các liên hoan quốc tế.",
             summaryEn: "Vietnam Circus not only inherits rich traditions but has conquered the world stage with multiple Guinness World Records and prestigious awards at top international festivals.",
             items: [
@@ -488,21 +489,21 @@ const HistoryNavigation: React.FC<{
       path: "/",
       number: null,
       label: isEn ? "Overview" : "Tổng quan",
-      icon: "📜",
+      icon: "bi bi-file-earmark-text",
       id: "overview",
     },
     {
       path: "/moc-1",
       number: "1",
       label: isEn ? "Ancient (2000 BC)" : "Mốc 1: Cổ Đại",
-      icon: "🏛️",
+      icon: "bi bi-bank",
       id: "ancient-circus",
     },
     {
       path: "/moc-2",
       number: "2",
       label: isEn ? "Classical (1768)" : "Mốc 2: Cổ Điển",
-      icon: "🎠",
+      icon: "bi bi-vinyl",
       id: "classical-circus",
     },
     {
@@ -516,7 +517,7 @@ const HistoryNavigation: React.FC<{
       path: "/moc-4",
       number: "4",
       label: isEn ? "100Y Vietnam" : "Mốc 4: 100 Năm Xiếc Việt",
-      icon: "🎋",
+      icon: "bi bi-tree",
       id: "vietnam-century-circus",
     },
   ];
@@ -588,7 +589,7 @@ const HistoryNavigation: React.FC<{
                     : "bg-amber-50/60 hover:bg-amber-100/80 text-neutral-800 border-amber-200"
                 }`}
               >
-                <span className="text-xl shrink-0">{item.icon}</span>
+                <span className="text-xl shrink-0"><Icon name={item.icon} /></span>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-black uppercase text-amber-900">

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Icon } from "@/src/components/Icon";
 import { Link } from "react-router-dom";
 import { HistoryEra } from "@/src/types";
 import { circusAudio } from "@/src/utils/audio";
@@ -321,7 +322,7 @@ export const HistoryHome: React.FC<HistoryHomeProps> = ({
                   {/* Card Footer with Applause & Link Button */}
                   <div className="pt-4 border-t border-amber-100 flex items-center justify-between gap-3">
                     <span className="text-xs font-bold text-amber-900 flex items-center gap-1.5">
-                      <span>👏</span>
+                      <span><Icon name="bi bi-hand-thumbs-up" /></span>
                       <span>{applauseCount} {isEn ? "applauds" : "lượt tán thưởng"}</span>
                     </span>
 
