@@ -141,6 +141,22 @@ export const HistoryHome: React.FC<HistoryHomeProps> = ({
             </p>
           </div>
         </div>
+
+        {/* Source citation link cited in a neat corner */}
+        <a
+          href="https://muctim.tuoitre.vn/vo-dien-moi-cua-rap-xiec-va-bieu-dien-da-nang-phu-tho-chinh-phuc-khan-gia-nhi-101260612232226283.htm"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => {
+            e.stopPropagation();
+            circusAudio.playBambooStep();
+          }}
+          className="absolute bottom-2 right-3 z-20 inline-flex items-center gap-1 text-[10px] text-amber-200/90 hover:text-white bg-black/75 hover:bg-black/90 px-2 py-0.5 rounded-md border border-white/20 transition-all backdrop-blur-xs"
+          title={isEn ? "Source: Muc Tim (Tuoi Tre)" : "Nguồn ảnh: Báo Mực Tím"}
+        >
+          <span>{isEn ? "Source: Muc Tim" : "Nguồn: Báo Mực Tím"}</span>
+          <ExternalLink className="size-2.5 text-amber-300" />
+        </a>
       </div>
 
       {/* Intro section for 4 Milestone Cards */}

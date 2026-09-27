@@ -159,7 +159,7 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
       </div>
 
       {/* Main Comment Box */}
-      <div className="rounded-3xl bg-neutral-950/80 border-2 border-amber-400/50 p-5 sm:p-7 shadow-xl backdrop-blur-md space-y-5 text-white">
+      <div className="rounded-3xl bg-gradient-to-b from-[#3a0808] via-[#240404] to-[#140202] border-4 border-amber-400 p-5 sm:p-7 shadow-2xl space-y-5 text-white">
         {/* User bar / Login prompt */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-amber-400/20">
           {currentUser ? (
@@ -195,16 +195,16 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
               </button>
             </div>
           ) : (
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 w-full bg-amber-400/10 border border-amber-400/30 rounded-2xl p-3 sm:p-3.5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 w-full bg-gradient-to-r from-amber-500/15 via-red-950/40 to-amber-500/15 border-2 border-amber-400/50 rounded-2xl p-3 sm:p-4 shadow-sm">
               <div className="flex items-center gap-2.5">
-                <div className="size-8 rounded-xl bg-white flex items-center justify-center p-1.5 shrink-0 shadow-xs">
-                  <GoogleIcon className="size-5" />
+                <div className="size-9 rounded-xl bg-white flex items-center justify-center p-1.5 shrink-0 shadow-md">
+                  <GoogleIcon className="size-5.5" />
                 </div>
                 <div>
                   <h4 className="text-xs sm:text-sm font-bold text-amber-200">
                     {isEn ? 'Sign in with Gmail to comment' : 'Đăng nhập bằng Gmail để bình luận'}
                   </h4>
-                  <p className="text-[11px] text-neutral-300">
+                  <p className="text-[11px] text-amber-100/80">
                     {isEn
                       ? 'Fast, secure sign-in with your Google account.'
                       : 'Đăng nhập nhanh chóng, xác thực tài khoản Google an toàn.'}
@@ -215,7 +215,7 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
               <button
                 type="button"
                 onClick={() => setIsLoginModalOpen(true)}
-                className="px-4 py-2 rounded-xl bg-white hover:bg-neutral-100 text-neutral-900 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer shrink-0 hover:scale-102 active:scale-98"
+                className="px-4.5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-300 hover:to-yellow-300 text-red-950 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-amber-400/30 cursor-pointer shrink-0 hover:scale-102 active:scale-98 border border-amber-200/50"
               >
                 <GoogleIcon className="size-4" />
                 <span>{isEn ? 'Sign in with Gmail' : 'Đăng Nhập Bằng Gmail'}</span>
@@ -296,20 +296,20 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
                   : 'Vui lòng đăng nhập Gmail ở trên để bắt đầu gửi ý kiến đóng góp...'
               }
               disabled={!currentUser}
-              className="w-full px-4 py-3 rounded-2xl bg-neutral-900 border border-amber-400/40 focus:border-amber-400 focus:outline-none text-white text-xs sm:text-sm placeholder:text-neutral-500 transition-all resize-none disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-3 rounded-2xl bg-[#260505]/90 border-2 border-amber-400/50 focus:border-amber-300 focus:bg-[#300606] focus:outline-none text-amber-50 text-xs sm:text-sm placeholder:text-amber-200/50 transition-all resize-none shadow-inner disabled:opacity-60 disabled:cursor-not-allowed"
             />
           </div>
 
           {/* Bottom Bar: Action */}
           <div className="flex items-center justify-between pt-1">
-            <span className="text-[11px] text-neutral-400">
+            <span className="text-[11px] text-amber-200/70">
               {content.length > 0 && `${content.length} ký tự`}
             </span>
 
             <button
               type="submit"
               disabled={isSubmitting || !currentUser || !content.trim()}
-              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-700 to-amber-600 hover:from-red-600 hover:to-amber-500 text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-md transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-600 via-amber-600 to-amber-500 hover:from-red-500 hover:to-amber-400 text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-md hover:shadow-lg transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed border border-amber-300/40"
             >
               <Send className="size-3.5" />
               <span>
@@ -386,7 +386,7 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
             return (
               <div
                 key={cmt.id}
-                className="rounded-2xl bg-neutral-950/70 border border-amber-400/30 hover:border-amber-400/60 p-4 sm:p-5 text-white shadow-md backdrop-blur-sm transition-all space-y-3"
+                className="rounded-2xl bg-gradient-to-b from-[#2e0606]/95 to-[#1c0303]/95 border-2 border-amber-400/40 hover:border-amber-400/80 p-4 sm:p-5 text-white shadow-md transition-all space-y-3"
               >
                 {/* Comment Header */}
                 <div className="flex items-start justify-between gap-3">

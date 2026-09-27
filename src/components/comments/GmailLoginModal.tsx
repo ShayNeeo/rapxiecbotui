@@ -90,13 +90,13 @@ export const GmailLoginModal: React.FC<GmailLoginModalProps> = ({
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-md rounded-3xl bg-neutral-900 border-2 border-amber-400/70 p-6 sm:p-7 shadow-2xl text-white space-y-5 animate-in zoom-in-95 duration-200"
+        className="relative w-full max-w-md rounded-3xl bg-gradient-to-b from-[#3d0909] via-[#260505] to-[#150202] border-4 border-amber-400 p-6 sm:p-7 shadow-[0_0_50px_rgba(245,158,11,0.25)] text-white space-y-5 animate-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 p-1.5 rounded-full text-neutral-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+          className="absolute right-4 top-4 p-1.5 rounded-full text-amber-300/70 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
           title={isEn ? 'Close' : 'Đóng'}
         >
           <X className="size-5" />
@@ -110,7 +110,7 @@ export const GmailLoginModal: React.FC<GmailLoginModalProps> = ({
           <h3 className="font-circus text-lg sm:text-xl text-amber-300 tracking-wider">
             {isEn ? 'Sign In with Gmail' : 'Đăng Nhập Bằng Gmail'}
           </h3>
-          <p className="text-xs text-neutral-300 leading-relaxed max-w-sm mx-auto">
+          <p className="text-xs text-amber-100/90 leading-relaxed max-w-sm mx-auto">
             {isEn
               ? 'Sign in with your Gmail account to leave comments, ratings, and suggestions for Pocket Circus.'
               : 'Đăng nhập tài khoản Gmail để để lại đánh giá, bình luận và đóng góp ý kiến cho Rạp Xiếc Bỏ Túi.'}
@@ -120,7 +120,7 @@ export const GmailLoginModal: React.FC<GmailLoginModalProps> = ({
         {/* Form */}
         <form onSubmit={handleLogin} className="space-y-4">
           {error && (
-            <div className="p-3 rounded-xl bg-red-950/80 border border-red-500/60 text-red-200 text-xs flex items-center gap-2">
+            <div className="p-3 rounded-xl bg-red-950/90 border border-red-500/80 text-red-200 text-xs flex items-center gap-2">
               <span className="shrink-0 size-2 rounded-full bg-red-400" />
               <span>{error}</span>
             </div>
@@ -138,10 +138,10 @@ export const GmailLoginModal: React.FC<GmailLoginModalProps> = ({
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="example@gmail.com"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-950 border border-amber-400/40 focus:border-amber-400 focus:outline-none text-white text-xs sm:text-sm placeholder:text-neutral-500 transition-all font-mono"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#2a0505]/90 border-2 border-amber-400/60 focus:border-amber-300 focus:ring-2 focus:ring-amber-400/30 focus:outline-none text-amber-100 text-xs sm:text-sm placeholder:text-amber-200/50 transition-all font-mono shadow-inner"
                 autoFocus
               />
-              <span className="absolute right-3 top-2.5 text-xs text-neutral-500 pointer-events-none">
+              <span className="absolute right-3 top-2.5 text-xs text-amber-300/70 font-semibold pointer-events-none">
                 @gmail.com
               </span>
             </div>
@@ -157,7 +157,7 @@ export const GmailLoginModal: React.FC<GmailLoginModalProps> = ({
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder={isEn ? 'Your Name' : 'Họ và tên của bạn'}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-950 border border-amber-400/40 focus:border-amber-400 focus:outline-none text-white text-xs sm:text-sm placeholder:text-neutral-500 transition-all"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-[#2a0505]/90 border-2 border-amber-400/60 focus:border-amber-300 focus:ring-2 focus:ring-amber-400/30 focus:outline-none text-amber-100 text-xs sm:text-sm placeholder:text-amber-200/50 transition-all shadow-inner"
             />
           </div>
 
@@ -165,7 +165,7 @@ export const GmailLoginModal: React.FC<GmailLoginModalProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-2.5 px-4 rounded-xl bg-white hover:bg-neutral-100 text-neutral-900 font-bold text-xs sm:text-sm flex items-center justify-center gap-2.5 shadow-md hover:shadow-lg transition-all cursor-pointer disabled:opacity-50"
+              className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-300 hover:to-yellow-300 text-red-950 font-bold text-xs sm:text-sm flex items-center justify-center gap-2.5 shadow-lg hover:shadow-amber-400/30 transition-all cursor-pointer disabled:opacity-50 hover:scale-[1.01] active:scale-[0.99] border border-amber-200/50"
             >
               <GoogleIcon className="size-4" />
               <span>

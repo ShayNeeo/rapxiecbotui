@@ -1,4 +1,4 @@
-import bannerImg from "@/src/assets/images/circus_history_banner_1790173992374.jpg";
+import bannerImg from "@/src/assets/images/kham_pha_lich_su_cover_muc_tim.jpg";
 import milestone1CoverImg from "@/src/assets/images/milestone_1_ancient_circus_cover.jpg";
 import milestone2CoverImg from "@/src/assets/images/milestone_2_classical_circus_cover.jpg";
 import milestone3CoverImg from "@/src/assets/images/milestone_3_contemporary_circus_cover.jpg";

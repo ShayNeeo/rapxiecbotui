@@ -32,15 +32,14 @@ import { CHATBOT_AI_URL, CIRCUS_3D_URL } from "@/src/lib/constants";
 import { Link } from "react-router-dom";
 import { CircusMediaArchive } from "@/src/components/CircusMediaArchive";
 import khoTuLieuCoverImg from "@/src/assets/images/kho_tu_lieu_so_cover_vung_dat_ky_bi.jpg";
-import banDoCoverImg from "@/src/assets/images/ban_do_rap_xiec_cover.jpg";
+import banDoCoverImg from "@/src/assets/images/ban_do_rap_xiec_cover_vung_dat_ky_bi.jpg";
 import rapXiec3dCoverImg from "@/src/assets/images/rap_xiec_3d_cover.jpg";
 import circusYouthImg from "@/src/assets/images/circus_youth_school_1789898876824.jpg";
-import circusHistoryCoverImg from "@/src/assets/images/milestone_4_vietnam_century_circus_cover.jpg";
-import quizCoverImg from "@/src/assets/images/du_non_4_nu_silver_idol.jpg";
-import chatbotCoverImg from "@/src/assets/images/cau_be_tro_ve_tu_rung_xanh.jpg";
-import brochureCoverImg from "@/src/assets/images/khai_mac_tai_nang_xiec_du_non_ao_dai.jpg";
+import circusHistoryCoverImg from "@/src/assets/images/kham_pha_lich_su_cover_muc_tim.jpg";
+import quizCoverImg from "@/src/assets/images/quiz_kien_thuc_cover_vung_dat_ky_bi.jpg";
+import chatbotCoverImg from "@/src/assets/images/chatbot_ai_cover_muc_tim.jpg";
+import brochureCoverImg from "@/src/assets/images/quang_ba_xiec_viet_cover_cha_rong_me_tien.jpg";
 import { FramedImage } from "@/src/components/FramedImage";
-import { ImageCropModal } from "@/src/components/ImageCropModal";
 
 interface CircusStageProps {
   onSelectAct: (act: CircusActId) => void;
@@ -66,26 +65,6 @@ export const CircusStage: React.FC<CircusStageProps> = ({
   const [hasCheered, setHasCheered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [isMediaArchiveOpen, setIsMediaArchiveOpen] = useState(false);
-  const [cropModalData, setCropModalData] = useState<{
-    isOpen: boolean;
-    imageKey: string;
-    imageUrl: string;
-    imageTitle: string;
-  }>({
-    isOpen: false,
-    imageKey: '',
-    imageUrl: '',
-    imageTitle: '',
-  });
-
-  const handleOpenCrop = (imageKey: string, imageUrl: string, imageTitle: string) => {
-    setCropModalData({
-      isOpen: true,
-      imageKey,
-      imageUrl,
-      imageTitle,
-    });
-  };
 
   const handleOpenMedia = () => {
     circusAudio.playBambooStep();
@@ -597,20 +576,33 @@ export const CircusStage: React.FC<CircusStageProps> = ({
             title={isEn ? "Open Promotional Brochure on Canva" : "Nhấn để mở Brochure Quảng Bá trên Canva"}
           >
             {/* Cover Image on top */}
-            <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-950">
-              <img
-                src={brochureCoverImg}
-                alt={isEn ? "Circus Brochure" : "Brochure Quảng Bá"}
-                className="size-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95 group-hover:opacity-100"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-              <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+            <FramedImage
+              imageKey="homepage-brochure"
+              src={brochureCoverImg}
+              alt={isEn ? "Circus Brochure" : "Brochure Quảng Bá"}
+              title={isEn ? "Promotional Brochure" : "Brochure Quảng Bá"}
+              badge={
                 <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-rose-900/80 text-rose-200 backdrop-blur-xs border border-rose-500/40">
                   📢 {isEn ? "E-Brochure" : "Brochure"}
                 </span>
-              </div>
-            </div>
+              }
+            >
+              {/* Source link cited in a neat corner */}
+              <a
+                href="http://cucnghethuatbieudien.gov.vn/nha-hat-phuong-nam-cong-dien-chinh-thuc-vo-kich-xiec-cha-rong-me-tien"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  circusAudio.playBambooStep();
+                }}
+                className="absolute bottom-1.5 right-2 z-20 inline-flex items-center gap-1 text-[9px] text-amber-200/90 hover:text-white bg-black/75 hover:bg-black/90 px-1.5 py-0.5 rounded border border-white/20 transition-all backdrop-blur-xs"
+                title={isEn ? "Source: Department of Performing Arts" : "Nguồn ảnh: Cục Nghệ thuật Biểu diễn"}
+              >
+                <span>{isEn ? "Source: Cuc NTBD" : "Nguồn: Cục NTBD"}</span>
+                <ExternalLink className="size-2 text-amber-300" />
+              </a>
+            </FramedImage>
 
             {/* Content below image */}
             <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
@@ -647,20 +639,17 @@ export const CircusStage: React.FC<CircusStageProps> = ({
             title={isEn ? "Open Modern Circus Digital Media Archive & Templates" : "Nhấn để mở Kho Tư Liệu Số & Mẫu Bỏ Ảnh/Tiêu Đề"}
           >
             {/* Cover Image on top */}
-            <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-950">
-              <img
-                src={khoTuLieuCoverImg}
-                alt={isEn ? "Digital Media Archive" : "Kho Tư Liệu Số"}
-                className="size-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95 group-hover:opacity-100"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-              <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+            <FramedImage
+              imageKey="homepage-archive"
+              src={khoTuLieuCoverImg}
+              alt={isEn ? "Digital Media Archive" : "Kho Tư Liệu Số"}
+              title={isEn ? "Digital Media Archive" : "Kho Tư Liệu Số"}
+              badge={
                 <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-950/80 text-amber-300 backdrop-blur-xs border border-amber-400/50">
                   🎞️ {isEn ? "Media Archive" : "Kho Tư Liệu Số"}
                 </span>
-              </div>
-            </div>
+              }
+            />
 
             {/* Content below image */}
             <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
@@ -700,20 +689,33 @@ export const CircusStage: React.FC<CircusStageProps> = ({
             className="group relative bg-white rounded-2xl overflow-hidden border-2 border-amber-300 hover:border-red-600 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
           >
             {/* Cover Image on top */}
-            <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-950">
-              <img
-                src={circusHistoryCoverImg}
-                alt={isEn ? "Circus History" : "Lịch Sử Xiếc Việt"}
-                className="size-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95 group-hover:opacity-100"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-              <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+            <FramedImage
+              imageKey="homepage-history"
+              src={circusHistoryCoverImg}
+              alt={isEn ? "Circus History" : "Lịch Sử Xiếc Việt"}
+              title={isEn ? "Circus History" : "Lịch Sử Xiếc Việt"}
+              badge={
                 <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-red-950/80 text-amber-200 backdrop-blur-xs border border-amber-400/40">
                   📜 {isEn ? "History" : "Lịch Sử Trăm Năm"}
                 </span>
-              </div>
-            </div>
+              }
+            >
+              {/* Source link cited in a neat corner */}
+              <a
+                href="https://muctim.tuoitre.vn/vo-dien-moi-cua-rap-xiec-va-bieu-dien-da-nang-phu-tho-chinh-phuc-khan-gia-nhi-101260612232226283.htm"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  circusAudio.playBambooStep();
+                }}
+                className="absolute bottom-1.5 right-2 z-20 inline-flex items-center gap-1 text-[9px] text-amber-200/90 hover:text-white bg-black/75 hover:bg-black/90 px-1.5 py-0.5 rounded border border-white/20 transition-all backdrop-blur-xs"
+                title={isEn ? "Source: Muc Tim (Tuoi Tre)" : "Nguồn ảnh: Báo Mực Tím"}
+              >
+                <span>{isEn ? "Source: Muc Tim" : "Nguồn: Báo Mực Tím"}</span>
+                <ExternalLink className="size-2 text-amber-300" />
+              </a>
+            </FramedImage>
 
             {/* Content below image */}
             <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
@@ -752,20 +754,17 @@ export const CircusStage: React.FC<CircusStageProps> = ({
             className="group relative bg-white rounded-2xl overflow-hidden border-2 border-amber-300 hover:border-sky-500 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
           >
             {/* Cover Image on top */}
-            <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-950">
-              <img
-                src={rapXiec3dCoverImg}
-                alt={isEn ? "3D Circus Tent" : "Rạp Xiếc 3D"}
-                className="size-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95 group-hover:opacity-100"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-              <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+            <FramedImage
+              imageKey="homepage-circus3d"
+              src={rapXiec3dCoverImg}
+              alt={isEn ? "3D Circus Tent" : "Rạp Xiếc 3D"}
+              title={isEn ? "3D Circus Tent" : "Rạp Xiếc 3D"}
+              badge={
                 <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-sky-950/80 text-sky-200 backdrop-blur-xs border border-sky-400/40">
                   🎪 WebGL 3D • 360°
                 </span>
-              </div>
-            </div>
+              }
+            />
 
             {/* Content below image */}
             <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
@@ -804,20 +803,33 @@ export const CircusStage: React.FC<CircusStageProps> = ({
             className="group relative bg-white rounded-2xl overflow-hidden border-2 border-amber-300 hover:border-emerald-500 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
           >
             {/* Cover Image on top */}
-            <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-950">
-              <img
-                src={quizCoverImg}
-                alt={isEn ? "Circus Quiz" : "Quiz Kiến Thức"}
-                className="size-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95 group-hover:opacity-100"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-              <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+            <FramedImage
+              imageKey="homepage-quiz"
+              src={quizCoverImg}
+              alt={isEn ? "Circus Quiz" : "Quiz Kiến Thức"}
+              title={isEn ? "Circus Quiz" : "Quiz Kiến Thức"}
+              badge={
                 <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-950/80 text-emerald-200 backdrop-blur-xs border border-emerald-400/40">
                   🧠 {isEn ? "Quiz" : "Thử Tài 20 Câu"}
                 </span>
-              </div>
-            </div>
+              }
+            >
+              {/* Source link cited in a neat corner */}
+              <a
+                href="https://bazaarvietnam.vn/vung-dat-ky-bi-vo-xiec-viral-dau-nam-2025-thay-doi-nhan-dinh-nao-cua-khan-gia-ve-xiec-viet/"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  circusAudio.playBambooStep();
+                }}
+                className="absolute bottom-1.5 right-2 z-20 inline-flex items-center gap-1 text-[9px] text-amber-200/90 hover:text-white bg-black/75 hover:bg-black/90 px-1.5 py-0.5 rounded border border-white/20 transition-all backdrop-blur-xs"
+                title={isEn ? "Source: Harper's Bazaar Vietnam" : "Nguồn ảnh: Bazaar Vietnam"}
+              >
+                <span>{isEn ? "Source: Bazaar Vietnam" : "Nguồn: Bazaar Vietnam"}</span>
+                <ExternalLink className="size-2 text-amber-300" />
+              </a>
+            </FramedImage>
 
             {/* Content below image */}
             <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
@@ -855,20 +867,33 @@ export const CircusStage: React.FC<CircusStageProps> = ({
             className="group relative bg-white rounded-2xl overflow-hidden border-2 border-amber-300 hover:border-amber-600 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
           >
             {/* Cover Image on top */}
-            <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-950">
-              <img
-                src={banDoCoverImg}
-                alt={isEn ? "Venues Map" : "Bản Đồ Rạp Xiếc"}
-                className="size-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95 group-hover:opacity-100"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-              <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+            <FramedImage
+              imageKey="homepage-map"
+              src={banDoCoverImg}
+              alt={isEn ? "Venues Map" : "Bản Đồ Rạp Xiếc"}
+              title={isEn ? "Venues Map" : "Bản Đồ Rạp Xiếc"}
+              badge={
                 <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-950/80 text-amber-200 backdrop-blur-xs border border-amber-400/40">
                   🗺️ {isEn ? "Circus Map" : "Bản Đồ Di Sản"}
                 </span>
-              </div>
-            </div>
+              }
+            >
+              {/* Source link cited in a neat corner */}
+              <a
+                href="https://bazaarvietnam.vn/vung-dat-ky-bi-vo-xiec-viral-dau-nam-2025-thay-doi-nhan-dinh-nao-cua-khan-gia-ve-xiec-viet/"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  circusAudio.playBambooStep();
+                }}
+                className="absolute bottom-1.5 right-2 z-20 inline-flex items-center gap-1 text-[9px] text-amber-200/90 hover:text-white bg-black/75 hover:bg-black/90 px-1.5 py-0.5 rounded border border-white/20 transition-all backdrop-blur-xs"
+                title={isEn ? "Source: Harper's Bazaar Vietnam" : "Nguồn ảnh: Bazaar Vietnam"}
+              >
+                <span>{isEn ? "Source: Bazaar Vietnam" : "Nguồn: Bazaar Vietnam"}</span>
+                <ExternalLink className="size-2 text-amber-300" />
+              </a>
+            </FramedImage>
 
             {/* Content below image */}
             <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
@@ -909,20 +934,33 @@ export const CircusStage: React.FC<CircusStageProps> = ({
             className="group relative bg-white rounded-2xl overflow-hidden border-2 border-amber-300 hover:border-red-600 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
           >
             {/* Cover Image on top */}
-            <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-950">
-              <img
-                src={chatbotCoverImg}
-                alt={isEn ? "Chatbot AI" : "Chatbot AI"}
-                className="size-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95 group-hover:opacity-100"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-              <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+            <FramedImage
+              imageKey="homepage-chat"
+              src={chatbotCoverImg}
+              alt={isEn ? "Chatbot AI" : "Chatbot AI"}
+              title={isEn ? "Chatbot AI" : "Chatbot AI"}
+              badge={
                 <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-red-950/80 text-amber-200 backdrop-blur-xs border border-amber-400/40">
                   🤖 {isEn ? "AI Artist" : "Chatbot AI"}
                 </span>
-              </div>
-            </div>
+              }
+            >
+              {/* Source link cited in a neat corner */}
+              <a
+                href="https://muctim.tuoitre.vn/vo-dien-moi-cua-rap-xiec-va-bieu-dien-da-nang-phu-tho-chinh-phuc-khan-gia-nhi-101260612232226283.htm"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  circusAudio.playBambooStep();
+                }}
+                className="absolute bottom-1.5 right-2 z-20 inline-flex items-center gap-1 text-[9px] text-amber-200/90 hover:text-white bg-black/75 hover:bg-black/90 px-1.5 py-0.5 rounded border border-white/20 transition-all backdrop-blur-xs"
+                title={isEn ? "Source: Muc Tim (Tuoi Tre)" : "Nguồn ảnh: Báo Mực Tím"}
+              >
+                <span>{isEn ? "Source: Muc Tim" : "Nguồn: Báo Mực Tím"}</span>
+                <ExternalLink className="size-2 text-amber-300" />
+              </a>
+            </FramedImage>
 
             {/* Content below image */}
             <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
@@ -987,6 +1025,8 @@ export const CircusStage: React.FC<CircusStageProps> = ({
           onClose={() => setIsMediaArchiveOpen(false)}
         />
       )}
+
+
 
     </div>
   );

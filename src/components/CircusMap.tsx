@@ -5,7 +5,7 @@ import { Button } from "@/src/components/ui/button";
 import { useLanguage } from "@/src/context/LanguageContext";
 import confetti from "canvas-confetti";
 import { OFFICIAL_CIRCUS_MAP } from "@/src/lib/map";
-import banDoCoverImg from "@/src/assets/images/ban_do_rap_xiec_cover.jpg";
+import banDoCoverImg from "@/src/assets/images/ban_do_rap_xiec_cover_vung_dat_ky_bi.jpg";
 import { Icon, SvgIconGlyph } from "@/src/components/Icon";
 import {
   ArrowLeft,
@@ -528,6 +528,22 @@ export const CircusMap: React.FC<CircusMapProps> = ({
             <span>{filteredVenues.length} {isEn ? "Theaters & Heritage Sites" : "Rạp & Điểm Di Sản"}</span>
           </div>
         </div>
+
+        {/* Source link cited in a neat corner */}
+        <a
+          href="https://bazaarvietnam.vn/vung-dat-ky-bi-vo-xiec-viral-dau-nam-2025-thay-doi-nhan-dinh-nao-cua-khan-gia-ve-xiec-viet/"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => {
+            e.stopPropagation();
+            circusAudio.playBambooStep();
+          }}
+          className="absolute top-3 right-3 z-20 inline-flex items-center gap-1.5 text-[10px] text-amber-200/90 hover:text-white bg-black/75 hover:bg-black/90 px-2.5 py-1 rounded-full border border-white/20 transition-all backdrop-blur-xs shadow-md"
+          title={isEn ? "Source: Harper's Bazaar Vietnam" : "Nguồn ảnh: Bazaar Vietnam"}
+        >
+          <span>{isEn ? "Source: Bazaar Vietnam" : "Nguồn: Bazaar Vietnam"}</span>
+          <ExternalLink className="size-2.5 text-amber-300" />
+        </a>
       </div>
 
       {/* Main Map & Venue Display Grid */}

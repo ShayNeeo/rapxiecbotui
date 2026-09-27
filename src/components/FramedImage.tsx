@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Crop, SlidersHorizontal } from 'lucide-react';
 import { 
   ImageFramingConfig, 
   DEFAULT_FRAMING, 
@@ -12,10 +11,9 @@ interface FramedImageProps {
   alt: string;
   className?: string;
   aspectClass?: string;
-  onOpenCrop?: (key: string, src: string, title: string) => void;
   title?: string;
   badge?: React.ReactNode;
-  showCropButton?: boolean;
+  children?: React.ReactNode;
 }
 
 export const FramedImage: React.FC<FramedImageProps> = ({
@@ -24,10 +22,9 @@ export const FramedImage: React.FC<FramedImageProps> = ({
   alt,
   className = '',
   aspectClass = 'aspect-[16/10]',
-  onOpenCrop,
   title = '',
   badge,
-  showCropButton = true,
+  children,
 }) => {
   const [config, setConfig] = useState<ImageFramingConfig>(() => getImageFraming(imageKey));
 
@@ -83,22 +80,10 @@ export const FramedImage: React.FC<FramedImageProps> = ({
         </div>
       )}
 
-      {/* Crop / Framing Button (Top Right) */}
-      {showCropButton && onOpenCrop && (
-        <button
-          type="button"
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            onOpenCrop(imageKey, src, title || alt);
-          }}
-          className="absolute top-2.5 right-2.5 z-20 opacity-80 group-hover:opacity-100 hover:scale-105 active:scale-95 transition-all bg-black/65 hover:bg-black/90 text-amber-300 hover:text-white px-2 py-1 rounded-lg border border-white/20 hover:border-amber-400 shadow-md backdrop-blur-xs flex items-center gap-1 text-[10px] font-medium cursor-pointer"
-          title="Chỉnh góc cắt & tỉ lệ khung ảnh (Adjust crop & framing)"
-        >
-          <Crop className="size-3 text-amber-400" />
-          <span className="hidden sm:inline">Khung ảnh</span>
-        </button>
-      )}
+
+
+      {/* Optional Children (e.g. source citation link) */}
+      {children}
     </div>
   );
 };

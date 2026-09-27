@@ -16,8 +16,10 @@ import {
   ChevronRight,
   Flame,
   Brain,
-  Shuffle
+  Shuffle,
+  ExternalLink
 } from "lucide-react";
+import quizCoverImg from "@/src/assets/images/quiz_kien_thuc_cover_vung_dat_ky_bi.jpg";
 
 interface CircusQuizProps {
   onBack: () => void;
@@ -604,6 +606,52 @@ export const CircusQuiz: React.FC<CircusQuizProps> = ({
             {isEn ? `Score: ${score}` : `Điểm: ${score}`}
           </div>
         </div>
+      </div>
+
+      {/* Featured Cover Banner / Ảnh bìa Quiz Kiến Thức */}
+      <div className="relative w-full h-44 sm:h-56 md:h-64 rounded-3xl overflow-hidden border-2 border-amber-400 shadow-xl shrink-0 group select-none">
+        <img
+          src={quizCoverImg}
+          alt="Quiz Kiến Thức Xiếc Việt Nam"
+          className="w-full h-full object-cover object-center group-hover:scale-103 transition-transform duration-700"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/20" />
+        <div className="absolute bottom-4 left-5 sm:left-7 right-5 sm:right-7 flex flex-col sm:flex-row sm:items-end justify-between gap-3 text-white">
+          <div className="space-y-1.5 max-w-xl">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-600/80 text-white text-[10px] sm:text-xs font-bold uppercase tracking-wider backdrop-blur-xs border border-emerald-400/50 shadow-xs">
+              <Sparkles className="size-3 text-amber-300" />
+              <span>{isEn ? "Cover Photo • Knowledge Quiz" : "Ảnh Bìa • Quiz Kiến Thức"}</span>
+            </span>
+            <h2 className="font-circus text-xl sm:text-3xl text-amber-300 drop-shadow-md leading-tight">
+              {isEn ? "VIETNAMESE CIRCUS KNOWLEDGE CHALLENGE" : "THỬ TÀI KIẾN THỨC XIẾC VIỆT NAM"}
+            </h2>
+            <p className="text-xs sm:text-sm text-neutral-200 line-clamp-2 drop-shadow-sm font-light">
+              {isEn
+                ? "Explore 20 fascinating trivia questions about circus history, legendary masters, and contemporary spectacles."
+                : "Khám phá 20 câu hỏi thử tài lý thú về lịch sử trăm năm, các nghệ nhân huyền thoại và những vở đại vũ kịch xiếc đương đại rực rỡ."}
+            </p>
+          </div>
+          <div className="text-xs text-emerald-200/90 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-xl border border-emerald-400/40 flex items-center gap-2 shrink-0">
+            <Award className="size-3.5 text-amber-400" />
+            <span>{isEn ? "20 Questions • Receive Badge" : "20 Câu Hỏi • Nhận Huy Hiệu"}</span>
+          </div>
+        </div>
+
+        {/* Source link cited in a neat corner */}
+        <a
+          href="https://bazaarvietnam.vn/vung-dat-ky-bi-vo-xiec-viral-dau-nam-2025-thay-doi-nhan-dinh-nao-cua-khan-gia-ve-xiec-viet/"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => {
+            e.stopPropagation();
+            circusAudio.playBambooStep();
+          }}
+          className="absolute top-3 right-3 z-20 inline-flex items-center gap-1.5 text-[10px] text-amber-200/90 hover:text-white bg-black/75 hover:bg-black/90 px-2.5 py-1 rounded-full border border-white/20 transition-all backdrop-blur-xs shadow-md"
+          title={isEn ? "Source: Harper's Bazaar Vietnam" : "Nguồn ảnh: Bazaar Vietnam"}
+        >
+          <span>{isEn ? "Source: Bazaar Vietnam" : "Nguồn: Bazaar Vietnam"}</span>
+          <ExternalLink className="size-2.5 text-amber-300" />
+        </a>
       </div>
 
       {!isCompleted ? (
