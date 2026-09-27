@@ -5,7 +5,7 @@ import { Button } from "@/src/components/ui/button";
 import { useLanguage } from "@/src/context/LanguageContext";
 import confetti from "canvas-confetti";
 import { OFFICIAL_CIRCUS_MAP } from "@/src/lib/map";
-import { Icon } from "@/src/components/Icon";
+import { Icon, SvgIconGlyph } from "@/src/components/Icon";
 import {
   ArrowLeft,
   MapPin,
@@ -645,15 +645,14 @@ export const CircusMap: React.FC<CircusMapProps> = ({
                         filter="drop-shadow(0 1px 2px rgba(0,0,0,0.18))"
                       />
                       <circle cx="0" cy="-7" r="5.5" fill={isSelected ? "#fef08a" : "#fee2e2"} />
-                      <text
-                        x="0"
-                        y="-4.5"
-                        fontSize="8"
-                        textAnchor="middle"
-                        className="select-none pointer-events-none"
-                      >
-                        {venue.icon}
-                      </text>
+                      {/* Glyph must be SVG paths: a webfont cannot render in <text>. */}
+                      <SvgIconGlyph
+                        name={venue.icon}
+                        x={0}
+                        y={-7}
+                        size={7}
+                        color={isSelected ? "#7f1d1d" : "#b91c1c"}
+                      />
                     </g>
 
                     {/* DEDICATED LOCATION BAR - Clearly separated, non-overlapping */}
@@ -679,15 +678,14 @@ export const CircusMap: React.FC<CircusMapProps> = ({
                         stroke={isSelected ? "#fef08a" : "#f59e0b"}
                         strokeWidth={0.8}
                       />
-                      <text
+                      {/* Glyph must be SVG paths: a webfont cannot render in <text>. */}
+                      <SvgIconGlyph
+                        name={venue.icon}
                         x={barX + 14}
                         y={barY + barHeight / 2 + 3.5}
-                        fontSize="9"
-                        textAnchor="middle"
-                        className="select-none pointer-events-none"
-                      >
-                        {venue.icon}
-                      </text>
+                        size={8}
+                        color={isSelected ? "#fef08a" : "#b91c1c"}
+                      />
 
                       {/* Venue Name inside bar */}
                       <text
@@ -744,7 +742,7 @@ export const CircusMap: React.FC<CircusMapProps> = ({
             <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 border-b border-neutral-100 pb-4">
               <div className="flex items-start gap-3">
                 <div className="size-14 rounded-2xl bg-amber-100 border-2 border-amber-300 flex items-center justify-center text-3xl shadow-xs shrink-0 mt-0.5">
-                  {activeVenue.icon}
+                  <Icon name={activeVenue.icon} />
                 </div>
                 <div>
                   <div className="flex flex-wrap items-center gap-2">

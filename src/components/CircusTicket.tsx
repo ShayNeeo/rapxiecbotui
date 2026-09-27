@@ -748,7 +748,7 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
             >
               <div className="size-16 rounded-full flex items-center justify-center text-3xl mb-2 relative">
                 <span className={badge.unlocked ? 'animate-bounce' : 'grayscale opacity-60 group-hover:scale-110 transition-transform'}>
-                  {badge.icon}
+                  <Icon name={badge.icon} />
                 </span>
                 {badge.unlocked && (
                   <CheckCircle2 className="size-5 text-emerald-600 fill-white absolute -top-1 -right-1 shadow-xs" />

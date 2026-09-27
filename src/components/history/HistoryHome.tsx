@@ -194,7 +194,7 @@ export const HistoryHome: React.FC<HistoryHomeProps> = ({
                     {/* Badge on Image */}
                     <div className="absolute top-3 left-3 flex items-center gap-2">
                       <span className="size-8 rounded-xl bg-amber-400 border border-amber-500 text-neutral-950 font-black text-xs flex items-center justify-center shadow-md">
-                        {era.imageIcon}
+                        <Icon name={era.imageIcon} />
                       </span>
                       <span className="text-[10px] font-black uppercase tracking-wider bg-red-700 text-white px-2.5 py-1 rounded-full shadow-md">
                         {isEn ? `Milestone ${era.sectionNumber}` : `Cột Mốc ${era.sectionNumber}`}
@@ -271,7 +271,7 @@ export const HistoryHome: React.FC<HistoryHomeProps> = ({
                   >
                     <div className="absolute top-3 left-3 flex items-center gap-2">
                       <span className="size-7 rounded-xl bg-amber-400 text-neutral-950 font-black text-xs flex items-center justify-center shadow-xs">
-                        {era.imageIcon}
+                        <Icon name={era.imageIcon} />
                       </span>
                       <span className="text-[10px] font-black uppercase tracking-wider bg-red-700 text-white px-2 py-0.5 rounded-full shadow-xs">
                         {isEn ? `Milestone ${era.sectionNumber}` : `Cột Mốc ${era.sectionNumber}`}

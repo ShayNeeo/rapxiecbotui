@@ -148,7 +148,7 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
           <div className="space-y-2">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="size-9 rounded-2xl bg-amber-400 border-2 border-amber-500 text-neutral-950 font-black text-sm flex items-center justify-center shadow-xs">
-                {era.imageIcon}
+                <Icon name={era.imageIcon} />
               </span>
               <span className="text-xs font-black uppercase tracking-wider bg-red-700 text-white px-3 py-1 rounded-full shadow-2xs">
                 {isEn ? `Milestone ${era.sectionNumber}` : `Cột Mốc ${era.sectionNumber}`}
@@ -443,7 +443,7 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
                         : "bg-neutral-50 hover:bg-amber-50 text-neutral-800 border-neutral-200"
                     }`}
                   >
-                    <span className="text-2xl">{sub.icon}</span>
+                    <span className="text-2xl">{sub.icon ? <Icon name={sub.icon} /> : null}</span>
                     <div className="min-w-0">
                       <span className={`text-[10px] font-black uppercase block ${isActive ? "text-amber-300" : "text-red-700"}`}>
                         {isEn ? sub.tagEn : sub.tag}
@@ -467,7 +467,7 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-amber-200/80 pb-3">
                     <div className="flex items-center gap-2.5">
-                      <span className="text-2xl">{sub.icon}</span>
+                      <span className="text-2xl">{sub.icon ? <Icon name={sub.icon} /> : null}</span>
                       <div>
                         <span className="text-[10px] font-black text-white bg-red-800 px-2 py-0.5 rounded-md uppercase">
                           {isEn ? sub.tagEn : sub.tag}
@@ -522,7 +522,7 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
                                 {sec.number}
                               </span>
                               <div className="flex items-center gap-2 flex-wrap">
-                                <span className="text-xl shrink-0">{sec.icon}</span>
+                                <span className="text-xl shrink-0">{sec.icon ? <Icon name={sec.icon} /> : null}</span>
                                 <h6 className="font-circus text-base sm:text-lg text-neutral-900 leading-snug">
                                   {isEn ? (sec.titleEn || sec.title) : sec.title}
                                 </h6>
