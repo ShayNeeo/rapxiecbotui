@@ -5,6 +5,7 @@ import { Button } from "@/src/components/ui/button";
 import { circusAudio } from "@/src/utils/audio";
 import { useLanguage } from "@/src/context/LanguageContext";
 import { CIRCUS_3D_URL } from "@/src/lib/constants";
+import rapXiec3dCoverImg from "@/src/assets/images/rap_xiec_3d_cover.jpg";
 import confetti from "canvas-confetti";
 import { 
   ArrowLeft, 
@@ -432,35 +433,42 @@ export const Circus3D: React.FC<Circus3DProps> = ({
         </div>
       </div>
 
-      {/* 3D Link Jump Banner */}
-      <div className="bg-gradient-to-r from-red-950 via-amber-950 to-red-900 p-4 rounded-2xl border-2 border-amber-400/60 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-3 text-amber-100">
-        <div className="flex items-center gap-3 text-left">
-          <div className="size-11 rounded-xl bg-amber-500/20 border border-amber-400/50 flex items-center justify-center text-2xl shrink-0">
-            🎪
-          </div>
-          <div>
-            <h3 className="text-sm sm:text-base font-circus text-amber-300">
-              {isEn ? "Interactive 3D Circus Space" : "Không Gian Tương Tác Rạp Xiếc 3D"}
-            </h3>
-            <p className="text-xs text-amber-200/90 leading-relaxed">
+      {/* Cover Photo Banner: Rạp Xiếc 3D */}
+      <div className="relative w-full h-44 sm:h-56 md:h-64 rounded-3xl overflow-hidden border-2 border-amber-400 shadow-xl shrink-0 group select-none">
+        <img
+          src={rapXiec3dCoverImg}
+          alt="Không Gian Rạp Xiếc 3D"
+          className="w-full h-full object-cover object-center group-hover:scale-103 transition-transform duration-700"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/25" />
+        <div className="absolute bottom-4 left-5 sm:left-7 right-5 sm:right-7 flex flex-col sm:flex-row sm:items-end justify-between gap-3 text-white">
+          <div className="space-y-1.5 max-w-xl">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-red-600/80 text-white text-[10px] sm:text-xs font-bold uppercase tracking-wider backdrop-blur-xs border border-red-400/50 shadow-xs">
+              <Sparkles className="size-3 text-amber-300" />
+              <span>{isEn ? "Cover Photo • 3D Arena" : "Ảnh Bìa • Không Gian Rạp Xiếc 3D"}</span>
+            </span>
+            <h2 className="font-circus text-xl sm:text-3xl text-amber-300 drop-shadow-md leading-tight">
+              {isEn ? "3D CIRCUS ARENA & PERFORMANCE STAGE" : "KHÔNG GIAN RẠP XIẾC 3D ĐA CHIỀU"}
+            </h2>
+            <p className="text-xs sm:text-sm text-neutral-200 line-clamp-2 drop-shadow-sm font-light">
               {isEn
-                ? "Access the full dedicated 3D Circus arena to interact with stages and performers"
-                : "Truy cập phiên bản không gian Rạp Xiếc 3D đầy đủ để khám phá và tương tác"}
+                ? "Experience the grand circus dome, circular sand arena, floating sea creatures, and vibrant lighting from every angle."
+                : "Trải nghiệm rạp xiếc mái vòm hoành tráng, đấu trường cát trung tâm và hiệu ứng ánh sáng huyền ảo 360 độ từ mọi góc nhìn."}
             </p>
           </div>
-        </div>
 
-        <Link
-          to={CIRCUS_3D_URL}
-          onClick={() => {
-            circusAudio.playFanfare();
-            onUnlockBadge('circus-3d-explorer');
-          }}
-          className="shrink-0 flex items-center gap-2 bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 text-red-950 font-circus font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer border border-amber-200"
-        >
-          <span>{isEn ? "Enter 3D Circus" : "Vào Rạp Xiếc 3D"}</span>
-          <ExternalLink className="size-4" />
-        </Link>
+          <Link
+            to={CIRCUS_3D_URL}
+            onClick={() => {
+              circusAudio.playFanfare();
+              onUnlockBadge('circus-3d-explorer');
+            }}
+            className="shrink-0 flex items-center gap-2 bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 text-red-950 font-circus font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer border border-amber-200"
+          >
+            <span>{isEn ? "Enter Dedicated 3D Arena" : "Mở Không Gian 3D Toàn Cảnh"}</span>
+            <ExternalLink className="size-4" />
+          </Link>
+        </div>
       </div>
 
       {/* Main 3D Canvas Box */}

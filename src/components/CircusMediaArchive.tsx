@@ -7,6 +7,7 @@ import vungDatKyBiImg1 from "@/src/assets/images/vung_dat_ky_bi_thap_nguoi_1.jpg
 import vungDatKyBiImg2 from "@/src/assets/images/vung_dat_ky_bi_khong_gian_2.jpg";
 import khaiMacTaiNangImg from "@/src/assets/images/khai_mac_tai_nang_xiec_du_non_ao_dai.jpg";
 import cauBeRungXanhImg from "@/src/assets/images/cau_be_tro_ve_tu_rung_xanh.jpg";
+import khoTuLieuCoverImg from "@/src/assets/images/kho_tu_lieu_so_cover_vung_dat_ky_bi.jpg";
 import { Button } from "@/src/components/ui/button";
 import { 
   Film, 
@@ -82,12 +83,12 @@ export const MODERN_CIRCUS_MEDIA: MediaItem[] = [
     titleEn: "'The Mystic Land' Grand Circus Spectacle (Phuong Nam Theatre) - A Breakthrough for HCMC Circus",
     troupe: "Nhà Hát Nghệ Thuật Phương Nam",
     category: "acrobatics",
-    thumbnail: vungDatKyBiImg1,
-    galleryImages: [vungDatKyBiImg1, vungDatKyBiImg2],
-    articleUrl: "https://www.sggp.org.vn/dao-dien-nsut-le-ich-dien-buoc-dem-cho-phat-trien-xiec-tphcm-post784148.html",
-    articleSource: "Báo SGGP",
+    thumbnail: khoTuLieuCoverImg,
+    galleryImages: [khoTuLieuCoverImg, vungDatKyBiImg1, vungDatKyBiImg2],
+    articleUrl: "https://bazaarvietnam.vn/vung-dat-ky-bi-vo-xiec-viral-dau-nam-2025-thay-doi-nhan-dinh-nao-cua-khan-gia-ve-xiec-viet/",
+    articleSource: "Harper's Bazaar Vietnam",
     year: "2025",
-    tags: ["Vùng Đất Kỳ Bí", "Nhà Hát Phương Nam", "NSƯT Lê Ích Diễn", "Xiếc TP.HCM", "Bộ Ảnh Sân Khấu"],
+    tags: ["Vùng Đất Kỳ Bí", "Bazaar Vietnam", "Nhà Hát Phương Nam", "NSƯT Lê Ích Diễn", "Xiếc TP.HCM", "Bộ Ảnh Sân Khấu"],
     description: "Vở đại vũ kịch xiếc 'Vùng Đất Kỳ Bí' do Nhà hát Nghệ thuật Phương Nam dàn dựng dưới sự chỉ đạo của đạo diễn - NSƯT Lê Ích Diễn đã tạo nên hiện tượng 'cháy vé' tại TP.HCM. Tác phẩm kết hợp ngoạn mục giữa kỹ thuật xiếc thăng bằng tháp người đỉnh cao, âm thanh ánh sáng kỳ ảo và múa rối khổng lồ, mở ra bước tiến mới cho nghệ thuật xiếc đương đại thành phố.",
     descriptionEn: "The grand circus spectacle 'The Mystic Land', produced by Phuong Nam Theatre under Director - Meritorious Artist Le Ich Dien, became a sold-out phenomenon in Ho Chi Minh City. Blending towering human pyramid acrobatics, mystical lighting, and colossal puppetry, it marks a breakthrough for contemporary circus art."
   },
@@ -717,6 +718,50 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
             >
               <X className="size-5" />
             </button>
+          </div>
+        </div>
+
+        {/* Featured Cover Banner / Ảnh bìa Kho Tư Liệu Số */}
+        <div className="relative w-full h-40 sm:h-52 md:h-60 overflow-hidden border-b-2 border-amber-400 shrink-0 group select-none">
+          <img
+            src={khoTuLieuCoverImg}
+            alt="Kho Tư Liệu Số - Vở đại vũ kịch xiếc Vùng Đất Kỳ Bí (Harper's Bazaar Vietnam)"
+            className="w-full h-full object-cover object-center group-hover:scale-103 transition-transform duration-700"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/25" />
+
+          {/* Banner Content Overlay */}
+          <div className="absolute bottom-3 left-4 sm:left-6 right-4 sm:right-6 flex flex-col sm:flex-row sm:items-end justify-between gap-3 text-white">
+            <div className="space-y-1 max-w-xl">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-red-600/80 text-white text-[10px] sm:text-xs font-bold uppercase tracking-wider backdrop-blur-xs border border-red-400/50 shadow-xs">
+                <Sparkles className="size-3 text-amber-300" />
+                <span>{isEn ? "Featured Cover • Digital Archive" : "Ảnh Bìa Kho Tư Liệu • Vở 'Vùng Đất Kỳ Bí'"}</span>
+              </div>
+              <h3 className="font-circus text-base sm:text-2xl text-amber-300 drop-shadow-md leading-tight">
+                {isEn ? "The Mystic Land - Modern Circus Breakthrough" : "Vở Đại Vũ Kịch Xiếc 'Vùng Đất Kỳ Bí'"}
+              </h3>
+              <p className="text-[11px] sm:text-xs text-neutral-200 line-clamp-1 sm:line-clamp-2 drop-shadow-sm font-light">
+                {isEn
+                  ? "Where viewers can admire vivid pictures and dynamic short videos of modern Vietnamese circus."
+                  : "Nơi người xem có thể chiêm ngưỡng nhiều hình ảnh sắc nét và video ngắn sống động về xiếc Việt Nam hiện đại."}
+              </p>
+            </div>
+
+            {/* Source citation in small corner */}
+            <a
+              href="https://bazaarvietnam.vn/vung-dat-ky-bi-vo-xiec-viral-dau-nam-2025-thay-doi-nhan-dinh-nao-cua-khan-gia-ve-xiec-viet/"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => {
+                e.stopPropagation();
+                circusAudio.playBambooStep();
+              }}
+              className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] text-amber-200/90 hover:text-white bg-black/75 hover:bg-black/95 px-2.5 py-1 rounded-lg border border-amber-400/40 hover:border-amber-300 backdrop-blur-md transition-all shadow-md self-start sm:self-auto shrink-0 group/link cursor-pointer"
+              title={isEn ? "View source article on Harper's Bazaar Vietnam" : "Xem nguồn bài viết trên Harper's Bazaar Vietnam"}
+            >
+              <span>{isEn ? "Source: Bazaar Vietnam" : "Nguồn: Bazaar Vietnam"}</span>
+              <ExternalLink className="size-3 text-amber-300 group-hover/link:translate-x-0.5 transition-transform" />
+            </a>
           </div>
         </div>
 

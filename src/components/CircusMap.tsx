@@ -5,6 +5,7 @@ import { Button } from "@/src/components/ui/button";
 import { useLanguage } from "@/src/context/LanguageContext";
 import confetti from "canvas-confetti";
 import { OFFICIAL_CIRCUS_MAP } from "@/src/lib/map";
+import banDoCoverImg from "@/src/assets/images/ban_do_rap_xiec_cover.jpg";
 import { Icon, SvgIconGlyph } from "@/src/components/Icon";
 import {
   ArrowLeft,
@@ -496,6 +497,36 @@ export const CircusMap: React.FC<CircusMapProps> = ({
               {getRegionLabel(reg)}
             </button>
           ))}
+        </div>
+      </div>
+
+      {/* Featured Cover Banner / Ảnh bìa Bản Đồ Rạp Xiếc */}
+      <div className="relative w-full h-44 sm:h-56 md:h-64 rounded-3xl overflow-hidden border-2 border-amber-400 shadow-xl shrink-0 group select-none">
+        <img
+          src={banDoCoverImg}
+          alt="Bản Đồ Rạp Xiếc Việt Nam"
+          className="w-full h-full object-cover object-center group-hover:scale-103 transition-transform duration-700"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/20" />
+        <div className="absolute bottom-4 left-5 sm:left-7 right-5 sm:right-7 flex flex-col sm:flex-row sm:items-end justify-between gap-3 text-white">
+          <div className="space-y-1.5 max-w-xl">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-red-600/80 text-white text-[10px] sm:text-xs font-bold uppercase tracking-wider backdrop-blur-xs border border-red-400/50 shadow-xs">
+              <Sparkles className="size-3 text-amber-300" />
+              <span>{isEn ? "Cover Photo • Theatres Map" : "Ảnh Bìa • Bản Đồ Rạp Xiếc"}</span>
+            </span>
+            <h2 className="font-circus text-xl sm:text-3xl text-amber-300 drop-shadow-md leading-tight">
+              {isEn ? "VIETNAM CIRCUS VENUES & THEATRES MAP" : "BẢN ĐỒ HỆ THỐNG RẠP XIẾC VIỆT NAM"}
+            </h2>
+            <p className="text-xs sm:text-sm text-neutral-200 line-clamp-2 drop-shadow-sm font-light">
+              {isEn
+                ? "Discover the arena stages, performing troupes, and circus heritage villages across North, Central, and South Vietnam."
+                : "Khám phá khán đài sân khấu vòm tròn, các nhà hát nghệ thuật và làng nghề xiếc truyền thống trải dài ba miền Bắc - Trung - Nam."}
+            </p>
+          </div>
+          <div className="text-xs text-amber-200/90 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-xl border border-amber-400/40 flex items-center gap-2 shrink-0">
+            <Navigation className="size-3.5 text-amber-400" />
+            <span>{filteredVenues.length} {isEn ? "Theaters & Heritage Sites" : "Rạp & Điểm Di Sản"}</span>
+          </div>
         </div>
       </div>
 

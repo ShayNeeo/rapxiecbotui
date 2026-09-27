@@ -31,6 +31,16 @@ import { OFFICIAL_CIRCUS_LOGO } from "@/src/lib/logo";
 import { CHATBOT_AI_URL, CIRCUS_3D_URL } from "@/src/lib/constants";
 import { Link } from "react-router-dom";
 import { CircusMediaArchive } from "@/src/components/CircusMediaArchive";
+import khoTuLieuCoverImg from "@/src/assets/images/kho_tu_lieu_so_cover_vung_dat_ky_bi.jpg";
+import banDoCoverImg from "@/src/assets/images/ban_do_rap_xiec_cover.jpg";
+import rapXiec3dCoverImg from "@/src/assets/images/rap_xiec_3d_cover.jpg";
+import circusYouthImg from "@/src/assets/images/circus_youth_school_1789898876824.jpg";
+import circusHistoryCoverImg from "@/src/assets/images/milestone_4_vietnam_century_circus_cover.jpg";
+import quizCoverImg from "@/src/assets/images/du_non_4_nu_silver_idol.jpg";
+import chatbotCoverImg from "@/src/assets/images/cau_be_tro_ve_tu_rung_xanh.jpg";
+import brochureCoverImg from "@/src/assets/images/khai_mac_tai_nang_xiec_du_non_ao_dai.jpg";
+import { FramedImage } from "@/src/components/FramedImage";
+import { ImageCropModal } from "@/src/components/ImageCropModal";
 
 interface CircusStageProps {
   onSelectAct: (act: CircusActId) => void;
@@ -56,6 +66,26 @@ export const CircusStage: React.FC<CircusStageProps> = ({
   const [hasCheered, setHasCheered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [isMediaArchiveOpen, setIsMediaArchiveOpen] = useState(false);
+  const [cropModalData, setCropModalData] = useState<{
+    isOpen: boolean;
+    imageKey: string;
+    imageUrl: string;
+    imageTitle: string;
+  }>({
+    isOpen: false,
+    imageKey: '',
+    imageUrl: '',
+    imageTitle: '',
+  });
+
+  const handleOpenCrop = (imageKey: string, imageUrl: string, imageTitle: string) => {
+    setCropModalData({
+      isOpen: true,
+      imageKey,
+      imageUrl,
+      imageTitle,
+    });
+  };
 
   const handleOpenMedia = () => {
     circusAudio.playBambooStep();
@@ -452,20 +482,30 @@ export const CircusStage: React.FC<CircusStageProps> = ({
           </div>
         </div>
 
-        {/* Featured Bullet Point: Kho Tư Liệu Số */}
+        {/* Featured Bullet Point: Kho Tư Liệu Số with Cover Photo & Source Link */}
         <div 
           onClick={handleOpenMedia}
-          className="bg-gradient-to-r from-amber-950 via-red-950 to-neutral-900 text-white rounded-2xl p-4 sm:p-5 border-2 border-amber-400 shadow-md hover:shadow-2xl hover:border-amber-300 transition-all cursor-pointer flex flex-col md:flex-row items-start md:items-center justify-between gap-4 group"
+          className="relative bg-gradient-to-r from-amber-950 via-red-950 to-neutral-900 text-white rounded-2xl p-4 sm:p-5 border-2 border-amber-400 shadow-md hover:shadow-2xl hover:border-amber-300 transition-all cursor-pointer flex flex-col md:flex-row items-start md:items-center justify-between gap-4 group overflow-hidden"
           title={isEn ? "Open Modern Circus Digital Media Archive & Blank Templates" : "Mở Kho Tư Liệu Số & Mẫu Tự Thêm Ảnh / Tiêu Đề"}
         >
-          <div className="flex items-start sm:items-center gap-3.5">
+          {/* Background Cover Photo with Theatrical Atmosphere */}
+          <div className="absolute inset-0 z-0">
+            <img 
+              src={khoTuLieuCoverImg} 
+              alt="Kho Tư Liệu Số - Vùng Đất Kỳ Bí (Bazaar Vietnam)" 
+              className="w-full h-full object-cover object-center opacity-30 group-hover:opacity-45 group-hover:scale-105 transition-all duration-700"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-neutral-950/95 via-red-950/85 to-neutral-950/80" />
+          </div>
+
+          <div className="relative z-10 flex items-start sm:items-center gap-3.5">
             <div className="size-12 sm:size-13 rounded-2xl bg-gradient-to-br from-amber-400 to-yellow-500 text-amber-950 flex items-center justify-center font-bold shadow-lg shrink-0 group-hover:scale-105 group-hover:rotate-3 transition-transform">
               <Film className="size-6" />
             </div>
             <div className="space-y-1">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-amber-300 bg-amber-400/20 px-2.5 py-0.5 rounded-full border border-amber-400/50">
-                  ★ {isEn ? "NEW HIGHLIGHT • MEDIA ARCHIVES" : "ĐIỂM NHẤN MỚI • KHO TƯ LIỆU SỐ"} ★
+                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-amber-300 bg-amber-400/20 px-2.5 py-0.5 rounded-full border border-amber-400/50 backdrop-blur-xs">
+                  ★ {isEn ? "COVER PHOTO • DIGITAL ARCHIVE" : "ẢNH BÌA • KHO TƯ LIỆU SỐ"} ★
                 </span>
                 <span className="text-xs text-amber-200/90 font-medium flex items-center gap-1">
                   {isEn ? "Photos & Videos" : "Hình Ảnh & Video Sắc Nét"}
@@ -489,14 +529,30 @@ export const CircusStage: React.FC<CircusStageProps> = ({
             </div>
           </div>
 
-          <div className="shrink-0 self-stretch sm:self-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-400 group-hover:from-amber-300 group-hover:to-yellow-300 text-amber-950 font-circus font-normal text-xs sm:text-sm tracking-wide shadow-md group-hover:shadow-lg transition-all">
+          <div className="relative z-10 shrink-0 self-stretch sm:self-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-400 group-hover:from-amber-300 group-hover:to-yellow-300 text-amber-950 font-circus font-normal text-xs sm:text-sm tracking-wide shadow-md group-hover:shadow-lg transition-all">
             <span>{isEn ? "Explore Media Archive" : "Khám Phá Kho Tư Liệu"}</span>
             <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
           </div>
+
+          {/* Source link cited in a neat corner */}
+          <a
+            href="https://bazaarvietnam.vn/vung-dat-ky-bi-vo-xiec-viral-dau-nam-2025-thay-doi-nhan-dinh-nao-cua-khan-gia-ve-xiec-viet/"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => {
+              e.stopPropagation();
+              circusAudio.playBambooStep();
+            }}
+            className="absolute bottom-1.5 right-2 z-20 inline-flex items-center gap-1 text-[9px] sm:text-[10px] text-amber-200/80 hover:text-white bg-black/70 hover:bg-black/90 px-2 py-0.5 rounded border border-white/20 transition-all backdrop-blur-xs"
+            title={isEn ? "Source: Harper's Bazaar Vietnam" : "Nguồn ảnh: Bazaar Vietnam"}
+          >
+            <span>{isEn ? "Source: Bazaar Vietnam" : "Nguồn: Bazaar Vietnam"}</span>
+            <ExternalLink className="size-2.5 text-amber-300" />
+          </a>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {/* Module 1: Về Chúng Tôi (About Us) - Placed first before Lịch Sử */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          {/* Module 1: Về Chúng Tôi (About Us) */}
           <div
             onClick={() => {
               onSelectAct('about');
@@ -537,215 +593,311 @@ export const CircusStage: React.FC<CircusStageProps> = ({
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => circusAudio.playBambooStep()}
-            className="group relative bg-gradient-to-b from-white to-rose-50/60 rounded-2xl p-5 border-2 border-amber-300 hover:border-red-600 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
+            className="group relative bg-white rounded-2xl overflow-hidden border-2 border-amber-300 hover:border-red-600 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
             title={isEn ? "Open Promotional Brochure on Canva" : "Nhấn để mở Brochure Quảng Bá trên Canva"}
           >
-            <div className="space-y-3">
-              <div className="size-12 rounded-xl bg-rose-100 border border-rose-200 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                <Icon name="bi bi-megaphone" />
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-rose-700 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200">
-                  E-Brochure
+            {/* Cover Image on top */}
+            <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-950">
+              <img
+                src={brochureCoverImg}
+                alt={isEn ? "Circus Brochure" : "Brochure Quảng Bá"}
+                className="size-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95 group-hover:opacity-100"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+              <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-rose-900/80 text-rose-200 backdrop-blur-xs border border-rose-500/40">
+                  📢 {isEn ? "E-Brochure" : "Brochure"}
                 </span>
-                <span className="text-[11px] text-amber-800 font-semibold flex items-center gap-1">
-                  Canva <ExternalLink className="size-3" />
-                </span>
               </div>
-              <h3 className="font-circus text-lg text-neutral-900 group-hover:text-rose-700 transition-colors flex items-center gap-1.5">
-                <span>{isEn ? "Digital Brochure" : "Quảng Bá"}</span>
-                <ExternalLink className="size-4 opacity-70 group-hover:opacity-100" />
-              </h3>
-              <p className="text-xs text-neutral-600 leading-relaxed group-hover:text-neutral-800">
-                {isEn
-                  ? "A special brochure for you and every guest who wishes to discover the beauty of Vietnamese circus arts."
-                  : "Một brochure nhỏ dành cho bạn và những vị khách muốn khám phá vẻ đẹp của nghệ thuật xiếc Việt Nam."}
-              </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-rose-200/60 flex items-center justify-between text-xs font-bold text-rose-700 group-hover:translate-x-1 transition-transform">
-              <span>{isEn ? "Open Brochure" : "Mở Brochure Quảng Bá"}</span>
-              <ExternalLink className="size-4" />
+
+            {/* Content below image */}
+            <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-rose-700 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200">
+                    Canva
+                  </span>
+                  <span className="text-[11px] text-amber-800 font-semibold flex items-center gap-1">
+                    {isEn ? "Free Publication" : "Ấn Phẩm Miễn Phí"} <ExternalLink className="size-3" />
+                  </span>
+                </div>
+                <h3 className="font-circus text-lg text-neutral-900 group-hover:text-rose-700 transition-colors flex items-center justify-between">
+                  <span>{isEn ? "Promoting Circus" : "Quảng Bá Xiếc Việt"}</span>
+                  <ExternalLink className="size-4 opacity-70 group-hover:opacity-100" />
+                </h3>
+                <p className="text-xs text-neutral-600 leading-relaxed line-clamp-3">
+                  {isEn
+                    ? "A special brochure for you and every guest who wishes to discover the beauty of Vietnamese circus arts."
+                    : "Một brochure nhỏ dành cho bạn và những vị khách muốn khám phá vẻ đẹp của nghệ thuật xiếc Việt Nam."}
+                </p>
+              </div>
+              <div className="pt-3 border-t border-rose-200/60 flex items-center justify-between text-xs font-bold text-rose-700 group-hover:translate-x-1 transition-transform">
+                <span>{isEn ? "Open Brochure" : "Mở Brochure Quảng Bá"}</span>
+                <ExternalLink className="size-4" />
+              </div>
             </div>
           </a>
 
           {/* Module 3: Kho Tư Liệu Số (Digital Media Archive) */}
           <div
             onClick={handleOpenMedia}
-            className="group relative bg-gradient-to-b from-white to-amber-50/90 rounded-2xl p-5 border-2 border-amber-400 hover:border-red-600 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between ring-1 ring-amber-400/40"
+            className="group relative bg-white rounded-2xl overflow-hidden border-2 border-amber-400 hover:border-red-600 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between ring-1 ring-amber-400/40"
             title={isEn ? "Open Modern Circus Digital Media Archive & Templates" : "Nhấn để mở Kho Tư Liệu Số & Mẫu Bỏ Ảnh/Tiêu Đề"}
           >
-            <div className="space-y-3">
-              <div className="size-12 rounded-xl bg-amber-100 border border-amber-300 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                <Icon name="bi bi-camera-reels" />
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-amber-900 bg-amber-100 px-2 py-0.5 rounded-full border border-amber-300">
-                  {isEn ? "Media Archive" : "Kho Tư Liệu Số"}
+            {/* Cover Image on top */}
+            <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-950">
+              <img
+                src={khoTuLieuCoverImg}
+                alt={isEn ? "Digital Media Archive" : "Kho Tư Liệu Số"}
+                className="size-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95 group-hover:opacity-100"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+              <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-950/80 text-amber-300 backdrop-blur-xs border border-amber-400/50">
+                  🎞️ {isEn ? "Media Archive" : "Kho Tư Liệu Số"}
                 </span>
-                <span className="text-[11px] text-red-700 font-semibold flex items-center gap-1">
-                  <Film className="size-3" />
-                  {isEn ? "Photos & Templates" : "Ảnh, Video & Mẫu"}
-                </span>
               </div>
-              <h3 className="font-circus text-lg text-neutral-900 group-hover:text-red-700 transition-colors flex items-center gap-1.5">
-                <span>{isEn ? "Kho Tư Liệu Số" : "Kho Tư Liệu Số"}</span>
-                <Sparkles className="size-4 text-amber-500 opacity-80 group-hover:opacity-100" />
-              </h3>
-              <p className="text-xs text-neutral-600 leading-relaxed group-hover:text-neutral-800">
-                {isEn
-                  ? "Where viewers can admire vivid pictures, dynamic short videos, and use templates to insert custom photos and titles."
-                  : "Nơi người xem có thể chiêm ngưỡng nhiều hình ảnh sắc nét, video ngắn sống động và dùng phần mẫu để bỏ ảnh và tiêu đề vào."}
-              </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-amber-200/60 flex items-center justify-between text-xs font-bold text-red-700 group-hover:translate-x-1 transition-transform">
-              <span>{isEn ? "Open Media Archive" : "Xem Kho Tư Liệu"}</span>
-              <ArrowRight className="size-4" />
+
+            {/* Content below image */}
+            <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-amber-900 bg-amber-100 px-2 py-0.5 rounded-full border border-amber-300">
+                    {isEn ? "Photos & Videos" : "Ảnh & Video"}
+                  </span>
+                  <span className="text-[11px] text-red-700 font-semibold flex items-center gap-1">
+                    <Film className="size-3" />
+                    {isEn ? "Blank Templates" : "Mẫu Tự Tạo"}
+                  </span>
+                </div>
+                <h3 className="font-circus text-lg text-neutral-900 group-hover:text-red-700 transition-colors flex items-center gap-1.5">
+                  <span>{isEn ? "Digital Media Archive" : "Kho Tư Liệu Số"}</span>
+                  <Sparkles className="size-4 text-amber-500 opacity-80 group-hover:opacity-100" />
+                </h3>
+                <p className="text-xs text-neutral-600 leading-relaxed line-clamp-3">
+                  {isEn
+                    ? "Where viewers can admire vivid pictures, dynamic short videos, and use templates to insert custom photos and titles."
+                    : "Nơi người xem có thể chiêm ngưỡng nhiều hình ảnh sắc nét, video ngắn sống động và dùng phần mẫu để bỏ ảnh và tiêu đề vào."}
+                </p>
+              </div>
+              <div className="pt-3 border-t border-amber-200/60 flex items-center justify-between text-xs font-bold text-red-700 group-hover:translate-x-1 transition-transform">
+                <span>{isEn ? "Open Media Archive" : "Xem Kho Tư Liệu"}</span>
+                <ArrowRight className="size-4" />
+              </div>
             </div>
           </div>
 
-          {/* Module 3: Lịch Sử Xiếc Việt */}
+          {/* Module 4: Lịch Sử Xiếc Việt */}
           <div
             onClick={() => {
               onSelectAct('history');
               circusAudio.playBambooStep();
             }}
-            className="group relative bg-gradient-to-b from-white to-amber-50/50 rounded-2xl p-5 border-2 border-amber-300 hover:border-red-600 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
+            className="group relative bg-white rounded-2xl overflow-hidden border-2 border-amber-300 hover:border-red-600 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
           >
-            <div className="space-y-3">
-              <div className="size-12 rounded-xl bg-red-100 border border-red-200 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                <Icon name="bi bi-file-earmark-text" />
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-red-700 bg-red-50 px-2 py-0.5 rounded-full border border-red-200">
-                  {isEn ? "Historical Documents" : "Tư Liệu Lịch Sử"}
+            {/* Cover Image on top */}
+            <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-950">
+              <img
+                src={circusHistoryCoverImg}
+                alt={isEn ? "Circus History" : "Lịch Sử Xiếc Việt"}
+                className="size-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95 group-hover:opacity-100"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+              <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-red-950/80 text-amber-200 backdrop-blur-xs border border-amber-400/40">
+                  📜 {isEn ? "History" : "Lịch Sử Trăm Năm"}
                 </span>
-                <span className="text-[11px] text-amber-800 font-semibold">
-                  2000 TCN - 2026
-                </span>
               </div>
-              <h3 className="font-circus text-lg text-neutral-900 group-hover:text-red-700 transition-colors">
-                {isEn ? "Discovering Historical Documents" : "Khám Phá Tư Liệu Lịch Sử"}
-              </h3>
-              <p className="text-xs text-neutral-600 leading-relaxed">
-                {isEn
-                  ? "From Ancient Rome, Egypt & Chinese Hundred Games, Philip Astley's 1768 Classical Circus to 100 years of Vietnamese circus and proud Guinness records."
-                  : "Hành trình từ xiếc Cổ đại (La Mã, Ai Cập, Bách Hý), Xiếc Cổ điển Philip Astley 1768, Xiếc Đương đại thế giới đến 100 năm Xiếc Việt (1922) và Kỷ lục Guinness."}
-              </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-amber-200/60 flex items-center justify-between text-xs font-bold text-red-700 group-hover:translate-x-1 transition-transform">
-              <span>{isEn ? "Discover Historical Documents" : "Khám Phá Tư Liệu Lịch Sử"}</span>
-              <ArrowRight className="size-4" />
+
+            {/* Content below image */}
+            <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-red-700 bg-red-50 px-2 py-0.5 rounded-full border border-red-200">
+                    2000 TCN - 2026
+                  </span>
+                  <span className="text-[11px] text-amber-800 font-semibold">
+                    {isEn ? "4 Milestones" : "4 Cột Mốc Di Sản"}
+                  </span>
+                </div>
+                <h3 className="font-circus text-lg text-neutral-900 group-hover:text-red-700 transition-colors">
+                  {isEn ? "Circus History" : "Khám Phá Tư Liệu Lịch Sử"}
+                </h3>
+                <p className="text-xs text-neutral-600 leading-relaxed line-clamp-3">
+                  {isEn
+                    ? "From Ancient Rome, Egypt & Chinese Hundred Games, Philip Astley's 1768 Classical Circus to 100 years of Vietnamese circus and proud Guinness records."
+                    : "Hành trình từ xiếc Cổ đại, Xiếc Cổ điển Philip Astley 1768, Xiếc Đương đại thế giới đến 100 năm Xiếc Việt (1922) và Kỷ lục Guinness."}
+                </p>
+              </div>
+              <div className="mt-4 pt-3 border-t border-amber-200/60 flex items-center justify-between text-xs font-bold text-red-700 group-hover:translate-x-1 transition-transform">
+                <span>{isEn ? "Discover Historical Documents" : "Khám Phá Tư Liệu Lịch Sử"}</span>
+                <ArrowRight className="size-4" />
+              </div>
             </div>
           </div>
 
-          {/* Module 4: Rạp Xiếc 3D */}
+          {/* Module 5: Rạp Xiếc 3D */}
           <Link
             to={CIRCUS_3D_URL}
             onClick={() => {
               circusAudio.playBambooStep();
               onUnlockBadge?.('circus-3d-explorer');
             }}
-            className="group relative bg-gradient-to-b from-white to-sky-50/40 rounded-2xl p-5 border-2 border-amber-300 hover:border-sky-500 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
+            className="group relative bg-white rounded-2xl overflow-hidden border-2 border-amber-300 hover:border-sky-500 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
           >
-            <div className="space-y-3">
-              <div className="size-12 rounded-xl bg-sky-100 border border-sky-200 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                🎪
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-sky-700 bg-sky-50 px-2 py-0.5 rounded-full border border-sky-200">
-                  WebGL 3D
+            {/* Cover Image on top */}
+            <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-950">
+              <img
+                src={rapXiec3dCoverImg}
+                alt={isEn ? "3D Circus Tent" : "Rạp Xiếc 3D"}
+                className="size-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95 group-hover:opacity-100"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+              <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-sky-950/80 text-sky-200 backdrop-blur-xs border border-sky-400/40">
+                  🎪 WebGL 3D • 360°
                 </span>
-                <span className="text-[11px] text-emerald-700 font-semibold">
-                  {isEn ? "Rotate 360°" : "Xoay 360°"}
-                </span>
               </div>
-              <h3 className="font-circus text-lg text-neutral-900 group-hover:text-sky-700 transition-colors flex items-center justify-between">
-                <span>{isEn ? "3D Circus Tent" : "Rạp Xiếc 3D"}</span>
-                <ExternalLink className="size-4 text-sky-600 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
-              </h3>
-              <p className="text-xs text-neutral-600 leading-relaxed">
-                {isEn
-                  ? "Interact in 3D with the circular sand ring, sweeping stage spotlights, trapeze, and red-yellow big top tent."
-                  : "Tương tác trực tiếp với mô hình sân khấu cát tròn, đèn rọi xoay chuyển, đu bay và mái lều đỏ vàng sống động."}
-              </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-sky-200/60 flex items-center justify-between text-xs font-bold text-sky-700 group-hover:translate-x-1 transition-transform">
-              <span>{isEn ? "Enter 3D Circus" : "Vào Rạp Xiếc 3D"}</span>
-              <ArrowRight className="size-4" />
+
+            {/* Content below image */}
+            <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-sky-700 bg-sky-50 px-2 py-0.5 rounded-full border border-sky-200">
+                    WebGL 3D
+                  </span>
+                  <span className="text-[11px] text-emerald-700 font-semibold">
+                    {isEn ? "Interactive Stage" : "Sân Khấu 360°"}
+                  </span>
+                </div>
+                <h3 className="font-circus text-lg text-neutral-900 group-hover:text-sky-700 transition-colors flex items-center justify-between">
+                  <span>{isEn ? "3D Circus Tent" : "Rạp Xiếc 3D"}</span>
+                  <ExternalLink className="size-4 text-sky-600 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
+                </h3>
+                <p className="text-xs text-neutral-600 leading-relaxed line-clamp-3">
+                  {isEn
+                    ? "Interact in 3D with the circular sand ring, sweeping stage spotlights, trapeze, and red-yellow big top tent."
+                    : "Tương tác trực tiếp với mô hình sân khấu cát tròn, đèn rọi xoay chuyển, đu bay và mái lều đỏ vàng sống động."}
+                </p>
+              </div>
+              <div className="pt-3 border-t border-sky-200/60 flex items-center justify-between text-xs font-bold text-sky-700 group-hover:translate-x-1 transition-transform">
+                <span>{isEn ? "Enter 3D Circus" : "Vào Rạp Xiếc 3D"}</span>
+                <ArrowRight className="size-4" />
+              </div>
             </div>
           </Link>
 
-          {/* Module 5: Quiz Kiến Thức */}
+          {/* Module 6: Quiz Kiến Thức */}
           <div
             onClick={() => {
               onSelectAct('quiz');
               circusAudio.playBambooStep();
             }}
-            className="group relative bg-gradient-to-b from-white to-emerald-50/40 rounded-2xl p-5 border-2 border-amber-300 hover:border-emerald-500 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
+            className="group relative bg-white rounded-2xl overflow-hidden border-2 border-amber-300 hover:border-emerald-500 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
           >
-            <div className="space-y-3">
-              <div className="size-12 rounded-xl bg-emerald-100 border border-emerald-200 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                <Icon name="bi bi-cpu" />
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-                  {isEn ? "Knowledge Test" : "Thử Tài Trí Tuệ"}
+            {/* Cover Image on top */}
+            <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-950">
+              <img
+                src={quizCoverImg}
+                alt={isEn ? "Circus Quiz" : "Quiz Kiến Thức"}
+                className="size-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95 group-hover:opacity-100"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+              <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-950/80 text-emerald-200 backdrop-blur-xs border border-emerald-400/40">
+                  🧠 {isEn ? "Quiz" : "Thử Tài 20 Câu"}
                 </span>
-                <span className="text-[11px] text-amber-700 font-semibold">
-                  {isEn ? "20 Questions" : "20 Câu Hỏi"}
-                </span>
               </div>
-              <h3 className="font-circus text-lg text-neutral-900 group-hover:text-emerald-700 transition-colors">
-                {isEn ? "Circus Quiz" : "Quiz Kiến Thức"}
-              </h3>
-              <p className="text-xs text-neutral-600 leading-relaxed">
-                {isEn
-                  ? "Test your knowledge of Vietnamese circus art, legendary artists, and fascinating cultural anecdotes."
-                  : "Kiểm tra độ am hiểu về nghệ thuật xiếc, các nhân vật huyền thoại và các câu chuyện văn hóa thú vị."}
-              </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-emerald-200/60 flex items-center justify-between text-xs font-bold text-emerald-700 group-hover:translate-x-1 transition-transform">
-              <span>{isEn ? "Start Quiz Challenge" : "Bắt Đầu Thử Thách"}</span>
-              <ArrowRight className="size-4" />
+
+            {/* Content below image */}
+            <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                    {isEn ? "Knowledge Test" : "Thử Tài Trí Tuệ"}
+                  </span>
+                  <span className="text-[11px] text-amber-700 font-semibold">
+                    {isEn ? "20 Questions" : "20 Câu Hỏi"}
+                  </span>
+                </div>
+                <h3 className="font-circus text-lg text-neutral-900 group-hover:text-emerald-700 transition-colors">
+                  {isEn ? "Circus Quiz" : "Quiz Kiến Thức"}
+                </h3>
+                <p className="text-xs text-neutral-600 leading-relaxed line-clamp-3">
+                  {isEn
+                    ? "Test your knowledge of Vietnamese circus art, legendary artists, and fascinating cultural anecdotes."
+                    : "Kiểm tra độ am hiểu về nghệ thuật xiếc, các nhân vật huyền thoại và các câu chuyện văn hóa thú vị."}
+                </p>
+              </div>
+              <div className="pt-3 border-t border-emerald-200/60 flex items-center justify-between text-xs font-bold text-emerald-700 group-hover:translate-x-1 transition-transform">
+                <span>{isEn ? "Start Quiz Challenge" : "Bắt Đầu Thử Thách"}</span>
+                <ArrowRight className="size-4" />
+              </div>
             </div>
           </div>
 
-          {/* Module 6: Bản Đồ */}
+          {/* Module 7: Bản Đồ */}
           <div
             onClick={() => {
               onSelectAct('map');
               circusAudio.playBambooStep();
             }}
-            className="group relative bg-gradient-to-b from-white to-amber-50/60 rounded-2xl p-5 border-2 border-amber-300 hover:border-amber-600 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
+            className="group relative bg-white rounded-2xl overflow-hidden border-2 border-amber-300 hover:border-amber-600 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
           >
-            <div className="space-y-3">
-              <div className="size-12 rounded-xl bg-amber-100 border border-amber-200 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                <Icon name="bi bi-map" />
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
-                  {isEn ? "North - Central - South" : "Bắc - Trung - Nam"}
+            {/* Cover Image on top */}
+            <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-950">
+              <img
+                src={banDoCoverImg}
+                alt={isEn ? "Venues Map" : "Bản Đồ Rạp Xiếc"}
+                className="size-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95 group-hover:opacity-100"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+              <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-950/80 text-amber-200 backdrop-blur-xs border border-amber-400/40">
+                  🗺️ {isEn ? "Circus Map" : "Bản Đồ Di Sản"}
                 </span>
-                <span className="text-[11px] text-red-700 font-semibold">
-                  {isEn ? "8 Venues & Villages" : "8 Rạp & Làng Nghề"}
-                </span>
               </div>
-              <h3 className="font-circus text-lg text-neutral-900 group-hover:text-amber-800 transition-colors">
-                {isEn ? "Venues Map" : "Bản Đồ Rạp Xiếc"}
-              </h3>
-              <p className="text-xs text-neutral-600 leading-relaxed">
-                {isEn
-                  ? "Discover locations, performance schedules, and contact details of circus venues and troupes nationwide."
-                  : "Khám phá vị trí, lịch biểu diễn và thông tin liên hệ của các rạp xiếc, đoàn nghệ thuật trên toàn quốc."}
-              </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-amber-200/60 flex items-center justify-between text-xs font-bold text-amber-800 group-hover:translate-x-1 transition-transform">
-              <span>{isEn ? "View Venues Map" : "Xem Bản Đồ"}</span>
-              <ArrowRight className="size-4" />
+
+            {/* Content below image */}
+            <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
+                    {isEn ? "North - Central - South" : "Bắc - Trung - Nam"}
+                  </span>
+                  <span className="text-[11px] text-red-700 font-semibold">
+                    {isEn ? "8 Venues" : "8 Rạp & Làng Nghề"}
+                  </span>
+                </div>
+                <h3 className="font-circus text-lg text-neutral-900 group-hover:text-amber-800 transition-colors">
+                  {isEn ? "Venues Map" : "Bản Đồ Rạp Xiếc"}
+                </h3>
+                <p className="text-xs text-neutral-600 leading-relaxed line-clamp-3">
+                  {isEn
+                    ? "Discover locations, performance schedules, and contact details of circus venues and troupes nationwide."
+                    : "Khám phá vị trí, lịch biểu diễn và thông tin liên hệ của các rạp xiếc, đoàn nghệ thuật trên toàn quốc."}
+                </p>
+              </div>
+              <div className="pt-3 border-t border-amber-200/60 flex items-center justify-between text-xs font-bold text-amber-800 group-hover:translate-x-1 transition-transform">
+                <span>{isEn ? "View Venues Map" : "Xem Bản Đồ"}</span>
+                <ArrowRight className="size-4" />
+              </div>
             </div>
           </div>
 
-          {/* Module 7: Chatbot AI */}
+          {/* Module 8: Chatbot AI */}
           <a
             href={CHATBOT_AI_URL}
             target="_blank"
@@ -754,33 +906,49 @@ export const CircusStage: React.FC<CircusStageProps> = ({
               circusAudio.playBambooStep();
               onUnlockBadge?.('circus-ai-chatbot');
             }}
-            className="group relative bg-gradient-to-b from-white to-red-50/50 rounded-2xl p-5 border-2 border-amber-300 hover:border-red-600 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
+            className="group relative bg-white rounded-2xl overflow-hidden border-2 border-amber-300 hover:border-red-600 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
           >
-            <div className="space-y-3">
-              <div className="size-12 rounded-xl bg-red-100 border border-red-200 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                <Icon name="bi bi-robot" />
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-red-700 bg-red-50 px-2 py-0.5 rounded-full border border-red-200">
-                  {isEn ? "Chatbot AI" : "Chatbot AI"}
+            {/* Cover Image on top */}
+            <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-950">
+              <img
+                src={chatbotCoverImg}
+                alt={isEn ? "Chatbot AI" : "Chatbot AI"}
+                className="size-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95 group-hover:opacity-100"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+              <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-red-950/80 text-amber-200 backdrop-blur-xs border border-amber-400/40">
+                  🤖 {isEn ? "AI Artist" : "Chatbot AI"}
                 </span>
-                <span className="text-[11px] text-amber-800 font-semibold">
-                  {isEn ? "AI Assistant" : "Nghệ sĩ xiếc đương đại"}
-                </span>
               </div>
-              <h3 className="font-circus text-lg text-neutral-900 group-hover:text-red-700 transition-colors flex items-center justify-between">
-                <span>{isEn ? "CHATBOT AI" : "CHATBOT AI"}</span>
-                <ExternalLink className="size-4 text-red-600 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
-              </h3>
-              <p className="text-xs text-neutral-600 leading-relaxed">
-                {isEn
-                  ? "Chat with the Contemporary Circus Artist AI to explore circus history, acrobatics, and behind-the-scenes stories."
-                  : "Trò chuyện trực tiếp cùng Chatbot AI 'Nghệ sĩ xiếc đương đại' để khám phá câu chuyện nghề, lịch sử và kỹ thuật biểu diễn."}
-              </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-amber-200/60 flex items-center justify-between text-xs font-bold text-red-700 group-hover:translate-x-1 transition-transform">
-              <span>{isEn ? "Open Chatbot AI" : "Trò Chuyện Cùng Chatbot AI"}</span>
-              <ArrowRight className="size-4" />
+
+            {/* Content below image */}
+            <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-red-700 bg-red-50 px-2 py-0.5 rounded-full border border-red-200">
+                    {isEn ? "Chatbot AI" : "Chatbot AI"}
+                  </span>
+                  <span className="text-[11px] text-amber-800 font-semibold">
+                    {isEn ? "AI Assistant" : "Nghệ sĩ xiếc đương đại"}
+                  </span>
+                </div>
+                <h3 className="font-circus text-lg text-neutral-900 group-hover:text-red-700 transition-colors flex items-center justify-between">
+                  <span>{isEn ? "CHATBOT AI" : "CHATBOT AI"}</span>
+                  <ExternalLink className="size-4 text-red-600 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
+                </h3>
+                <p className="text-xs text-neutral-600 leading-relaxed line-clamp-3">
+                  {isEn
+                    ? "Chat with the Contemporary Circus Artist AI to explore circus history, acrobatics, and behind-the-scenes stories."
+                    : "Trò chuyện trực tiếp cùng Chatbot AI 'Nghệ sĩ xiếc đương đại' để khám phá câu chuyện nghề, lịch sử và kỹ thuật biểu diễn."}
+                </p>
+              </div>
+              <div className="pt-3 border-t border-amber-200/60 flex items-center justify-between text-xs font-bold text-red-700 group-hover:translate-x-1 transition-transform">
+                <span>{isEn ? "Open Chatbot AI" : "Trò Chuyện Cùng Chatbot AI"}</span>
+                <ArrowRight className="size-4" />
+              </div>
             </div>
           </a>
         </div>
