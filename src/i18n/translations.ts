@@ -38,7 +38,7 @@ export const TRANSLATIONS = {
     footer: {
       heritage: 'Nghệ Thuật Dân Gian',
       web: 'Pocket Circus Web',
-      audio: 'Âm Thanh Tương Tác Web Audio',
+      tech: 'Bảo Tàng Xiếc Số 3D',
       contactTitle: 'Thông tin liên hệ',
       aboutLink: 'Về Chúng Tôi (About Us)',
       brochureLink: 'Quảng Bá (Brochure)',
@@ -84,7 +84,7 @@ export const TRANSLATIONS = {
     footer: {
       heritage: 'Folk Performing Arts',
       web: 'Pocket Circus Web',
-      audio: 'Interactive Web Audio',
+      tech: '3D Digital Circus Museum',
       contactTitle: 'Contact Information',
       aboutLink: 'About Us',
       brochureLink: 'Digital Brochure',

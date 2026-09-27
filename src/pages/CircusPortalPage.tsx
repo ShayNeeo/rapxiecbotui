@@ -20,6 +20,9 @@ import { OFFICIAL_CIRCUS_LOGO } from "@/src/lib/logo";
 import { OFFICIAL_CIRCUS_MAP } from "@/src/lib/map";
 import { CHATBOT_AI_URL } from "@/src/lib/constants";
 import { CircusMediaArchive } from "@/src/components/CircusMediaArchive";
+import { VisitorCounter } from "@/src/components/VisitorCounter";
+import { FloatingVisitorBadge } from "@/src/components/FloatingVisitorBadge";
+import { CircusCommentsSection } from "@/src/components/comments/CircusCommentsSection";
 
 const INITIAL_BADGES: CircusBadge[] = [
   {
@@ -411,6 +414,9 @@ export default function App() {
             }}
           />
         )}
+
+        {/* Comments & Suggestions Section (Bình luận & Đóng góp ý kiến) */}
+        <CircusCommentsSection isEn={isEn} />
       </main>
 
       {/* Footer */}
@@ -520,15 +526,23 @@ export default function App() {
             </div>
           </div>
 
+          {/* Public Visitor Counter / Thống kê lượng truy cập công khai */}
+          <div className="pt-2 max-w-lg mx-auto">
+            <VisitorCounter isEn={isEn} />
+          </div>
+
           <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 text-[11px] sm:text-xs text-amber-200/80 pt-3.5 border-t border-amber-400/20 font-medium">
             <span>{isEn ? <><Icon name="bi bi-flag-fill" /> Folk Arts</> : <><Icon name="bi bi-flag-fill" /> Nghệ Thuật Dân Gian</>}</span>
             <span className="text-amber-500/60">•</span>
             <span>🎪 Pocket Circus Web</span>
             <span className="text-amber-500/60">•</span>
-            <span>{isEn ? <><Icon name="bi bi-stars" /> Interactive Web Audio</> : <><Icon name="bi bi-stars" /> Âm Thanh Tương Tác Web Audio</>}</span>
+            <span>{isEn ? <><Icon name="bi bi-stars" /> 3D Digital Museum</> : <><Icon name="bi bi-stars" /> Bảo Tàng Xiếc Số 3D</>}</span>
           </div>
         </div>
       </footer>
+
+      {/* Neat Floating Corner Visitor Badge */}
+      <FloatingVisitorBadge isEn={isEn} />
 
       {/* Digital Media Archive Modal Viewer */}
       <CircusMediaArchive
