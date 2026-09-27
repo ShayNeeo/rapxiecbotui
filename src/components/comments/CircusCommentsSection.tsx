@@ -11,6 +11,9 @@ import {
   HelpCircle,
   CheckCircle2,
   Clock,
+  Trash2,
+  RefreshCw,
+  AlertCircle,
 } from 'lucide-react';
 import { GoogleIcon } from '@/src/components/icons/GoogleIcon';
 import {
@@ -18,10 +21,13 @@ import {
   CommentTag,
   CommentUser,
   addComment,
+  deleteComment,
   clearCurrentUser,
   getComments,
   getCurrentUser,
   toggleLikeComment,
+  subscribeComments,
+  fetchRemoteComments,
 } from '@/src/lib/commentsService';
 import { GmailLoginModal } from './GmailLoginModal';
 
@@ -41,10 +47,24 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
   const [filterTag, setFilterTag] = useState<'all' | CommentTag>('all');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [toastNotice, setToastNotice] = useState<string | null>(null);
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
     setCurrentUser(getCurrentUser());
     setComments(getComments());
+
+    // Subscribe to cloud and local comment updates
+    const unsubscribe = subscribeComments((updatedComments) => {
+      setComments(updatedComments);
+    });
+
+    fetchRemoteComments().catch(() => {});
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   const handleLogout = () => {
@@ -52,7 +72,13 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
     setCurrentUser(null);
   };
 
-  const handleSubmitComment = (e: React.FormEvent) => {
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    await fetchRemoteComments();
+    setIsRefreshing(false);
+  };
+
+  const handleSubmitComment = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!currentUser) {
       setIsLoginModalOpen(true);
@@ -64,26 +90,44 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
 
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      const newCmt = addComment({
+    try {
+      await addComment({
         user: currentUser,
         content: trimmed,
         rating,
         tag,
       });
 
-      setComments((prev) => [newCmt, ...prev]);
       setContent('');
       setIsSubmitting(false);
       setShowSuccessToast(true);
-
       setTimeout(() => setShowSuccessToast(false), 3500);
-    }, 300);
+    } catch {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleDeleteComment = async (commentId: string) => {
+    if (!currentUser) return;
+
+    if (deleteConfirmId !== commentId) {
+      setDeleteConfirmId(commentId);
+      setTimeout(() => {
+        setDeleteConfirmId((prev) => (prev === commentId ? null : prev));
+      }, 4000);
+      return;
+    }
+
+    const success = await deleteComment(commentId, currentUser.email);
+    setDeleteConfirmId(null);
+    if (success) {
+      setToastNotice(isEn ? 'Your comment has been deleted.' : 'Đã xóa bình luận của bạn thành công.');
+      setTimeout(() => setToastNotice(null), 3000);
+    }
   };
 
   const handleToggleLike = (commentId: string) => {
     toggleLikeComment(commentId);
-    setComments(getComments());
   };
 
   const filteredComments = filterTag === 'all'
@@ -139,6 +183,7 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
 
   return (
     <section
+      id="comments-section"
       className="w-full max-w-4xl mx-auto px-4 sm:px-6 py-10 space-y-6"
       aria-label={isEn ? 'Comments and Suggestions' : 'Bình luận và đóng góp ý kiến'}
     >
@@ -153,8 +198,8 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
         </h3>
         <p className="text-xs sm:text-sm text-neutral-700 max-w-xl mx-auto leading-relaxed font-medium">
           {isEn
-            ? 'Share your thoughts, circus memories, or valuable suggestions to help Pocket Circus Vietnam grow and preserve traditional arts.'
-            : 'Chia sẻ cảm nhận, kỷ niệm về xiếc hoặc đóng góp ý kiến để Rạp Xiếc Bỏ Túi ngày một hoàn thiện và lan tỏa nghệ thuật xiếc truyền thống.'}
+            ? 'Connect with your Gmail account to leave comments. All comments are synced publicly so every visitor can see them!'
+            : 'Đăng nhập tài khoản Gmail để gửi đánh giá và đóng góp ý kiến. Bình luận được đồng bộ trực tuyến để mọi khán giả cùng theo dõi!'}
         </p>
       </div>
 
@@ -175,11 +220,11 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
                     <span>{currentUser.name}</span>
                     <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-white/10 text-[10px] text-emerald-400 font-medium border border-emerald-400/30">
                       <GoogleIcon className="size-2.5" />
-                      <span>{maskEmail(currentUser.email)}</span>
+                      <span>{currentUser.email}</span>
                     </span>
                   </div>
                   <span className="text-[11px] text-neutral-400">
-                    {isEn ? 'Signed in with Gmail' : 'Đã đăng nhập bằng Gmail'}
+                    {isEn ? 'Connected with Google Account' : 'Đã kết nối tài khoản Google Gmail'}
                   </span>
                 </div>
               </div>
@@ -202,12 +247,12 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
                 </div>
                 <div>
                   <h4 className="text-xs sm:text-sm font-bold text-amber-200">
-                    {isEn ? 'Sign in with Gmail to comment' : 'Đăng nhập bằng Gmail để bình luận'}
+                    {isEn ? 'Sign in with Gmail to comment' : 'Đăng nhập tài khoản Gmail để bình luận'}
                   </h4>
                   <p className="text-[11px] text-amber-100/80">
                     {isEn
-                      ? 'Fast, secure sign-in with your Google account.'
-                      : 'Đăng nhập nhanh chóng, xác thực tài khoản Google an toàn.'}
+                      ? 'Connect your exact Gmail to post public suggestions and manage your comments.'
+                      : 'Kết nối đúng tài khoản Gmail để đăng ý kiến công khai và tự xóa khi viết nhầm.'}
                   </p>
                 </div>
               </div>
@@ -331,9 +376,17 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
             <CheckCircle2 className="size-4 text-emerald-400 shrink-0" />
             <span>
               {isEn
-                ? 'Thank you! Your feedback has been posted successfully.'
-                : 'Cảm ơn bạn! Ý kiến đóng góp của bạn đã được ghi nhận và hiển thị công khai.'}
+                ? 'Thank you! Your feedback has been posted publicly and is visible to all visitors.'
+                : 'Cảm ơn bạn! Bình luận của bạn đã được đăng công khai cho mọi người cùng xem!'}
             </span>
+          </div>
+        )}
+
+        {/* Action Notice Toast */}
+        {toastNotice && (
+          <div className="p-3 rounded-2xl bg-amber-950/90 border border-amber-400/60 text-amber-200 text-xs flex items-center gap-2 animate-in fade-in duration-300">
+            <AlertCircle className="size-4 text-amber-400 shrink-0" />
+            <span>{toastNotice}</span>
           </div>
         )}
       </div>
@@ -345,6 +398,15 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
           <span>
             {isEn ? `All Comments (${filteredComments.length})` : `Tất cả bình luận (${filteredComments.length})`}
           </span>
+          <button
+            type="button"
+            onClick={handleRefresh}
+            disabled={isRefreshing}
+            className="p-1 rounded-md hover:bg-neutral-200 text-neutral-600 transition-colors ml-1 cursor-pointer"
+            title={isEn ? 'Refresh comments' : 'Cập nhật bình luận mới nhất'}
+          >
+            <RefreshCw className={`size-3.5 ${isRefreshing ? 'animate-spin text-red-600' : ''}`} />
+          </button>
         </div>
 
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
@@ -383,6 +445,9 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
         ) : (
           filteredComments.map((cmt) => {
             const badge = getTagBadge(cmt.tag);
+            const isMyComment = currentUser && currentUser.email.toLowerCase() === cmt.user.email.toLowerCase();
+            const isConfirmingDelete = deleteConfirmId === cmt.id;
+
             return (
               <div
                 key={cmt.id}
@@ -405,6 +470,11 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
                           <GoogleIcon className="size-2.5" />
                           <span>{maskEmail(cmt.user.email)}</span>
                         </span>
+                        {isMyComment && (
+                          <span className="px-1.5 py-0.5 rounded-full bg-amber-400/20 text-[10px] text-amber-300 border border-amber-400/40 font-semibold">
+                            {isEn ? 'You' : 'Bình luận của bạn'}
+                          </span>
+                        )}
                       </div>
                       <div className="flex items-center gap-2 text-[10px] text-neutral-400 mt-0.5">
                         <span className="flex items-center gap-0.5">
@@ -443,7 +513,7 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
                   {cmt.content}
                 </p>
 
-                {/* Footer Actions: Like / Heart */}
+                {/* Footer Actions: Like / Heart & Delete Own Comment */}
                 <div className="flex items-center justify-between pt-2 border-t border-white/5 pl-12">
                   <button
                     type="button"
@@ -464,6 +534,31 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
                       {isEn ? 'Helpful' : 'Hữu ích'}
                     </span>
                   </button>
+
+                  {/* Feature: Automatically delete your own comment if you write it wrong */}
+                  {isMyComment && (
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteComment(cmt.id)}
+                      className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer border ${
+                        isConfirmingDelete
+                          ? 'bg-red-600 text-white border-red-500 animate-pulse'
+                          : 'bg-red-950/40 hover:bg-red-900/60 text-red-300 hover:text-white border-red-500/30'
+                      }`}
+                      title={isEn ? 'Delete this comment' : 'Xóa bình luận này (nếu viết nhầm)'}
+                    >
+                      <Trash2 className="size-3" />
+                      <span>
+                        {isConfirmingDelete
+                          ? isEn
+                            ? 'Confirm Delete?'
+                            : 'Xác nhận xóa?'
+                          : isEn
+                          ? 'Delete comment'
+                          : 'Xóa bình luận'}
+                      </span>
+                    </button>
+                  )}
                 </div>
               </div>
             );

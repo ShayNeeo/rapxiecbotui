@@ -23,6 +23,11 @@ import { CircusMediaArchive } from "@/src/components/CircusMediaArchive";
 import { VisitorCounter } from "@/src/components/VisitorCounter";
 import { FloatingVisitorBadge } from "@/src/components/FloatingVisitorBadge";
 import { CircusCommentsSection } from "@/src/components/comments/CircusCommentsSection";
+import {
+  saveStageScrollY,
+  restoreStageScrollY,
+  restoreAllHorizontalScrolls,
+} from "@/src/lib/scrollPreserver";
 
 const INITIAL_BADGES: CircusBadge[] = [
   {
@@ -127,24 +132,54 @@ export default function App() {
 
   const navigate = useNavigate();
 
+  // Continuously record scroll position when browsing stage
+  useEffect(() => {
+    if (currentAct !== 'stage') return;
+    const handleScroll = () => {
+      saveStageScrollY(window.scrollY);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [currentAct]);
+
   const navigateToAct = (act: CircusActId) => {
     if (act === 'chat') {
+      saveStageScrollY();
       navigate('/chatbot');
       return;
     }
-    setCurrentAct(act);
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    if (typeof document !== 'undefined') {
-      if (document.documentElement) document.documentElement.scrollTop = 0;
-      if (document.body) document.body.scrollTop = 0;
+
+    if (currentAct === 'stage' && act !== 'stage') {
+      // Saving current surfing location before visiting
+      saveStageScrollY();
+      setCurrentAct(act);
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      if (typeof document !== 'undefined') {
+        if (document.documentElement) document.documentElement.scrollTop = 0;
+        if (document.body) document.body.scrollTop = 0;
+      }
+    } else if (act === 'stage') {
+      // Exiting and returning to stage: restore the exact location the user was surfing
+      setCurrentAct('stage');
+      restoreStageScrollY();
+      restoreAllHorizontalScrolls();
+    } else {
+      setCurrentAct(act);
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      if (typeof document !== 'undefined') {
+        if (document.documentElement) document.documentElement.scrollTop = 0;
+        if (document.body) document.body.scrollTop = 0;
+      }
     }
   };
 
+  // Restore scroll when returning to stage (e.g. from 3D, Chatbot, or sub-view)
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    if (typeof document !== 'undefined') {
-      if (document.documentElement) document.documentElement.scrollTop = 0;
-      if (document.body) document.body.scrollTop = 0;
+    if (currentAct === 'stage') {
+      restoreStageScrollY();
+      restoreAllHorizontalScrolls();
     }
   }, [currentAct]);
   const [logoUrl, setLogoUrl] = useState<string>(() => {

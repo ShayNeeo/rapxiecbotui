@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
-import { X, Mail, CheckCircle2, ShieldCheck, User } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { X, Mail, CheckCircle2, ShieldCheck, User, Sparkles } from 'lucide-react';
 import { GoogleIcon } from '@/src/components/icons/GoogleIcon';
 import { CommentUser, saveCurrentUser } from '@/src/lib/commentsService';
+
+declare global {
+  interface Window {
+    google?: any;
+  }
+}
 
 interface GmailLoginModalProps {
   isOpen: boolean;
@@ -20,6 +26,58 @@ export const GmailLoginModal: React.FC<GmailLoginModalProps> = ({
   const [name, setName] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const gisButtonRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    // Check if GIS is available and client ID is provided
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    if (clientId && window.google?.accounts?.id && gisButtonRef.current) {
+      try {
+        window.google.accounts.id.initialize({
+          client_id: clientId,
+          callback: (response: any) => {
+            if (response.credential) {
+              try {
+                // Decode JWT payload
+                const base64Url = response.credential.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(
+                  atob(base64)
+                    .split('')
+                    .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+                    .join('')
+                );
+                const payload = JSON.parse(jsonPayload);
+                const googleUser: CommentUser = {
+                  name: payload.name || payload.given_name || payload.email.split('@')[0],
+                  email: payload.email.toLowerCase(),
+                  avatar: payload.picture || `https://ui-avatars.com/api/?name=${encodeURIComponent(payload.name || 'User')}&background=ea4335&color=fff`,
+                  provider: 'google',
+                };
+                saveCurrentUser(googleUser);
+                onSuccess(googleUser);
+                onClose();
+              } catch (err) {
+                console.warn('Could not decode Google GIS token', err);
+              }
+            }
+          },
+        });
+
+        window.google.accounts.id.renderButton(gisButtonRef.current, {
+          theme: 'filled_blue',
+          size: 'large',
+          text: 'signin_with',
+          shape: 'pill',
+          width: 320,
+        });
+      } catch (err) {
+        console.warn('Google GIS initialize error', err);
+      }
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -62,13 +120,12 @@ export const GmailLoginModal: React.FC<GmailLoginModalProps> = ({
 
     setTimeout(() => {
       // Deterministic colorful avatar with initial
-      const initial = displayName.charAt(0).toUpperCase();
-      const colors = ['#ea4335', '#4285f4', '#fbbc05', '#34a853', '#9c27b0', '#ff6d00'];
+      const colors = ['ea4335', '4285f4', 'fbbc05', '34a853', '9c27b0', 'ff6d00'];
       const colorIndex = (displayName.charCodeAt(0) || 0) % colors.length;
       const avatarColor = colors[colorIndex];
       const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(
         displayName
-      )}&background=${avatarColor.replace('#', '')}&color=fff&size=128&bold=true`;
+      )}&background=${avatarColor}&color=fff&size=128&bold=true`;
 
       const user: CommentUser = {
         name: displayName,
@@ -81,7 +138,7 @@ export const GmailLoginModal: React.FC<GmailLoginModalProps> = ({
       setIsSubmitting(false);
       onSuccess(user);
       onClose();
-    }, 400);
+    }, 350);
   };
 
   return (
@@ -108,14 +165,17 @@ export const GmailLoginModal: React.FC<GmailLoginModalProps> = ({
             <GoogleIcon className="size-7" />
           </div>
           <h3 className="font-circus text-lg sm:text-xl text-amber-300 tracking-wider">
-            {isEn ? 'Sign In with Gmail' : 'Đăng Nhập Bằng Gmail'}
+            {isEn ? 'Sign In with Google Account' : 'Kết Nối Tài Khoản Google (Gmail)'}
           </h3>
           <p className="text-xs text-amber-100/90 leading-relaxed max-w-sm mx-auto">
             {isEn
-              ? 'Sign in with your Gmail account to leave comments, ratings, and suggestions for Pocket Circus.'
-              : 'Đăng nhập tài khoản Gmail để để lại đánh giá, bình luận và đóng góp ý kiến cho Rạp Xiếc Bỏ Túi.'}
+              ? 'Connect your Gmail account to leave comments, ratings, and suggestions. Everyone will see your contribution!'
+              : 'Kết nối bằng tài khoản Gmail của bạn để để lại bình luận và đóng góp ý kiến. Mọi người xem sẽ cùng thấy ý kiến của bạn!'}
           </p>
         </div>
+
+        {/* GIS Button container (if configured) */}
+        <div ref={gisButtonRef} className="flex justify-center empty:hidden" />
 
         {/* Form */}
         <form onSubmit={handleLogin} className="space-y-4">
@@ -129,7 +189,7 @@ export const GmailLoginModal: React.FC<GmailLoginModalProps> = ({
           <div className="space-y-1.5">
             <label className="block text-xs font-semibold text-amber-200 flex items-center gap-1.5">
               <Mail className="size-3.5 text-amber-400" />
-              <span>{isEn ? 'Gmail Address' : 'Địa chỉ Gmail'}</span>
+              <span>{isEn ? 'Your Gmail Address' : 'Địa chỉ Gmail của bạn'}</span>
               <span className="text-red-400">*</span>
             </label>
             <div className="relative">
@@ -171,11 +231,11 @@ export const GmailLoginModal: React.FC<GmailLoginModalProps> = ({
               <span>
                 {isSubmitting
                   ? isEn
-                    ? 'Signing in...'
-                    : 'Đang kết nối...'
+                    ? 'Connecting...'
+                    : 'Đang kết nối tài khoản...'
                   : isEn
-                  ? 'Continue with Google Account'
-                  : 'Xác Nhận & Đăng Nhập Gmail'}
+                  ? 'Connect Gmail Account'
+                  : 'Xác Nhận & Kết Nối Gmail'}
               </span>
             </button>
           </div>
@@ -186,8 +246,8 @@ export const GmailLoginModal: React.FC<GmailLoginModalProps> = ({
           <ShieldCheck className="size-3.5 text-emerald-400" />
           <span>
             {isEn
-              ? 'Safe & verified Gmail profile for community feedback'
-              : 'Xác thực an toàn để gửi ý kiến đóng góp cho ban tổ chức'}
+              ? 'Safe Google account authentication • Comments synced publicly'
+              : 'Xác thực tài khoản Google an toàn • Bình luận đồng bộ công khai'}
           </span>
         </div>
       </div>

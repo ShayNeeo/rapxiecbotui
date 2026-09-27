@@ -40,6 +40,7 @@ import quizCoverImg from "@/src/assets/images/quiz_kien_thuc_cover_vung_dat_ky_b
 import chatbotCoverImg from "@/src/assets/images/chatbot_ai_cover_muc_tim.jpg";
 import brochureCoverImg from "@/src/assets/images/quang_ba_xiec_viet_cover_cha_rong_me_tien.jpg";
 import { FramedImage } from "@/src/components/FramedImage";
+import { saveStageScrollY } from "@/src/lib/scrollPreserver";
 
 interface CircusStageProps {
   onSelectAct: (act: CircusActId) => void;
@@ -67,6 +68,7 @@ export const CircusStage: React.FC<CircusStageProps> = ({
   const [isMediaArchiveOpen, setIsMediaArchiveOpen] = useState(false);
 
   const handleOpenMedia = () => {
+    saveStageScrollY();
     circusAudio.playBambooStep();
     onUnlockBadge?.('circus-digital-archive');
     if (onOpenMediaArchive) {
@@ -215,6 +217,7 @@ export const CircusStage: React.FC<CircusStageProps> = ({
             <Link
               to={CIRCUS_3D_URL}
               onClick={() => {
+                saveStageScrollY();
                 onUnlockBadge?.('circus-3d-explorer');
                 circusAudio.playFanfare();
               }}
@@ -748,6 +751,7 @@ export const CircusStage: React.FC<CircusStageProps> = ({
           <Link
             to={CIRCUS_3D_URL}
             onClick={() => {
+              saveStageScrollY();
               circusAudio.playBambooStep();
               onUnlockBadge?.('circus-3d-explorer');
             }}
