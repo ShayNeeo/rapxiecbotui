@@ -93,6 +93,36 @@ const STARTER_PROMPTS = [
 
 const getCurrentTimestamp = () => Date.now()
 
+/**
+ * Hiệu ứng hiển thị chữ chạy từ từ (typewriter streaming) cho câu trả lời
+ */
+function streamTextGradually(
+  fullText: string,
+  onChunk: (chunkText: string) => void,
+  signal?: AbortSignal,
+  chunkSize = 3,
+  intervalMs = 16
+): Promise<void> {
+  return new Promise((resolve) => {
+    let currentIndex = 0
+    const intervalId = setInterval(() => {
+      if (signal?.aborted) {
+        clearInterval(intervalId)
+        resolve()
+        return
+      }
+
+      currentIndex = Math.min(currentIndex + chunkSize, fullText.length)
+      onChunk(fullText.slice(0, currentIndex))
+
+      if (currentIndex >= fullText.length) {
+        clearInterval(intervalId)
+        resolve()
+      }
+    }, intervalMs)
+  })
+}
+
 interface ChatbotPageProps {
   onBackToPortal?: () => void
 }
@@ -193,30 +223,50 @@ export const ChatbotPage: React.FC<ChatbotPageProps> = ({ onBackToPortal }) => {
     setInput('')
     setIsLoading(true)
 
+    const abortController = new AbortController()
+    abortControllerRef.current = abortController
+
     // Predefined answers: Always output exact response for circus venue & ticket inquiries
     const predefined = getPredefinedAnswer(textToSend)
     if (predefined) {
-      setTimeout(() => {
+      setTimeout(async () => {
         setMessages((prev) =>
           prev.map((msg) =>
             msg.id === assistantPlaceholderId
               ? {
                   ...msg,
-                  content: predefined.answer,
                   sources: predefined.sources,
                 }
               : msg
           )
         )
         setIsLoading(false)
+        setIsStreaming(true)
+
+        await streamTextGradually(
+          predefined.answer,
+          (chunkText) => {
+            setMessages((prev) =>
+              prev.map((msg) =>
+                msg.id === assistantPlaceholderId
+                  ? { ...msg, content: chunkText }
+                  : msg
+              )
+            )
+          },
+          abortController.signal
+        )
+
+        setIsStreaming(false)
+        abortControllerRef.current = null
         circusAudio.playBambooStep()
-      }, 300)
+      }, 250)
       return
     }
 
     // Mode 1: No API Key configured -> Use local knowledge base retrieval & synthesis
     if (!settings.apiKey.trim()) {
-      setTimeout(() => {
+      setTimeout(async () => {
         const localSources = retrieveRelevantChunksLocally(textToSend, 3)
         const localReply = generateLocalCircusAnswer(textToSend, localSources)
 
@@ -225,22 +275,37 @@ export const ChatbotPage: React.FC<ChatbotPageProps> = ({ onBackToPortal }) => {
             msg.id === assistantPlaceholderId
               ? {
                   ...msg,
-                  content: localReply,
                   sources: localSources,
                 }
               : msg
           )
         )
         setIsLoading(false)
+        setIsStreaming(true)
+
+        await streamTextGradually(
+          localReply,
+          (chunkText) => {
+            setMessages((prev) =>
+              prev.map((msg) =>
+                msg.id === assistantPlaceholderId
+                  ? { ...msg, content: chunkText }
+                  : msg
+              )
+            )
+          },
+          abortController.signal
+        )
+
+        setIsStreaming(false)
+        abortControllerRef.current = null
         circusAudio.playBambooStep()
-      }, 350)
+      }, 300)
       return
     }
 
     // Mode 2: API Key is configured -> Live Gemini Streaming with Vector RAG
     setIsStreaming(true)
-    const abortController = new AbortController()
-    abortControllerRef.current = abortController
 
     try {
       let retrievedSources: RetrievedSource[] = []
@@ -312,17 +377,31 @@ export const ChatbotPage: React.FC<ChatbotPageProps> = ({ onBackToPortal }) => {
         // Fallback to local search if remote LLM fails
         const fallbackSources = retrieveRelevantChunksLocally(textToSend, 3)
         const fallbackReply = generateLocalCircusAnswer(textToSend, fallbackSources)
+        const fullFallbackText = `${fallbackReply}\n\n*(Lưu ý: API Gemini gặp thông báo: ${errorText})*`
 
         setMessages((prev) =>
           prev.map((msg) =>
             msg.id === assistantPlaceholderId
               ? {
                   ...msg,
-                  content: `${fallbackReply}\n\n*(Lưu ý: API Gemini gặp thông báo: ${errorText})*`,
                   sources: fallbackSources,
                 }
               : msg
           )
+        )
+
+        await streamTextGradually(
+          fullFallbackText,
+          (chunkText) => {
+            setMessages((prev) =>
+              prev.map((msg) =>
+                msg.id === assistantPlaceholderId
+                  ? { ...msg, content: chunkText }
+                  : msg
+              )
+            )
+          },
+          abortController.signal
         )
       }
     } finally {

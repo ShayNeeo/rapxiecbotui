@@ -1,11 +1,11 @@
 import React from 'react'
-import { Sparkles, Settings, Trash2, Cpu, Database, ArrowLeft } from 'lucide-react'
+import { Sparkles, Settings, Trash2, Cpu, ArrowLeft } from 'lucide-react'
 
 interface ChatHeaderProps {
   model: string
-  ragEnabled: boolean
-  onToggleRag: () => void
-  chunkCount: number
+  ragEnabled?: boolean
+  onToggleRag?: () => void
+  chunkCount?: number
   onOpenSettings: () => void
   onClearChat: () => void
   messageCount: number
@@ -69,24 +69,6 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
                 <Cpu className="h-3 w-3 text-amber-400" />
                 {model}
               </span>
-              <button
-                type="button"
-                onClick={onToggleRag}
-                className={`flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium transition cursor-pointer ${
-                  ragEnabled
-                    ? 'border-emerald-400/80 bg-emerald-950/50 text-emerald-200 shadow-xs'
-                    : 'border-white/20 bg-black/20 text-white/60 hover:text-white'
-                }`}
-                title={ragEnabled ? 'Tri thức RAG đang kích hoạt: gắn liền dữ liệu xiếc' : 'Bấm để bật tri thức RAG'}
-              >
-                <Database className="h-3 w-3 text-emerald-400" />
-                <span>RAG: {chunkCount} tư liệu</span>
-                <span
-                  className={`inline-block h-1.5 w-1.5 rounded-full ${
-                    ragEnabled ? 'bg-emerald-400 ring-2 ring-emerald-300/50' : 'bg-slate-400'
-                  }`}
-                />
-              </button>
             </div>
             <p className="text-xs text-amber-100/70 font-medium">
               {messageCount === 0 ? 'Sẵn sàng giải đáp lịch sử & nghệ thuật xiếc' : `${messageCount} câu trao đổi`}

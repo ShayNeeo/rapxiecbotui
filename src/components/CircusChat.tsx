@@ -163,12 +163,40 @@ I am your **AI Circus Assistant**. Feel free to ask me anything about Vietnamese
   timestamp: "Just now",
 };
 
+const streamTextGradually = (
+  fullText: string,
+  onChunk: (chunkText: string) => void,
+  signal?: AbortSignal,
+  chunkSize = 3,
+  intervalMs = 16
+): Promise<void> => {
+  return new Promise((resolve) => {
+    let currentIndex = 0;
+    const intervalId = setInterval(() => {
+      if (signal?.aborted) {
+        clearInterval(intervalId);
+        resolve();
+        return;
+      }
+      currentIndex = Math.min(currentIndex + chunkSize, fullText.length);
+      onChunk(fullText.slice(0, currentIndex));
+      if (currentIndex >= fullText.length) {
+        clearInterval(intervalId);
+        resolve();
+      }
+    }, intervalMs);
+  });
+};
+
 export const CircusChat: React.FC<CircusChatProps> = ({ onBack, onUnlockBadge }) => {
   const { isEn } = useLanguage();
   const [messages, setMessages] = useState<Message[]>([isEn ? INITIAL_GREETING_EN : INITIAL_GREETING_VI]);
   const [inputPrompt, setInputPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isStreaming, setIsStreaming] = useState(false);
+  const [streamingMessageId, setStreamingMessageId] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   // Update initial greeting if no chat has taken place
   useEffect(() => {
@@ -186,11 +214,11 @@ export const CircusChat: React.FC<CircusChatProps> = ({ onBack, onUnlockBadge })
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, isLoading]);
+  }, [messages, isLoading, isStreaming]);
 
   const handleSendMessage = async (textToSend?: string) => {
     const query = (textToSend || inputPrompt).trim();
-    if (!query || isLoading) return;
+    if (!query || isLoading || isStreaming) return;
 
     circusAudio.playBambooStep();
 
@@ -210,19 +238,40 @@ export const CircusChat: React.FC<CircusChatProps> = ({ onBack, onUnlockBadge })
       onUnlockBadge("circus-scholar");
     }
 
+    const abort = new AbortController();
+    abortControllerRef.current = abort;
+
+    const assistantPlaceholderId = "assistant-" + Date.now();
+    const assistantMessage: Message = {
+      id: assistantPlaceholderId,
+      role: "assistant",
+      content: "",
+      timestamp: new Date().toLocaleTimeString(isEn ? "en-US" : "vi-VN", { hour: "2-digit", minute: "2-digit" }),
+      source: "gemini",
+    };
+
     // Predefined exact answers for circus queries
     const predefined = getPredefinedAnswer(query);
     if (predefined) {
-      setTimeout(() => {
-        const assistantMessage: Message = {
-          id: "assistant-" + Date.now(),
-          role: "assistant",
-          content: predefined.answer,
-          timestamp: new Date().toLocaleTimeString(isEn ? "en-US" : "vi-VN", { hour: "2-digit", minute: "2-digit" }),
-          source: "gemini",
-        };
+      setTimeout(async () => {
         setMessages((prev) => [...prev, assistantMessage]);
         setIsLoading(false);
+        setIsStreaming(true);
+        setStreamingMessageId(assistantPlaceholderId);
+
+        await streamTextGradually(
+          predefined.answer,
+          (chunk) => {
+            setMessages((prev) =>
+              prev.map((m) => (m.id === assistantPlaceholderId ? { ...m, content: chunk } : m))
+            );
+          },
+          abort.signal
+        );
+
+        setIsStreaming(false);
+        setStreamingMessageId(null);
+        abortControllerRef.current = null;
         circusAudio.playBambooStep();
       }, 250);
       return;
@@ -249,30 +298,55 @@ export const CircusChat: React.FC<CircusChatProps> = ({ onBack, onUnlockBadge })
       }
 
       const data = await res.json();
-      const assistantMessage: Message = {
-        id: "assistant-" + Date.now(),
-        role: "assistant",
-        content: data.reply || (isEn ? "I have received your question, what else would you like to explore?" : "Tôi đã nhận được câu hỏi, bạn muốn tìm hiểu thêm chi tiết nào nữa không?"),
-        timestamp: new Date().toLocaleTimeString(isEn ? "en-US" : "vi-VN", { hour: "2-digit", minute: "2-digit" }),
-        source: data.source,
-      };
+      const targetContent = data.reply || (isEn ? "I have received your question, what else would you like to explore?" : "Tôi đã nhận được câu hỏi, bạn muốn tìm hiểu thêm chi tiết nào nữa không?");
 
-      setMessages((prev) => [...prev, assistantMessage]);
+      setMessages((prev) => [...prev, { ...assistantMessage, source: data.source }]);
+      setIsLoading(false);
+      setIsStreaming(true);
+      setStreamingMessageId(assistantPlaceholderId);
+
+      await streamTextGradually(
+        targetContent,
+        (chunk) => {
+          setMessages((prev) =>
+            prev.map((m) => (m.id === assistantPlaceholderId ? { ...m, content: chunk } : m))
+          );
+        },
+        abort.signal
+      );
+
+      setIsStreaming(false);
+      setStreamingMessageId(null);
+      abortControllerRef.current = null;
       circusAudio.playBambooStep();
     } catch (err: any) {
       console.warn("Chat request error, providing local answer fallback", err);
-      const fallbackMessage: Message = {
-        id: "assistant-" + Date.now(),
-        role: "assistant",
-        content: isEn 
-          ? `🎪 Thank you for asking about "${query}"!\n\nVietnam's circus art boasts over a century of heritage, highlighted by Master Tạ Duy Hiển (1921), prestigious global gold medals in France, Spain, and Monaco, and contemporary Bamboo Circus (À Ố Show).\n\nYou can explore more directly in the **History Timeline** or **Circus Map** section!`
-          : `🎪 Cảm ơn câu hỏi của bạn về "${query}"!\n\nNghệ thuật xiếc Việt Nam qua hơn 100 năm phát triển đã ghi dấu ấn với gánh xiếc Cụ Tạ Duy Hiển (1921), những tấm huy chương vàng thế giới tại Pháp, Tây Ban Nha, Monaco và dòng xiếc tre đương đại độc đáo (À Ố Show).\n\nBạn có thể tra cứu thêm trực tiếp trên mục **Lịch Sử Xiếc** hoặc mục **Bản Đồ** để có thông tin địa chỉ 6 rạp xiếc lớn nhất ba miền nhé!`,
-        timestamp: new Date().toLocaleTimeString(isEn ? "en-US" : "vi-VN", { hour: "2-digit", minute: "2-digit" }),
-        source: "fallback",
-      };
-      setMessages((prev) => [...prev, fallbackMessage]);
+      const fallbackText = isEn 
+        ? `🎪 Thank you for asking about "${query}"!\n\nVietnam's circus art boasts over a century of heritage, highlighted by Master Tạ Duy Hiển (1921), prestigious global gold medals in France, Spain, and Monaco, and contemporary Bamboo Circus (À Ố Show).\n\nYou can explore more directly in the **History Timeline** or **Circus Map** section!`
+        : `🎪 Cảm ơn câu hỏi của bạn về "${query}"!\n\nNghệ thuật xiếc Việt Nam qua hơn 100 năm phát triển đã ghi dấu ấn với gánh xiếc Cụ Tạ Duy Hiển (1921), những tấm huy chương vàng thế giới tại Pháp, Tây Ban Nha, Monaco và dòng xiếc tre đương đại độc đáo (À Ố Show).\n\nBạn có thể tra cứu thêm trực tiếp trên mục **Lịch Sử Xiếc** hoặc mục **Bản Đồ** để có thông tin địa chỉ 6 rạp xiếc lớn nhất ba miền nhé!`;
+
+      setMessages((prev) => [...prev, { ...assistantMessage, source: "fallback" }]);
+      setIsLoading(false);
+      setIsStreaming(true);
+      setStreamingMessageId(assistantPlaceholderId);
+
+      await streamTextGradually(
+        fallbackText,
+        (chunk) => {
+          setMessages((prev) =>
+            prev.map((m) => (m.id === assistantPlaceholderId ? { ...m, content: chunk } : m))
+          );
+        },
+        abort.signal
+      );
+
+      setIsStreaming(false);
+      setStreamingMessageId(null);
+      abortControllerRef.current = null;
     } finally {
       setIsLoading(false);
+      setIsStreaming(false);
+      setStreamingMessageId(null);
       setTimeout(() => {
         textareaRef.current?.focus();
       }, 100);
@@ -293,6 +367,13 @@ export const CircusChat: React.FC<CircusChatProps> = ({ onBack, onUnlockBadge })
   };
 
   const handleClearChat = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    setIsLoading(false);
+    setIsStreaming(false);
+    setStreamingMessageId(null);
     setMessages([isEn ? INITIAL_GREETING_EN : INITIAL_GREETING_VI]);
     circusAudio.playBambooStep();
   };
@@ -439,37 +520,42 @@ export const CircusChat: React.FC<CircusChatProps> = ({ onBack, onUnlockBadge })
                     {isUser ? (
                       <p className="whitespace-pre-wrap">{message.content}</p>
                     ) : (
-                      <Markdown
-                        remarkPlugins={[remarkGfm]}
-                        components={{
-                          p({ children }) {
-                            return <p className="mb-2.5 last:mb-0 leading-relaxed whitespace-pre-line">{children}</p>;
-                          },
-                          a({ href, children }) {
-                            return (
-                              <a
-                                href={href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="font-semibold text-red-700 underline decoration-amber-400 hover:text-red-900 transition-colors break-all"
-                              >
-                                {children}
-                              </a>
-                            );
-                          },
-                          strong({ children }) {
-                            return <strong className="font-bold text-neutral-900">{children}</strong>;
-                          },
-                          ul({ children }) {
-                            return <ul className="list-disc pl-4 space-y-1 mb-2.5">{children}</ul>;
-                          },
-                          li({ children }) {
-                            return <li className="leading-relaxed">{children}</li>;
-                          },
-                        }}
-                      >
-                        {message.content}
-                      </Markdown>
+                      <>
+                        <Markdown
+                          remarkPlugins={[remarkGfm]}
+                          components={{
+                            p({ children }) {
+                              return <p className="mb-2.5 last:mb-0 leading-relaxed whitespace-pre-line">{children}</p>;
+                            },
+                            a({ href, children }) {
+                              return (
+                                <a
+                                  href={href}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="font-semibold text-red-700 underline decoration-amber-400 hover:text-red-900 transition-colors break-all"
+                                >
+                                  {children}
+                                </a>
+                              );
+                            },
+                            strong({ children }) {
+                              return <strong className="font-bold text-neutral-900">{children}</strong>;
+                            },
+                            ul({ children }) {
+                              return <ul className="list-disc pl-4 space-y-1 mb-2.5">{children}</ul>;
+                            },
+                            li({ children }) {
+                              return <li className="leading-relaxed">{children}</li>;
+                            },
+                          }}
+                        >
+                          {message.content}
+                        </Markdown>
+                        {isStreaming && message.id === streamingMessageId && (
+                          <span className="inline-block h-3.5 w-1.5 animate-pulse rounded-full bg-amber-500 ml-1 align-middle" />
+                        )}
+                      </>
                     )}
                   </div>
 
