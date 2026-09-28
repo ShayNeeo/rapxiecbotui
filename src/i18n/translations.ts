@@ -15,7 +15,7 @@ export const TRANSLATIONS = {
       circus3d: 'Rạp Xiếc 3D',
       quiz: 'Quiz Kiến Thức',
       map: 'Bản Đồ',
-      chat: 'Chatbot AI (ENG)',
+      chat: 'Chatbot',
       ticket: 'Vé Kỷ Niệm',
     },
     actions: {
@@ -61,7 +61,7 @@ export const TRANSLATIONS = {
       circus3d: '3D Circus',
       quiz: 'Circus Quiz',
       map: 'Venues Map',
-      chat: 'AI Chatbot (ENG)',
+      chat: 'Chatbot',
       ticket: 'Collector’s Ticket',
     },
     actions: {
