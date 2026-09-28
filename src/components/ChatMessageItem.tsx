@@ -3,6 +3,7 @@ import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { Sparkles, User, Copy, Check, AlertCircle, Database, ChevronDown, ChevronUp } from 'lucide-react'
 import type { ChatMessage } from '../types/chat'
+import { useLanguage } from '@/src/context/LanguageContext'
 
 interface ChatMessageItemProps {
   message: ChatMessage
@@ -13,6 +14,7 @@ export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({
   message,
   isStreaming = false,
 }) => {
+  const { isEn } = useLanguage()
   const isUser = message.role === 'user'
   const [showSources, setShowSources] = useState(false)
 
@@ -156,7 +158,9 @@ export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({
               <div className="flex items-center gap-1.5 font-medium">
                 <Database className="h-3.5 w-3.5 text-emerald-700" />
                 <span>
-                  {message.sources.length} trích đoạn tư liệu RAG (Gemini Embedding)
+                  {isEn
+                    ? `${message.sources.length} RAG reference excerpts (Gemini Embedding)`
+                    : `${message.sources.length} trích đoạn tư liệu RAG (Gemini Embedding)`}
                 </span>
               </div>
               {showSources ? (
@@ -178,7 +182,7 @@ export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({
                         #{i + 1} {src.title}
                       </span>
                       <span className="rounded-full bg-emerald-100 border border-emerald-300 px-2 py-0.5 text-[10px] font-mono text-emerald-800 font-semibold">
-                        {(src.similarity * 100).toFixed(1)}% khớp
+                        {(src.similarity * 100).toFixed(1)}% {isEn ? "match" : "khớp"}
                       </span>
                     </div>
                     <p className="mt-1 line-clamp-3 text-[11px] text-stone-700 leading-relaxed">

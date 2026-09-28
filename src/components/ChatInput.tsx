@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 import { ArrowUp, Square } from 'lucide-react'
+import { useLanguage } from '@/src/context/LanguageContext'
 
 interface ChatInputProps {
   input: string
@@ -18,6 +19,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
   isLoading,
   disabled = false,
 }) => {
+  const { isEn } = useLanguage()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   // Auto-resize textarea
@@ -53,8 +55,8 @@ export const ChatInput: React.FC<ChatInputProps> = ({
             disabled={disabled}
             placeholder={
               disabled
-                ? 'Vui lòng cấu hình API key trong Cài đặt...'
-                : 'Hỏi bất kỳ điều gì về xiếc đương đại Việt Nam... (Enter để gửi, Shift+Enter để xuống dòng)'
+                ? (isEn ? 'Please configure Gemini API key in Settings...' : 'Vui lòng cấu hình API key trong Cài đặt...')
+                : (isEn ? 'Ask anything about Vietnamese contemporary & classical circus... (Enter to send, Shift+Enter for newline)' : 'Hỏi bất kỳ điều gì về xiếc đương đại Việt Nam... (Enter để gửi, Shift+Enter để xuống dòng)')
             }
             className="max-h-44 min-h-[44px] w-full resize-none bg-transparent px-3 py-2.5 text-sm font-medium text-stone-900 placeholder-stone-400 focus:outline-none disabled:opacity-50"
           />
@@ -65,7 +67,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                 type="button"
                 onClick={onStop}
                 className="flex h-9 w-9 items-center justify-center rounded-xl bg-red-800 text-amber-200 border border-amber-400 hover:bg-red-700 transition active:scale-95 cursor-pointer shadow-sm"
-                title="Dừng phản hồi"
+                title={isEn ? "Stop generating" : "Dừng phản hồi"}
               >
                 <Square className="h-4 w-4 fill-current" />
               </button>
@@ -75,7 +77,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                 onClick={onSend}
                 disabled={!input.trim() || disabled}
                 className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-amber-400 to-amber-500 text-red-950 font-bold border border-amber-300 ring-2 ring-amber-400/40 transition hover:from-amber-300 hover:to-amber-400 disabled:opacity-30 disabled:hover:from-amber-400 disabled:hover:to-amber-500 active:scale-95 shadow-md shadow-amber-500/20 cursor-pointer"
-                title="Gửi câu hỏi"
+                title={isEn ? "Send inquiry" : "Gửi câu hỏi"}
               >
                 <ArrowUp className="h-4 w-4 stroke-[3]" />
               </button>
@@ -84,7 +86,9 @@ export const ChatInput: React.FC<ChatInputProps> = ({
         </div>
 
         <p className="mt-2 text-center text-[11px] font-medium text-amber-200/80">
-          🎪 Tư vấn viên AI • Hỗ trợ bởi RAG Tri Thức Xiếc Việt Nam & Google Gemini
+          {isEn
+            ? "🎪 AI Circus Consultant • Powered by Vietnam Circus Knowledge Base & Google Gemini"
+            : "🎪 Tư vấn viên AI • Hỗ trợ bởi RAG Tri Thức Xiếc Việt Nam & Google Gemini"}
         </p>
       </div>
     </div>

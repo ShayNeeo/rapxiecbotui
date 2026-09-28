@@ -204,14 +204,33 @@ export function retrieveRelevantChunksLocally(
  */
 export function generateLocalCircusAnswer(
   query: string,
-  sources: RetrievedSource[]
+  sources: RetrievedSource[],
+  lang?: 'vi' | 'en'
 ): string {
-  const predefined = getPredefinedAnswer(query)
+  const isEn = lang === 'en' || (!lang && /^[a-zA-Z0-9\s.,?!'"-:;()]+$/.test(query) && !/[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/.test(query))
+  const predefined = getPredefinedAnswer(query, isEn ? 'en' : 'vi')
   if (predefined) {
     return predefined.answer
   }
 
   if (sources.length === 0) {
+    if (isEn) {
+      return [
+        '🎪 **Welcome! Thank you for your interest in Vietnamese Circus Arts.**',
+        '',
+        `Currently, no exact document was found in our quick knowledge base for: "${query}".`,
+        '',
+        '💡 **Suggested topics you can explore:**',
+        '- 📜 *Over 100 years of Vietnamese circus history and pioneer Tạ Duy Hiển (1922)*',
+        '- 🎋 *Contemporary Bamboo Circus: À Ố Show, Mơ Show, Teh Dar*',
+        '- 🤹 *The key differences between traditional and contemporary circus*',
+        '- 🦁 *The global and local shift towards non-animal circus arts*',
+        '- 📍 *Addresses, schedules, and ticket booking for major theaters in Hanoi & HCMC*',
+        '',
+        '*(Tip: You can configure your Gemini API Key in Settings to unlock real-time generative responses for all topics!)*',
+      ].join('\n')
+    }
+
     return [
       '🎪 **Chào bạn! Cảm ơn bạn đã quan tâm đến Nghệ thuật Xiếc.**',
       '',
@@ -230,6 +249,28 @@ export function generateLocalCircusAnswer(
 
   const primarySource = sources[0]
   const otherSources = sources.slice(1)
+
+  if (isEn) {
+    const lines: string[] = [
+      '🎪 **Information from Pocket Circus Knowledge Base:**',
+      '',
+      `### 📌 ${primarySource.title}`,
+      '',
+      primarySource.content,
+      '',
+    ]
+
+    if (otherSources.length > 0) {
+      lines.push('#### 🔍 Related Supplementary References:')
+      for (const src of otherSources) {
+        lines.push(`- **${src.title}**: ${src.content.slice(0, 180)}...`)
+      }
+      lines.push('')
+    }
+
+    lines.push('> 💡 *Answer synthesized directly from curated Vietnamese Circus documents. You can configure a Gemini API Key in Settings for live AI generation!*')
+    return lines.join('\n')
+  }
 
   const lines: string[] = [
     '🎪 **Thông tin từ Cơ sở Dữ liệu Rạp Xiếc Bỏ Túi:**',

@@ -1,4 +1,32 @@
 import type { RetrievedSource } from '../types/chat'
+import {
+  CIRCUS_VENUES_AND_TICKETS_ANSWER_EN,
+  CIRCUS_DIFF_ANSWER_EN,
+  CIRCUS_DURATION_ANSWER_EN,
+  CIRCUS_CHALLENGES_ANSWER_EN,
+  CIRCUS_FACTORS_ANSWER_EN,
+  CIRCUS_HARD_SKILL_ANSWER_EN,
+  CIRCUS_CULTURAL_INFLUENCE_ANSWER_EN,
+  CIRCUS_ORIGIN_ANSWER_EN,
+  CIRCUS_STAGES_VN_ANSWER_EN,
+  CIRCUS_ANIMAL_WELFARE_ANSWER_EN,
+  CIRCUS_AUDIENCE_AGE_ANSWER_EN,
+  CIRCUS_PROPS_ANSWER_EN,
+  CIRCUS_CONTEMPORARY_INFO_ANSWER_EN,
+  CIRCUS_VENUES_SOURCE_EN,
+  CIRCUS_DIFF_SOURCE_EN,
+  CIRCUS_DURATION_SOURCE_EN,
+  CIRCUS_CHALLENGES_SOURCE_EN,
+  CIRCUS_FACTORS_SOURCE_EN,
+  CIRCUS_HARD_SKILL_SOURCE_EN,
+  CIRCUS_CULTURAL_INFLUENCE_SOURCE_EN,
+  CIRCUS_ORIGIN_SOURCE_EN,
+  CIRCUS_STAGES_VN_SOURCE_EN,
+  CIRCUS_ANIMAL_WELFARE_SOURCE_EN,
+  CIRCUS_AUDIENCE_AGE_SOURCE_EN,
+  CIRCUS_PROPS_SOURCE_EN,
+  CIRCUS_CONTEMPORARY_INFO_SOURCE_EN,
+} from './predefinedAnswersEn'
 
 /**
  * ==============================================================================
@@ -205,9 +233,64 @@ export function normalizeVietnamese(str: string): string {
 }
 
 /**
+ * Detect if query is written in English or corresponds to an English question
+ */
+export function isEnglishQuery(query: string): boolean {
+  const q = query.toLowerCase().trim()
+  const enPatterns = [
+    'traditional vs contemporary',
+    'technique & show quality',
+    'cultural influences',
+    'origin of circus',
+    'development stages',
+    'circus artist training',
+    'challenges & hardships',
+    'artist challenges',
+    'performance factors',
+    'venues & tickets',
+    'why no circus animals',
+    'target audience',
+    'traditional circus props',
+    'contemporary circus',
+    'what is',
+    'how long',
+    'where do',
+    'why do',
+    'difference between',
+    'which cultures',
+    'when did',
+    'does difficult',
+    'biggest challenges',
+  ]
+  for (const p of enPatterns) {
+    if (q.includes(p)) return true
+  }
+  const enKeywords = [
+    'circus', 'contemporary', 'traditional', 'technique', 'artist',
+    'tickets', 'venues', 'vietnam', 'vietnamese', 'props', 'training'
+  ]
+  let hits = 0
+  for (const w of enKeywords) {
+    if (new RegExp(`\\b${w}\\b`, 'i').test(q)) hits++
+  }
+  return hits >= 2 || (hits >= 1 && !/[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/.test(q))
+}
+
+/**
  * 1. Khớp câu hỏi: Địa điểm biểu diễn xiếc / Mua vé ở đâu
  */
 export function matchCircusVenuesQuestion(query: string): boolean {
+  const q = query.toLowerCase()
+  if (
+    q.includes('where do vietnamese circus') ||
+    q.includes('venues & ticket') ||
+    q.includes('venues & tickets') ||
+    (q.includes('where') && q.includes('circus') && (q.includes('perform') || q.includes('ticket'))) ||
+    (q.includes('ticket') && (q.includes('book') || q.includes('buy') || q.includes('circus')))
+  ) {
+    return true
+  }
+
   const norm = normalizeVietnamese(query)
   if (!norm) return false
 
@@ -284,6 +367,15 @@ export function matchCircusVenuesQuestion(query: string): boolean {
  * 2. Khớp câu hỏi: Sự khác biệt giữa xiếc truyền thống và xiếc đương đại
  */
 export function matchCircusDiffQuestion(query: string): boolean {
+  const q = query.toLowerCase()
+  if (
+    q.includes('traditional vs contemporary') ||
+    q.includes('difference between traditional and contemporary') ||
+    (q.includes('traditional') && q.includes('contemporary') && (q.includes('difference') || q.includes('vs') || q.includes('compare')))
+  ) {
+    return true
+  }
+
   const norm = normalizeVietnamese(query)
   if (!norm) return false
 
@@ -327,6 +419,15 @@ export function matchCircusDiffQuestion(query: string): boolean {
  * 3. Khớp câu hỏi: Mất bao lâu để trở thành diễn viên xiếc (đương đại)
  */
 export function matchCircusDurationQuestion(query: string): boolean {
+  const q = query.toLowerCase()
+  if (
+    q.includes('how long does it take to become') ||
+    q.includes('circus artist training') ||
+    (q.includes('how long') && (q.includes('become') || q.includes('artist') || q.includes('training') || q.includes('train')))
+  ) {
+    return true
+  }
+
   const norm = normalizeVietnamese(query)
   if (!norm) return false
 
@@ -375,6 +476,16 @@ export function matchCircusDurationQuestion(query: string): boolean {
  * 4. Khớp câu hỏi: Khó khăn và thách thức nhất của một diễn viên xiếc
  */
 export function matchCircusChallengesQuestion(query: string): boolean {
+  const q = query.toLowerCase()
+  if (
+    q.includes('challenges faced by a circus') ||
+    q.includes('artist challenges') ||
+    q.includes('challenges & hardships') ||
+    ((q.includes('challenge') || q.includes('hardship') || q.includes('difficulty')) && (q.includes('artist') || q.includes('performer') || q.includes('circus')))
+  ) {
+    return true
+  }
+
   const norm = normalizeVietnamese(query)
   if (!norm) return false
 
@@ -421,6 +532,17 @@ export function matchCircusChallengesQuestion(query: string): boolean {
  * 5. Khớp câu hỏi: Những yếu tố nào quyết định giá trị nghệ thuật của một tác phẩm xiếc đương đại
  */
 export function matchCircusFactorsQuestion(query: string): boolean {
+  const q = query.toLowerCase()
+  if (q.includes('technique determine') || q.includes('difficult technique')) return false
+  if (
+    q.includes('factors determine a contemporary') ||
+    q.includes('crucial performance factors') ||
+    q.includes('decisive performance factors') ||
+    (q.includes('factors') && (q.includes('determine') || q.includes('circus') || q.includes('performance')))
+  ) {
+    return true
+  }
+
   const norm = normalizeVietnamese(query)
   if (!norm) return false
 
@@ -472,6 +594,15 @@ export function matchCircusFactorsQuestion(query: string): boolean {
  * 6. Khớp câu hỏi: Kỹ thuật khó có quyết định một tiết mục hay hay không?
  */
 export function matchCircusHardSkillQuestion(query: string): boolean {
+  const q = query.toLowerCase()
+  if (
+    q.includes('technique & show quality') ||
+    q.includes('difficult technique determine') ||
+    (q.includes('difficult technique') || (q.includes('technique') && (q.includes('determine') || q.includes('good show'))))
+  ) {
+    return true
+  }
+
   const norm = normalizeVietnamese(query)
   if (!norm) return false
 
@@ -513,6 +644,15 @@ export function matchCircusHardSkillQuestion(query: string): boolean {
  * 7. Khớp câu hỏi: Xiếc Việt Nam chịu ảnh hưởng từ những nền văn hóa nào?
  */
 export function matchCircusCulturalInfluenceQuestion(query: string): boolean {
+  const q = query.toLowerCase()
+  if (
+    q.includes('cultural influences') ||
+    q.includes('cultures have influenced') ||
+    (q.includes('culture') && (q.includes('influence') || q.includes('vietnamese circus')))
+  ) {
+    return true
+  }
+
   const norm = normalizeVietnamese(query)
   if (!norm) return false
 
@@ -554,6 +694,16 @@ export function matchCircusCulturalInfluenceQuestion(query: string): boolean {
  * 8. Khớp câu hỏi: Xiếc bắt đầu từ khi nào / xiếc bắt đầu từ đâu
  */
 export function matchCircusOriginQuestion(query: string): boolean {
+  const q = query.toLowerCase()
+  if (
+    q.includes('origin of circus') ||
+    q.includes('when did circus art begin') ||
+    q.includes('when did circus begin') ||
+    (q.includes('circus') && (q.includes('origin') || q.includes('begin') || q.includes('history of circus')))
+  ) {
+    return true
+  }
+
   const norm = normalizeVietnamese(query)
   if (!norm) return false
 
@@ -608,6 +758,16 @@ export function matchCircusOriginQuestion(query: string): boolean {
  * 9. Khớp câu hỏi: Từng giai đoạn phát triển trong xiếc Việt Nam / xiếc phát triển như thế nào ở Việt Nam
  */
 export function matchCircusStagesVNQuestion(query: string): boolean {
+  const q = query.toLowerCase()
+  if (
+    q.includes('developmental stages of vietnamese circus') ||
+    q.includes('development stages') ||
+    q.includes('stages of vietnamese circus') ||
+    (q.includes('circus') && (q.includes('stages') || q.includes('milestones')) && (q.includes('vietnam') || q.includes('vietnamese')))
+  ) {
+    return true
+  }
+
   const norm = normalizeVietnamese(query)
   if (!norm) return false
 
@@ -654,6 +814,15 @@ export function matchCircusStagesVNQuestion(query: string): boolean {
  * 10. Khớp câu hỏi: Vì sao ngày nay nhiều chương trình xiếc không còn sử dụng động vật
  */
 export function matchCircusAnimalWelfareQuestion(query: string): boolean {
+  const q = query.toLowerCase()
+  if (
+    q.includes('why no circus animals') ||
+    q.includes('no longer use animals') ||
+    (q.includes('animal') && (q.includes('circus') || q.includes('why') || q.includes('no longer')))
+  ) {
+    return true
+  }
+
   const norm = normalizeVietnamese(query)
   if (!norm) return false
 
@@ -700,6 +869,18 @@ export function matchCircusAnimalWelfareQuestion(query: string): boolean {
  * 11. Khớp câu hỏi: Xiếc phù hợp với tệp khán giả nào / độ tuổi nào
  */
 export function matchCircusAudienceAgeQuestion(query: string): boolean {
+  const q = query.toLowerCase()
+  if (
+    q.includes('target audience & age') ||
+    q.includes('target audience') ||
+    q.includes('which audience age group') ||
+    (q.includes('audience') && q.includes('circus')) ||
+    (q.includes('age group') && q.includes('circus')) ||
+    (q.includes('suitable for') && (q.includes('age') || q.includes('audience')))
+  ) {
+    return true
+  }
+
   const norm = normalizeVietnamese(query)
   if (!norm) return false
 
@@ -747,6 +928,17 @@ export function matchCircusAudienceAgeQuestion(query: string): boolean {
  * 12. Khớp câu hỏi: Có những đạo cụ truyền thống nào phổ biến trong xiếc / đạo cụ thường sử dụng
  */
 export function matchCircusPropsQuestion(query: string): boolean {
+  const q = query.toLowerCase()
+  if (
+    q.includes('traditional circus props') ||
+    q.includes('props in circus') ||
+    (q.includes('props') && q.includes('circus')) ||
+    (q.includes('bamboo') && q.includes('props')) ||
+    (q.includes('common') && q.includes('props'))
+  ) {
+    return true
+  }
+
   const norm = normalizeVietnamese(query)
   if (!norm) return false
 
@@ -793,6 +985,15 @@ export function matchCircusPropsQuestion(query: string): boolean {
  * 13. Khớp câu hỏi: Thông tin về xiếc đương đại Việt Nam / thông tin về xiếc / xiếc đương đại là gì
  */
 export function matchCircusContemporaryInfoQuestion(query: string): boolean {
+  const q = query.toLowerCase()
+  if (
+    q.includes('what is contemporary circus') ||
+    q.includes('information about vietnamese contemporary circus') ||
+    (q.includes('contemporary circus') && (q.includes('what') || q.includes('info') || q.includes('about')))
+  ) {
+    return true
+  }
+
   const norm = normalizeVietnamese(query)
   if (!norm) return false
 
@@ -953,112 +1154,115 @@ export const CIRCUS_CONTEMPORARY_INFO_SOURCE: RetrievedSource = {
 
 /**
  * Trả về câu trả lời cố định chính xác 100% nếu câu hỏi người dùng khớp với danh mục định trước
+ * Hỗ trợ song ngữ: Trả lời Tiếng Anh chuẩn xác nếu lang='en' hoặc câu hỏi bằng tiếng Anh
  */
-export function getPredefinedAnswer(query: string): {
+export function getPredefinedAnswer(query: string, lang?: 'vi' | 'en'): {
   answer: string
   sources: RetrievedSource[]
 } | null {
+  const isEn = lang === 'en' || (lang !== 'vi' && isEnglishQuery(query))
+
   // 1. Nhóm Kỹ thuật khó có quyết định tiết mục hay không
   if (matchCircusHardSkillQuestion(query)) {
     return {
-      answer: CIRCUS_HARD_SKILL_ANSWER,
-      sources: [CIRCUS_HARD_SKILL_SOURCE],
+      answer: isEn ? CIRCUS_HARD_SKILL_ANSWER_EN : CIRCUS_HARD_SKILL_ANSWER,
+      sources: [isEn ? CIRCUS_HARD_SKILL_SOURCE_EN : CIRCUS_HARD_SKILL_SOURCE],
     }
   }
 
   // 2. Nhóm Yếu tố quyết định giá trị nghệ thuật xiếc đương đại
   if (matchCircusFactorsQuestion(query)) {
     return {
-      answer: CIRCUS_FACTORS_ANSWER,
-      sources: [CIRCUS_FACTORS_SOURCE],
+      answer: isEn ? CIRCUS_FACTORS_ANSWER_EN : CIRCUS_FACTORS_ANSWER,
+      sources: [isEn ? CIRCUS_FACTORS_SOURCE_EN : CIRCUS_FACTORS_SOURCE],
     }
   }
 
   // 3. Nhóm Xiếc Việt Nam chịu ảnh hưởng từ những nền văn hóa nào
   if (matchCircusCulturalInfluenceQuestion(query)) {
     return {
-      answer: CIRCUS_CULTURAL_INFLUENCE_ANSWER,
-      sources: [CIRCUS_CULTURAL_INFLUENCE_SOURCE],
+      answer: isEn ? CIRCUS_CULTURAL_INFLUENCE_ANSWER_EN : CIRCUS_CULTURAL_INFLUENCE_ANSWER,
+      sources: [isEn ? CIRCUS_CULTURAL_INFLUENCE_SOURCE_EN : CIRCUS_CULTURAL_INFLUENCE_SOURCE],
     }
   }
 
   // 4. Nhóm Xiếc bắt đầu từ khi nào / xiếc bắt đầu từ đâu
   if (matchCircusOriginQuestion(query)) {
     return {
-      answer: CIRCUS_ORIGIN_ANSWER,
-      sources: [CIRCUS_ORIGIN_SOURCE],
+      answer: isEn ? CIRCUS_ORIGIN_ANSWER_EN : CIRCUS_ORIGIN_ANSWER,
+      sources: [isEn ? CIRCUS_ORIGIN_SOURCE_EN : CIRCUS_ORIGIN_SOURCE],
     }
   }
 
   // 5. Nhóm Từng giai đoạn phát triển trong xiếc Việt Nam
   if (matchCircusStagesVNQuestion(query)) {
     return {
-      answer: CIRCUS_STAGES_VN_ANSWER,
-      sources: [CIRCUS_STAGES_VN_SOURCE],
+      answer: isEn ? CIRCUS_STAGES_VN_ANSWER_EN : CIRCUS_STAGES_VN_ANSWER,
+      sources: [isEn ? CIRCUS_STAGES_VN_SOURCE_EN : CIRCUS_STAGES_VN_SOURCE],
     }
   }
 
   // 6. Nhóm Khác biệt xiếc truyền thống vs đương đại
   if (matchCircusDiffQuestion(query)) {
     return {
-      answer: CIRCUS_DIFF_ANSWER,
-      sources: [CIRCUS_DIFF_SOURCE],
+      answer: isEn ? CIRCUS_DIFF_ANSWER_EN : CIRCUS_DIFF_ANSWER,
+      sources: [isEn ? CIRCUS_DIFF_SOURCE_EN : CIRCUS_DIFF_SOURCE],
     }
   }
 
   // 7. Nhóm Thời gian đào tạo diễn viên xiếc
   if (matchCircusDurationQuestion(query)) {
     return {
-      answer: CIRCUS_DURATION_ANSWER,
-      sources: [CIRCUS_DURATION_SOURCE],
+      answer: isEn ? CIRCUS_DURATION_ANSWER_EN : CIRCUS_DURATION_ANSWER,
+      sources: [isEn ? CIRCUS_DURATION_SOURCE_EN : CIRCUS_DURATION_SOURCE],
     }
   }
 
   // 8. Nhóm Khó khăn & Thách thức
   if (matchCircusChallengesQuestion(query)) {
     return {
-      answer: CIRCUS_CHALLENGES_ANSWER,
-      sources: [CIRCUS_CHALLENGES_SOURCE],
+      answer: isEn ? CIRCUS_CHALLENGES_ANSWER_EN : CIRCUS_CHALLENGES_ANSWER,
+      sources: [isEn ? CIRCUS_CHALLENGES_SOURCE_EN : CIRCUS_CHALLENGES_SOURCE],
     }
   }
 
   // 9. Nhóm Vì sao không còn sử dụng động vật
   if (matchCircusAnimalWelfareQuestion(query)) {
     return {
-      answer: CIRCUS_ANIMAL_WELFARE_ANSWER,
-      sources: [CIRCUS_ANIMAL_WELFARE_SOURCE],
+      answer: isEn ? CIRCUS_ANIMAL_WELFARE_ANSWER_EN : CIRCUS_ANIMAL_WELFARE_ANSWER,
+      sources: [isEn ? CIRCUS_ANIMAL_WELFARE_SOURCE_EN : CIRCUS_ANIMAL_WELFARE_SOURCE],
     }
   }
 
   // 10. Nhóm Tệp khán giả / độ tuổi xem xiếc
   if (matchCircusAudienceAgeQuestion(query)) {
     return {
-      answer: CIRCUS_AUDIENCE_AGE_ANSWER,
-      sources: [CIRCUS_AUDIENCE_AGE_SOURCE],
+      answer: isEn ? CIRCUS_AUDIENCE_AGE_ANSWER_EN : CIRCUS_AUDIENCE_AGE_ANSWER,
+      sources: [isEn ? CIRCUS_AUDIENCE_AGE_SOURCE_EN : CIRCUS_AUDIENCE_AGE_SOURCE],
     }
   }
 
   // 11. Nhóm Đạo cụ phổ biến trong xiếc
   if (matchCircusPropsQuestion(query)) {
     return {
-      answer: CIRCUS_PROPS_ANSWER,
-      sources: [CIRCUS_PROPS_SOURCE],
+      answer: isEn ? CIRCUS_PROPS_ANSWER_EN : CIRCUS_PROPS_ANSWER,
+      sources: [isEn ? CIRCUS_PROPS_SOURCE_EN : CIRCUS_PROPS_SOURCE],
     }
   }
 
   // 12. Nhóm Thông tin về xiếc đương đại Việt Nam / xiếc đương đại là gì
   if (matchCircusContemporaryInfoQuestion(query)) {
     return {
-      answer: CIRCUS_CONTEMPORARY_INFO_ANSWER,
-      sources: [CIRCUS_CONTEMPORARY_INFO_SOURCE],
+      answer: isEn ? CIRCUS_CONTEMPORARY_INFO_ANSWER_EN : CIRCUS_CONTEMPORARY_INFO_ANSWER,
+      sources: [isEn ? CIRCUS_CONTEMPORARY_INFO_SOURCE_EN : CIRCUS_CONTEMPORARY_INFO_SOURCE],
     }
   }
 
   // 13. Nhóm Địa điểm & Mua vé
   if (matchCircusVenuesQuestion(query)) {
     return {
-      answer: CIRCUS_VENUES_AND_TICKETS_ANSWER,
-      sources: [CIRCUS_VENUES_SOURCE],
+      answer: isEn ? CIRCUS_VENUES_AND_TICKETS_ANSWER_EN : CIRCUS_VENUES_AND_TICKETS_ANSWER,
+      sources: [isEn ? CIRCUS_VENUES_SOURCE_EN : CIRCUS_VENUES_SOURCE],
     }
   }
 

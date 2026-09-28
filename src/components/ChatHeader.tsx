@@ -1,5 +1,7 @@
 import React from 'react'
 import { Sparkles, Settings, Trash2, Cpu, ArrowLeft } from 'lucide-react'
+import { useLanguage } from '@/src/context/LanguageContext'
+import { circusAudio } from '@/src/utils/audio'
 
 interface ChatHeaderProps {
   model: string
@@ -22,6 +24,8 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
   messageCount,
   onBackToPortal,
 }) => {
+  const { isEn, language, setLanguage } = useLanguage()
+
   return (
     <header className="sticky top-0 z-20 border-b-4 border-amber-400 bg-gradient-to-r from-[#8a181b] via-[#741316] to-[#5f0e11] px-4 py-3 text-white shadow-xl backdrop-blur-md relative select-none">
       {/* Decorative Bunting Pennants Banner */}
@@ -49,10 +53,10 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
               type="button"
               onClick={onBackToPortal}
               className="flex items-center gap-1.5 rounded-xl border border-amber-400/80 bg-amber-400/20 px-3 py-1.5 text-xs font-bold text-amber-200 transition hover:bg-amber-400/30 hover:text-white shadow-xs cursor-pointer active:scale-95"
-              title="Quay lại Rạp Xiếc Bỏ Túi"
+              title={isEn ? "Return to Circus Main Stage" : "Quay lại Rạp Xiếc Bỏ Túi"}
             >
               <ArrowLeft className="h-4 w-4 text-amber-300" />
-              <span className="hidden sm:inline">Về Rạp Xiếc</span>
+              <span className="hidden sm:inline">{isEn ? "Back to Stage" : "Về Rạp Xiếc"}</span>
             </button>
           )}
 
@@ -63,7 +67,7 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
           <div>
             <div className="flex flex-wrap items-center gap-2">
               <h1 className="font-circus text-base tracking-wide text-amber-300 drop-shadow-sm">
-                Tư vấn viên AI
+                {isEn ? "AI Circus Consultant" : "Tư vấn viên AI"}
               </h1>
               <span className="flex items-center gap-1 rounded-full border border-amber-400/40 bg-red-950/60 px-2.5 py-0.5 text-xs font-medium text-amber-200">
                 <Cpu className="h-3 w-3 text-amber-400" />
@@ -71,21 +75,65 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
               </span>
             </div>
             <p className="text-xs text-amber-100/70 font-medium">
-              {messageCount === 0 ? 'Sẵn sàng giải đáp lịch sử & nghệ thuật xiếc' : `${messageCount} câu trao đổi`}
+              {messageCount === 0 
+                ? (isEn ? "Ready to answer questions about Vietnamese & global circus" : "Sẵn sàng giải đáp lịch sử & nghệ thuật xiếc")
+                : (isEn ? `${messageCount} messages exchanged` : `${messageCount} câu trao đổi`)}
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
+          {/* Language Switcher Mode */}
+          <div 
+            className="flex items-center rounded-lg bg-red-950/80 p-0.5 border border-amber-400/60 shadow-xs"
+            role="group"
+            aria-label="Language selector"
+          >
+            <button
+              type="button"
+              onClick={() => {
+                if (language !== 'vi') {
+                  circusAudio.playBambooStep();
+                  setLanguage('vi');
+                }
+              }}
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-md transition-all text-xs font-bold cursor-pointer ${
+                language === 'vi'
+                  ? 'bg-amber-400 text-amber-950 shadow-xs scale-102'
+                  : 'text-amber-200 hover:text-white hover:bg-white/10'
+              }`}
+              title="Tiếng Việt"
+            >
+              <span>VI</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                if (language !== 'en') {
+                  circusAudio.playBambooStep();
+                  setLanguage('en');
+                }
+              }}
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-md transition-all text-xs font-bold cursor-pointer ${
+                language === 'en'
+                  ? 'bg-amber-400 text-amber-950 shadow-xs scale-102'
+                  : 'text-amber-200 hover:text-white hover:bg-white/10'
+              }`}
+              title="English mode"
+            >
+              <span>EN</span>
+            </button>
+          </div>
+
           {messageCount > 0 && (
             <button
               type="button"
               onClick={onClearChat}
               className="flex items-center gap-1.5 rounded-xl border border-red-400/40 bg-red-900/60 px-3 py-1.5 text-xs font-medium text-amber-100 transition hover:bg-red-800 hover:text-white shadow-xs cursor-pointer active:scale-95"
-              title="Xóa cuộc trò chuyện"
+              title={isEn ? "Clear chat conversation" : "Xóa cuộc trò chuyện"}
             >
               <Trash2 className="h-3.5 w-3.5 text-amber-300" />
-              <span className="hidden sm:inline">Xóa đoạn chat</span>
+              <span className="hidden sm:inline">{isEn ? "Clear Chat" : "Xóa đoạn chat"}</span>
             </button>
           )}
 
@@ -93,10 +141,10 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
             type="button"
             onClick={onOpenSettings}
             className="flex items-center gap-1.5 rounded-xl border border-amber-400/50 bg-amber-400/20 px-3 py-1.5 text-xs font-bold text-amber-200 transition hover:bg-amber-400/30 hover:text-white shadow-xs cursor-pointer active:scale-95"
-            title="Cài đặt hệ thống"
+            title={isEn ? "System AI settings" : "Cài đặt hệ thống"}
           >
             <Settings className="h-3.5 w-3.5 text-amber-300" />
-            <span className="hidden sm:inline">Cài đặt</span>
+            <span className="hidden sm:inline">{isEn ? "Settings" : "Cài đặt"}</span>
           </button>
         </div>
       </div>

@@ -251,7 +251,7 @@ export const CircusChat: React.FC<CircusChatProps> = ({ onBack, onUnlockBadge })
     };
 
     // Predefined exact answers for circus queries
-    const predefined = getPredefinedAnswer(query);
+    const predefined = getPredefinedAnswer(query, isEn ? 'en' : 'vi');
     if (predefined) {
       setTimeout(async () => {
         setMessages((prev) => [...prev, assistantMessage]);
