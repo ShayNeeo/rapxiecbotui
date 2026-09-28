@@ -190,10 +190,10 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
   let offsetRightZ = 0;
 
   if (foldMode === 'folded') {
-    angleLeft = 176;
-    angleRight = -176;
-    offsetLeftZ = -4;
-    offsetRightZ = 4;
+    angleLeft = 177;
+    angleRight = -177;
+    offsetLeftZ = -6;
+    offsetRightZ = 6;
   } else if (foldMode === 'half') {
     angleLeft = 55;
     angleRight = -55;
@@ -295,18 +295,20 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
                 transform: "rotateY(0deg) translateZ(1px)",
                 backfaceVisibility: "hidden",
                 WebkitBackfaceVisibility: "hidden",
+                opacity: foldMode === 'folded' ? 0 : 1,
+                transition: "opacity 0.35s ease",
               }}
-              className="absolute inset-0 overflow-hidden border-t-2 border-b-2 border-amber-300/40 bg-neutral-900"
+              className="absolute inset-0 border-t-2 border-b-2 border-amber-300/40 bg-neutral-900 rounded-sm"
             >
               <img
                 src="/media/back_panel_1.png"
                 alt="Brochure Center Inside"
-                className="w-full h-full object-cover pointer-events-none select-none"
+                className="w-full h-full object-cover rounded-sm pointer-events-none select-none block"
                 draggable={false}
               />
               {/* Dynamic contact shadow from folding front flap */}
               <div
-                className="absolute inset-0 pointer-events-none bg-gradient-to-r from-black/20 via-transparent to-black/50 transition-opacity duration-700"
+                className="absolute inset-0 pointer-events-none rounded-sm bg-gradient-to-r from-black/20 via-transparent to-black/50 transition-opacity duration-700"
                 style={{ opacity: foldMode === 'open' ? 0.05 : 0.4 }}
               />
             </div>
@@ -318,17 +320,17 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
                 backfaceVisibility: "hidden",
                 WebkitBackfaceVisibility: "hidden",
               }}
-              className="absolute inset-0 overflow-hidden border-t-2 border-b-2 border-amber-300/40 bg-neutral-900"
+              className="absolute inset-0 border-t-2 border-b-2 border-amber-300/40 bg-neutral-900 rounded-sm"
             >
               <img
                 src="/media/front_panel_1.png"
                 alt="Brochure Center Outside"
-                className="w-full h-full object-cover pointer-events-none select-none"
+                className="w-full h-full object-cover rounded-sm pointer-events-none select-none block"
                 draggable={false}
               />
               {/* Dynamic contact shadow from folding back flap */}
               <div
-                className="absolute inset-0 pointer-events-none bg-gradient-to-l from-black/20 via-transparent to-black/50 transition-opacity duration-700"
+                className="absolute inset-0 pointer-events-none rounded-sm bg-gradient-to-l from-black/20 via-transparent to-black/50 transition-opacity duration-700"
                 style={{ opacity: foldMode === 'open' ? 0.05 : 0.4 }}
               />
             </div>
@@ -342,7 +344,7 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
             {/* ========================================================
                 LEFT PANEL (Flap trái) - width 100% of panel, left -100%
                 Hinged at its right edge: transform-origin: 100% 50%
-                Folds BACKWARD behind center panel (rotateY: 0deg -> 176deg)
+                Folds BACKWARD behind center panel (rotateY: 0deg -> 177deg)
                 Inside Face: back_panel_0.png
                 Outside Face: front_panel_0.png (Chúng mình là ai?)
                ======================================================== */}
@@ -361,19 +363,21 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
               }}
               className="rounded-l-sm shadow-2xl"
             >
-              {/* Left Inside Face (facing +Z when flat) */}
+              {/* Left Inside Face (facing +Z when flat, hidden when folded) */}
               <div
                 style={{
                   transform: "rotateY(0deg) translateZ(1px)",
                   backfaceVisibility: "hidden",
                   WebkitBackfaceVisibility: "hidden",
+                  opacity: foldMode === 'folded' ? 0 : 1,
+                  transition: "opacity 0.35s ease",
                 }}
-                className="absolute inset-0 overflow-hidden border-t-2 border-b-2 border-l-2 border-amber-300/40 bg-neutral-900 rounded-l-sm"
+                className="absolute inset-0 border-t-2 border-b-2 border-l-2 border-amber-300/40 bg-neutral-900 rounded-l-sm"
               >
                 <img
                   src="/media/back_panel_0.png"
                   alt="Brochure Left Inside"
-                  className="w-full h-full object-cover pointer-events-none select-none"
+                  className="w-full h-full object-cover rounded-l-sm pointer-events-none select-none block"
                   draggable={false}
                 />
               </div>
@@ -381,16 +385,16 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
               {/* Left Outside Face (facing -Z when flat, facing -Z when folded behind!) */}
               <div
                 style={{
-                  transform: "rotateY(180deg) translateZ(1px)",
+                  transform: "rotateY(180deg) translateZ(1.5px)",
                   backfaceVisibility: "hidden",
                   WebkitBackfaceVisibility: "hidden",
                 }}
-                className="absolute inset-0 overflow-hidden border-t-2 border-b-2 border-l-2 border-amber-300/40 bg-neutral-900 rounded-l-sm shadow-xl"
+                className="absolute inset-0 border-t-2 border-b-2 border-l-2 border-amber-300/40 bg-neutral-900 rounded-l-sm shadow-xl"
               >
                 <img
                   src="/media/front_panel_0.png"
                   alt="Brochure Left Outside"
-                  className="w-full h-full object-cover pointer-events-none select-none"
+                  className="w-full h-full object-cover rounded-l-sm pointer-events-none select-none block"
                   draggable={false}
                 />
               </div>
@@ -399,7 +403,7 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
             {/* ========================================================
                 RIGHT PANEL (Flap phải / Cover) - width 100% of panel, left 100%
                 Hinged at its left edge: transform-origin: 0% 50%
-                Folds FORWARD in front of center panel (rotateY: 0deg -> -176deg)
+                Folds FORWARD in front of center panel (rotateY: 0deg -> -177deg)
                 Inside Face: back_panel_2.png
                 Outside Face: front_panel_2.png (Front Cover "RẠP XIẾC BỎ TÚI")
                ======================================================== */}
@@ -418,19 +422,21 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
               }}
               className="rounded-r-sm shadow-2xl"
             >
-              {/* Right Inside Face (facing +Z when flat) */}
+              {/* Right Inside Face (facing +Z when flat, hidden when folded) */}
               <div
                 style={{
                   transform: "rotateY(0deg) translateZ(1px)",
                   backfaceVisibility: "hidden",
                   WebkitBackfaceVisibility: "hidden",
+                  opacity: foldMode === 'folded' ? 0 : 1,
+                  transition: "opacity 0.35s ease",
                 }}
-                className="absolute inset-0 overflow-hidden border-t-2 border-b-2 border-r-2 border-amber-300/40 bg-neutral-900 rounded-r-sm"
+                className="absolute inset-0 border-t-2 border-b-2 border-r-2 border-amber-300/40 bg-neutral-900 rounded-r-sm"
               >
                 <img
                   src="/media/back_panel_2.png"
                   alt="Brochure Right Inside"
-                  className="w-full h-full object-cover pointer-events-none select-none"
+                  className="w-full h-full object-cover rounded-r-sm pointer-events-none select-none block"
                   draggable={false}
                 />
               </div>
@@ -438,20 +444,20 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
               {/* Right Outside Face (FRONT COVER: facing -Z when flat, facing +Z when folded forward!) */}
               <div
                 style={{
-                  transform: "rotateY(180deg) translateZ(1.5px)",
+                  transform: "rotateY(180deg) translateZ(2px)",
                   backfaceVisibility: "hidden",
                   WebkitBackfaceVisibility: "hidden",
                 }}
-                className="absolute inset-0 overflow-hidden border-t-2 border-b-2 border-r-2 border-amber-300/80 bg-neutral-900 rounded-r-sm shadow-[0_20px_50px_rgba(0,0,0,0.85)]"
+                className="absolute inset-0 border-t-2 border-b-2 border-r-2 border-amber-300/80 bg-neutral-900 rounded-r-sm shadow-[0_20px_50px_rgba(0,0,0,0.85)]"
               >
                 <img
                   src="/media/front_panel_2.png"
                   alt="Brochure Front Cover"
-                  className="w-full h-full object-cover pointer-events-none select-none"
+                  className="w-full h-full object-cover rounded-r-sm pointer-events-none select-none block"
                   draggable={false}
                 />
                 {/* Subtle paper gloss glare on cover */}
-                <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-transparent via-white/10 to-transparent" />
+                <div className="absolute inset-0 pointer-events-none rounded-r-sm bg-gradient-to-tr from-transparent via-white/10 to-transparent" />
               </div>
             </div>
           </div>
