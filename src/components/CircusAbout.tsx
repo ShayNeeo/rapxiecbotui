@@ -17,7 +17,8 @@ import {
   FileText, 
   ArrowRight,
   Target,
-  ExternalLink
+  ExternalLink,
+  Rotate3d
 } from "lucide-react";
 
 interface CircusAboutProps {
@@ -195,19 +196,19 @@ export const CircusAbout: React.FC<CircusAboutProps> = ({
               <span className="text-xs font-bold text-red-800 uppercase tracking-wider">
                 {isEn ? "Purpose 02 • Contemporary Circus" : "Mục Đích 02 • Đương Đại"}
               </span>
-              <a
-                href="https://canva.link/t1yoszd541vjc3z"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => circusAudio.playBambooStep()}
+              <div
+                onClick={() => {
+                  circusAudio.playBambooStep();
+                  onNavigateTo('promo');
+                }}
                 className="group/t inline-flex items-center gap-1.5 hover:opacity-90 cursor-pointer"
-                title={isEn ? "Open promotional brochure on Canva" : "Mở brochure quảng bá trên Canva"}
+                title={isEn ? "View 360° promotional brochure" : "Xem brochure quảng bá 360°"}
               >
                 <h3 className="font-circus text-xl text-neutral-900 group-hover/t:text-red-800 mt-1 transition-colors">
                   {isEn ? "Outreach & Celebrating Contemporary Circus" : "Lan Tỏa & Quảng Bá Xiếc Đương Đại"}
                 </h3>
-                <ExternalLink className="size-4 text-red-700 opacity-75 group-hover/t:opacity-100" />
-              </a>
+                <Rotate3d className="size-4 text-red-700 opacity-75 group-hover/t:opacity-100" />
+              </div>
             </div>
 
             <p className="text-xs sm:text-sm text-neutral-700 leading-relaxed">
@@ -237,17 +238,17 @@ export const CircusAbout: React.FC<CircusAboutProps> = ({
                 <CheckCircle2 className="size-4 text-red-600 shrink-0 mt-0.5" />
                 <span>
                   {isEn ? "Experience circus art through " : "Trải nghiệm nghệ thuật xiếc qua "}
-                  <a
-                    href="https://canva.link/t1yoszd541vjc3z"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => circusAudio.playBambooStep()}
-                    className="underline font-bold text-red-700 hover:text-red-900 inline-flex items-center gap-1"
-                    title={isEn ? "Open brochure on Canva" : "Mở brochure trên Canva"}
+                  <button
+                    onClick={() => {
+                      circusAudio.playBambooStep();
+                      onNavigateTo('promo');
+                    }}
+                    className="underline font-bold text-red-700 hover:text-red-900 inline-flex items-center gap-1 cursor-pointer"
+                    title={isEn ? "View 360° brochure" : "Xem brochure 360°"}
                   >
-                    {isEn ? "digital brochure" : "brochure số"}
-                    <ExternalLink className="size-3" />
-                  </a>{" "}
+                    {isEn ? "360° digital brochure" : "brochure số 360°"}
+                    <Rotate3d className="size-3" />
+                  </button>{" "}
                   {isEn ? "and interactive visual content." : "và các nội dung tương tác trực quan."}
                 </span>
               </li>
@@ -325,47 +326,47 @@ export const CircusAbout: React.FC<CircusAboutProps> = ({
             <span>{isEn ? "Special Publication For You" : "Ấn Phẩm Dành Riêng Cho Bạn"}</span>
           </div>
 
-          <a
-            href="https://canva.link/t1yoszd541vjc3z"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => circusAudio.playBambooStep()}
+          <div
+            onClick={() => {
+              circusAudio.playBambooStep();
+              onNavigateTo('promo');
+            }}
             className="group/title flex items-center justify-center md:justify-start gap-2 cursor-pointer"
-            title={isEn ? "Click to open brochure on Canva" : "Nhấn để mở Brochure Quảng Bá trên Canva"}
+            title={isEn ? "Click to view 360° brochure" : "Nhấn để xem Brochure Quảng Bá 360°"}
           >
             <h3 className="font-circus text-xl sm:text-2xl text-neutral-950 group-hover/title:text-red-900 transition-colors underline decoration-amber-950/40 underline-offset-4">
-              {isEn ? 'Explore the "Promoting Vietnamese Circus" Publication' : 'Khám Phá Ấn Phẩm "Quảng Bá Xiếc Việt"'}
+              {isEn ? 'Explore the "Promoting Vietnamese Circus" 360° Publication' : 'Khám Phá Ấn Phẩm "Quảng Bá Xiếc Việt" 360°'}
             </h3>
-            <ExternalLink className="size-5 text-neutral-900 group-hover/title:scale-110 transition-transform" />
-          </a>
+            <Rotate3d className="size-5 text-neutral-900 group-hover/title:scale-110 transition-transform" />
+          </div>
 
-          <a
-            href="https://canva.link/t1yoszd541vjc3z"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => circusAudio.playBambooStep()}
+          <div
+            onClick={() => {
+              circusAudio.playBambooStep();
+              onNavigateTo('promo');
+            }}
             className="block text-xs sm:text-sm text-neutral-900/90 hover:text-red-900 max-w-xl italic cursor-pointer transition-colors"
-            title={isEn ? "Click to open brochure on Canva" : "Nhấn vào dòng này để mở Brochure trên Canva"}
+            title={isEn ? "Click to view 360° brochure" : "Nhấn vào dòng này để xem Brochure 360°"}
           >
             {isEn
               ? '"A special brochure for you and every guest who wishes to discover the beauty of Vietnamese circus arts."'
               : '"Một brochure nhỏ dành cho bạn và những vị khách muốn khám phá vẻ đẹp của nghệ thuật xiếc Việt Nam."'}
-          </a>
+          </div>
         </div>
 
         <div className="flex flex-wrap items-center gap-3 shrink-0">
-          <a
-            href="https://canva.link/t1yoszd541vjc3z"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => circusAudio.playBambooStep()}
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-red-800 hover:bg-red-700 text-white font-circus font-normal tracking-wide shadow-md hover:shadow-lg transition-all text-sm cursor-pointer"
-            title={isEn ? "Open Promotional Brochure on Canva" : "Mở Brochure Quảng Bá trên Canva"}
+          <Button
+            size="lg"
+            onClick={() => {
+              circusAudio.playBambooStep();
+              onNavigateTo('promo');
+            }}
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-red-800 hover:bg-red-700 text-white font-circus font-normal tracking-wide shadow-md hover:shadow-lg transition-all text-sm cursor-pointer border-0"
+            title={isEn ? "View 360° Promotional Brochure" : "Xem Brochure Quảng Bá 360°"}
           >
-            <FileText className="size-4" />
-            <span>{isEn ? "Open Digital Brochure" : "Mở Brochure Quảng Bá"}</span>
-            <ExternalLink className="size-4" />
-          </a>
+            <Rotate3d className="size-4" />
+            <span>{isEn ? "View 360° Brochure" : "Xem Brochure 360°"}</span>
+          </Button>
 
           <Button
             variant="outline"

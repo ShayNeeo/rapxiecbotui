@@ -32,7 +32,7 @@ export const TRANSLATIONS = {
       viewMore: 'Xem Chi Tiết',
       exploreNow: 'Khám Phá Ngay',
       launch3d: 'Mở Không Gian 3D',
-      openBrochure: 'Mở Brochure Canva',
+      openBrochure: 'Xem Brochure 360°',
       switchLang: 'Ngôn ngữ',
     },
     footer: {
@@ -78,7 +78,7 @@ export const TRANSLATIONS = {
       viewMore: 'Learn More',
       exploreNow: 'Explore Now',
       launch3d: 'Open 3D Virtual Tent',
-      openBrochure: 'Open Canva Brochure',
+      openBrochure: 'View 360° Brochure',
       switchLang: 'Language',
     },
     footer: {

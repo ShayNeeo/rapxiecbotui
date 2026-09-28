@@ -478,17 +478,16 @@ export default function App() {
             >
               {isEn ? "About Us" : "Về Chúng Tôi (About Us)"}
             </button>
-            <a
-              href="https://canva.link/t1yoszd541vjc3z"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => circusAudio.playBambooStep()}
+            <button
+              onClick={() => {
+                circusAudio.playBambooStep();
+                navigateToAct('promo');
+              }}
               className="text-xs text-amber-300 hover:text-white bg-white/10 hover:bg-white/20 px-3 py-1 rounded-full border border-amber-400/30 transition-colors cursor-pointer inline-flex items-center gap-1"
-              title={isEn ? "Open Brochure on Canva" : "Mở Brochure Quảng Bá trên Canva"}
+              title={isEn ? "Open 360° Brochure" : "Xem Brochure 360°"}
             >
-              <span>{isEn ? "Brochure (Canva)" : "Quảng Bá (Brochure)"}</span>
-              <ExternalLink className="size-3 text-amber-300" />
-            </a>
+              <span>{isEn ? "360° Brochure" : "Brochure 360°"}</span>
+            </button>
             <button
               onClick={() => {
                 circusAudio.playBambooStep();

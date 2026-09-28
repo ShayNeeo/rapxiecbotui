@@ -25,7 +25,8 @@ import {
   CheckCircle2,
   Film,
   Camera,
-  Video
+  Video,
+  Rotate3d
 } from "lucide-react";
 import { OFFICIAL_CIRCUS_LOGO } from "@/src/lib/logo";
 import { CHATBOT_AI_URL, CIRCUS_3D_URL } from "@/src/lib/constants";
@@ -393,48 +394,48 @@ export const CircusStage: React.FC<CircusStageProps> = ({
               <span className="text-[11px] font-bold uppercase tracking-wider text-amber-300 bg-amber-400/20 px-2.5 py-0.5 rounded-full border border-amber-400/40">
                 {isEn ? "Cultural Publication" : "Ấn Phẩm Văn Hóa"}
               </span>
-              <a
-                href="https://canva.link/t1yoszd541vjc3z"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => circusAudio.playBambooStep()}
+              <div
+                onClick={() => {
+                  circusAudio.playBambooStep();
+                  onSelectAct('promo');
+                }}
                 className="group/title flex items-center gap-2 hover:opacity-95 transition-all cursor-pointer"
-                title={isEn ? "Open Promotional Brochure on Canva" : "Nhấn để mở Brochure Quảng bá xiếc Việt Nam trên Canva"}
+                title={isEn ? "View 360° Promotional Brochure" : "Nhấn để xem Brochure Quảng bá xiếc Việt Nam 360°"}
               >
                 <h2 className="font-circus text-2xl text-amber-300 mt-0.5 group-hover/title:underline decoration-amber-400 underline-offset-4">
                   {isEn ? "Promoting Vietnamese Circus" : "Quảng Bá Xiếc Việt Nam"}
                 </h2>
-                <ExternalLink className="size-4 text-amber-300 group-hover/title:scale-110 transition-transform" />
-              </a>
+                <Rotate3d className="size-4 text-amber-300 group-hover/title:scale-110 transition-transform" />
+              </div>
             </div>
           </div>
 
-          <a
-            href="https://canva.link/t1yoszd541vjc3z"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => circusAudio.playBambooStep()}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 text-amber-950 text-xs font-bold shadow-md hover:shadow-lg transition-all shrink-0 cursor-pointer"
-            title={isEn ? "Open Brochure on Canva" : "Mở Brochure Quảng Bá trên Canva"}
+          <Button
+            size="sm"
+            onClick={() => {
+              circusAudio.playBambooStep();
+              onSelectAct('promo');
+            }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 text-amber-950 text-xs font-bold shadow-md hover:shadow-lg transition-all shrink-0 cursor-pointer border-0"
+            title={isEn ? "View 360° Brochure" : "Xem Brochure Quảng Bá 360°"}
           >
-            <FileText className="size-4" />
-            <span>{isEn ? "Open Brochure (Canva)" : "Mở Brochure Quảng Bá (Canva)"}</span>
-            <ExternalLink className="size-3.5" />
-          </a>
+            <Rotate3d className="size-4" />
+            <span>{isEn ? "View 360° Brochure" : "Xem Brochure 360°"}</span>
+          </Button>
         </div>
 
-        {/* BIO SECTION REQUIRED - CLICKABLE TO CANVA LINK (1.25CM AT BOTH ENDS, LARGER CANVA PROMPT) */}
-        <a
-          href="https://canva.link/t1yoszd541vjc3z"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => circusAudio.playBambooStep()}
+        {/* BIO SECTION REQUIRED - CLICKABLE TO 360 BROCHURE (1.25CM AT BOTH ENDS) */}
+        <div
+          onClick={() => {
+            circusAudio.playBambooStep();
+            onSelectAct('promo');
+          }}
           className="block bg-gradient-to-b from-black/50 via-black/60 to-black/75 hover:from-black/65 hover:to-black/85 border-2 border-amber-400/80 hover:border-amber-300 rounded-2xl py-3.5 sm:py-4 px-4 sm:px-8 backdrop-blur-sm text-center w-full shadow-lg hover:shadow-[0_0_20px_rgba(251,191,36,0.25)] transition-all group cursor-pointer"
-          title={isEn ? "Click here to open brochure on Canva" : "Nhấn vào dòng này để mở Brochure trên Canva"}
+          title={isEn ? "Click here to view 360° interactive brochure" : "Nhấn vào dòng này để xem Brochure 360°"}
         >
           <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-amber-400/20 border border-amber-400/50 text-amber-300 text-[10px] sm:text-xs uppercase tracking-widest font-bold mb-1.5 sm:mb-2">
             <span>{isEn ? "★ INTRODUCTION • BIO ★" : "★ LỜI GIỚI THIỆU • BIO ★"}</span>
-            <ExternalLink className="size-3 text-amber-300 group-hover:scale-110 transition-transform" />
+            <Sparkles className="size-3 text-amber-300 group-hover:scale-110 transition-transform" />
           </div>
           <p className="text-base sm:text-lg md:text-xl text-amber-100 group-hover:text-white font-medium italic leading-normal sm:leading-relaxed tracking-wide text-balance max-w-4xl mx-auto transition-colors">
             {isEn
@@ -442,10 +443,10 @@ export const CircusStage: React.FC<CircusStageProps> = ({
               : '"Một brochure nhỏ dành cho bạn và những vị khách muốn khám phá vẻ đẹp của nghệ thuật xiếc Việt Nam."'}
           </p>
           <div className="mt-2.5 sm:mt-3 inline-flex items-center gap-2 text-sm sm:text-base font-circus font-normal text-amber-300 group-hover:text-yellow-200 tracking-wide transition-colors">
-            <span>{isEn ? <><Icon name="bi bi-stars" /> Click here to view the publication on Canva</> : <><Icon name="bi bi-stars" /> Nhấn vào đây để mở ấn phẩm trên Canva</>}</span>
-            <ExternalLink className="size-4 sm:size-4.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            <span>{isEn ? <><Icon name="bi bi-stars" /> Click here to experience the 360° 3D brochure</> : <><Icon name="bi bi-stars" /> Nhấn vào đây để xem ấn phẩm 3D 360° tương tác</>}</span>
+            <Rotate3d className="size-4 sm:size-4.5 group-hover:rotate-180 transition-transform duration-500" />
           </div>
-        </a>
+        </div>
       </section>
 
       {/* Cultural Exploration Modules Grid: Về Chúng Tôi, Quảng Bá, Kho tư liệu số, Lịch sử, Rạp xiếc 3D, Quiz kiến thức, Bản đồ, Góc Giải Đáp */}
@@ -569,24 +570,24 @@ export const CircusStage: React.FC<CircusStageProps> = ({
             </div>
           </div>
 
-          {/* Module 2: Quảng Bá (Brochure) */}
-          <a
-            href="https://canva.link/t1yoszd541vjc3z"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => circusAudio.playBambooStep()}
+          {/* Module 2: Quảng Bá (Brochure 360°) */}
+          <div
+            onClick={() => {
+              circusAudio.playBambooStep();
+              onSelectAct('promo');
+            }}
             className="group relative bg-white rounded-2xl overflow-hidden border-2 border-amber-300 hover:border-red-600 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
-            title={isEn ? "Open Promotional Brochure on Canva" : "Nhấn để mở Brochure Quảng Bá trên Canva"}
+            title={isEn ? "View 360° Promotional Brochure" : "Xem Brochure Quảng Bá 360°"}
           >
             {/* Cover Image on top */}
             <FramedImage
               imageKey="homepage-brochure"
               src={brochureCoverImg}
-              alt={isEn ? "Circus Brochure" : "Brochure Quảng Bá"}
-              title={isEn ? "Promotional Brochure" : "Brochure Quảng Bá"}
+              alt={isEn ? "Circus Brochure 360°" : "Brochure Quảng Bá 360°"}
+              title={isEn ? "Promotional Brochure 360°" : "Brochure Quảng Bá 360°"}
               badge={
                 <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-rose-900/80 text-rose-200 backdrop-blur-xs border border-rose-500/40">
-                  📢 {isEn ? "E-Brochure" : "Brochure"}
+                  📢 {isEn ? "360° Brochure" : "Brochure 360°"}
                 </span>
               }
             >
@@ -612,28 +613,28 @@ export const CircusStage: React.FC<CircusStageProps> = ({
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-rose-700 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200">
-                    Canva
+                    3D 360°
                   </span>
                   <span className="text-[11px] text-amber-800 font-semibold flex items-center gap-1">
-                    {isEn ? "Free Publication" : "Ấn Phẩm Miễn Phí"} <ExternalLink className="size-3" />
+                    {isEn ? "Free Publication" : "Ấn Phẩm Miễn Phí"} <Rotate3d className="size-3" />
                   </span>
                 </div>
                 <h3 className="font-circus text-lg text-neutral-900 group-hover:text-rose-700 transition-colors flex items-center justify-between">
-                  <span>{isEn ? "Promoting Circus" : "Quảng Bá Xiếc Việt"}</span>
-                  <ExternalLink className="size-4 opacity-70 group-hover:opacity-100" />
+                  <span>{isEn ? "Promoting Circus 360°" : "Quảng Bá Xiếc Việt 360°"}</span>
+                  <Rotate3d className="size-4 opacity-70 group-hover:opacity-100 text-amber-600" />
                 </h3>
                 <p className="text-xs text-neutral-600 leading-relaxed line-clamp-3">
                   {isEn
-                    ? "A special brochure for you and every guest who wishes to discover the beauty of Vietnamese circus arts."
-                    : "Một brochure nhỏ dành cho bạn và những vị khách muốn khám phá vẻ đẹp của nghệ thuật xiếc Việt Nam."}
+                    ? "A special brochure for you and every guest who wishes to discover the beauty of Vietnamese circus arts. Supports full 360° interactive rotation."
+                    : "Một brochure nhỏ dành cho bạn và những vị khách muốn khám phá vẻ đẹp của nghệ thuật xiếc Việt Nam. Tương tác xoay 360° tự do 2 mặt trước và sau."}
                 </p>
               </div>
               <div className="pt-3 border-t border-rose-200/60 flex items-center justify-between text-xs font-bold text-rose-700 group-hover:translate-x-1 transition-transform">
-                <span>{isEn ? "Open Brochure" : "Mở Brochure Quảng Bá"}</span>
-                <ExternalLink className="size-4" />
+                <span>{isEn ? "Explore 360° Brochure" : "Khám Phá Brochure 360°"}</span>
+                <ArrowRight className="size-4" />
               </div>
             </div>
-          </a>
+          </div>
 
           {/* Module 3: Kho Tư Liệu Số (Digital Media Archive) */}
           <div

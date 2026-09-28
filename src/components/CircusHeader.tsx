@@ -200,7 +200,6 @@ export const CircusHeader: React.FC<CircusHeaderProps> = ({
               id: 'promo' as CircusActId, 
               label: t.nav.promo, 
               icon: Megaphone,
-              href: 'https://canva.link/t1yoszd541vjc3z' 
             },
             { 
               id: 'archive' as CircusActId, 
