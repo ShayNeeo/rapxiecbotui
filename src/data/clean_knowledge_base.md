@@ -103,7 +103,7 @@ Rạp xiếc và Biểu diễn đa năng Phú Thọ (TP. Hồ Chí Minh):
 - Vở diễn tiêu biểu: Mơ Show - Dreamscape Show (nghệ thuật xiếc đương đại kết hợp hiệu ứng thị giác).
 - Thời lượng biểu diễn: 70 phút.
 - Nội dung: Tác phẩm đưa khán giả vào hành trình trưởng thành của một đứa trẻ, từ những cảm nhận đầu tiên về ánh sáng, màu sắc và sự sống cho đến khi khám phá, định hình các cung bậc cảm xúc tâm hồn.
-- Đặt vé: Trực tuyến trên website chính thức của Nhà hát Nghệ thuật Phương Nam.
+- Đặt vé: Trực tuyến tại https://datve.nhahatphuongnam.com.vn/event/vo-dien-mo-show-dreamscape-show-3891/detail
 - Bản đồ: https://maps.app.goo.gl/GFoJWHMCsHR8g4qT7
 
 ---
@@ -116,7 +116,7 @@ Rạp xiếc Công viên Gia Định (TP. Hồ Chí Minh):
 - Vở diễn tiêu biểu: Vùng Đất Kỳ Bí - Phiên bản Pro max.
 - Thời lượng biểu diễn: 120 phút.
 - Nội dung: Vở diễn theo chân hành trình của các nguyên tố trong Ngũ hành, từ sự đối đầu, tranh đấu cho đến khi các nguyên tố học cách thấu hiểu, kết nối và hòa hợp nhằm tái lập sự cân bằng hoàn mỹ cho thiên nhiên.
-- Đặt vé: Trực tuyến trên website của Nhà hát Nghệ thuật Phương Nam.
+- Đặt vé: Trực tuyến tại https://datve.nhahatphuongnam.com.vn/event/vo-xiec-vung-dat-ky-bi-3584/detail
 - Bản đồ: https://maps.app.goo.gl/A8933G8p7LjdwKXV8
 
 ---
@@ -129,7 +129,7 @@ Nhà hát Thành phố Hồ Chí Minh (Opera House):
 - Vở diễn tiêu biểu: À Ố SHOW (thuộc Lune Production).
 - Thời lượng biểu diễn: 60 phút.
 - Nội dung: Bản hòa âm mộc mạc giữa vẻ đẹp yên bình của làng quê Việt Nam và nhịp sống trẻ trung, sôi động nơi đô thị hiện đại. Sử dụng đạo cụ tre nứa thân thuộc như thuyền thúng, rổ tre, gậy tre kết hợp kỹ thuật nhào lộn xiếc đương đại và âm nhạc dân tộc sống động.
-- Đặt vé: Trực tuyến trên website chính thức của Lune Production.
+- Đặt vé: Trực tuyến tại https://luneproduction.com/ao-show?location_id=1&from_date=2026-10-05T00%3A00%3A00Z
 - Bản đồ: https://maps.app.goo.gl/WWLX2kTfvQx3e65L8
 
 ---

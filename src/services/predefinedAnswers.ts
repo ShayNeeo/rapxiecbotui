@@ -9,17 +9,20 @@ export const CIRCUS_VENUES_AND_TICKETS_ANSWER = `🌟HCM🌟
 
 📍RẠP XIẾC VÀ BIỂU DIỄN ĐA NĂNG PHÚ THỌ
 Địa chỉ: https://maps.app.goo.gl/GFoJWHMCsHR8g4qT7?g_st=ipc
-🖇️Rạp xiếc và Biểu diễn đa năng Phú Thọ hiện đang diễn ra vở diễn nghệ thuật xiếc đương đại “Mơ Show - Dreamscape Show”, bạn có thể đặt vé trên website của Nhà hát Phương Nam.
+🖇️Rạp xiếc và Biểu diễn đa năng Phú Thọ hiện đang diễn ra vở diễn nghệ thuật xiếc đương đại “Mơ Show - Dreamscape Show”
+Link đặt vé: https://datve.nhahatphuongnam.com.vn/event/vo-dien-mo-show-dreamscape-show-3891/detail
 ⏰Với thời lượng 70 phút, các bạn sẽ bước vào thế giới sự trưởng thành của một đứa bé từ những cảm nhận đầu tiên về ánh sáng, màu sắc, sự sống đến khi khám phá và gọi tên các cung bậc cảm xúc của mình.
 
 📍RẠP XIẾC CÔNG VIÊN GIA ĐỊNH
 Địa chỉ: https://maps.app.goo.gl/A8933G8p7LjdwKXV8?g_st=ipc
 🖇️Rạp xiếc Công viên Gia Định hiện đang diễn ra vở diễn nghệ thuật xiếc “Vùng Đất Kỳ Bí - Phiên bản Pro max”, bạn có thể đặt vé trên website của Nhà hát Phương Nam.
+Link đặt vé: https://datve.nhahatphuongnam.com.vn/event/vo-xiec-vung-dat-ky-bi-3584/detail
 ⏰Với thời lượng 120 phút, các bạn sẽ theo chân hành trình của từng nguyên tố Ngũ hành, từ sự tranh đấu cho đến khi học cách kết nối, hòa hợp để mang lại sự cân bằng, đưa thiên nhiên trở lại trạng thái hoàn mỹ.
 
 📍NHÀ HÁT THÀNH PHỐ HỒ CHÍ MINH
 Địa chỉ: https://maps.app.goo.gl/WWLX2kTfvQx3e65L8?g_st=ipc
-🖇️Nhà hát Thành Phố Hồ Chí Minh hiện đang diễn ra vở diễn nghệ thuật xiếc “À Ố SHOW”, bạn có thể đặt vé trên website chính thức Lune Production
+🖇️Nhà hát Thành Phố Hồ Chí Minh hiện đang diễn ra vở diễn nghệ thuật xiếc “À Ố SHOW”
+Link đặt vé: [luneproduction.com/ao-show?location_id=1&from_date=2026-10-05T00%3A00%3A00Z](https://luneproduction.com/ao-show?location_id=1&from_date=2026-10-05T00%3A00%3A00Z)
 ⏰Với 60 phút, các bạn sẽ thưởng thức một bản hoà âm dân dã của đồng quê Việt pha trộn với giai điệu trẻ trung rất đời của đô thị Việt Nam. Sử dụng các đạo cụ “cây nhà lá vườn” mộc mạc, gần gũi như thuyền thúng, rổ tre,... À Ố Show tạo nên một bức tranh bình dị nhưng đẹp đến ngỡ ngàng.
 
 📍RẠP XIẾC ĐẦM SEN
@@ -225,6 +228,17 @@ export function matchCircusVenuesQuestion(query: string): boolean {
     'dat ve xiec o dau',
     'dat ve xiec',
     'dat ve',
+    'dat ve xem xiec',
+    'dat ve xem xiec o dau',
+    'cach dat ve xem xiec',
+    'cach dat ve xiec',
+    'cach dat ve',
+    'cach mua ve xem xiec',
+    'cach mua ve xiec',
+    'cach mua ve',
+    'huong dan dat ve xem xiec',
+    'huong dan dat ve',
+    'huong dan mua ve',
     'ban ve o dau',
     'rap xiec o dau',
     'xem xiec o dau',
