@@ -216,7 +216,7 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
           </div>
           <div>
             <h2 className="font-circus text-xl sm:text-2xl text-amber-300 drop-shadow-sm">
-              {isEn ? "Interactive 3D Circus Brochure" : "Brochure Xiếc Việt Nam 3D"}
+              {isEn ? "Vietnam Circus Promotional Brochure" : "Brochure quảng bá xiếc Việt Nam"}
             </h2>
           </div>
         </div>
