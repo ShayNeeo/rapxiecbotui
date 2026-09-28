@@ -215,14 +215,8 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
             <Rotate3d className="size-6 animate-pulse" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] uppercase font-bold tracking-widest text-amber-300 bg-amber-400/20 px-2 py-0.5 rounded-full border border-amber-400/30 flex items-center gap-1">
-                <Sparkles className="size-3 text-amber-300" />
-                <span>Nếp Gấp Xen Kẽ (Z-Fold) • 360°</span>
-              </span>
-            </div>
-            <h2 className="font-circus text-xl sm:text-2xl text-amber-300 drop-shadow-sm mt-0.5">
-              {isEn ? "Interactive 3D Foldable Circus Brochure" : "Brochure Xiếc Việt Nam 3D — Nếp Gấp Xen Kẽ"}
+            <h2 className="font-circus text-xl sm:text-2xl text-amber-300 drop-shadow-sm">
+              {isEn ? "Interactive 3D Circus Brochure" : "Brochure Xiếc Việt Nam 3D"}
             </h2>
           </div>
         </div>
@@ -491,10 +485,10 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
                 ? "bg-amber-400 text-amber-950 font-bold border-amber-300 shadow-md"
                 : "bg-white/10 text-white hover:bg-white/20 border-white/20"
             }`}
-            title={isEn ? "3D Alternating Z-Fold perspective" : "Nếp gấp xen kẽ Z-Fold 3D"}
+            title={isEn ? "3D Z-Fold perspective" : "Góc nhìn Z-Fold 3D"}
           >
             <Layers className="size-3.5 text-amber-300" />
-            <span>{isEn ? "Z-Fold (3D)" : "Nếp Gấp Xen Kẽ (3D)"}</span>
+            <span>{isEn ? "Z-Fold (3D)" : "Gập Nửa (3D)"}</span>
           </Button>
 
           <Button
