@@ -105,11 +105,17 @@ export const CIRCUS_CULTURAL_INFLUENCE_ANSWER = `🌏 Nền nghệ thuật xiế
  * CÂU TRẢ LỜI CỐ ĐỊNH 8: XIẾC BẮT ĐẦU TỪ KHI NÀO / TỪ ĐÂU?
  * ==============================================================================
  */
-export const CIRCUS_ORIGIN_ANSWER = `📜 Vào thế kỷ XVIII, tại châu Âu, xiếc bắt đầu bước sang một giai đoạn mới. Philip Astley - một nghệ sĩ cưỡi ngựa người Anh, được xem là một trong những người đặt nền móng cho xiếc hiện đại.
+export const CIRCUS_ORIGIN_ANSWER = `🏛️ Từ "Circus" trong tiếng Latinh nghĩa là "vòng tròn", bắt nguồn từ đấu trường Circus Maximus tại La Mã Cổ đại (Thế kỷ 6 TCN).
+
+🏺 Song song đó, các kỹ thuật tạp kỹ đỉnh cao đã được ghi nhận trên tranh tường lăng mộ Ai Cập (2000 TCN) và nghệ thuật "Bách Hý" (trăm trò) rực rỡ thời Hán (Trung Quốc, TK 2 TCN).
+
+🎪 Sau khi La Mã sụp đổ, các nghệ sĩ hợp thành gánh hát rong lưu động biểu diễn tại hội chợ Trung Cổ châu Âu. Toàn bộ trò diễn cổ đại này chính là nguồn chất liệu kỹ thuật đắt giá để Philip Astley tổng hợp thành mô hình Rạp Xiếc Cổ điển vào năm 1768 tại Anh.
+
+📜 Vào thế kỷ XVIII, tại châu Âu, xiếc bắt đầu bước sang một giai đoạn mới. Philip Astley - một nghệ sĩ cưỡi ngựa người Anh, được xem là một trong những người đặt nền móng cho xiếc hiện đại.
 
 🎠 Năm 1768, ông bắt đầu biểu diễn tại London với những màn cưỡi ngựa đầy kỹ thuật trong một vòng diễn hình tròn.
 
-🤹🎪 Sau đó, Astley đưa thêm các tiết mục như nhào lộn, tung hứng, đi dây và hài kịch vào chương trình, dần tạo nên một hình thức biểu diễn tổng hợp rất gần với xiếc mà chúng ta biết ngày nay.`
+🤹🎭 Sau đó, Astley đưa thêm các tiết mục như nhào lộn, tung hứng, đi dây và hài kịch vào chương trình, dần tạo nên một hình thức biểu diễn tổng hợp rất gần với xiếc mà chúng ta biết ngày nay.`
 
 /**
  * ==============================================================================

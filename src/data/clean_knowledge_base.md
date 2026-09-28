@@ -80,7 +80,10 @@ Trả lời: Xiếc Việt Nam từng tiếp thu và chịu ảnh hưởng từ 
 **Keywords:** khởi nguồn xiếc, thế giới, Philip Astley, 1768, London, thế kỷ XVIII
 
 Xiếc thế giới bắt đầu từ khi nào?
-Trả lời: Vào thế kỷ XVIII tại châu Âu, nghệ thuật xiếc bước sang một kỷ nguyên phát triển mới. Philip Astley - một nghệ sĩ cưỡi ngựa tài ba người Anh - được công nhận là một trong những người đặt nền móng cho xiếc hiện đại. Năm 1768 tại London, ông bắt đầu biểu diễn các màn cưỡi ngựa kỹ thuật cao bên trong một vòng tròn (ring). Sau đó, Astley đưa thêm các tiết mục nhào lộn, tung hứng, đi dây thăng bằng và hài kịch vào chương trình, hình thành nên mô hình biểu diễn nghệ thuật xiếc tổng hợp mà chúng ta biết ngày nay.
+Trả lời: 
+- Từ "Circus" trong tiếng Latinh nghĩa là "vòng tròn", bắt nguồn từ đấu trường Circus Maximus tại La Mã Cổ đại (Thế kỷ 6 TCN).
+- Song song đó, các kỹ thuật tạp kỹ đỉnh cao đã được ghi nhận trên tranh tường lăng mộ Ai Cập (2000 TCN) và nghệ thuật "Bách Hý" (trăm trò) rực rỡ thời Hán (Trung Quốc, TK 2 TCN). Sau khi La Mã sụp đổ, các nghệ sĩ hợp thành gánh hát rong lưu động biểu diễn tại hội chợ Trung Cổ châu Âu. Toàn bộ trò diễn cổ đại này chính là nguồn chất liệu kỹ thuật đắt giá để Philip Astley tổng hợp thành mô hình Rạp Xiếc Cổ điển vào năm 1768 tại Anh.
+- Vào thế kỷ XVIII tại châu Âu, nghệ thuật xiếc bước sang một kỷ nguyên phát triển mới. Philip Astley - một nghệ sĩ cưỡi ngựa tài ba người Anh - được công nhận là một trong những người đặt nền móng cho xiếc hiện đại. Năm 1768 tại London, ông bắt đầu biểu diễn các màn cưỡi ngựa kỹ thuật cao bên trong một vòng tròn (ring). Sau đó, Astley đưa thêm các tiết mục nhào lộn, tung hứng, đi dây thăng bằng và hài kịch vào chương trình, hình thành nên mô hình biểu diễn nghệ thuật xiếc tổng hợp mà chúng ta biết ngày nay.
 
 ---
 
