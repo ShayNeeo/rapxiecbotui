@@ -322,49 +322,57 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
           <div className="absolute size-[240px] sm:size-[340px] md:size-[440px] rounded-full border border-amber-300/40" />
         </div>
 
-        {/* Floating Interactive Tooltip Pill on top */}
-        <div className="absolute top-3 left-3 z-30 pointer-events-none flex flex-col sm:flex-row items-start sm:items-center gap-2">
-          <div className="bg-black/80 backdrop-blur-xs border border-amber-400/50 px-3 py-1.5 rounded-full text-xs text-amber-200 flex items-center gap-1.5 shadow-lg">
-            <Sparkles className="size-3.5 text-amber-300 animate-spin" />
-            <span className="font-semibold">
-              {foldMode === 'open'
-                ? (isEn ? "✨ Click brochure to fold back" : "✨ Click vào brochure để gập lại!")
-                : (isEn ? "✨ Click brochure to unfold!" : "✨ Click vào brochure để bung ra!")
-              }
+        {/* Floating Interactive Tooltip Pill on top left */}
+        <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 z-30 pointer-events-none">
+          <div className="bg-black/85 backdrop-blur-xs border border-amber-400/50 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-[10px] sm:text-xs text-amber-200 flex items-center gap-1 sm:gap-1.5 shadow-lg">
+            <Sparkles className="size-3 sm:size-3.5 text-amber-300 animate-spin" />
+            <span className="font-semibold whitespace-nowrap">
+              <span className="sm:hidden">
+                {foldMode === 'open'
+                  ? (isEn ? "✨ Chạm để gập" : "✨ Chạm để gập")
+                  : (isEn ? "✨ Chạm để mở" : "✨ Chạm để mở")
+                }
+              </span>
+              <span className="hidden sm:inline">
+                {foldMode === 'open'
+                  ? (isEn ? "✨ Click brochure to fold back" : "✨ Click vào brochure để gập lại!")
+                  : (isEn ? "✨ Click brochure to unfold!" : "✨ Click vào brochure để bung ra!")
+                }
+              </span>
             </span>
           </div>
         </div>
 
         {/* Floating Zoom & Detail Viewer Controls directly on the 3D Stage (top right) */}
-        <div className="absolute top-3 right-3 z-30 flex items-center gap-1 bg-black/85 backdrop-blur-md border border-amber-400/50 p-1 rounded-xl shadow-xl">
+        <div className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-30 flex items-center gap-0.5 sm:gap-1 bg-black/85 backdrop-blur-md border border-amber-400/50 p-0.5 sm:p-1 rounded-lg sm:rounded-xl shadow-xl">
           <button
             onClick={() => setZoomLevel((z) => Math.max(0.6, Number((z - 0.2).toFixed(2))))}
-            className="p-1.5 hover:bg-white/20 rounded-lg text-amber-200 hover:text-white transition-colors cursor-pointer"
+            className="p-1 sm:p-1.5 hover:bg-white/20 rounded-md sm:rounded-lg text-amber-200 hover:text-white transition-colors cursor-pointer"
             title={isEn ? "Zoom out" : "Thu nhỏ"}
           >
-            <ZoomOut className="size-4" />
+            <ZoomOut className="size-3 sm:size-4" />
           </button>
           <button
             onClick={() => setZoomLevel(1)}
-            className="text-xs font-mono px-2 py-0.5 rounded hover:bg-white/10 text-amber-300 font-bold cursor-pointer"
+            className="text-[10px] sm:text-xs font-mono px-1 sm:px-2 py-0.5 rounded hover:bg-white/10 text-amber-300 font-bold cursor-pointer min-w-[32px] sm:min-w-[40px] text-center"
             title={isEn ? "Reset zoom (100%)" : "Đặt lại độ phóng to (100%)"}
           >
             {Math.round(zoomLevel * 100)}%
           </button>
           <button
             onClick={() => setZoomLevel((z) => Math.min(2.5, Number((z + 0.2).toFixed(2))))}
-            className="p-1.5 hover:bg-white/20 rounded-lg text-amber-200 hover:text-white transition-colors cursor-pointer"
+            className="p-1 sm:p-1.5 hover:bg-white/20 rounded-md sm:rounded-lg text-amber-200 hover:text-white transition-colors cursor-pointer"
             title={isEn ? "Zoom in" : "Phóng to"}
           >
-            <ZoomIn className="size-4" />
+            <ZoomIn className="size-3 sm:size-4" />
           </button>
-          <div className="w-[1px] h-4 bg-white/20 mx-1" />
+          <div className="w-[1px] h-3.5 sm:h-4 bg-white/20 mx-0.5 sm:mx-1" />
           <button
             onClick={() => openLightbox('inside')}
-            className="px-2.5 py-1 rounded-lg bg-amber-400/25 hover:bg-amber-400/35 text-amber-300 hover:text-amber-100 text-xs font-semibold flex items-center gap-1.5 cursor-pointer border border-amber-400/40 transition-all shadow-sm"
+            className="p-1 sm:px-2.5 sm:py-1 rounded-md sm:rounded-lg bg-amber-400/25 hover:bg-amber-400/35 text-amber-300 hover:text-amber-100 text-[10px] sm:text-xs font-semibold flex items-center gap-1 cursor-pointer border border-amber-400/40 transition-all shadow-sm"
             title={isEn ? "Open full-screen high-resolution zoom mode" : "Chế độ phóng to đọc chi tiết toàn màn hình"}
           >
-            <Maximize2 className="size-3.5" />
+            <Maximize2 className="size-3 sm:size-3.5" />
             <span className="hidden sm:inline">{isEn ? "Zoom Mode" : "Chế độ phóng to"}</span>
           </button>
         </div>
