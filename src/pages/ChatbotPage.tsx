@@ -158,9 +158,9 @@ export const ChatbotPage: React.FC<ChatbotPageProps> = ({ onBackToPortal }) => {
   const { isEn, setLanguage } = useLanguage()
   const kbStats = getKnowledgeBaseStats()
 
-  // Automatically switch to English mode when accessing Chatbot for the ENG section
+  // Automatically ensure Vietnamese mode when accessing Chatbot
   useEffect(() => {
-    setLanguage('en')
+    setLanguage('vi')
   }, [])
 
   const [settings, setSettings] = useState<ChatSettings>(() => {
@@ -175,7 +175,7 @@ export const ChatbotPage: React.FC<ChatbotPageProps> = ({ onBackToPortal }) => {
     return {
       apiKey: DEFAULT_API_KEY,
       model: DEFAULT_MODEL,
-      systemPrompt: 'You are an AI Assistant with deep expertise and enthusiasm for Vietnamese and global circus arts. Provide eloquent, structured, and informative responses in English.',
+      systemPrompt: 'Bạn là chuyên gia tư vấn về nghệ thuật xiếc Việt Nam và thế giới (Rạp Xiếc Bỏ Túi). Hãy giải đáp chi tiết, truyền cảm hứng và nhiệt tình bằng tiếng Việt.',
       temperature: 0.7,
       ragEnabled: true,
     }
