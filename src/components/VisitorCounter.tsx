@@ -96,9 +96,16 @@ export const VisitorCounter: React.FC<VisitorCounterProps> = ({
           <span className="text-neutral-500">•</span>
           <span className="text-neutral-300">{isEn ? 'Entered at' : 'Vào lúc'} <strong className="font-mono text-amber-300">{stats.entryTimeFormatted}</strong></span>
         </div>
-        <div className="flex items-center gap-1 text-amber-200/90">
-          <span>{isEn ? 'Time on site:' : 'Đã xem:'}</span>
-          <strong className="font-mono text-emerald-300">{formatSessionDuration(stats.sessionDuration)}</strong>
+        <div className="flex items-center gap-3 text-neutral-300">
+          <div className="flex items-center gap-1 text-amber-200/90">
+            <span>{isEn ? 'Time on site:' : 'Đã xem:'}</span>
+            <strong className="font-mono text-emerald-300">{formatSessionDuration(stats.sessionDuration)}</strong>
+          </div>
+          <span className="text-neutral-600 hidden sm:inline">•</span>
+          <div className="flex items-center gap-1 text-neutral-400 text-[9px] font-mono">
+            <span>{isEn ? 'Synced:' : 'Đồng bộ:'}</span>
+            <span className="text-neutral-300">{stats.lastSyncTimeFormatted}</span>
+          </div>
         </div>
       </div>
     </div>

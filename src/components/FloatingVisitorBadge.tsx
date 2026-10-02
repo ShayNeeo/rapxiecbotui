@@ -100,6 +100,10 @@ export const FloatingVisitorBadge: React.FC<FloatingVisitorBadgeProps> = ({ isEn
               <span>{isEn ? "Duration on site:" : "Thời gian đang xem:"}</span>
               <span className="font-mono text-emerald-300 font-bold">{formatSessionDuration(stats.sessionDuration)}</span>
             </div>
+            <div className="flex items-center justify-between text-[10px] text-neutral-400 border-t border-emerald-500/20 pt-1">
+              <span>{isEn ? "Last synced:" : "Đồng bộ lúc:"}</span>
+              <span className="font-mono text-neutral-300">{stats.lastSyncTimeFormatted}</span>
+            </div>
           </div>
 
           {/* Stats 2x2 Grid */}
@@ -152,7 +156,7 @@ export const FloatingVisitorBadge: React.FC<FloatingVisitorBadgeProps> = ({ isEn
           {/* Footer note */}
           <div className="text-[10px] text-neutral-400 text-center pt-1.5 border-t border-white/10 flex items-center justify-between">
             <span className="text-amber-300/80">🎪 rapxiecbotui.com</span>
-            <span className="text-emerald-400/90 font-medium">● {isEn ? "Live update" : "Tính chuẩn xác"}</span>
+            <span className="text-emerald-400/90 font-medium">● {isEn ? "Live Synced" : "Đồng bộ trực tiếp"}</span>
           </div>
         </div>
       )}
