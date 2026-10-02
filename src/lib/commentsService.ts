@@ -4,7 +4,7 @@ export interface CommentUser {
   name: string;
   email: string;
   avatar?: string;
-  provider: 'gmail' | 'google';
+  provider: 'gmail' | 'google' | 'guest';
 }
 
 export type CommentTag = 'suggestion' | 'appreciation' | 'question';

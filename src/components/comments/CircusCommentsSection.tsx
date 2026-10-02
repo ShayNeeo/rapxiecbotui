@@ -198,8 +198,8 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
         </h3>
         <p className="text-xs sm:text-sm text-neutral-700 max-w-xl mx-auto leading-relaxed font-medium">
           {isEn
-            ? 'Connect with your Gmail account to leave comments. All comments are synced publicly so every visitor can see them!'
-            : 'Đăng nhập tài khoản Gmail để gửi đánh giá và đóng góp ý kiến. Bình luận được đồng bộ trực tuyến để mọi khán giả cùng theo dõi!'}
+            ? 'Enter your name to leave reviews and suggestions. All comments are synced publicly so every visitor can see them!'
+            : 'Nhập tên của bạn để gửi đánh giá và đóng góp ý kiến. Bình luận được đồng bộ trực tuyến để mọi khán giả cùng theo dõi!'}
         </p>
       </div>
 
@@ -218,13 +218,9 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
                 <div>
                   <div className="flex items-center gap-1.5 font-bold text-sm text-amber-200">
                     <span>{currentUser.name}</span>
-                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-white/10 text-[10px] text-emerald-400 font-medium border border-emerald-400/30">
-                      <GoogleIcon className="size-2.5" />
-                      <span>{currentUser.email}</span>
-                    </span>
                   </div>
                   <span className="text-[11px] text-neutral-400">
-                    {isEn ? 'Connected with Google Account' : 'Đã kết nối tài khoản Google Gmail'}
+                    {isEn ? 'Signed in as Guest' : 'Đã xác nhận tên người đóng góp'}
                   </span>
                 </div>
               </div>
@@ -233,26 +229,26 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
                 type="button"
                 onClick={handleLogout}
                 className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/15 text-neutral-300 hover:text-white text-xs transition-colors cursor-pointer border border-white/10"
-                title={isEn ? 'Sign out' : 'Đăng xuất'}
+                title={isEn ? 'Change name' : 'Đổi tên khác'}
               >
                 <LogOut className="size-3 text-neutral-400" />
-                <span className="hidden sm:inline">{isEn ? 'Sign out' : 'Đăng xuất'}</span>
+                <span className="hidden sm:inline">{isEn ? 'Change name' : 'Đổi tên'}</span>
               </button>
             </div>
           ) : (
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 w-full bg-gradient-to-r from-amber-500/15 via-red-950/40 to-amber-500/15 border-2 border-amber-400/50 rounded-2xl p-3 sm:p-4 shadow-sm">
               <div className="flex items-center gap-2.5">
-                <div className="size-9 rounded-xl bg-white flex items-center justify-center p-1.5 shrink-0 shadow-md">
-                  <GoogleIcon className="size-5.5" />
+                <div className="size-9 rounded-xl bg-amber-400/20 border border-amber-400/40 flex items-center justify-center p-1.5 shrink-0 shadow-md">
+                  <MessageSquarePlus className="size-5 text-amber-300" />
                 </div>
                 <div>
                   <h4 className="text-xs sm:text-sm font-bold text-amber-200">
-                    {isEn ? 'Sign in with Gmail to comment' : 'Đăng nhập tài khoản Gmail để bình luận'}
+                    {isEn ? 'Enter your name to comment' : 'Nhập tên của bạn để bình luận'}
                   </h4>
                   <p className="text-[11px] text-amber-100/80">
                     {isEn
-                      ? 'Connect your exact Gmail to post public suggestions and manage your comments.'
-                      : 'Kết nối đúng tài khoản Gmail để đăng ý kiến công khai và tự xóa khi viết nhầm.'}
+                      ? 'Enter your name to post public suggestions and impressions.'
+                      : 'Nhập tên của bạn để đăng ý kiến đóng góp và cảm nhận công khai.'}
                   </p>
                 </div>
               </div>
@@ -262,8 +258,7 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
                 onClick={() => setIsLoginModalOpen(true)}
                 className="px-4.5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-300 hover:to-yellow-300 text-red-950 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-amber-400/30 cursor-pointer shrink-0 hover:scale-102 active:scale-98 border border-amber-200/50"
               >
-                <GoogleIcon className="size-4" />
-                <span>{isEn ? 'Sign in with Gmail' : 'Đăng Nhập Bằng Gmail'}</span>
+                <span>{isEn ? 'Enter Your Name' : 'Nhập Tên Của Bạn'}</span>
               </button>
             </div>
           )}
@@ -337,8 +332,8 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
                     ? 'Write your feedback, suggestions, or impressions about the website...'
                     : 'Nhập ý kiến đóng góp, cảm nghĩ hoặc đề xuất cải tiến về mô hình 3D, tư liệu lịch sử...'
                   : isEn
-                  ? 'Please sign in with Gmail above to write a comment...'
-                  : 'Vui lòng đăng nhập Gmail ở trên để bắt đầu gửi ý kiến đóng góp...'
+                  ? 'Please click "Enter Your Name" above to start contributing...'
+                  : 'Vui lòng bấm "Nhập tên của bạn" ở trên để bắt đầu gửi ý kiến đóng góp...'
               }
               disabled={!currentUser}
               className="w-full px-4 py-3 rounded-2xl bg-[#260505]/90 border-2 border-amber-400/50 focus:border-amber-300 focus:bg-[#300606] focus:outline-none text-amber-50 text-xs sm:text-sm placeholder:text-amber-200/50 transition-all resize-none shadow-inner disabled:opacity-60 disabled:cursor-not-allowed"
@@ -439,13 +434,16 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
               {isEn ? 'No comments yet' : 'Chưa có bình luận nào'}
             </p>
             <p className="text-xs text-neutral-600">
-              {isEn ? 'Be the first to sign in with Gmail and share your feedback!' : 'Hãy đăng nhập Gmail và là người đầu tiên chia sẻ cảm nhận hoặc đóng góp ý kiến!'}
+              {isEn ? 'Enter your name and be the first to share your feedback!' : 'Hãy nhập tên của bạn và là người đầu tiên chia sẻ cảm nhận hoặc đóng góp ý kiến!'}
             </p>
           </div>
         ) : (
           filteredComments.map((cmt) => {
             const badge = getTagBadge(cmt.tag);
-            const isMyComment = currentUser && currentUser.email.toLowerCase() === cmt.user.email.toLowerCase();
+            const isMyComment = currentUser && (
+              currentUser.email.toLowerCase() === cmt.user.email.toLowerCase() ||
+              currentUser.name.trim().toLowerCase() === cmt.user.name.trim().toLowerCase()
+            );
             const isConfirmingDelete = deleteConfirmId === cmt.id;
 
             return (
@@ -465,10 +463,6 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
                       <div className="flex items-center gap-2 flex-wrap">
                         <span className="font-bold text-xs sm:text-sm text-amber-200">
                           {cmt.user.name}
-                        </span>
-                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-white/10 text-[10px] text-neutral-300 font-mono border border-white/10">
-                          <GoogleIcon className="size-2.5" />
-                          <span>{maskEmail(cmt.user.email)}</span>
                         </span>
                         {isMyComment && (
                           <span className="px-1.5 py-0.5 rounded-full bg-amber-400/20 text-[10px] text-amber-300 border border-amber-400/40 font-semibold">
