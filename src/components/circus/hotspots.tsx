@@ -1,8 +1,7 @@
-'use client'
-
 import { Html } from '@react-three/drei'
 import { HOTSPOTS } from '@/lib/circus-data'
 import { Plus } from 'lucide-react'
+import { useLanguage } from '@/src/context/LanguageContext'
 
 export function Hotspots({
   activeId,
@@ -11,10 +10,12 @@ export function Hotspots({
   activeId: string | null
   onSelect: (id: string) => void
 }) {
+  const { isEn } = useLanguage()
   return (
     <group>
       {HOTSPOTS.map((h) => {
         const active = activeId === h.id
+        const title = (isEn && h.titleEn) ? h.titleEn : h.title
         return (
           <Html
             key={h.id}
@@ -29,7 +30,7 @@ export function Hotspots({
                 onSelect(h.id)
               }}
               className="group relative flex items-center justify-center"
-              aria-label={`Xem thông tin: ${h.title}`}
+              aria-label={isEn ? `View information: ${title}` : `Xem thông tin: ${title}`}
             >
               <span
                 className={`absolute inline-flex h-9 w-9 rounded-full ${
@@ -46,7 +47,7 @@ export function Hotspots({
                 <Plus className="h-5 w-5" strokeWidth={2.5} />
               </span>
               <span className="pointer-events-none absolute left-1/2 top-11 -translate-x-1/2 whitespace-nowrap rounded-md bg-popover/90 px-2 py-1 text-xs font-medium text-popover-foreground opacity-0 shadow-md backdrop-blur transition-opacity duration-200 group-hover:opacity-100">
-                {h.title}
+                {title}
               </span>
             </button>
           </Html>

@@ -14,8 +14,11 @@ import { Scene } from './scene'
 import { InfoPanel } from './info-panel'
 import { HOTSPOTS, DEFAULT_CAMERA } from '@/lib/circus-data'
 import { Button } from '@/components/ui/button'
+import { useLanguage } from '@/src/context/LanguageContext'
+import { circusAudio } from '@/src/utils/audio'
 
 export function CircusExperience() {
+  const { isEn, language, setLanguage } = useLanguage()
   const [activeId, setActiveId] = useState<string | null>(null)
   const [intro, setIntro] = useState(true)
   const [mounted, setMounted] = useState(false)
@@ -42,7 +45,7 @@ export function CircusExperience() {
         containerStyles={{ background: '#160b09' }}
         barStyles={{ background: '#e8b93a' }}
         dataStyles={{ color: '#f4ead3', fontFamily: 'var(--font-sans)' }}
-        dataInterpolation={(p) => `Đang dựng rạp xiếc… ${p.toFixed(0)}%`}
+        dataInterpolation={(p) => isEn ? `Building 3D Circus… ${p.toFixed(0)}%` : `Đang dựng rạp xiếc… ${p.toFixed(0)}%`}
       />
 
       {/* Top bar with Navigation */}
@@ -51,11 +54,11 @@ export function CircusExperience() {
           <Link
             to="/"
             className="flex items-center gap-2 rounded-xl border border-border bg-card/85 px-3 py-2 text-xs font-semibold text-foreground backdrop-blur-md transition-all hover:bg-accent hover:text-accent-foreground shadow-md cursor-pointer"
-            title="Về Sân Khấu Chính"
+            title={isEn ? "Back to Main Stage" : "Về Sân Khấu Chính"}
           >
             <ArrowLeft className="h-4 w-4" />
-            <span className="hidden sm:inline">Về Sân Khấu Chính</span>
-            <span className="sm:hidden">Trang chủ</span>
+            <span className="hidden sm:inline">{isEn ? "Back to Main Stage" : "Về Sân Khấu Chính"}</span>
+            <span className="sm:hidden">{isEn ? "Home" : "Trang chủ"}</span>
           </Link>
         </div>
 
@@ -66,24 +69,70 @@ export function CircusExperience() {
           </span>
           <div>
             <h1 className="text-sm font-bold leading-tight text-foreground md:text-base">
-              Rạp Xiếc Bỏ Túi 3D
+              {isEn ? "Pocket Circus 3D" : "Rạp Xiếc Bỏ Túi 3D"}
             </h1>
-            <p className="text-xs text-muted-foreground">Không gian bảo tàng xiếc số tương tác 360°</p>
+            <p className="text-xs text-muted-foreground">
+              {isEn ? "Interactive 360° digital circus museum" : "Không gian bảo tàng xiếc số tương tác 360°"}
+            </p>
           </div>
         </div>
 
-        {/* Right View Controls */}
-        <div className="pointer-events-auto flex gap-2">
+        {/* Right View Controls & Language Switcher */}
+        <div className="pointer-events-auto flex items-center gap-2">
+          {/* Language Switcher */}
+          <div 
+            className="flex items-center rounded-lg bg-card/85 p-0.5 border border-border shadow-xs backdrop-blur-md"
+            role="group"
+            aria-label="Language selector"
+          >
+            <button
+              type="button"
+              onClick={() => {
+                if (language !== 'vi') {
+                  circusAudio.playBambooStep()
+                  setLanguage('vi')
+                }
+              }}
+              className={`flex items-center gap-1 px-2 py-1 rounded-md transition-all text-xs font-bold cursor-pointer ${
+                language === 'vi'
+                  ? 'bg-amber-400 text-amber-950 shadow-xs'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-accent/40'
+              }`}
+              title="Tiếng Việt"
+            >
+              <span>VI</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                if (language !== 'en') {
+                  circusAudio.playBambooStep()
+                  setLanguage('en')
+                }
+              }}
+              className={`flex items-center gap-1 px-2 py-1 rounded-md transition-all text-xs font-bold cursor-pointer ${
+                language === 'en'
+                  ? 'bg-amber-400 text-amber-950 shadow-xs'
+                  : 'text-muted-foreground hover:text-foreground hover:bg-accent/40'
+              }`}
+              title="English mode"
+            >
+              <span>EN</span>
+            </button>
+          </div>
+
           {activeId && (
             <Button
               variant="secondary"
               size="sm"
               onClick={() => setActiveId(null)}
-              aria-label="Trở về toàn cảnh"
+              aria-label={isEn ? "Reset to panorama" : "Trở về toàn cảnh"}
               className="backdrop-blur-md border border-border bg-card/85 text-foreground hover:bg-accent hover:text-accent-foreground cursor-pointer px-3"
             >
               <RotateCcw className="h-4 w-4" />
-              <span className="hidden sm:inline text-xs font-medium ml-1">Toàn cảnh</span>
+              <span className="hidden sm:inline text-xs font-medium ml-1">
+                {isEn ? "Panorama" : "Toàn cảnh"}
+              </span>
             </Button>
           )}
         </div>
@@ -94,22 +143,37 @@ export function CircusExperience() {
         <nav className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex flex-col items-center gap-3 p-4 md:p-6">
           <div className="pointer-events-auto flex items-center gap-2 rounded-full border border-border bg-card/80 px-3 py-1.5 text-xs text-muted-foreground backdrop-blur-md">
             <MousePointer2 className="h-3.5 w-3.5" />
-            Kéo để xoay · cuộn để phóng to · nhấn điểm{' '}
-            <span className="inline-flex h-3.5 w-3.5 items-center justify-center rounded-full bg-primary text-[8px] text-primary-foreground">
-              +
-            </span>{' '}
-            để khám phá
+            {isEn ? (
+              <>
+                Drag to rotate · scroll to zoom · click{' '}
+                <span className="inline-flex h-3.5 w-3.5 items-center justify-center rounded-full bg-primary text-[8px] text-primary-foreground">
+                  +
+                </span>{' '}
+                to explore
+              </>
+            ) : (
+              <>
+                Kéo để xoay · cuộn để phóng to · nhấn điểm{' '}
+                <span className="inline-flex h-3.5 w-3.5 items-center justify-center rounded-full bg-primary text-[8px] text-primary-foreground">
+                  +
+                </span>{' '}
+                để khám phá
+              </>
+            )}
           </div>
           <div className="pointer-events-auto flex max-w-full flex-wrap justify-center gap-2">
-            {HOTSPOTS.map((h) => (
-              <button
-                key={h.id}
-                onClick={() => setActiveId(h.id)}
-                className="rounded-full border border-border bg-card/70 px-3 py-1.5 text-xs font-medium text-foreground backdrop-blur-md transition-colors hover:bg-accent hover:text-accent-foreground"
-              >
-                {h.title}
-              </button>
-            ))}
+            {HOTSPOTS.map((h) => {
+              const label = (isEn && h.titleEn) ? h.titleEn : h.title
+              return (
+                <button
+                  key={h.id}
+                  onClick={() => setActiveId(h.id)}
+                  className="rounded-full border border-border bg-card/70 px-3 py-1.5 text-xs font-medium text-foreground backdrop-blur-md transition-colors hover:bg-accent hover:text-accent-foreground"
+                >
+                  {label}
+                </button>
+              )
+            })}
           </div>
         </nav>
       )}
@@ -124,20 +188,31 @@ export function CircusExperience() {
               <Ticket className="h-7 w-7" />
             </span>
             <h2 className="text-balance text-2xl font-bold text-foreground">
-              Chào mừng đến Rạp Xiếc Bỏ Túi
+              {isEn ? "Welcome to Pocket Circus 3D" : "Chào mừng đến Rạp Xiếc Bỏ Túi"}
             </h2>
             <p className="mt-3 text-pretty leading-relaxed text-muted-foreground">
-              Bước vào không gian rạp xiếc 3D tương tác. Xoay 360°, phóng to
-              từng góc và nhấn vào các điểm{' '}
-              <span className="font-semibold text-accent">+</span> để khám phá
-              sân khấu, nghệ sĩ, ánh sáng và trò chuyện cùng hướng dẫn viên AI.
+              {isEn ? (
+                <>
+                  Step inside an interactive 3D circus arena. Orbit 360°, zoom in on every angle,
+                  and click the{' '}
+                  <span className="font-semibold text-accent">+</span> markers to discover
+                  the main stage, performers, lighting, and stage atmosphere.
+                </>
+              ) : (
+                <>
+                  Bước vào không gian rạp xiếc 3D tương tác. Xoay 360°, phóng to
+                  từng góc và nhấn vào các điểm{' '}
+                  <span className="font-semibold text-accent">+</span> để khám phá
+                  sân khấu, nghệ sĩ, ánh sáng và không khí trình diễn.
+                </>
+              )}
             </p>
             <div className="mt-6 flex justify-center">
               <Button
                 onClick={() => setIntro(false)}
                 className="bg-primary text-primary-foreground hover:bg-primary/90 px-6 cursor-pointer"
               >
-                Bắt đầu khám phá
+                {isEn ? "Start Exploring" : "Bắt đầu khám phá"}
               </Button>
             </div>
           </div>

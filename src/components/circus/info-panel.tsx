@@ -1,8 +1,7 @@
-'use client'
-
 import { X, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import type { Hotspot } from '@/lib/circus-data'
+import { useLanguage } from '@/src/context/LanguageContext'
 
 export function InfoPanel({
   hotspot,
@@ -11,7 +10,13 @@ export function InfoPanel({
   hotspot: Hotspot | null
   onClose: () => void
 }) {
+  const { isEn } = useLanguage()
   if (!hotspot) return null
+
+  const title = (isEn && hotspot.titleEn) ? hotspot.titleEn : hotspot.title
+  const subtitle = (isEn && hotspot.subtitleEn) ? hotspot.subtitleEn : hotspot.subtitle
+  const description = (isEn && hotspot.descriptionEn) ? hotspot.descriptionEn : hotspot.description
+  const facts = (isEn && hotspot.factsEn) ? hotspot.factsEn : hotspot.facts
 
   return (
     <aside
@@ -38,10 +43,10 @@ export function InfoPanel({
           </Button>
           <div className="absolute bottom-3 left-4 right-4">
             <p className="text-xs font-semibold uppercase tracking-wider text-amber-500">
-              {hotspot.subtitle}
+              {subtitle}
             </p>
             <h2 className="text-pretty text-2xl font-bold text-foreground">
-              {hotspot.title}
+              {title}
             </h2>
           </div>
         </div>
@@ -52,16 +57,16 @@ export function InfoPanel({
             variant="secondary"
             onClick={onClose}
             className="absolute right-4 top-4 rounded-full cursor-pointer"
-            aria-label="Đóng bảng thông tin"
+            aria-label={isEn ? "Close info panel" : "Đóng bảng thông tin"}
           >
             <X className="h-4 w-4" />
           </Button>
           <div className="pr-10">
             <p className="text-xs font-semibold uppercase tracking-wider text-amber-500">
-              {hotspot.subtitle}
+              {subtitle}
             </p>
             <h2 className="text-pretty text-2xl font-bold text-foreground mt-1">
-              {hotspot.title}
+              {title}
             </h2>
           </div>
         </div>
@@ -69,13 +74,15 @@ export function InfoPanel({
 
       <div className="flex flex-col gap-5 p-5">
         <p className="text-pretty leading-relaxed text-muted-foreground" style={{ fontSize: '14px' }}>
-          {hotspot.description}
+          {description}
         </p>
 
         <div className="flex flex-col gap-2">
-          <h3 className="text-sm font-semibold text-foreground">Có thể bạn chưa biết</h3>
+          <h3 className="text-sm font-semibold text-foreground">
+            {isEn ? "Did You Know?" : "Có thể bạn chưa biết"}
+          </h3>
           <ul className="flex flex-col gap-2" style={{ fontSize: '14px' }}>
-            {hotspot.facts.map((fact, i) => (
+            {facts.map((fact, i) => (
               <li key={i} className="flex gap-2 text-muted-foreground">
                 <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
                 <span className="leading-relaxed">{fact}</span>
