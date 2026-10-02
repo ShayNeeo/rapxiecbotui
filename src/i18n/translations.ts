@@ -12,7 +12,7 @@ export const TRANSLATIONS = {
       about: 'Về Chúng Tôi',
       promo: 'Quảng Bá (Brochure)',
       history: 'Tư Liệu Lịch Sử',
-      circus3d: 'Mô Hình 3D',
+      circus3d: 'Rạp Xiếc 3D',
       quiz: 'Quiz Kiến Thức',
       map: 'Bản Đồ',
       chat: 'Chatbot',
