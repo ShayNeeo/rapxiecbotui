@@ -13,7 +13,6 @@ import {
   Download,
   RefreshCw,
   X,
-  Compass,
   BookOpen,
   FolderClosed,
   Sparkles,
@@ -43,6 +42,10 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
   const [isAutoRotating, setIsAutoRotating] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [zoomLevel, setZoomLevel] = useState<number>(1);
+  const zoomLevelRef = useRef<number>(1);
+  zoomLevelRef.current = zoomLevel;
+
+  const [isDownloading, setIsDownloading] = useState<boolean>(false);
 
   // Lightbox for high-resolution reading
   const [lightboxOpen, setLightboxOpen] = useState<boolean>(false);
@@ -59,6 +62,61 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
   } | null>(null);
   const animFrameRef = useRef<number | null>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+
+  // Zoom on wheel (mouse scroll directly on the brochure stage)
+  useEffect(() => {
+    const stageEl = stageRef.current;
+    if (!stageEl) return;
+
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const delta = e.deltaY < 0 ? 0.15 : -0.15;
+      setZoomLevel((prev) => Math.min(2.5, Math.max(0.6, Number((prev + delta).toFixed(2)))));
+    };
+
+    stageEl.addEventListener('wheel', onWheel, { passive: false });
+    return () => {
+      stageEl.removeEventListener('wheel', onWheel);
+    };
+  }, []);
+
+  // Pinch-to-zoom on touch devices
+  useEffect(() => {
+    const stageEl = stageRef.current;
+    if (!stageEl) return;
+
+    let initialDist: number | null = null;
+    let initialZoom = 1;
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        const dist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        if (initialDist === null) {
+          initialDist = dist;
+          initialZoom = zoomLevelRef.current;
+        } else {
+          const factor = dist / initialDist;
+          const newZoom = Math.min(2.5, Math.max(0.6, Number((initialZoom * factor).toFixed(2))));
+          setZoomLevel(newZoom);
+        }
+      }
+    };
+
+    const onTouchEnd = () => {
+      initialDist = null;
+    };
+
+    stageEl.addEventListener('touchmove', onTouchMove, { passive: false });
+    stageEl.addEventListener('touchend', onTouchEnd);
+    return () => {
+      stageEl.removeEventListener('touchmove', onTouchMove);
+      stageEl.removeEventListener('touchend', onTouchEnd);
+    };
+  }, []);
 
   // Auto-rotation loop
   useEffect(() => {
@@ -172,6 +230,36 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
     onFullscreenChange?.(false);
   };
 
+  // Tải trọn bộ brochure: tự động tải cả 2 mặt (Mặt Ngoài + Mặt Trong) trong một lần bấm
+  const handleDownloadBoth = async () => {
+    circusAudio.playBambooStep();
+    setIsDownloading(true);
+    try {
+      // 1. Tải Mặt Ngoài (Front / Outside Cover)
+      const linkFront = document.createElement('a');
+      linkFront.href = '/media/brochure_front.png';
+      linkFront.download = 'Brochure_Xiec_Viet_Nam_Mat_Ngoai.png';
+      document.body.appendChild(linkFront);
+      linkFront.click();
+      document.body.removeChild(linkFront);
+
+      // Khoảng nghỉ 400ms để trình duyệt tải tệp thứ hai mà không bị chặn đa luồng
+      await new Promise((resolve) => setTimeout(resolve, 400));
+
+      // 2. Tải Mặt Trong (Back / Inside Spread)
+      const linkBack = document.createElement('a');
+      linkBack.href = '/media/brochure_back.png';
+      linkBack.download = 'Brochure_Xiec_Viet_Nam_Mat_Trong.png';
+      document.body.appendChild(linkBack);
+      linkBack.click();
+      document.body.removeChild(linkBack);
+    } catch (err) {
+      console.error('Lỗi khi tải brochure:', err);
+    } finally {
+      setTimeout(() => setIsDownloading(false), 800);
+    }
+  };
+
   // =========================================================================
   // ALTERNATING Z-FOLD (Nếp gấp xen kẽ):
   // - Left panel folds BACKWARD (-Z) behind center panel:
@@ -245,11 +333,40 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
               }
             </span>
           </div>
+        </div>
 
-          <div className="hidden sm:flex bg-black/60 backdrop-blur-xs border border-white/20 px-2.5 py-1 rounded-full text-[11px] text-white/70 items-center gap-1.5">
-            <Compass className="size-3 text-amber-300" />
-            <span>{isEn ? "Drag to rotate 360°" : "Kéo chuột xoay 360° tự do"}</span>
-          </div>
+        {/* Floating Zoom & Detail Viewer Controls directly on the 3D Stage (top right) */}
+        <div className="absolute top-3 right-3 z-30 flex items-center gap-1 bg-black/85 backdrop-blur-md border border-amber-400/50 p-1 rounded-xl shadow-xl">
+          <button
+            onClick={() => setZoomLevel((z) => Math.max(0.6, Number((z - 0.2).toFixed(2))))}
+            className="p-1.5 hover:bg-white/20 rounded-lg text-amber-200 hover:text-white transition-colors cursor-pointer"
+            title={isEn ? "Zoom out" : "Thu nhỏ"}
+          >
+            <ZoomOut className="size-4" />
+          </button>
+          <button
+            onClick={() => setZoomLevel(1)}
+            className="text-xs font-mono px-2 py-0.5 rounded hover:bg-white/10 text-amber-300 font-bold cursor-pointer"
+            title={isEn ? "Reset zoom (100%)" : "Đặt lại độ phóng to (100%)"}
+          >
+            {Math.round(zoomLevel * 100)}%
+          </button>
+          <button
+            onClick={() => setZoomLevel((z) => Math.min(2.5, Number((z + 0.2).toFixed(2))))}
+            className="p-1.5 hover:bg-white/20 rounded-lg text-amber-200 hover:text-white transition-colors cursor-pointer"
+            title={isEn ? "Zoom in" : "Phóng to"}
+          >
+            <ZoomIn className="size-4" />
+          </button>
+          <div className="w-[1px] h-4 bg-white/20 mx-1" />
+          <button
+            onClick={() => openLightbox('inside')}
+            className="px-2.5 py-1 rounded-lg bg-amber-400/25 hover:bg-amber-400/35 text-amber-300 hover:text-amber-100 text-xs font-semibold flex items-center gap-1.5 cursor-pointer border border-amber-400/40 transition-all shadow-sm"
+            title={isEn ? "Open full-screen high-resolution zoom mode" : "Chế độ phóng to đọc chi tiết toàn màn hình"}
+          >
+            <Maximize2 className="size-3.5" />
+            <span className="hidden sm:inline">{isEn ? "Zoom Mode" : "Chế độ phóng to"}</span>
+          </button>
         </div>
 
         {/* 3D TRI-FOLD BROCHURE OBJECT */}
@@ -538,11 +655,11 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
             size="sm"
             variant="outline"
             onClick={() => openLightbox('inside')}
-            className="text-xs bg-white/10 hover:bg-white/20 text-white border-white/20 flex items-center gap-1.5 cursor-pointer"
-            title={isEn ? "High-res reader" : "Phóng to đọc nét từng chi tiết"}
+            className="text-xs bg-amber-400/20 hover:bg-amber-400/30 text-amber-200 border-amber-400/40 flex items-center gap-1.5 cursor-pointer font-medium"
+            title={isEn ? "Open high-resolution zoom mode" : "Chế độ phóng to đọc nét từng chi tiết"}
           >
             <Maximize2 className="size-3.5 text-amber-300" />
-            <span>{isEn ? "Zoom In" : "Phóng To Đọc"}</span>
+            <span>{isEn ? "Zoom Mode" : "Chế Độ Phóng To"}</span>
           </Button>
 
           <Button
@@ -550,59 +667,52 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
             variant="outline"
             onClick={resetView}
             className="text-xs bg-white/10 text-white hover:bg-white/20 border-white/20 flex items-center gap-1.5 cursor-pointer"
-            title={isEn ? "Reset view angle" : "Đặt lại góc nhìn"}
+            title={isEn ? "Reset view angle & zoom" : "Đặt lại góc nhìn & kích thước"}
           >
             <RefreshCw className="size-3.5" />
             <span>{isEn ? "Reset" : "Đặt Lại"}</span>
           </Button>
         </div>
 
-        {/* Zoom & Download Buttons */}
-        <div className="flex flex-wrap items-center justify-center gap-2">
+        {/* Zoom Controls & Unified Download Button */}
+        <div className="flex flex-wrap items-center justify-center gap-3">
           {/* Zoom controls */}
-          <div className="flex items-center gap-1 bg-white/10 border border-white/20 rounded-lg p-0.5">
+          <div className="flex items-center gap-1 bg-white/10 border border-white/20 rounded-xl p-0.5 shadow-sm">
             <button
-              onClick={() => setZoomLevel((z) => Math.max(0.65, z - 0.15))}
-              className="p-1 hover:bg-white/20 rounded text-amber-200 transition-colors cursor-pointer"
-              title={isEn ? "Zoom out" : "Thu nhỏ"}
+              onClick={() => setZoomLevel((z) => Math.max(0.6, Number((z - 0.2).toFixed(2))))}
+              className="p-1.5 hover:bg-white/20 rounded-lg text-amber-200 transition-colors cursor-pointer"
+              title={isEn ? "Zoom out" : "Thu nhỏ brochure"}
             >
               <ZoomOut className="size-4" />
             </button>
-            <span className="text-[11px] font-mono px-1.5 text-amber-300">
+            <span className="text-xs font-mono px-2 text-amber-300 font-bold min-w-[50px] text-center">
               {Math.round(zoomLevel * 100)}%
             </span>
             <button
-              onClick={() => setZoomLevel((z) => Math.min(1.4, z + 0.15))}
-              className="p-1 hover:bg-white/20 rounded text-amber-200 transition-colors cursor-pointer"
-              title={isEn ? "Zoom in" : "Phóng to"}
+              onClick={() => setZoomLevel((z) => Math.min(2.5, Number((z + 0.2).toFixed(2))))}
+              className="p-1.5 hover:bg-white/20 rounded-lg text-amber-200 transition-colors cursor-pointer"
+              title={isEn ? "Zoom in" : "Phóng to brochure"}
             >
               <ZoomIn className="size-4" />
             </button>
           </div>
 
-          {/* Download Front PNG */}
-          <a
-            href="/media/brochure_front.png"
-            download="Brochure_Xiec_Viet_Nam_Bia_Ngoai.png"
-            onClick={() => circusAudio.playBambooStep()}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-amber-400/40 text-xs text-amber-200 hover:text-white transition-all cursor-pointer"
-            title={isEn ? "Download Outside PNG" : "Tải Bìa Ngoài (PNG)"}
+          {/* Gộp 1 nút tải duy nhất: Tải Brochure (tải cả 2 mặt một lượt luôn) */}
+          <Button
+            size="sm"
+            onClick={handleDownloadBoth}
+            disabled={isDownloading}
+            className="bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-amber-950 font-bold px-4 py-2 rounded-xl shadow-lg border border-amber-200 flex items-center gap-2 cursor-pointer transition-all hover:scale-105 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
+            title={isEn ? "Download both outside & inside brochure pages at once" : "Tải trọn bộ brochure (cả 2 mặt ngoài & trong một lượt)"}
           >
-            <Download className="size-3.5 text-amber-300" />
-            <span>{isEn ? "Outside PNG" : "Tải Bìa Ngoài"}</span>
-          </a>
-
-          {/* Download Back PNG */}
-          <a
-            href="/media/brochure_back.png"
-            download="Brochure_Xiec_Viet_Nam_Ruot_Trong.png"
-            onClick={() => circusAudio.playBambooStep()}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-amber-400/40 text-xs text-amber-200 hover:text-white transition-all cursor-pointer"
-            title={isEn ? "Download Inside PNG" : "Tải Ruột Trong (PNG)"}
-          >
-            <Download className="size-3.5 text-amber-300" />
-            <span>{isEn ? "Inside PNG" : "Tải Ruột Trong"}</span>
-          </a>
+            <Download className={`size-4 text-amber-950 ${isDownloading ? "animate-bounce" : ""}`} />
+            <span className="font-semibold text-xs sm:text-sm">
+              {isDownloading ? (isEn ? "Downloading 2 sides..." : "Đang tải 2 mặt...") : (isEn ? "Download Brochure" : "Tải Brochure")}
+            </span>
+            <span className="text-[10px] bg-amber-950/20 text-amber-950 font-extrabold px-1.5 py-0.5 rounded-md font-mono tracking-tight">
+              {isEn ? "2 Sides" : "2 Mặt"}
+            </span>
+          </Button>
         </div>
       </div>
 
@@ -650,7 +760,7 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1 bg-white/10 border border-white/20 rounded-lg p-0.5">
                 <button
-                  onClick={() => setLightboxZoom((z) => Math.max(0.6, z - 0.2))}
+                  onClick={() => setLightboxZoom((z) => Math.max(0.6, Number((z - 0.2).toFixed(2))))}
                   className="p-1.5 hover:bg-white/20 rounded text-white cursor-pointer"
                   title="Zoom Out"
                 >
@@ -660,7 +770,7 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
                   {Math.round(lightboxZoom * 100)}%
                 </span>
                 <button
-                  onClick={() => setLightboxZoom((z) => Math.min(2.5, z + 0.2))}
+                  onClick={() => setLightboxZoom((z) => Math.min(3.0, Number((z + 0.2).toFixed(2))))}
                   className="p-1.5 hover:bg-white/20 rounded text-white cursor-pointer"
                   title="Zoom In"
                 >
@@ -668,14 +778,17 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
                 </button>
               </div>
 
-              <a
-                href={lightboxSide === 'outside' ? '/media/brochure_front.png' : '/media/brochure_back.png'}
-                download={lightboxSide === 'outside' ? 'Brochure_Bia_Ngoai.png' : 'Brochure_Ruot_Trong.png'}
-                className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-amber-300 hover:text-white border border-white/20 transition-all cursor-pointer"
-                title={isEn ? "Download image" : "Tải ảnh về máy"}
+              {/* Nút tải trọn bộ cả 2 mặt ngay trong Modal */}
+              <Button
+                size="sm"
+                onClick={handleDownloadBoth}
+                disabled={isDownloading}
+                className="bg-amber-400 hover:bg-amber-300 text-amber-950 text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 cursor-pointer shadow transition-all disabled:opacity-70"
+                title={isEn ? "Download complete brochure (both sides at once)" : "Tải brochure (cả 2 mặt cùng lúc)"}
               >
-                <Download className="size-4" />
-              </a>
+                <Download className={`size-3.5 ${isDownloading ? "animate-bounce" : ""}`} />
+                <span>{isDownloading ? (isEn ? "Downloading..." : "Đang tải...") : (isEn ? "Download Brochure" : "Tải Brochure (2 Mặt)")}</span>
+              </Button>
 
               <button
                 onClick={closeLightbox}
@@ -687,12 +800,19 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
             </div>
           </div>
 
-          {/* Modal Content / Pan-able image */}
-          <div className="flex-1 overflow-auto flex items-center justify-center p-4">
+          {/* Modal Content / Pan-able image with wheel zoom */}
+          <div
+            onWheel={(e) => {
+              e.stopPropagation();
+              const delta = e.deltaY < 0 ? 0.2 : -0.2;
+              setLightboxZoom((z) => Math.min(3.0, Math.max(0.6, Number((z + delta).toFixed(2)))));
+            }}
+            className="flex-1 overflow-auto flex items-center justify-center p-4 cursor-grab active:cursor-grabbing"
+          >
             <div
               style={{
                 transform: `scale(${lightboxZoom})`,
-                transition: "transform 0.2s ease-out",
+                transition: "transform 0.15s ease-out",
               }}
               className="max-w-full max-h-full flex items-center justify-center shadow-2xl rounded-lg overflow-hidden border border-amber-400/30"
             >
@@ -709,8 +829,8 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
             <span>💡</span>
             <span>
               {isEn
-                ? "Tip: Use the zoom controls or download the image to read text and explore details."
-                : "Mẹo: Nhấn nút phóng to (+) hoặc tải ảnh về máy để xem rõ từng chi tiết và văn bản của brochure."}
+                ? "Tip: Use the zoom controls or scroll your mouse wheel to zoom in up to 300% and explore every detail."
+                : "Mẹo: Dùng thanh phóng to hoặc cuộn chuột để zoom lên tới 300% và đọc rõ từng chi tiết của brochure."}
             </span>
           </div>
         </div>
