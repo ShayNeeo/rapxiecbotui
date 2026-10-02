@@ -211,7 +211,6 @@ export const CircusHeader: React.FC<CircusHeaderProps> = ({
               id: 'circus3d' as CircusActId, 
               label: t.nav.circus3d, 
               icon: Box, 
-              href: '/3d' 
             },
             { id: 'quiz' as CircusActId, label: t.nav.quiz, icon: HelpCircle },
             { id: 'map' as CircusActId, label: t.nav.map, icon: MapPin },
@@ -243,9 +242,13 @@ export const CircusHeader: React.FC<CircusHeaderProps> = ({
                       }
                     }}
                     title={tab.label}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all cursor-pointer bg-amber-400 hover:bg-amber-300 text-amber-950 shadow-sm border border-amber-300 group"
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all cursor-pointer ${
+                      isActive
+                        ? 'bg-amber-400 text-amber-950 font-bold shadow-md shadow-amber-400/30 scale-105'
+                        : 'text-amber-100/80 hover:text-white hover:bg-white/10'
+                    }`}
                   >
-                    <Icon className="size-3.5 text-amber-950 group-hover:scale-110 transition-transform" />
+                    <Icon className={`size-3.5 ${isActive ? 'text-red-700' : 'text-amber-300'}`} />
                     <span>{tab.label}</span>
                   </Link>
                 );
@@ -279,6 +282,9 @@ export const CircusHeader: React.FC<CircusHeaderProps> = ({
                 onClick={() => {
                   if (tab.id === 'archive') {
                     onUnlockBadge?.('circus-digital-archive');
+                  }
+                  if (tab.id === 'circus3d') {
+                    onUnlockBadge?.('circus-3d-explorer');
                   }
                   onSelectAct(tab.id);
                   circusAudio.playBambooStep();
