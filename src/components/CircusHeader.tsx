@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Icon } from "@/src/components/Icon";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { circusAudio } from "@/src/utils/audio";
 import { CircusActId } from "@/src/types";
 import { useLanguage } from "@/src/context/LanguageContext";
@@ -48,6 +48,7 @@ export const CircusHeader: React.FC<CircusHeaderProps> = ({
   onUnlockBadge,
 }) => {
   const { language, setLanguage, isEn } = useLanguage();
+  const location = useLocation();
   const t = TRANSLATIONS[language];
   const headerFileRef = React.useRef<HTMLInputElement>(null);
 
@@ -229,6 +230,7 @@ export const CircusHeader: React.FC<CircusHeaderProps> = ({
             if (tab.href) {
               const isInternal = tab.href.startsWith('/');
               if (isInternal) {
+                const isRouteActive = location.pathname === tab.href;
                 return (
                   <Link
                     key={tab.id}
@@ -243,9 +245,13 @@ export const CircusHeader: React.FC<CircusHeaderProps> = ({
                       }
                     }}
                     title={tab.label}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all cursor-pointer bg-amber-400 hover:bg-amber-300 text-amber-950 shadow-sm border border-amber-300 group"
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs transition-all cursor-pointer whitespace-nowrap group ${
+                      isRouteActive
+                        ? 'bg-amber-400 text-amber-950 font-bold shadow-md shadow-amber-400/30 scale-105 border border-amber-300'
+                        : 'text-amber-100/80 hover:text-white hover:bg-white/10 font-medium'
+                    }`}
                   >
-                    <Icon className="size-3.5 text-amber-950 group-hover:scale-110 transition-transform" />
+                    <Icon className={`size-3.5 transition-transform group-hover:scale-110 ${isRouteActive ? 'text-red-700' : 'text-amber-300'}`} />
                     <span>{tab.label}</span>
                   </Link>
                 );

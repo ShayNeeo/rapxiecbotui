@@ -9,7 +9,6 @@ import {
   MousePointer2,
   Ticket,
   ArrowLeft,
-  MessageSquareText,
 } from 'lucide-react'
 import { Scene } from './scene'
 import { InfoPanel } from './info-panel'
@@ -57,15 +56,6 @@ export function CircusExperience() {
             <ArrowLeft className="h-4 w-4" />
             <span className="hidden sm:inline">Về Sân Khấu Chính</span>
             <span className="sm:hidden">Trang chủ</span>
-          </Link>
-
-          <Link
-            to="/chatbot"
-            className="flex items-center gap-2 rounded-xl border border-border bg-card/85 px-3 py-2 text-xs font-semibold text-foreground backdrop-blur-md transition-all hover:bg-accent hover:text-accent-foreground shadow-md cursor-pointer"
-            title="Trò chuyện cùng Chatbot AI"
-          >
-            <MessageSquareText className="h-4 w-4 text-accent" />
-            <span className="hidden sm:inline">Chatbot AI</span>
           </Link>
         </div>
 
