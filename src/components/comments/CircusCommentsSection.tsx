@@ -14,7 +14,6 @@ import {
   Trash2,
   RefreshCw,
   AlertCircle,
-  User,
 } from 'lucide-react';
 import { GoogleIcon } from '@/src/components/icons/GoogleIcon';
 import {
@@ -26,8 +25,6 @@ import {
   clearCurrentUser,
   getComments,
   getCurrentUser,
-  saveCurrentUser,
-  createGuestUser,
   toggleLikeComment,
   subscribeComments,
   fetchRemoteComments,
@@ -53,7 +50,6 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
   const [toastNotice, setToastNotice] = useState<string | null>(null);
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [inlineName, setInlineName] = useState('');
 
   useEffect(() => {
     setCurrentUser(getCurrentUser());
@@ -74,18 +70,6 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
   const handleLogout = () => {
     clearCurrentUser();
     setCurrentUser(null);
-    setInlineName('');
-  };
-
-  const handleInlineNameSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const trimmed = inlineName.trim();
-    if (!trimmed) return;
-
-    const user = createGuestUser(trimmed);
-    saveCurrentUser(user);
-    setCurrentUser(user);
-    setInlineName('');
   };
 
   const handleRefresh = async () => {
@@ -114,9 +98,6 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
         tag,
       });
 
-      // Đảm bảo hiển thị bình luận mới ngay lập tức trên trang web và không bị biến mất
-      setFilterTag('all'); // Tự động đưa bộ lọc về 'all' để bình luận vừa đăng luôn hiển thị ngay ở đầu danh sách
-      setComments(getComments()); // Đồng bộ state tức thì
       setContent('');
       setIsSubmitting(false);
       setShowSuccessToast(true);
@@ -262,36 +243,23 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
                 </div>
                 <div>
                   <h4 className="text-xs sm:text-sm font-bold text-amber-200">
-                    {isEn ? 'Enter your name to contribute' : 'Nhập tên của bạn để đóng góp ý kiến'}
+                    {isEn ? 'Enter your name to comment' : 'Nhập tên của bạn để bình luận'}
                   </h4>
                   <p className="text-[11px] text-amber-100/80">
                     {isEn
-                      ? 'Type your name below to unlock the feedback box and post public suggestions.'
-                      : 'Nhập tên của bạn để mở ngay phần đóng góp ý kiến và bình luận công khai.'}
+                      ? 'Enter your name to post public suggestions and impressions.'
+                      : 'Nhập tên của bạn để đăng ý kiến đóng góp và cảm nhận công khai.'}
                   </p>
                 </div>
               </div>
 
-              {/* Inline Name Input Form */}
-              <form onSubmit={handleInlineNameSubmit} className="flex items-center gap-2 w-full sm:w-auto">
-                <div className="relative flex-1 sm:w-56">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-amber-300/70" />
-                  <input
-                    type="text"
-                    value={inlineName}
-                    onChange={(e) => setInlineName(e.target.value)}
-                    placeholder={isEn ? 'Enter your name...' : 'Nhập tên của bạn...'}
-                    className="w-full pl-9 pr-3 py-2 rounded-xl bg-[#260505]/95 border-2 border-amber-400/60 focus:border-amber-300 focus:outline-none text-amber-100 text-xs sm:text-sm placeholder:text-amber-200/50 transition-all shadow-inner"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  disabled={!inlineName.trim()}
-                  className="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-300 hover:to-yellow-300 text-red-950 font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all shadow-md hover:shadow-amber-400/30 cursor-pointer shrink-0 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-102 active:scale-98 border border-amber-200/50"
-                >
-                  <span>{isEn ? 'Confirm' : 'Xác Nhận'}</span>
-                </button>
-              </form>
+              <button
+                type="button"
+                onClick={() => setIsLoginModalOpen(true)}
+                className="px-4.5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-300 hover:to-yellow-300 text-red-950 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-amber-400/30 cursor-pointer shrink-0 hover:scale-102 active:scale-98 border border-amber-200/50"
+              >
+                <span>{isEn ? 'Enter Your Name' : 'Nhập Tên Của Bạn'}</span>
+              </button>
             </div>
           )}
         </div>
