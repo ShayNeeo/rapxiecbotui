@@ -183,6 +183,68 @@ export const CIRCUS_CONTEMPORARY_INFO_ANSWER_EN = `👉🏻🎪 In Vietnam, prof
 🎟️🤹‍♀️ Evolving from classical circus, the Contemporary Circus (Nouveau Cirque) movement took shape in Europe in the 1970s. It replaces animal acts with human physical virtuosity, merging acrobatics with contemporary dance, original live music, visual poetry, and meaningful storytelling.`
 
 /**
+ * ==============================================================================
+ * ENGLISH PREDEFINED ANSWER 14: TẠ DUY HIỂN BIOGRAPHY
+ * ==============================================================================
+ */
+export const CIRCUS_TA_DUY_HIEN_ANSWER_EN = `Tạ Duy Hiển (born October 10, 1889 in Cầu Đất, Hanoi – passed away October 3, 1967) is honored as the "Father / Founding Pioneer of Vietnamese Circus Arts".
+
+- **Apprenticeship & Beginnings:** Acquired circus skills from street performers and foreign acrobats; received his first trained circus pony named "Tí Ti".
+- **Founding & Debut:** Established the Vietnam Circus Troupe with relatives, premiering with tremendous acclaim on December 5, 1922 at Hàng Da Market, Hanoi.
+- **Expansion:** Acquired all performing animals from the bankrupt British Harmston's Circus in late 1922, creating the largest troupe in Indochina.
+- **Overcoming Adversity:** In 1926, despite betrayal and losing star performers to competitors, he persevered, trained his wife, and led touring productions across Vietnam and Indochina.
+- **National Dedication:** In 1956, merged his troupe into the Central Circus Troupe, serving as Leader of the Thống Nhất Circus Troupe.
+- **National Honor:** Upon his passing in 1967 (aged 78), President Hồ Chí Minh sent a condolence letter acknowledging his outstanding lifetime contributions to national performing arts.`
+
+/**
+ * ==============================================================================
+ * ENGLISH PREDEFINED ANSWER 15: PHILIP ASTLEY BIOGRAPHY
+ * ==============================================================================
+ */
+export const CIRCUS_PHILIP_ASTLEY_ANSWER_EN = `Philip Astley (January 8, 1742 – January 27, 1814) was an English equestrian, circus owner, and inventor widely recognized as the father of modern circus.
+
+- **Background & Military Service:** Son of a cabinet-maker in England; joined the cavalry at age 17 out of passion for horses, rising to sergeant-major and horse trainer after 7 years of service.
+- **Invention of the Circus Ring (1768):** Founded a riding school in London, pioneering equestrian stunts performed in a 42-foot diameter circle instead of a straight line.
+- **Defining Modern Circus:** In 1770, added acrobats, tightrope walkers, jugglers, and clowns; in 1780, roofed the amphitheater for winter performances.
+- **Expansion:** Achieved wide acclaim, opening the first amphitheater in Paris (1782) and establishing 18 other circuses across Europe.`
+
+/**
+ * ==============================================================================
+ * ENGLISH PREDEFINED ANSWER 16: FOLK CULTURE IN CONTEMPORARY CIRCUS
+ * ==============================================================================
+ */
+export const CIRCUS_FOLK_CULTURE_ANSWER_EN = `Vietnamese circus artists integrate folk cultural elements into contemporary circus by transforming them into core stage props, scenography, and live traditional music that narrate poignant Vietnamese cultural stories:
+
+- **Props & Scenography:** Bamboo and rattan are stylized into aerial poles, ladders, and climbing frames directly used for acrobatics and balancing (such as in My Village / Làng Tôi, À Ố Show).
+- **Folk Music:** Live performances with gongs, bamboo flutes, monochord (đàn bầu), and T'rưng guide and elevate emotional rhythms during dramatic stunts.
+- **Physical Expression:** Harmonizing traditional folk melodies with contemporary body movement, requiring artists to master both circus virtuosity and emotive acting.
+- **Stage Innovation:** Fusing modern lighting and 3D mapping projections with rustic organic materials to recreate mythical, poetic Vietnamese landscapes.`
+
+/**
+ * ==============================================================================
+ * ENGLISH PREDEFINED ANSWER 17: À Ố SHOW
+ * ==============================================================================
+ */
+export const CIRCUS_AO_SHOW_ANSWER_EN = `À Ố Show is an acclaimed contemporary circus production combining bamboo circus and contemporary dance, capturing the dynamic transition from rustic rural village life to vibrant modern urbanization (derived from the Vietnamese vowels in "Làng" [village] and "Phố" [town]). Utilizing all-bamboo props symbolizing resilient Vietnamese youth, the show delivers a deeply poetic cultural journey at the Saigon Opera House.
+
+- **Ticket booking:** [luneproduction.com/ao-show?location_id=1&from_date=2026-10-05T00%3A00%3A00Z](https://luneproduction.com/ao-show?location_id=1&from_date=2026-10-05T00%3A00%3A00Z)
+- **Duration:** 60 minutes
+- **Address:** 07 Lam Son Square, Ben Nghe Ward, District 1, Ho Chi Minh City (Municipal Theater / Opera House)
+- **Map:** https://maps.app.goo.gl/WWLX2kTfvQx3e65L8?g_st=ipc`
+
+/**
+ * ==============================================================================
+ * ENGLISH PREDEFINED ANSWER 18: MƠ SHOW
+ * ==============================================================================
+ */
+export const CIRCUS_MO_SHOW_ANSWER_EN = `Mơ Show (Dreamscape Show) portrays a child's coming-of-age journey from their first cry at birth through progressive exploration of the surrounding world. Through poetic lighting, colors, evocative sound, and symbolic physical theater, the production reflects the process of emotional awakening, self-discovery, and finding the spiritual essence of art.
+
+- **Ticket booking:** https://datve.nhahatphuongnam.com.vn/event/vo-dien-mo-show-dreamscape-show-3891/detail
+- **Duration:** 70 minutes
+- **Address:** Phú Thọ Circus & Multipurpose Performance Center (Lữ Gia Street, Phú Thọ Ward, HCMC)
+- **Map:** https://maps.app.goo.gl/GFoJWHMCsHR8g4qT7?g_st=ipc`
+
+/**
  * English RAG Source Citations
  */
 export const CIRCUS_VENUES_SOURCE_EN: RetrievedSource = {
@@ -287,4 +349,44 @@ export const CIRCUS_CONTEMPORARY_INFO_SOURCE_EN: RetrievedSource = {
   category: 'knowledge',
   similarity: 1.0,
   content: CIRCUS_CONTEMPORARY_INFO_ANSWER_EN,
+}
+
+export const CIRCUS_TA_DUY_HIEN_SOURCE_EN: RetrievedSource = {
+  id: 'circus-ta-duy-hien-biography-official-en',
+  title: "Tạ Duy Hiển - Father of Vietnamese Circus Arts",
+  category: 'history',
+  similarity: 1.0,
+  content: CIRCUS_TA_DUY_HIEN_ANSWER_EN,
+}
+
+export const CIRCUS_PHILIP_ASTLEY_SOURCE_EN: RetrievedSource = {
+  id: 'circus-philip-astley-biography-official-en',
+  title: 'Philip Astley - Father of Modern Circus',
+  category: 'history',
+  similarity: 1.0,
+  content: CIRCUS_PHILIP_ASTLEY_ANSWER_EN,
+}
+
+export const CIRCUS_FOLK_CULTURE_SOURCE_EN: RetrievedSource = {
+  id: 'circus-folk-culture-elements-official-en',
+  title: 'Integrating Vietnamese Folk Culture into Contemporary Circus',
+  category: 'knowledge',
+  similarity: 1.0,
+  content: CIRCUS_FOLK_CULTURE_ANSWER_EN,
+}
+
+export const CIRCUS_AO_SHOW_SOURCE_EN: RetrievedSource = {
+  id: 'circus-ao-show-information-official-en',
+  title: 'À Ố Show - Masterpiece of Bamboo Contemporary Circus',
+  category: 'venues',
+  similarity: 1.0,
+  content: CIRCUS_AO_SHOW_ANSWER_EN,
+}
+
+export const CIRCUS_MO_SHOW_SOURCE_EN: RetrievedSource = {
+  id: 'circus-mo-show-information-official-en',
+  title: 'Mơ Show (Dreamscape Show) - Journey of Childhood Awakening',
+  category: 'venues',
+  similarity: 1.0,
+  content: CIRCUS_MO_SHOW_ANSWER_EN,
 }

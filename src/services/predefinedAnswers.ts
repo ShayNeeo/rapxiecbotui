@@ -13,6 +13,11 @@ import {
   CIRCUS_AUDIENCE_AGE_ANSWER_EN,
   CIRCUS_PROPS_ANSWER_EN,
   CIRCUS_CONTEMPORARY_INFO_ANSWER_EN,
+  CIRCUS_TA_DUY_HIEN_ANSWER_EN,
+  CIRCUS_PHILIP_ASTLEY_ANSWER_EN,
+  CIRCUS_FOLK_CULTURE_ANSWER_EN,
+  CIRCUS_AO_SHOW_ANSWER_EN,
+  CIRCUS_MO_SHOW_ANSWER_EN,
   CIRCUS_VENUES_SOURCE_EN,
   CIRCUS_DIFF_SOURCE_EN,
   CIRCUS_DURATION_SOURCE_EN,
@@ -26,6 +31,11 @@ import {
   CIRCUS_AUDIENCE_AGE_SOURCE_EN,
   CIRCUS_PROPS_SOURCE_EN,
   CIRCUS_CONTEMPORARY_INFO_SOURCE_EN,
+  CIRCUS_TA_DUY_HIEN_SOURCE_EN,
+  CIRCUS_PHILIP_ASTLEY_SOURCE_EN,
+  CIRCUS_FOLK_CULTURE_SOURCE_EN,
+  CIRCUS_AO_SHOW_SOURCE_EN,
+  CIRCUS_MO_SHOW_SOURCE_EN,
 } from './predefinedAnswersEn'
 
 /**
@@ -219,6 +229,68 @@ export const CIRCUS_CONTEMPORARY_INFO_ANSWER = `👉🏻🎪 Tại Việt Nam, n
 🎭 Loại hình này chịu ảnh hưởng từ phong trào Nouveau Cirque tại Pháp, hướng đến việc đổi mới tư duy sáng tạo trong nghệ thuật biểu diễn, giảm dần sự phụ thuộc vào các tiết mục trình diễn động vật và tăng cường khả năng biểu đạt của cơ thể con người thông qua sự kết hợp giữa kỹ thuật xiếc với các yếu tố sân khấu, múa đương đại, âm nhạc, mỹ thuật, ánh sáng và nghệ thuật kể chuyện.`
 
 /**
+ * ==============================================================================
+ * CÂU TRẢ LỜI CỐ ĐỊNH 14: TIỂU SỬ VÀ SỰ NGHIỆP CỤ TẠ DUY HIỂN
+ * ==============================================================================
+ */
+export const CIRCUS_TA_DUY_HIEN_ANSWER = `Tạ Duy Hiển sinh ngày 10/10/1889 tại phố Cầu Đất (Hà Nội), mất ngày 03/10/1967 - “Ông tổ ngành xiếc Việt Nam”
+
+- 🐎 **Học nghề & khởi đầu:** Ông tích lũy kinh nghiệm từ các gánh xiếc đường phố, nghệ sĩ ngoại quốc và nhận tặng vật là chú ngựa xiếc đầu tiên mang tên Tí Ti.
+- 🎪 **Thành lập & ra mắt:** Ông lập đoàn xiếc Việt Nam, chiêu mộ người thân luyện tập và ra mắt thành công vang dội ngày 5/12/1922 tại chợ Hàng Da.
+- 🦁 **Mở rộng quy mô:** Mua lại toàn bộ thú diễn từ đoàn xiếc Anh Harmston’s bị phá sản cuối năm 1922, đưa đoàn lên quy mô lớn nhất đương thời.
+- 🎭 **Vượt qua cạnh tranh:** Bị học trò Khánh Vân phản bội và lôi kéo ngôi sao cô Nghiêm năm 1926, ông bình tĩnh đào tạo vợ thay thế và tiếp tục đưa đoàn lưu diễn trong nước cùng Đông Dương.
+- 🇻🇳 **Cống hiến cho Nhà nước:** Năm 1956, ông sáp nhập đoàn vào Đội Xiếc Trung ương, giữ chức Trưởng đoàn Xiếc Thống Nhất.
+- 🎖️ **Tôn vinh:** Qua đời năm 1967 (thọ 78 tuổi), ông được Chủ tịch Hồ Chí Minh gửi thư chia buồn và ghi nhận công lao to lớn cho nghệ thuật nước nhà.`
+
+/**
+ * ==============================================================================
+ * CÂU TRẢ LỜI CỐ ĐỊNH 15: TIỂU SỬ PHILIP ASTLEY (CHA ĐẺ XIẾC HIỆN ĐẠI)
+ * ==============================================================================
+ */
+export const CIRCUS_PHILIP_ASTLEY_ANSWER = `Philip Astley (8.1.1742 - 27.1.1814) là một người cưỡi ngựa người Anh, là chủ sở hữu của rạp xiếc, là nhà phát minh và được biết đến như là cha đẻ của nghệ thuật xiếc hiện đại.
+
+- 🐎 **Xuất thân & Quân ngũ:** Là con thợ mộc ở Anh, 17 tuổi gia nhập kỵ binh vì mê ngựa, thăng đến trung sĩ và thành chuyên gia cưỡi và dạy ngựa sau 7 năm phục vụ.
+- ⭕ **Khai sinh vòng xiếc (1768):** Lập trường cưỡi ngựa tại London, phát minh biểu diễn cưỡi ngựa theo đường tròn (đường kính 42 ft) thay vì đường thẳng.
+- 🎪 **Định hình mô hình xiếc hiện đại:** Năm 1770, kết hợp thêm nhào lộn, dây thăng bằng, tung hứng, hề; năm 1780, làm mái che cho rạp để diễn mùa đông.
+- 🌍 **Mở rộng quy mô:** Rạp xiếc nổi tiếng rộng rãi, lập rạp đầu tiên tại Pháp (1782) và mở thêm 18 rạp trên khắp châu Âu.`
+
+/**
+ * ==============================================================================
+ * CÂU TRẢ LỜI CỐ ĐỊNH 16: ĐƯA CHẤT LIỆU DÂN GIAN VÀO XIẾC ĐƯƠNG ĐẠI
+ * ==============================================================================
+ */
+export const CIRCUS_FOLK_CULTURE_ANSWER = `Nghệ sĩ xiếc Việt Nam đưa chất liệu văn hóa dân gian vào xiếc đương đại bằng cách biến chúng thành đạo cụ biểu diễn trực tiếp, không gian nghệ thuật, và âm nhạc chủ đạo để kể câu chuyện mang đậm bản sắc Việt:
+
+- 🎋 **Đạo cụ & sân khấu:** Tre, nứa được cách điệu thành cột đu, thang, khung leo phục vụ trực tiếp cho nhào lộn, thăng bằng (như vở Làng tôi, À Ố Show).
+- 🎶 **Âm nhạc dân tộc:** Cồng chiêng, sáo trúc, đàn bầu, T'rưng tấu trực tiếp, giữ vai trò dẫn dắt cảm xúc cho từng động tác kịch tính.
+- 💃 **Ngôn ngữ biểu diễn:** Hòa quyện làn điệu dân ca với vũ đạo hình thể, yêu cầu diễn viên vừa giỏi kỹ thuật xiếc vừa biết diễn xuất, cảm thụ âm nhạc.
+- 💡 **Công nghệ sân khấu:** Kết hợp ánh sáng hiện đại và trình chiếu 3D mapping với chất liệu tre nứa mộc mạc để tái hiện các không gian huyền thoại.`
+
+/**
+ * ==============================================================================
+ * CÂU TRẢ LỜI CỐ ĐỊNH 17: THÔNG TIN VỞ DIỄN À Ố SHOW
+ * ==============================================================================
+ */
+export const CIRCUS_AO_SHOW_ANSWER = `À Ố Show là vở diễn nghệ thuật kết hợp giữa xiếc tre và múa đương đại, khắc họa sinh động sự chuyển mình từ làng quê mộc mạc đến phố thị hiện đại (bắt nguồn từ hai nguyên âm trong "Làng" và "Phố"). Với toàn bộ đạo cụ làm từ tre — biểu tượng của sự kiên cường và sức trẻ người nghệ sĩ — chương trình đưa khán giả vào hành trình đầy cảm xúc, đậm đà bản sắc văn hóa Việt Nam tại Nhà hát TP. Hồ Chí Minh.
+
+- 🎟️ **Link bán vé:** [luneproduction.com/ao-show?location_id=1&from_date=2026-10-05T00%3A00%3A00Z](https://luneproduction.com/ao-show?location_id=1&from_date=2026-10-05T00%3A00%3A00Z)
+- ⏰ **Thời lượng:** 60 phút
+- 📍 **Địa chỉ:** 07 Công Trường Lam Sơn, Phường Sài Gòn, Thành phố Hồ Chí Minh (Nhà hát Thành phố)
+- 🗺️ **Bản đồ:** https://maps.app.goo.gl/WWLX2kTfvQx3e65L8?g_st=ipc`
+
+/**
+ * ==============================================================================
+ * CÂU TRẢ LỜI CỐ ĐỊNH 18: THÔNG TIN VỞ DIỄN MƠ SHOW
+ * ==============================================================================
+ */
+export const CIRCUS_MO_SHOW_ANSWER = `Mơ Show kể câu chuyện về hành trình trưởng thành của một đứa trẻ từ lúc cất tiếng khóc chào đời đến khi từng bước khám phá thế giới xung quanh. Thông qua ánh sáng, màu sắc, âm thanh và chuyển động sân khấu giàu tính biểu tượng, vở diễn tái hiện quá trình nhận diện cảm xúc, khám phá bản thân và tìm thấy ý nghĩa của nghệ thuật trong đời sống tinh thần.
+
+- 🎟️ **Link bán vé:** https://datve.nhahatphuongnam.com.vn/event/vo-dien-mo-show-dreamscape-show-3891/detail
+- ⏰ **Thời lượng:** 70 phút
+- 📍 **Địa chỉ:** Rạp xiếc và biểu diễn đa năng Phú Thọ (đường Lữ Gia, phường Phú Thọ HCM)
+- 🗺️ **Bản đồ:** https://maps.app.goo.gl/GFoJWHMCsHR8g4qT7?g_st=ipc`
+
+/**
  * Chuẩn hóa chuỗi tiếng Việt không dấu, loại bỏ ký tự đặc biệt để so khớp chính xác
  */
 export function normalizeVietnamese(str: string): string {
@@ -261,13 +333,25 @@ export function isEnglishQuery(query: string): boolean {
     'when did',
     'does difficult',
     'biggest challenges',
+    'who is ta duy hien',
+    'ta duy hien',
+    'who is philip astley',
+    'philip astley',
+    'folk culture',
+    'bamboo and folk',
+    'what is ao show',
+    'ao show',
+    'what is mo show',
+    'mo show',
+    'dreamscape show',
   ]
   for (const p of enPatterns) {
     if (q.includes(p)) return true
   }
   const enKeywords = [
     'circus', 'contemporary', 'traditional', 'technique', 'artist',
-    'tickets', 'venues', 'vietnam', 'vietnamese', 'props', 'training'
+    'tickets', 'venues', 'vietnam', 'vietnamese', 'props', 'training',
+    'astley', 'dreamscape'
   ]
   let hits = 0
   for (const w of enKeywords) {
@@ -1048,6 +1132,265 @@ export function matchCircusContemporaryInfoQuestion(query: string): boolean {
   return false
 }
 
+/**
+ * 14. Khớp câu hỏi: Tạ Duy Hiển là ai / Ông tổ ngành xiếc Việt Nam
+ */
+export function matchCircusTaDuyHienQuestion(query: string): boolean {
+  const q = query.toLowerCase()
+  if (
+    q.includes('who is ta duy hien') ||
+    q.includes('father of vietnamese circus') ||
+    (q.includes('ta duy hien') && (q.includes('who') || q.includes('biography') || q.includes('about')))
+  ) {
+    return true
+  }
+
+  const norm = normalizeVietnamese(query)
+  if (!norm) return false
+
+  // Tránh xung đột với câu hỏi các giai đoạn lịch sử
+  if (norm.includes('tung giai doan') || norm.includes('cac giai doan') || norm.includes('lich su phat trien')) {
+    return false
+  }
+
+  const exactPatterns = [
+    'ta duy hien la ai',
+    'ong ta duy hien la ai',
+    'cu ta duy hien la ai',
+    'nsnd ta duy hien la ai',
+    'ta duy hien',
+    'cu ta duy hien',
+    'ong to nganh xiec viet nam la ai',
+    'ong to nganh xiec viet nam',
+    'ong to xiec viet nam',
+    'cu to nganh xiec viet nam',
+    'cu to xiec viet nam',
+    'cu to nganh xiec',
+    'tieu su ta duy hien',
+    'thong tin ve ta duy hien',
+    'thong tin ta duy hien',
+    'nguoi dat nen mong cho xiec viet nam',
+    'ai la nguoi dat nen mong cho xiec viet nam',
+    'ai la ong to xiec viet nam',
+    'ai la ong to nganh xiec viet nam',
+  ]
+
+  for (const pattern of exactPatterns) {
+    if (norm === pattern || norm.includes(pattern)) {
+      return true
+    }
+  }
+
+  if (norm.includes('ta duy hien')) {
+    return true
+  }
+
+  return false
+}
+
+/**
+ * 15. Khớp câu hỏi: Philip Astley là ai / Cha đẻ của xiếc hiện đại
+ */
+export function matchCircusPhilipAstleyQuestion(query: string): boolean {
+  const q = query.toLowerCase()
+  if (
+    q.includes('who is philip astley') ||
+    q.includes('father of modern circus') ||
+    (q.includes('philip astley') && (q.includes('who') || q.includes('biography') || q.includes('about'))) ||
+    q === 'philip astley'
+  ) {
+    return true
+  }
+
+  const norm = normalizeVietnamese(query)
+  if (!norm) return false
+
+  const exactPatterns = [
+    'philip astley la ai',
+    'philip astley',
+    'astley la ai',
+    'astley',
+    'cha de cua nghe thuat xiec hien dai',
+    'cha de nghe thuat xiec hien dai',
+    'cha de cua xiec hien dai',
+    'cha de xiec hien dai',
+    'ai la cha de cua xiec hien dai',
+    'ai la cha de xiec hien dai',
+    'nguoi khai sinh xiec hien dai',
+    'tieu su philip astley',
+    'thong tin ve philip astley',
+  ]
+
+  for (const pattern of exactPatterns) {
+    if (norm === pattern || norm.includes(pattern)) {
+      return true
+    }
+  }
+
+  if (norm.includes('philip astley') || norm.includes('astley')) {
+    return true
+  }
+
+  if (norm.includes('cha de') && norm.includes('xiec')) {
+    return true
+  }
+
+  return false
+}
+
+/**
+ * 16. Khớp câu hỏi: Các nghệ sĩ xiếc Việt Nam làm thế nào để đưa chất liệu văn hóa dân gian vào xiếc đương đại
+ */
+export function matchCircusFolkCultureQuestion(query: string): boolean {
+  const q = query.toLowerCase()
+  if (
+    q.includes('folk culture') ||
+    q.includes('bamboo and folk') ||
+    (q.includes('folk') && q.includes('contemporary circus')) ||
+    (q.includes('cultural elements') && q.includes('contemporary circus'))
+  ) {
+    return true
+  }
+
+  const norm = normalizeVietnamese(query)
+  if (!norm) return false
+
+  const exactPatterns = [
+    'cac nghe si xiec viet nam lam the nao de dua chat lieu van hoa dan gian tre nua cong chieng lan dieu dan ca vao xiec duong dai',
+    'cac nghe si xiec viet nam lam the nao de dua chat lieu van hoa dan gian vao xiec duong dai',
+    'lam the nao de dua chat lieu van hoa dan gian vao xiec duong dai',
+    'dua chat lieu van hoa dan gian vao xiec duong dai',
+    'chat lieu van hoa dan gian trong xiec duong dai',
+    'chat lieu van hoa dan gian',
+    'chat lieu dan gian trong xiec duong dai',
+    'chat lieu dan gian trong xiec',
+    'chat lieu dan gian',
+    'van hoa dan gian trong xiec duong dai',
+    'van hoa dan gian trong xiec',
+    'van hoa dan gian vao xiec duong dai',
+    'cong chieng lan dieu dan ca vao xiec',
+    'dua van hoa dan gian vao xiec',
+  ]
+
+  for (const pattern of exactPatterns) {
+    if (norm === pattern || norm.includes(pattern)) {
+      return true
+    }
+  }
+
+  const hasFolk = norm.includes('van hoa dan gian') || norm.includes('chat lieu dan gian') || norm.includes('dan gian')
+  const hasCircus = norm.includes('xiec') || norm.includes('xiec duong dai')
+  const hasAction = norm.includes('dua') || norm.includes('ket hop') || norm.includes('su dung') || norm.includes('trong')
+
+  if (hasFolk && hasCircus && (hasAction || norm.includes('chat lieu'))) {
+    return true
+  }
+
+  return false
+}
+
+/**
+ * 17. Khớp câu hỏi: À Ố SHOW là gì
+ */
+export function matchCircusAoShowQuestion(query: string): boolean {
+  const q = query.toLowerCase()
+  if (
+    q.includes('what is ao show') ||
+    q.includes('about ao show') ||
+    q === 'ao show' ||
+    q.includes('a o show')
+  ) {
+    return true
+  }
+
+  const norm = normalizeVietnamese(query)
+  if (!norm) return false
+
+  // Không khớp nếu hỏi mua vé / địa chỉ (đã có bộ match riêng)
+  if (norm.includes('mua ve') || norm.includes('dat ve') || norm.includes('o dau')) {
+    return false
+  }
+
+  const exactPatterns = [
+    'a o show la gi',
+    'a o show',
+    'vo dien a o show la gi',
+    'vo dien a o show',
+    'thong tin ve a o show',
+    'thong tin a o show',
+    'gioi thieu ve a o show',
+    'gioi thieu a o show',
+    'tim hieu ve a o show',
+    'tim hieu a o show',
+    'noi dung a o show',
+    'y nghia a o show',
+  ]
+
+  for (const pattern of exactPatterns) {
+    if (norm === pattern || norm.includes(pattern)) {
+      return true
+    }
+  }
+
+  if (norm.includes('a o show')) {
+    return true
+  }
+
+  return false
+}
+
+/**
+ * 18. Khớp câu hỏi: MƠ SHOW là gì
+ */
+export function matchCircusMoShowQuestion(query: string): boolean {
+  const q = query.toLowerCase()
+  if (
+    q.includes('what is mo show') ||
+    q.includes('about mo show') ||
+    q.includes('dreamscape show') ||
+    q === 'mo show'
+  ) {
+    return true
+  }
+
+  const norm = normalizeVietnamese(query)
+  if (!norm) return false
+
+  // Không khớp nếu hỏi mua vé / địa chỉ
+  if (norm.includes('mua ve') || norm.includes('dat ve') || norm.includes('o dau')) {
+    return false
+  }
+
+  const exactPatterns = [
+    'mo show la gi',
+    'mo show',
+    'dreamscape show la gi',
+    'dreamscape show',
+    'vo dien mo show la gi',
+    'vo dien mo show',
+    'thong tin ve mo show',
+    'thong tin mo show',
+    'gioi thieu ve mo show',
+    'gioi thieu mo show',
+    'tim hieu ve mo show',
+    'tim hieu mo show',
+    'noi dung mo show',
+    'y nghia mo show',
+  ]
+
+  for (const pattern of exactPatterns) {
+    if (norm === pattern || norm.includes(pattern)) {
+      return true
+    }
+  }
+
+  if (norm.includes('mo show') || norm.includes('dreamscape show')) {
+    return true
+  }
+
+  return false
+}
+
 export const CIRCUS_VENUES_SOURCE: RetrievedSource = {
   id: 'circus-venues-and-tickets-official',
   title: 'Địa điểm biểu diễn và hướng dẫn mua vé các Rạp Xiếc Việt Nam',
@@ -1152,6 +1495,46 @@ export const CIRCUS_CONTEMPORARY_INFO_SOURCE: RetrievedSource = {
   content: CIRCUS_CONTEMPORARY_INFO_ANSWER,
 }
 
+export const CIRCUS_TA_DUY_HIEN_SOURCE: RetrievedSource = {
+  id: 'circus-ta-duy-hien-biography-official',
+  title: 'NSND Tạ Duy Hiển - Ông tổ của ngành xiếc Việt Nam',
+  category: 'history',
+  similarity: 1.0,
+  content: CIRCUS_TA_DUY_HIEN_ANSWER,
+}
+
+export const CIRCUS_PHILIP_ASTLEY_SOURCE: RetrievedSource = {
+  id: 'circus-philip-astley-biography-official',
+  title: 'Philip Astley - Cha đẻ của nghệ thuật xiếc hiện đại',
+  category: 'history',
+  similarity: 1.0,
+  content: CIRCUS_PHILIP_ASTLEY_ANSWER,
+}
+
+export const CIRCUS_FOLK_CULTURE_SOURCE: RetrievedSource = {
+  id: 'circus-folk-culture-elements-official',
+  title: 'Cách đưa chất liệu văn hóa dân gian vào xiếc đương đại',
+  category: 'knowledge',
+  similarity: 1.0,
+  content: CIRCUS_FOLK_CULTURE_ANSWER,
+}
+
+export const CIRCUS_AO_SHOW_SOURCE: RetrievedSource = {
+  id: 'circus-ao-show-information-official',
+  title: 'À Ố Show - Tuyệt tác xiếc tre đương đại Việt Nam',
+  category: 'venues',
+  similarity: 1.0,
+  content: CIRCUS_AO_SHOW_ANSWER,
+}
+
+export const CIRCUS_MO_SHOW_SOURCE: RetrievedSource = {
+  id: 'circus-mo-show-information-official',
+  title: 'Mơ Show (Dreamscape Show) - Hành trình đánh thức cảm xúc tuổi thơ',
+  category: 'venues',
+  similarity: 1.0,
+  content: CIRCUS_MO_SHOW_ANSWER,
+}
+
 /**
  * Trả về câu trả lời cố định chính xác 100% nếu câu hỏi người dùng khớp với danh mục định trước
  * Hỗ trợ song ngữ: Trả lời Tiếng Anh chuẩn xác nếu lang='en' hoặc câu hỏi bằng tiếng Anh
@@ -1250,7 +1633,47 @@ export function getPredefinedAnswer(query: string, lang?: 'vi' | 'en'): {
     }
   }
 
-  // 12. Nhóm Thông tin về xiếc đương đại Việt Nam / xiếc đương đại là gì
+  // 12. Nhóm Tạ Duy Hiển là ai
+  if (matchCircusTaDuyHienQuestion(query)) {
+    return {
+      answer: isEn ? CIRCUS_TA_DUY_HIEN_ANSWER_EN : CIRCUS_TA_DUY_HIEN_ANSWER,
+      sources: [isEn ? CIRCUS_TA_DUY_HIEN_SOURCE_EN : CIRCUS_TA_DUY_HIEN_SOURCE],
+    }
+  }
+
+  // 13. Nhóm Philip Astley là ai
+  if (matchCircusPhilipAstleyQuestion(query)) {
+    return {
+      answer: isEn ? CIRCUS_PHILIP_ASTLEY_ANSWER_EN : CIRCUS_PHILIP_ASTLEY_ANSWER,
+      sources: [isEn ? CIRCUS_PHILIP_ASTLEY_SOURCE_EN : CIRCUS_PHILIP_ASTLEY_SOURCE],
+    }
+  }
+
+  // 14. Nhóm Đưa chất liệu văn hóa dân gian vào xiếc đương đại
+  if (matchCircusFolkCultureQuestion(query)) {
+    return {
+      answer: isEn ? CIRCUS_FOLK_CULTURE_ANSWER_EN : CIRCUS_FOLK_CULTURE_ANSWER,
+      sources: [isEn ? CIRCUS_FOLK_CULTURE_SOURCE_EN : CIRCUS_FOLK_CULTURE_SOURCE],
+    }
+  }
+
+  // 15. Nhóm À Ố Show là gì
+  if (matchCircusAoShowQuestion(query)) {
+    return {
+      answer: isEn ? CIRCUS_AO_SHOW_ANSWER_EN : CIRCUS_AO_SHOW_ANSWER,
+      sources: [isEn ? CIRCUS_AO_SHOW_SOURCE_EN : CIRCUS_AO_SHOW_SOURCE],
+    }
+  }
+
+  // 16. Nhóm Mơ Show là gì
+  if (matchCircusMoShowQuestion(query)) {
+    return {
+      answer: isEn ? CIRCUS_MO_SHOW_ANSWER_EN : CIRCUS_MO_SHOW_ANSWER,
+      sources: [isEn ? CIRCUS_MO_SHOW_SOURCE_EN : CIRCUS_MO_SHOW_SOURCE],
+    }
+  }
+
+  // 17. Nhóm Thông tin về xiếc đương đại Việt Nam / xiếc đương đại là gì
   if (matchCircusContemporaryInfoQuestion(query)) {
     return {
       answer: isEn ? CIRCUS_CONTEMPORARY_INFO_ANSWER_EN : CIRCUS_CONTEMPORARY_INFO_ANSWER,
@@ -1258,7 +1681,7 @@ export function getPredefinedAnswer(query: string, lang?: 'vi' | 'en'): {
     }
   }
 
-  // 13. Nhóm Địa điểm & Mua vé
+  // 18. Nhóm Địa điểm & Mua vé
   if (matchCircusVenuesQuestion(query)) {
     return {
       answer: isEn ? CIRCUS_VENUES_AND_TICKETS_ANSWER_EN : CIRCUS_VENUES_AND_TICKETS_ANSWER,
