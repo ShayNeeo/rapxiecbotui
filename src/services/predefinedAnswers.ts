@@ -36,7 +36,7 @@ import {
   CIRCUS_FOLK_CULTURE_SOURCE_EN,
   CIRCUS_AO_SHOW_SOURCE_EN,
   CIRCUS_MO_SHOW_SOURCE_EN,
-} from './predefinedAnswersEn'
+} from './predefinedAnswersEn.ts'
 
 /**
  * ==============================================================================
@@ -291,10 +291,13 @@ export const CIRCUS_MO_SHOW_ANSWER = `Mơ Show kể câu chuyện về hành tr�
 - 🗺️ **Bản đồ:** https://maps.app.goo.gl/GFoJWHMCsHR8g4qT7?g_st=ipc`
 
 /**
- * Chuẩn hóa chuỗi tiếng Việt không dấu, loại bỏ ký tự đặc biệt để so khớp chính xác
+ * Chuẩn hóa chuỗi tiếng Việt: chuyển chữ thường, bỏ dấu, chuyển từ viết tắt/tiếng lóng, loại bỏ từ đệm giao tiếp
  */
 export function normalizeVietnamese(str: string): string {
-  return str
+  if (!str) return ''
+  
+  // 1. Chuyển chữ thường, bỏ dấu tiếng Việt, loại bỏ ký tự đặc biệt / dấu câu
+  let text = str
     .toLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
@@ -302,6 +305,41 @@ export function normalizeVietnamese(str: string): string {
     .replace(/[^a-z0-9\s]/g, ' ')
     .replace(/\s+/g, ' ')
     .trim()
+
+  if (!text) return ''
+
+  // 2. Chuẩn hóa từ viết tắt & tiếng lóng chat phổ biến
+  text = ` ${text} `
+    .replace(/\b(ko|k|hong|hem|hok|k0|kh|khg)\b/g, 'khong')
+    .replace(/\b(dc|đc|dk)\b/g, 'duoc')
+    .replace(/\b(vs)\b/g, 'voi')
+    .replace(/\b(ng|ng`)\b/g, 'nguoi')
+    .replace(/\b(dv)\b/g, 'dien vien')
+    .replace(/\b(ns|nsnd|nsut)\b/g, 'nghe si')
+    .replace(/\b(vn)\b/g, 'viet nam')
+    .replace(/\b(tphcm|hcm|sg|sai gon)\b/g, 'ho chi minh')
+    .replace(/\b(hn)\b/g, 'ha noi')
+    .replace(/\b(coi)\b/g, 'xem')
+    .replace(/\b(bao nhiu)\b/g, 'bao nhieu')
+    .replace(/\b(may nhiu)\b/g, 'may')
+    .replace(/\b(j|gi`)\b/g, 'gi')
+    .replace(/\b(lm|lam sao)\b/g, 'lam')
+    .replace(/\bao show\b/g, 'a o show')
+    .replace(/\s+/g, ' ')
+    .trim()
+
+  // 3. Loại bỏ từ xưng hô, hỏi thăm đầu câu (conversational prefixes)
+  text = text
+    .replace(/^(cho (minh|em|toi|ban|hoi)|ad oi|bot oi|ban oi|admin oi|xin hoi|lam on cho hoi|em muon hoi|minh muon hoi|toi muon hoi|cho hoi|hoi ti|hoi xiu|hoi chut|ai cho minh hoi|ai biet cho hoi|ad cho hoi|bot cho hoi|ban cho hoi)\s+/g, '')
+    .trim()
+
+  // 4. Loại bỏ các trợ từ cảm thán hoặc câu hỏi cuối câu (conversational suffixes)
+  text = text
+    .replace(/\s+(vay ad|vay bot|vay ban|ha ad|ha bot|ha ban|khong ad|khong bot|khong ban|the ad|the bot|the ban|nhe ad|nhe bot|nhe ban)$/g, '')
+    .replace(/\s+(vay a|ha a|the a|nhi|nhe|vay|ha|a|ta|nghen|nha|ah|ha|z|za|da|day|k|ko|khong)$/g, '')
+    .trim()
+
+  return text
 }
 
 /**
@@ -309,6 +347,28 @@ export function normalizeVietnamese(str: string): string {
  */
 export function isEnglishQuery(query: string): boolean {
   const q = query.toLowerCase().trim()
+
+  // Nếu có dấu tiếng Việt, chắc chắn là tiếng Việt
+  if (/[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/.test(q)) {
+    return false
+  }
+
+  // Nếu có các từ tiếng Việt không dấu đặc trưng, chắc chắn là câu tiếng Việt
+  const viSignifiers = [
+    'la ai', 'la gi', 'o dau', 'the nao', 'nhu the nao', 'khong', 'co khong',
+    'cua', 'nhung', 'cac', 'duoc', 'mat bao lau', 'tai sao', 'vi sao',
+    'nghe si', 'dien vien', 'khan gia', 'nguoi', 'dao cu', 'yeu to', 'ky thuat',
+    'tiet muc', 'trinh dien', 'vo dien', 'xem', 'coi', 'mua ve', 'dat ve',
+    'bat dau', 'ra doi', 'phat trien', 'dong vat', 'xiec thu', 'cho minh hoi',
+    'cho em hoi', 'ad oi', 'bot oi', 'ban oi', 'bao nhieu', 'may tuoi', 'bao lau',
+    'thong tin ve', 'gioi thieu ve', 'tim hieu ve', 'noi dung'
+  ]
+  for (const sig of viSignifiers) {
+    if (new RegExp(`\\b${sig}\\b`, 'i').test(q) || q.includes(sig)) {
+      return false
+    }
+  }
+
   const enPatterns = [
     'traditional vs contemporary',
     'technique & show quality',
@@ -327,6 +387,7 @@ export function isEnglishQuery(query: string): boolean {
     'what is',
     'how long',
     'where do',
+    'where can',
     'why do',
     'difference between',
     'which cultures',
@@ -334,30 +395,27 @@ export function isEnglishQuery(query: string): boolean {
     'does difficult',
     'biggest challenges',
     'who is ta duy hien',
-    'ta duy hien',
     'who is philip astley',
-    'philip astley',
-    'folk culture',
-    'bamboo and folk',
     'what is ao show',
-    'ao show',
     'what is mo show',
-    'mo show',
+    'about ao show',
+    'about mo show',
     'dreamscape show',
   ]
   for (const p of enPatterns) {
     if (q.includes(p)) return true
   }
+
   const enKeywords = [
     'circus', 'contemporary', 'traditional', 'technique', 'artist',
     'tickets', 'venues', 'vietnam', 'vietnamese', 'props', 'training',
-    'astley', 'dreamscape'
+    'astley', 'dreamscape', 'performer'
   ]
   let hits = 0
   for (const w of enKeywords) {
     if (new RegExp(`\\b${w}\\b`, 'i').test(q)) hits++
   }
-  return hits >= 2 || (hits >= 1 && !/[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/.test(q))
+  return hits >= 2
 }
 
 /**
@@ -599,13 +657,18 @@ export function matchCircusChallengesQuestion(query: string): boolean {
     norm.includes('kho khan') ||
     norm.includes('thach thuc') ||
     norm.includes('gian nan') ||
-    norm.includes('vat va')
+    norm.includes('vat va') ||
+    norm.includes('cuc') ||
+    norm.includes('kho')
   const hasActor =
     norm.includes('dien vien') ||
     norm.includes('nghe si') ||
-    norm.includes('nguoi dien')
+    norm.includes('nguoi dien') ||
+    norm.includes('nghe') ||
+    norm.includes('tap luyen') ||
+    norm.includes('hoc')
 
-  if (hasDifficulty && norm.includes('xiec') && (hasActor || norm.includes('gap phai') || norm.includes('nghe'))) {
+  if (hasDifficulty && norm.includes('xiec') && (hasActor || norm.includes('gap phai'))) {
     return true
   }
 
@@ -650,6 +713,8 @@ export function matchCircusFactorsQuestion(query: string): boolean {
     'yeu to quyet dinh xiec duong dai',
     'gia tri nghe thuat cua xiec duong dai',
     'gia tri nghe thuat cua mot tac pham xiec duong dai',
+    'dieu gi quyet dinh mot man trinh dien xiec',
+    'yeu to quyet dinh cua man trinh dien xiec',
   ]
 
   for (const pattern of exactPatterns) {
@@ -661,13 +726,17 @@ export function matchCircusFactorsQuestion(query: string): boolean {
   const hasFactors =
     norm.includes('yeu to') ||
     norm.includes('gia tri nghe thuat') ||
-    norm.includes('tieu chi')
-  const hasContemporary =
-    norm.includes('duong dai') ||
-    (norm.includes('xiec') && norm.includes('tac pham')) ||
-    (norm.includes('xiec') && norm.includes('trinh dien'))
+    norm.includes('tieu chi') ||
+    norm.includes('dieu gi') ||
+    norm.includes('cai gi')
+  const hasDecisive =
+    norm.includes('quyet dinh') ||
+    norm.includes('quan trong') ||
+    norm.includes('thanh cong') ||
+    norm.includes('can thiet')
+  const hasCircus = norm.includes('xiec')
 
-  if (hasFactors && hasContemporary && norm.includes('xiec')) {
+  if (hasFactors && hasDecisive && hasCircus) {
     return true
   }
 
@@ -821,6 +890,7 @@ export function matchCircusOriginQuestion(query: string): boolean {
 
   const hasOriginAction =
     norm.includes('bat dau') ||
+    norm.includes('bat nguon') ||
     norm.includes('ra doi') ||
     norm.includes('nguon goc') ||
     norm.includes('hinh thanh')
@@ -831,7 +901,7 @@ export function matchCircusOriginQuestion(query: string): boolean {
     norm.includes('nam nao') ||
     norm.includes('the ky')
 
-  if (norm.includes('xiec') && hasOriginAction && hasTimeOrPlace && !norm.includes('viet nam')) {
+  if ((norm.includes('xiec') || norm.includes('circus')) && hasOriginAction && hasTimeOrPlace && !norm.includes('viet nam')) {
     return true
   }
 
@@ -996,10 +1066,15 @@ export function matchCircusAudienceAgeQuestion(query: string): boolean {
     }
   }
 
+  // Không khớp nếu người hỏi đang hỏi về địa điểm biểu diễn / mua vé (ở đâu, địa chỉ)
+  if (norm.includes('o dau') || norm.includes('dia chi') || norm.includes('dia diem') || norm.includes('mua ve') || norm.includes('dat ve')) {
+    return false
+  }
+
   const hasCircus = norm.includes('xiec')
-  const hasAudience = norm.includes('khan gia') || norm.includes('doi tuong') || norm.includes('ai')
+  const hasAudience = norm.includes('khan gia') || norm.includes('doi tuong') || norm.includes('ai') || norm.includes('nguoi lon') || norm.includes('tre em') || norm.includes('tre con')
   const hasAge = norm.includes('bao nhieu tuoi') || norm.includes('do tuoi') || norm.includes('lua tuoi') || norm.includes('may tuoi')
-  const hasFit = norm.includes('phu hop') || norm.includes('coi duoc') || norm.includes('xem duoc')
+  const hasFit = norm.includes('phu hop') || norm.includes('coi duoc') || norm.includes('xem duoc') || norm.includes('xem') || norm.includes('coi')
 
   if (hasCircus && (hasAge || (hasAudience && (hasFit || norm.includes('tep'))))) {
     return true
