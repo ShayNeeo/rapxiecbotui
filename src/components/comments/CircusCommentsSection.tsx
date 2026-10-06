@@ -130,9 +130,10 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
     toggleLikeComment(commentId);
   };
 
-  const filteredComments = filterTag === 'all'
+  const filteredComments = (filterTag === 'all'
     ? comments
-    : comments.filter((c) => c.tag === filterTag);
+    : comments.filter((c) => c.tag === filterTag)
+  ).filter((c) => Boolean(c && c.user && typeof c.user === 'object' && c.user.name));
 
   const getTagBadge = (cmtTag: CommentTag) => {
     switch (cmtTag) {
@@ -439,10 +440,13 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
           </div>
         ) : (
           filteredComments.map((cmt) => {
+            const userName = cmt.user?.name || 'Khán giả';
+            const userEmail = cmt.user?.email || '';
+            const userAvatar = cmt.user?.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=ea4335&color=fff`;
             const badge = getTagBadge(cmt.tag);
             const isMyComment = currentUser && (
-              currentUser.email.toLowerCase() === cmt.user.email.toLowerCase() ||
-              currentUser.name.trim().toLowerCase() === cmt.user.name.trim().toLowerCase()
+              (currentUser.email && userEmail && currentUser.email.toLowerCase() === userEmail.toLowerCase()) ||
+              currentUser.name.trim().toLowerCase() === userName.trim().toLowerCase()
             );
             const isConfirmingDelete = deleteConfirmId === cmt.id;
 
@@ -455,14 +459,14 @@ export const CircusCommentsSection: React.FC<CircusCommentsSectionProps> = ({ is
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-center gap-3">
                     <img
-                      src={cmt.user.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(cmt.user.name)}&background=ea4335&color=fff`}
-                      alt={cmt.user.name}
+                      src={userAvatar}
+                      alt={userName}
                       className="size-9 rounded-full border border-amber-400/50 object-cover shrink-0"
                     />
                     <div>
                       <div className="flex items-center gap-2 flex-wrap">
                         <span className="font-bold text-xs sm:text-sm text-amber-200">
-                          {cmt.user.name}
+                          {userName}
                         </span>
                         {isMyComment && (
                           <span className="px-1.5 py-0.5 rounded-full bg-amber-400/20 text-[10px] text-amber-300 border border-amber-400/40 font-semibold">

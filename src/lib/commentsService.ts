@@ -54,12 +54,25 @@ function notifyListeners() {
   });
 }
 
+const isValidComment = (c: any): c is CircusComment => {
+  return Boolean(
+    c &&
+    typeof c === 'object' &&
+    typeof c.id === 'string' &&
+    !['cmt-1', 'cmt-2', 'cmt-3'].includes(c.id) &&
+    c.user &&
+    typeof c.user === 'object' &&
+    typeof c.user.name === 'string' &&
+    c.user.name.trim().length > 0
+  );
+};
+
 function loadFromLocalStorage(): CircusComment[] {
   if (typeof window === 'undefined') return [];
   try {
     const raw = localStorage.getItem(COMMENTS_STORAGE_KEY);
-    const parsed: CircusComment[] = raw ? JSON.parse(raw) : [];
-    inMemoryComments = parsed.filter((c) => !['cmt-1', 'cmt-2', 'cmt-3'].includes(c.id));
+    const parsed: any[] = raw ? JSON.parse(raw) : [];
+    inMemoryComments = Array.isArray(parsed) ? parsed.filter(isValidComment) : [];
     return inMemoryComments;
   } catch {
     return inMemoryComments;
@@ -162,7 +175,7 @@ export async function fetchRemoteComments(): Promise<CircusComment[]> {
 
     const data = await res.json();
     if (data && Array.isArray(data.comments)) {
-      const remoteComments: CircusComment[] = data.comments;
+      const remoteComments: CircusComment[] = data.comments.filter(isValidComment);
       
       // Update in-memory and local cache
       inMemoryComments = remoteComments;
