@@ -167,18 +167,20 @@ const streamTextGradually = (
   fullText: string,
   onChunk: (chunkText: string) => void,
   signal?: AbortSignal,
-  chunkSize = 3,
-  intervalMs = 16
+  chunkSize?: number,
+  intervalMs = 18
 ): Promise<void> => {
   return new Promise((resolve) => {
     let currentIndex = 0;
+    // Tốc độ hiện chữ vừa phải, tự nhiên, không quá nhanh và không gây sốt ruột cho người đọc
+    const computedChunk = chunkSize ?? Math.max(6, Math.min(22, Math.ceil(fullText.length / 55)));
     const intervalId = setInterval(() => {
       if (signal?.aborted) {
         clearInterval(intervalId);
         resolve();
         return;
       }
-      currentIndex = Math.min(currentIndex + chunkSize, fullText.length);
+      currentIndex = Math.min(currentIndex + computedChunk, fullText.length);
       onChunk(fullText.slice(0, currentIndex));
       if (currentIndex >= fullText.length) {
         clearInterval(intervalId);
