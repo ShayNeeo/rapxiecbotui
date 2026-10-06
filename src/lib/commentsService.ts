@@ -23,7 +23,8 @@ export interface CircusComment {
 const USER_STORAGE_KEY = 'circus_gmail_user_v1';
 const COMMENTS_STORAGE_KEY = 'circus_user_comments_v2';
 const LIKES_STORAGE_KEY = 'circus_user_liked_comments_v1';
-const CLOUD_BIN_URL = 'https://extendsclass.com/api/json-storage/bin/efbfaca';
+const PRIMARY_CLOUD_URL = 'https://api.restful-api.dev/objects/ff808181a09d98f701a1124a55850ba2';
+const SECONDARY_CLOUD_URL = 'https://extendsclass.com/api/json-storage/bin/efbfaca';
 
 let inMemoryComments: CircusComment[] = [];
 const commentListeners = new Set<(comments: CircusComment[]) => void>();
@@ -59,7 +60,21 @@ function loadFromLocalStorage(): CircusComment[] {
   try {
     const raw = localStorage.getItem(COMMENTS_STORAGE_KEY);
     const parsed: CircusComment[] = raw ? JSON.parse(raw) : [];
-    inMemoryComments = parsed.filter((c) => !['cmt-1', 'cmt-2', 'cmt-3'].includes(c.id));
+    const valid = Array.isArray(parsed)
+      ? parsed.filter((c) => c && c.id && !['cmt-1', 'cmt-2', 'cmt-3'].includes(c.id))
+      : [];
+
+    const map = new Map<string, CircusComment>();
+    inMemoryComments.forEach((c) => {
+      if (c && c.id) map.set(c.id, c);
+    });
+    valid.forEach((c) => {
+      if (c && c.id) map.set(c.id, c);
+    });
+
+    inMemoryComments = Array.from(map.values()).sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
     return inMemoryComments;
   } catch {
     return inMemoryComments;
@@ -94,6 +109,29 @@ export function saveCurrentUser(user: CommentUser): void {
   } catch {
     /* ignore */
   }
+}
+
+export function createGuestUser(rawName: string): CommentUser {
+  const trimmedName = rawName.trim();
+  const slugName = trimmedName
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]/g, '');
+  const userEmail = `${slugName || 'user'}@guest.com`;
+  const colors = ['ea4335', '4285f4', 'fbbc05', '34a853', '9c27b0', 'ff6d00'];
+  const colorIndex = (trimmedName.charCodeAt(0) || 0) % colors.length;
+  const avatarColor = colors[colorIndex];
+  const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+    trimmedName
+  )}&background=${avatarColor}&color=fff&size=128&bold=true`;
+
+  return {
+    name: trimmedName,
+    email: userEmail,
+    avatar: avatarUrl,
+    provider: 'guest',
+  };
 }
 
 export function clearCurrentUser(): void {
@@ -136,36 +174,99 @@ export function subscribeComments(callback: (comments: CircusComment[]) => void)
   };
 }
 
-// Push to Cloud Bin
+// Push to Cloud Stores (primary: restful-api.dev with full CORS, secondary: extendsclass)
 async function syncToCloud(comments: CircusComment[]): Promise<boolean> {
+  let success = false;
   try {
-    const res = await fetch(CLOUD_BIN_URL, {
+    const res = await fetch(PRIMARY_CLOUD_URL, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: 'circus_comments_store',
+        data: { comments },
+      }),
+    });
+    if (res.ok) success = true;
+  } catch (err) {
+    console.warn('Could not sync comments to primary cloud store', err);
+  }
+
+  // Backup sync (best effort)
+  try {
+    fetch(SECONDARY_CLOUD_URL, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ comments }),
-    });
-    return res.ok;
-  } catch (err) {
-    console.warn('Could not sync comments to cloud store', err);
-    return false;
+    }).catch(() => {});
+  } catch {
+    /* ignore */
   }
+
+  return success;
 }
 
-// Fetch comments from Cloud Bin and merge
+// Fetch comments from Cloud and merge without losing any local or in-memory comments
 export async function fetchRemoteComments(): Promise<CircusComment[]> {
   try {
-    // Add timestamp to bypass caching
-    const res = await fetch(`${CLOUD_BIN_URL}?t=${Date.now()}`);
-    if (!res.ok) return getComments();
+    let remoteComments: CircusComment[] | null = null;
 
-    const data = await res.json();
-    if (data && Array.isArray(data.comments)) {
-      const remoteComments: CircusComment[] = data.comments;
-      
-      // Update in-memory and local cache
-      inMemoryComments = remoteComments;
+    // 1. Fetch from primary cloud store
+    try {
+      const res = await fetch(`${PRIMARY_CLOUD_URL}?t=${Date.now()}`);
+      if (res.ok) {
+        const json = await res.json();
+        if (json?.data?.comments && Array.isArray(json.data.comments)) {
+          remoteComments = json.data.comments;
+        }
+      }
+    } catch (e) {
+      console.warn('Primary cloud fetch failed, falling back:', e);
+    }
+
+    // 2. Fallback to secondary store if primary is unavailable
+    if (!remoteComments) {
+      try {
+        const res2 = await fetch(`${SECONDARY_CLOUD_URL}?t=${Date.now()}`);
+        if (res2.ok) {
+          const json2 = await res2.json();
+          if (json2?.comments && Array.isArray(json2.comments)) {
+            remoteComments = json2.comments;
+          }
+        }
+      } catch {
+        /* ignore */
+      }
+    }
+
+    if (remoteComments && Array.isArray(remoteComments)) {
+      // Hợp nhất bình luận: Remote + LocalStorage + In-Memory để không bao giờ bị mất bất kỳ bình luận nào
+      const localComments = loadFromLocalStorage();
+      const commentMap = new Map<string, CircusComment>();
+
+      // Đưa bình luận remote vào map
+      for (const c of remoteComments) {
+        if (c && c.id) commentMap.set(c.id, c);
+      }
+
+      // Đưa bình luận local vào map (giữ lại các bình luận vừa đăng mà remote chưa kịp sync)
+      for (const c of localComments) {
+        if (c && c.id) commentMap.set(c.id, c);
+      }
+
+      // Đưa bình luận in-memory vào map (bảo vệ các bình luận vừa tạo trong phiên hiện tại)
+      for (const c of inMemoryComments) {
+        if (c && c.id) commentMap.set(c.id, c);
+      }
+
+      const merged = Array.from(commentMap.values()).sort(
+        (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+
+      inMemoryComments = merged;
       saveToLocalStorage(inMemoryComments);
       notifyListeners();
 
@@ -175,6 +276,11 @@ export async function fetchRemoteComments(): Promise<CircusComment[]> {
         } catch {
           /* ignore */
         }
+      }
+
+      // Nếu local có bình luận mới mà remote chưa có, tự động đẩy lên cloud ngay
+      if (merged.length > remoteComments.length) {
+        syncToCloud(merged).catch(() => {});
       }
 
       return getComments();
