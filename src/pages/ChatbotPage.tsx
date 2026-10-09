@@ -17,6 +17,7 @@ import type { ChatMessage, ChatSettings, RetrievedSource } from '../types/chat'
 import { AlertTriangle, Compass } from 'lucide-react'
 import { Icon } from "@/src/components/Icon";
 import { useLanguage } from '@/src/context/LanguageContext'
+import { OFFICIAL_CIRCUS_LOGO } from '@/src/lib/logo'
 
 const DEFAULT_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || ''
 const DEFAULT_MODEL = import.meta.env.VITE_GEMINI_MODEL || 'gemini-2.5-flash'
@@ -535,11 +536,15 @@ export const ChatbotPage: React.FC<ChatbotPageProps> = ({ onBackToPortal }) => {
             </div>
           )}
 
-          {/* Empty state with prompt starters */}
+          {/* Empty state hero */}
           {messages.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-8 sm:py-12 text-center animate-in fade-in duration-300">
-              <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-tr from-amber-400 to-amber-500 text-red-950 mb-4 shadow-xl ring-4 ring-amber-400/30">
-                <span className="text-3xl">🎪</span>
+            <div className="flex flex-col items-center justify-center py-12 sm:py-16 text-center animate-in fade-in duration-300">
+              <div className="relative mb-4 flex h-24 w-24 items-center justify-center overflow-hidden rounded-3xl bg-amber-950/90 p-1.5 shadow-2xl ring-4 ring-amber-400">
+                <img
+                  src={OFFICIAL_CIRCUS_LOGO}
+                  alt="Tư vấn viên AI"
+                  className="h-full w-full rounded-2xl object-cover"
+                />
               </div>
               <h2 className="font-circus text-2xl sm:text-3xl tracking-wide text-amber-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)]">
                 {isEn ? "AI CIRCUS CONSULTANT" : "TƯ VẤN VIÊN AI"}
@@ -549,32 +554,11 @@ export const ChatbotPage: React.FC<ChatbotPageProps> = ({ onBackToPortal }) => {
                   ? "Circus arts knowledge is vast and you might have unanswered questions? We are here to answer everything for you!"
                   : "Thông tin về nghệ thuật xiếc khá rộng lớn nhưng bạn vẫn chưa giải đáp được? Hãy đến đây, chúng tôi sẽ trả lời tất tần tật các câu hỏi của bạn!"}
               </p>
-
-              {/* Grid of Starter Prompts */}
-              <div className="mt-8 grid w-full max-w-3xl grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {STARTER_PROMPTS.map((item, idx) => {
-                  const title = isEn ? item.titleEn : item.title
-                  const prompt = isEn ? item.promptEn : item.prompt
-                  return (
-                    <button
-                      key={idx}
-                      type="button"
-                      onClick={() => handleSend(prompt)}
-                      className="flex flex-col items-start gap-1.5 rounded-2xl border-2 border-amber-400/40 bg-[#8c1c1f]/85 p-4 text-left text-amber-100 shadow-md transition-all duration-200 hover:border-amber-300 hover:bg-[#9e1f24] hover:text-white group cursor-pointer active:scale-98"
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="text-lg"><Icon name={item.icon} /></span>
-                        <span className="font-bold text-amber-300 group-hover:text-amber-200 text-xs">
-                          {title}
-                        </span>
-                      </div>
-                      <span className="text-[11px] leading-relaxed text-amber-100/80 group-hover:text-white">
-                        {prompt}
-                      </span>
-                    </button>
-                  )
-                })}
-              </div>
+              <p className="mt-3 text-xs text-amber-300/80 font-medium">
+                {isEn
+                  ? "👇 Choose a suggested question below or type your inquiry to get started:"
+                  : "👇 Bấm chọn một câu hỏi gợi ý ở thanh ngang bên dưới hoặc gõ câu hỏi để bắt đầu:"}
+              </p>
             </div>
           ) : (
             messages.map((message, index) => (
@@ -594,7 +578,7 @@ export const ChatbotPage: React.FC<ChatbotPageProps> = ({ onBackToPortal }) => {
         </div>
       </main>
 
-      {/* Input bar */}
+      {/* Input bar with horizontal suggested questions row */}
       <ChatInput
         input={input}
         setInput={setInput}
@@ -602,6 +586,8 @@ export const ChatbotPage: React.FC<ChatbotPageProps> = ({ onBackToPortal }) => {
         onStop={handleStop}
         isLoading={isLoading}
         disabled={false}
+        starterPrompts={STARTER_PROMPTS}
+        onSelectPrompt={(promptText) => handleSend(promptText)}
       />
 
       {/* Settings Modal */}

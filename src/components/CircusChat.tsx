@@ -21,6 +21,7 @@ import { getPredefinedAnswer } from "@/src/services/predefinedAnswers";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Icon } from "@/src/components/Icon";
+import { OFFICIAL_CIRCUS_LOGO } from "@/src/lib/logo";
 
 interface Message {
   id: string;
@@ -401,19 +402,27 @@ export const CircusChat: React.FC<CircusChatProps> = ({ onBack, onUnlockBadge })
               <span>{isEn ? "Main Stage" : "Sân Khấu"}</span>
             </button>
 
-            <div>
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-[11px] uppercase tracking-widest font-bold bg-amber-400 text-red-950 px-2.5 py-0.5 rounded-full shadow-xs">
-                  {isEn ? "AI Assistant 24/7" : "AI Trợ Lý 24/7"}
-                </span>
-                <span className="text-xs text-amber-200/90 font-medium">
-                  {isEn ? "Interactive culture & circus guide" : "Hỏi đáp thông minh như ChatGPT"}
-                </span>
+            <div className="flex items-center gap-3">
+              <div className="size-12 rounded-2xl bg-amber-950/80 p-0.5 border-2 border-amber-400 overflow-hidden shrink-0 shadow-md">
+                <img
+                  src={OFFICIAL_CIRCUS_LOGO}
+                  alt="Logo Rạp Xiếc Bỏ Túi"
+                  className="size-full rounded-xl object-cover"
+                />
               </div>
-              <h1 className="font-circus text-2xl sm:text-3xl text-amber-300 tracking-wide mt-1 drop-shadow-md flex items-center gap-2.5">
-                <Bot className="size-7 text-amber-400 animate-pulse" />
-                <span>{isEn ? "VIETNAM CIRCUS Q&A" : "GÓC GIẢI ĐÁP XIẾC VIỆT"}</span>
-              </h1>
+              <div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-[11px] uppercase tracking-widest font-bold bg-amber-400 text-red-950 px-2.5 py-0.5 rounded-full shadow-xs">
+                    {isEn ? "AI Assistant 24/7" : "Tư vấn viên AI 24/7"}
+                  </span>
+                  <span className="text-xs text-amber-200/90 font-medium">
+                    {isEn ? "Interactive culture & circus guide" : "Hỏi đáp thông minh về nghệ thuật xiếc"}
+                  </span>
+                </div>
+                <h1 className="font-circus text-2xl sm:text-3xl text-amber-300 tracking-wide mt-1 drop-shadow-md">
+                  {isEn ? "AI CIRCUS CONSULTANT" : "TƯ VẤN VIÊN AI"}
+                </h1>
+              </div>
             </div>
           </div>
 
@@ -439,40 +448,6 @@ export const CircusChat: React.FC<CircusChatProps> = ({ onBack, onUnlockBadge })
         </div>
       </div>
 
-      {/* Suggested Questions Carousel / Chips */}
-      <div className="space-y-2">
-        <div className="flex items-center justify-between text-xs text-neutral-600 px-1">
-          <span className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-amber-900">
-            <Lightbulb className="size-4 text-amber-600" />
-            <span>{isEn ? "Quick Suggested Questions (Click to ask)" : "Gợi Ý Câu Hỏi Nhanh (Bấm để hỏi ngay)"}</span>
-          </span>
-          <span className="text-[11px] text-neutral-500 hidden sm:inline">
-            {isEn ? "Ask about history, artists, techniques or venues" : "Hỏi về lịch sử, nghệ sĩ, kỹ thuật hoặc vé"}
-          </span>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
-          {SAMPLE_QUESTIONS.map((item, idx) => (
-            <button
-              key={idx}
-              onClick={() => handleSendMessage(isEn ? item.promptEn : item.prompt)}
-              disabled={isLoading}
-              className="p-3 text-left rounded-2xl bg-white hover:bg-amber-50/80 border-2 border-amber-200 hover:border-red-500 shadow-xs hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between text-xs disabled:opacity-50"
-            >
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-lg group-hover:scale-110 transition-transform"><Icon name={item.icon} /></span>
-                <span className="font-bold text-neutral-800 line-clamp-1 group-hover:text-red-700">
-                  {isEn ? item.labelEn : item.label}
-                </span>
-              </div>
-              <p className="text-[11px] text-neutral-500 line-clamp-2 leading-tight">
-                {isEn ? item.promptEn : item.prompt}
-              </p>
-            </button>
-          ))}
-        </div>
-      </div>
-
       {/* Main Conversation Window */}
       <div className="bg-white rounded-3xl border-2 border-amber-200 shadow-lg overflow-hidden flex flex-col min-h-[460px] max-h-[620px]">
         {/* Messages Feed */}
@@ -488,13 +463,21 @@ export const CircusChat: React.FC<CircusChatProps> = ({ onBack, onUnlockBadge })
               >
                 {/* Avatar Icon */}
                 <div
-                  className={`size-9 sm:size-10 rounded-2xl flex items-center justify-center shrink-0 text-base shadow-xs ${
+                  className={`size-9 sm:size-10 rounded-2xl flex items-center justify-center shrink-0 text-base shadow-xs overflow-hidden ${
                     isUser
                       ? "bg-red-600 text-white font-bold"
-                      : "bg-amber-400 text-red-950 border border-amber-300"
+                      : "bg-amber-950/90 border-2 border-amber-400 p-0.5"
                   }`}
                 >
-                  {isUser ? <Icon name="bi bi-person" /> : "🎪"}
+                  {isUser ? (
+                    <Icon name="bi bi-person" />
+                  ) : (
+                    <img
+                      src={OFFICIAL_CIRCUS_LOGO}
+                      alt="AI"
+                      className="size-full rounded-xl object-cover"
+                    />
+                  )}
                 </div>
 
                 {/* Message Bubble */}
@@ -594,8 +577,12 @@ export const CircusChat: React.FC<CircusChatProps> = ({ onBack, onUnlockBadge })
           {/* Typing / Loading indicator */}
           {isLoading && (
             <div className="flex gap-3 mr-auto max-w-[85%] animate-pulse">
-              <div className="size-9 sm:size-10 rounded-2xl bg-amber-400 text-red-950 flex items-center justify-center shrink-0 text-base shadow-xs">
-                🎪
+              <div className="size-9 sm:size-10 rounded-2xl bg-amber-950/90 border-2 border-amber-400 p-0.5 overflow-hidden flex items-center justify-center shrink-0 shadow-xs">
+                <img
+                  src={OFFICIAL_CIRCUS_LOGO}
+                  alt="AI Thinking"
+                  className="size-full rounded-xl object-cover"
+                />
               </div>
               <div className="rounded-2xl rounded-tl-xs p-4 bg-amber-50/90 border border-amber-200 text-neutral-700 flex items-center gap-2 text-xs sm:text-sm">
                 <Sparkles className="size-4 text-amber-600 animate-spin" />
@@ -611,8 +598,35 @@ export const CircusChat: React.FC<CircusChatProps> = ({ onBack, onUnlockBadge })
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input Bar */}
+        {/* Input Bar with horizontal suggestion pills */}
         <div className="p-3 sm:p-4 bg-white border-t border-amber-200">
+          {/* Horizontal Suggested Questions Row */}
+          <div className="mb-2.5 flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-thin scrollbar-thumb-amber-300 scrollbar-track-transparent">
+            <span className="shrink-0 flex items-center gap-1 text-[11px] font-bold text-amber-900 pr-1 uppercase tracking-wider">
+              <Sparkles className="size-3.5 text-amber-600" />
+              <span className="hidden sm:inline">{isEn ? "Suggestions:" : "Gợi ý:"}</span>
+            </span>
+            {SAMPLE_QUESTIONS.map((item, idx) => {
+              const label = isEn ? item.labelEn : item.label;
+              const promptText = isEn ? item.promptEn : item.prompt;
+              return (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => handleSendMessage(promptText)}
+                  disabled={isLoading}
+                  title={promptText}
+                  className="group inline-flex shrink-0 items-center gap-1.5 rounded-full border border-amber-300 bg-amber-50/80 hover:bg-amber-400 hover:border-amber-500 px-3 py-1 text-xs font-semibold text-amber-950 transition-all shadow-xs cursor-pointer active:scale-95 disabled:opacity-50"
+                >
+                  <span className="text-xs group-hover:scale-110 transition-transform">
+                    <Icon name={item.icon} />
+                  </span>
+                  <span className="whitespace-nowrap tracking-tight">{label}</span>
+                </button>
+              );
+            })}
+          </div>
+
           <div className="flex items-end gap-2 bg-neutral-50 rounded-2xl border-2 border-amber-300 focus-within:border-red-600 focus-within:ring-2 focus-within:ring-red-100 p-2 transition-all">
             <textarea
               ref={textareaRef}

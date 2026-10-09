@@ -4,6 +4,7 @@ import remarkGfm from 'remark-gfm'
 import { Sparkles, User, Copy, Check, AlertCircle, Database, ChevronDown, ChevronUp } from 'lucide-react'
 import type { ChatMessage } from '../types/chat'
 import { useLanguage } from '@/src/context/LanguageContext'
+import { OFFICIAL_CIRCUS_LOGO } from '@/src/lib/logo'
 
 interface ChatMessageItemProps {
   message: ChatMessage
@@ -26,16 +27,20 @@ export const ChatMessageItem: React.FC<ChatMessageItemProps> = ({
     >
       {!isUser && (
         <div
-          className={`flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-xl shadow-md ${
+          className={`flex h-8 w-8 shrink-0 select-none items-center justify-center overflow-hidden rounded-xl shadow-md ${
             message.isError
               ? 'border-2 border-red-400 bg-red-100 text-red-600'
-              : 'border-2 border-amber-400 bg-gradient-to-tr from-[#8a181b] to-[#6d1013] text-amber-300 ring-2 ring-amber-400/30'
+              : 'border-2 border-amber-400 bg-amber-950/90 p-0.5 text-amber-300 ring-2 ring-amber-400/30'
           }`}
         >
           {message.isError ? (
             <AlertCircle className="h-4 w-4" />
           ) : (
-            <Sparkles className="h-4 w-4 text-amber-300" />
+            <img
+              src={OFFICIAL_CIRCUS_LOGO}
+              alt="AI"
+              className="h-full w-full rounded-lg object-cover"
+            />
           )}
         </div>
       )}

@@ -3,6 +3,8 @@ import { Sparkles, Settings, Trash2, Cpu, ArrowLeft } from 'lucide-react'
 import { useLanguage } from '@/src/context/LanguageContext'
 import { circusAudio } from '@/src/utils/audio'
 
+import { OFFICIAL_CIRCUS_LOGO } from '@/src/lib/logo'
+
 interface ChatHeaderProps {
   model: string
   ragEnabled?: boolean
@@ -60,8 +62,12 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
             </button>
           )}
 
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-amber-400 to-amber-600 text-red-950 shadow-md shadow-amber-500/30 ring-2 ring-amber-300/40">
-            <Sparkles className="h-5 w-5" />
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-amber-950/80 p-0.5 shadow-md shadow-amber-500/20 ring-2 ring-amber-400">
+            <img
+              src={OFFICIAL_CIRCUS_LOGO}
+              alt="Logo Rạp Xiếc Bỏ Túi"
+              className="h-full w-full rounded-lg object-cover"
+            />
           </div>
 
           <div>
