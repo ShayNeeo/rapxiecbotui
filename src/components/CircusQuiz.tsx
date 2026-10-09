@@ -993,16 +993,6 @@ export const CircusQuiz: React.FC<CircusQuizProps> = ({
           <Button
             variant="outline"
             size="sm"
-            onClick={onBack}
-            className="flex items-center gap-1.5 bg-white shadow-xs cursor-pointer"
-          >
-            <ArrowLeft className="size-4" />
-            <span>{isEn ? "Back to Main Stage" : "Về Sân Khấu Chính"}</span>
-          </Button>
-
-          <Button
-            variant="outline"
-            size="sm"
             onClick={handleShuffleQuiz}
             className="flex items-center gap-1.5 bg-amber-50/80 hover:bg-amber-100 text-amber-900 border-amber-300 shadow-xs cursor-pointer"
             title={isEn ? "Shuffle questions order (20 questions)" : "Xáo trộn thứ tự 20 câu hỏi"}

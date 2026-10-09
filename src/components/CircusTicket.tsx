@@ -461,16 +461,7 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
   return (
     <div className="w-full max-w-4xl mx-auto flex flex-col items-center space-y-8 pb-12 select-none px-3 sm:px-4">
       {/* Top Controls */}
-      <div className="no-print w-full max-w-2xl flex items-center justify-between gap-3 flex-wrap">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={onBack}
-          className="flex items-center gap-1.5 bg-white shadow-xs cursor-pointer"
-        >
-          <ArrowLeft className="size-4" />
-          <span>{isEn ? "Back to Main Stage" : "Về Sân Khấu Chính"}</span>
-        </Button>
+      <div className="no-print w-full max-w-2xl flex items-center justify-end gap-3 flex-wrap">
 
         <div className="flex items-center gap-2 flex-wrap">
           {/* Direct Download Image Button (Instant save .PNG on computer) */}
@@ -790,65 +781,6 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
               </div>
             </div>
           ))}
-        </div>
-      </div>
-
-      {/* Contact Information / Thông tin liên hệ */}
-      <div 
-        id="circus-contact-section"
-        className="no-print w-full max-w-2xl mx-auto bg-gradient-to-br from-[#2b0808] via-[#1f0606] to-[#120303] rounded-3xl p-6 sm:p-8 border-2 border-amber-400 shadow-xl text-white relative overflow-hidden"
-      >
-        {/* Decorative corner stars and circus flourishes */}
-        <div className="absolute top-3 right-4 text-amber-400/20 text-4xl select-none pointer-events-none">
-          ★
-        </div>
-        <div className="absolute -bottom-4 -right-4 text-8xl text-red-700/10 select-none pointer-events-none">
-          🎪
-        </div>
-
-        <div className="relative z-10 space-y-4">
-          <div className="border-b border-white/15 pb-3">
-            <h3 className="font-circus text-xl sm:text-2xl text-amber-300 tracking-wide flex items-center gap-2.5">
-              <span>★</span>
-              <span>{isEn ? "Contact Information" : "Thông tin liên hệ"}</span>
-            </h3>
-          </div>
-
-          <div className="space-y-3.5 pt-1">
-            {/* Letter sticker in front of rapxiecbotui@gmail.com, both in white */}
-            <div className="flex items-center gap-3 group">
-              <span 
-                className="inline-flex items-center justify-center size-9 rounded-xl bg-white/15 border-2 border-white text-white shadow-md rotate-[-3deg] group-hover:rotate-0 transition-transform shrink-0"
-                title="Email sticker"
-              >
-                <Mail className="size-5 text-white" strokeWidth={2.2} />
-              </span>
-              <a 
-                href="mailto:rapxiecbotui@gmail.com" 
-                className="text-white hover:text-amber-300 font-medium text-sm sm:text-base tracking-wide transition-colors underline-offset-4 hover:underline"
-              >
-                rapxiecbotui@gmail.com
-              </a>
-            </div>
-
-            {/* Facebook logo in front of Rạp Xiếc Bỏ Túi, both in white */}
-            <a 
-              href="https://www.facebook.com/people/R%E1%BA%A1p-Xi%E1%BA%BFc-B%E1%BB%8F-T%C3%BAi/61591831813277/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-3 group w-fit cursor-pointer"
-            >
-              <span 
-                className="inline-flex items-center justify-center size-9 rounded-xl bg-white/15 border-2 border-white text-white shadow-md rotate-[3deg] group-hover:rotate-0 group-hover:scale-105 transition-all shrink-0"
-                title="Facebook logo"
-              >
-                <Facebook className="size-5 text-white fill-white" strokeWidth={0} />
-              </span>
-              <span className="text-white group-hover:text-amber-300 font-medium text-sm sm:text-base tracking-wide transition-colors underline-offset-4 group-hover:underline">
-                {isEn ? "Pocket Circus Vietnam" : "Rạp Xiếc Bỏ Túi"}
-              </span>
-            </a>
-          </div>
         </div>
       </div>
 
