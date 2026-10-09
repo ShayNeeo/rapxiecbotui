@@ -768,27 +768,6 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
           <div className="hidden sm:block" />
         )}
 
-        {onNavigate ? (
-          <button
-            type="button"
-            onClick={() => {
-              circusAudio.playBambooStep();
-              onNavigate('/');
-            }}
-            className="w-full sm:w-auto px-4 py-2.5 rounded-2xl bg-amber-100 hover:bg-amber-200 border border-amber-300 text-amber-950 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
-          >
-            <span><Icon name="bi bi-house" /> {isEn ? "Overview of 4 Milestones" : "Về Trang Chủ Lịch Sử"}</span>
-          </button>
-        ) : (
-          <Link
-            to="/"
-            onClick={() => circusAudio.playBambooStep()}
-            className="w-full sm:w-auto px-4 py-2.5 rounded-2xl bg-amber-100 hover:bg-amber-200 border border-amber-300 text-amber-950 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs transition-all cursor-pointer"
-          >
-            <span><Icon name="bi bi-house" /> {isEn ? "Overview of 4 Milestones" : "Về Trang Chủ Lịch Sử"}</span>
-          </Link>
-        )}
-
         {nextPath ? (
           onNavigate ? (
             <button
