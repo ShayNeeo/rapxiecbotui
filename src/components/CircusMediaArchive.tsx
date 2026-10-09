@@ -81,9 +81,9 @@ export const MODERN_CIRCUS_MEDIA: MediaItem[] = [
       dienDaVungDatKyBiImg3
     ],
     year: "2025",
-    tags: ["Ảnh Điền Dã", "Nhóm Nghiên Cứu", "Tư Liệu Thực Địa", "Vùng Đất Kỳ Bí", "Khán Đài Rạp Xiếc", "Nghệ Thuật Sân Khấu", "Trực Tiếp Tại Rạp"],
-    description: "Bộ ảnh tư liệu quý giá do nhóm nghiên cứu trực tiếp thực hiện trong chuyến điền dã khảo sát tại rạp xiếc. Ghi lại chân thực không gian khán đài vòm tròn náo nức, ánh sáng kỳ ảo, các phân đoạn tạo hình nhào lộn uốn dẻo, múa rối đại cảnh và hiệu ứng hoa tuyết rơi ngập tràn khán phòng trong vở đại vũ kịch xiếc 'Vùng Đất Kỳ Bí'.",
-    descriptionEn: "A precious documentary photo series captured firsthand by the project research team during on-site field visits to the circus theater. The images capture the electric atmosphere of the circular amphitheater, mystical stage lighting, contortion and acrobatic formations, colossal puppet choreography, and snowfall effects during 'The Mystic Land' grand circus spectacle."
+    tags: ["Ảnh Điền Dã", "Nhóm Nghiên Cứu", "Tư Liệu Thực Địa", "Mơ Show", "Khán Đài Rạp Xiếc", "Nghệ Thuật Sân Khấu", "Trực Tiếp Tại Rạp"],
+    description: "Bộ ảnh tư liệu do nhóm nghiên cứu trực tiếp ghi nhận trong chuyến điền dã khảo sát tại rạp xiếc, xoay quanh các màn trình diễn đặc sắc trong show xiếc \"Mơ Show\".",
+    descriptionEn: "A documentary photo series captured firsthand by the project research team during on-site field visits to the circus theater, spotlighting standout performances in the 'Mo Show' circus production."
   },
   {
     id: "media-cau-be-tro-ve-tu-rung-xanh-baovanhoa",
