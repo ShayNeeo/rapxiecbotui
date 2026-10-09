@@ -1,4 +1,5 @@
-// Service for comments and suggestions with Google / Gmail authentication and Public Cloud Sync
+// Service for comments and suggestions with Supabase Database & Realtime Sync + Local Cache Fallback
+import { supabase } from './supabase';
 
 export interface CommentUser {
   name: string;
@@ -23,7 +24,6 @@ export interface CircusComment {
 const USER_STORAGE_KEY = 'circus_gmail_user_v1';
 const COMMENTS_STORAGE_KEY = 'circus_user_comments_v2';
 const LIKES_STORAGE_KEY = 'circus_user_liked_comments_v1';
-const CLOUD_BIN_URL = 'https://extendsclass.com/api/json-storage/bin/efbfaca';
 
 let inMemoryComments: CircusComment[] = [];
 const commentListeners = new Set<(comments: CircusComment[]) => void>();
@@ -149,36 +149,31 @@ export function subscribeComments(callback: (comments: CircusComment[]) => void)
   };
 }
 
-// Push to Cloud Bin
-async function syncToCloud(comments: CircusComment[]): Promise<boolean> {
-  try {
-    const res = await fetch(CLOUD_BIN_URL, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ comments }),
-    });
-    return res.ok;
-  } catch (err) {
-    console.warn('Could not sync comments to cloud store', err);
-    return false;
-  }
-}
-
-// Fetch comments from Cloud Bin and merge
+// Fetch comments from Supabase Database
 export async function fetchRemoteComments(): Promise<CircusComment[]> {
   try {
-    // Add timestamp to bypass caching
-    const res = await fetch(`${CLOUD_BIN_URL}?t=${Date.now()}`);
-    if (!res.ok) return getComments();
+    const { data, error } = await supabase
+      .from('circus_comments')
+      .select('*')
+      .order('created_at', { ascending: false });
 
-    const data = await res.json();
-    if (data && Array.isArray(data.comments)) {
-      const remoteComments: CircusComment[] = data.comments.filter(isValidComment);
-      
-      // Update in-memory and local cache
-      inMemoryComments = remoteComments;
+    if (!error && Array.isArray(data)) {
+      const mappedComments: CircusComment[] = data.map((row) => ({
+        id: row.id,
+        user: {
+          name: row.user_name || 'Khán giả',
+          email: row.user_email || '',
+          avatar: row.user_avatar || '',
+          provider: (row.user_provider as any) || 'guest',
+        },
+        content: row.content,
+        rating: Number(row.rating) || 5,
+        tag: (row.tag as CommentTag) || 'suggestion',
+        createdAt: row.created_at || new Date().toISOString(),
+        likes: Number(row.likes) || 0,
+      })).filter(isValidComment);
+
+      inMemoryComments = mappedComments;
       saveToLocalStorage(inMemoryComments);
       notifyListeners();
 
@@ -193,12 +188,13 @@ export async function fetchRemoteComments(): Promise<CircusComment[]> {
       return getComments();
     }
   } catch (err) {
-    console.warn('Failed to fetch remote comments', err);
+    console.warn('Failed to fetch comments from Supabase, using local cache', err);
   }
+
   return getComments();
 }
 
-// Add a new comment (stores locally + cloud sync)
+// Add a new comment (writes to Supabase + local cache)
 export async function addComment(commentData: {
   user: CommentUser;
   content: string;
@@ -216,9 +212,9 @@ export async function addComment(commentData: {
     likedByMe: true,
   };
 
+  // Immediate optimistic update
   const existing = getComments();
   const updated = [newComment, ...existing.filter((c) => c.id !== newComment.id)];
-
   inMemoryComments = updated;
   saveToLocalStorage(updated);
 
@@ -243,8 +239,29 @@ export async function addComment(commentData: {
     }
   }
 
-  // Push to cloud so everyone will see it immediately
-  syncToCloud(updated).catch(() => {});
+  // Insert into Supabase table
+  try {
+    const { error } = await supabase.from('circus_comments').insert([
+      {
+        id: newComment.id,
+        user_name: newComment.user.name,
+        user_email: newComment.user.email,
+        user_avatar: newComment.user.avatar || '',
+        user_provider: newComment.user.provider || 'guest',
+        content: newComment.content,
+        rating: newComment.rating,
+        tag: newComment.tag,
+        likes: newComment.likes,
+        created_at: newComment.createdAt,
+      },
+    ]);
+
+    if (error) {
+      console.warn('Supabase comment insert warning (table might not exist yet):', error.message);
+    }
+  } catch (err) {
+    console.warn('Supabase comment insert exception:', err);
+  }
 
   return newComment;
 }
@@ -256,7 +273,6 @@ export async function deleteComment(commentId: string, currentUserEmail: string)
 
   if (!target) return false;
 
-  // Verify that the email matches the author
   if (target.user.email.toLowerCase() !== currentUserEmail.toLowerCase()) {
     console.warn('Unauthorized delete attempt: author email does not match');
     return false;
@@ -275,8 +291,12 @@ export async function deleteComment(commentId: string, currentUserEmail: string)
     }
   }
 
-  // Update cloud
-  syncToCloud(updated).catch(() => {});
+  // Delete from Supabase
+  try {
+    await supabase.from('circus_comments').delete().eq('id', commentId);
+  } catch (err) {
+    console.warn('Supabase comment delete error:', err);
+  }
 
   return true;
 }
@@ -290,11 +310,13 @@ export function toggleLikeComment(commentId: string): boolean {
     const isLiked = likedIds.includes(commentId);
 
     const comments = getComments();
+    let newLikes = 0;
     const updated = comments.map((c) => {
       if (c.id === commentId) {
+        newLikes = isLiked ? Math.max(0, c.likes - 1) : c.likes + 1;
         return {
           ...c,
-          likes: isLiked ? Math.max(0, c.likes - 1) : c.likes + 1,
+          likes: newLikes,
           likedByMe: !isLiked,
         };
       }
@@ -312,8 +334,12 @@ export function toggleLikeComment(commentId: string): boolean {
     saveToLocalStorage(updated);
     notifyListeners();
 
-    // Sync likes to cloud
-    syncToCloud(updated).catch(() => {});
+    // Update like count in Supabase
+    supabase
+      .from('circus_comments')
+      .update({ likes: newLikes })
+      .eq('id', commentId)
+      .then();
 
     return !isLiked;
   } catch {
@@ -321,12 +347,29 @@ export function toggleLikeComment(commentId: string): boolean {
   }
 }
 
-// Initialize and start periodic cloud synchronization (every 4 seconds)
+// Initialize Supabase Realtime Listener & Periodic Polling
 if (typeof window !== 'undefined') {
   loadFromLocalStorage();
   fetchRemoteComments().catch(() => {});
 
+  // Setup Supabase Realtime subscription
+  try {
+    supabase
+      .channel('public:circus_comments')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'circus_comments' },
+        () => {
+          fetchRemoteComments().catch(() => {});
+        }
+      )
+      .subscribe();
+  } catch (e) {
+    console.warn('Supabase realtime subscription error:', e);
+  }
+
+  // Backup sync every 6 seconds
   setInterval(() => {
     fetchRemoteComments().catch(() => {});
-  }, 4000);
+  }, 6000);
 }

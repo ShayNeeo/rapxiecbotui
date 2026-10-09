@@ -1,5 +1,6 @@
 // Realtime Accurate Visitor Tracking & Presence Service for Pocket Circus Vietnam
-// Realtime sync via Cloud Storage (no fake numbers, accurate online presence & session duration)
+// Realtime sync via Supabase & Cloud Storage
+import { supabase } from './supabase';
 
 export interface VisitorStats {
   online: number; // Accurate count of active online visitors across all devices
@@ -175,44 +176,90 @@ function saveLocalCache(): void {
   }
 }
 
-// Fetch current cloud data, clean expired presence, return updated payload
+// Fetch current cloud data from Supabase, clean expired presence, return updated payload
 async function fetchCloudData(): Promise<CloudPayload | null> {
   try {
-    const res = await fetch(`${CLOUD_BIN_URL}?t=${Date.now()}`);
-    if (!res.ok) return null;
-    const data = await res.json();
-    if (data && data.visitors) {
+    const { data, error } = await supabase
+      .from('circus_visitor_stats')
+      .select('payload')
+      .eq('id', 'global_stats')
+      .maybeSingle();
+
+    if (!error && data && data.payload && data.payload.visitors) {
       return {
         visitors: {
-          total: Number(data.visitors.total) || 1,
-          today: Number(data.visitors.today) || 1,
-          yesterday: Number(data.visitors.yesterday) || 0,
-          date: data.visitors.date || getVietnamDateString(),
+          total: Number(data.payload.visitors.total) || 1,
+          today: Number(data.payload.visitors.today) || 1,
+          yesterday: Number(data.payload.visitors.yesterday) || 0,
+          date: data.payload.visitors.date || getVietnamDateString(),
         },
-        presence: typeof data.presence === 'object' && data.presence !== null ? data.presence : {},
+        presence:
+          typeof data.payload.presence === 'object' && data.payload.presence !== null
+            ? data.payload.presence
+            : {},
       };
     }
   } catch (e) {
-    console.warn('Realtime visitor fetch error:', e);
+    console.warn('Supabase visitor stats fetch error:', e);
   }
+
+  // Secondary fallback to json storage bin if Supabase table is not yet created
+  try {
+    const res = await fetch(`${CLOUD_BIN_URL}?t=${Date.now()}`);
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.visitors) {
+        return {
+          visitors: {
+            total: Number(data.visitors.total) || 1,
+            today: Number(data.visitors.today) || 1,
+            yesterday: Number(data.visitors.yesterday) || 0,
+            date: data.visitors.date || getVietnamDateString(),
+          },
+          presence: typeof data.presence === 'object' && data.presence !== null ? data.presence : {},
+        };
+      }
+    }
+  } catch (e) {
+    /* ignore fallback error */
+  }
+
   return null;
 }
 
-// Send updated payload to cloud
+// Send updated payload to Supabase (and mirror to bin)
 async function saveCloudData(payload: CloudPayload): Promise<boolean> {
+  let supabaseSuccess = false;
   try {
-    const res = await fetch(CLOUD_BIN_URL, {
+    const { error } = await supabase
+      .from('circus_visitor_stats')
+      .upsert({
+        id: 'global_stats',
+        payload: payload,
+        updated_at: new Date().toISOString(),
+      });
+
+    if (!error) {
+      supabaseSuccess = true;
+    }
+  } catch (e) {
+    console.warn('Supabase visitor stats save error:', e);
+  }
+
+  // Mirror to json bin as fallback
+  try {
+    await fetch(CLOUD_BIN_URL, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(payload),
     });
-    return res.ok;
-  } catch (e) {
-    console.warn('Realtime visitor save error:', e);
-    return false;
+  } catch {
+    /* ignore fallback error */
   }
+
+  return supabaseSuccess;
 }
 
 // Core sync engine: updates presence and increments visit on new session
