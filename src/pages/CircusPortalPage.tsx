@@ -452,8 +452,10 @@ export default function App() {
           />
         )}
 
-        {/* Comments & Suggestions Section (Bình luận & Đóng góp ý kiến) */}
-        <CircusCommentsSection isEn={isEn} />
+        {/* Comments & Suggestions Section (Bình luận & Đóng góp ý kiến) - Chỉ hiển thị ở trang sân khấu chính */}
+        {currentAct === 'stage' && (
+          <CircusCommentsSection isEn={isEn} />
+        )}
       </main>
 
       {/* Footer */}
