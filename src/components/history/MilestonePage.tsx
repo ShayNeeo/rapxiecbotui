@@ -428,6 +428,119 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
             {/* Active Sub-section Exhibition Display */}
             {era.subsections.map((sub) => {
               if (sub.id !== activeSubsectionId) return null;
+
+              // Special restructured layout for Subsection 4.3 (or any subsection with structuredSections)
+              if (sub.structuredSections && sub.structuredSections.length > 0) {
+                return (
+                  <div key={sub.id} className="space-y-6 animate-in fade-in duration-200">
+                    {/* KHUNG TIỂU MỤC 4.3 - MỤC LỚN PHÍA ĐẦU */}
+                    <div className="bg-gradient-to-br from-amber-50/90 via-white to-red-50/40 rounded-3xl p-5 sm:p-7 border-2 border-red-300 shadow-md space-y-4">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b-2 border-amber-200/80 pb-4">
+                        <div className="flex items-center gap-3">
+                          <span className="size-11 rounded-2xl bg-gradient-to-br from-red-700 to-amber-600 text-white flex items-center justify-center text-xl shrink-0 shadow-sm">
+                            {sub.icon ? <Icon name={sub.icon} /> : "🏆"}
+                          </span>
+                          <div>
+                            <span className="text-[11px] font-black text-white bg-red-800 px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-2xs">
+                              {isEn ? sub.tagEn : sub.tag}
+                            </span>
+                            <h5 className="font-circus text-lg sm:text-2xl text-neutral-900 mt-1">
+                              {isEn ? sub.titleEn : sub.title}
+                            </h5>
+                          </div>
+                        </div>
+                        <span className="text-xs sm:text-sm font-bold text-amber-950 bg-amber-100/90 px-3.5 py-1 rounded-full border border-amber-300 shrink-0 self-start sm:self-center">
+                          {isEn ? (sub.periodEn || sub.period) : sub.period}
+                        </span>
+                      </div>
+
+                      {/* Sub-section 4.3 Overview Description */}
+                      <p className="text-xs sm:text-sm text-neutral-800 leading-relaxed whitespace-pre-line bg-white/90 p-4 sm:p-5 rounded-2xl border border-amber-200/90 shadow-2xs">
+                        {isEn ? (sub.descriptionEn || sub.description) : sub.description}
+                      </p>
+                    </div>
+
+                    {/* TÁCH RIÊNG THÀNH 2 MỤC ĐỘC LẬP: MỤC 1 & MỤC 2 */}
+                    <div className="space-y-6">
+                      {sub.structuredSections.map((sec) => (
+                        <div
+                          key={sec.number}
+                          className="rounded-3xl p-5 sm:p-7 border-2 transition-all bg-white shadow-md hover:shadow-lg border-amber-300 hover:border-amber-400 space-y-4"
+                        >
+                          {/* Mục Header */}
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b-2 border-amber-100 pb-4">
+                            <div className="flex items-center gap-3">
+                              <span className="size-9 sm:size-10 rounded-2xl bg-gradient-to-br from-red-600 to-amber-600 text-white font-black text-base sm:text-lg flex items-center justify-center shrink-0 shadow-sm">
+                                {sec.number}
+                              </span>
+                              <div className="flex items-center gap-2 flex-wrap">
+                                <span className="text-2xl shrink-0">{sec.icon ? <Icon name={sec.icon} /> : null}</span>
+                                <h6 className="font-circus text-lg sm:text-xl text-neutral-900 leading-snug">
+                                  {isEn ? `Section ${sec.number}: ` : `Mục ${sec.number}: `}
+                                  {isEn ? (sec.titleEn || sec.title) : sec.title}
+                                </h6>
+                              </div>
+                            </div>
+
+                            {(sec.categoryBadge || sec.categoryBadgeEn) && (
+                              <span className="text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shrink-0 w-fit bg-red-50 text-red-800 border border-red-200">
+                                {isEn ? (sec.categoryBadgeEn || sec.categoryBadge) : sec.categoryBadge}
+                              </span>
+                            )}
+                          </div>
+
+                          {/* Mục Summary */}
+                          {(sec.summary || sec.summaryEn) && (
+                            <p className="text-xs sm:text-sm text-neutral-700 leading-relaxed bg-amber-50/60 p-4 rounded-2xl border border-amber-200/70">
+                              {isEn ? (sec.summaryEn || sec.summary) : sec.summary}
+                            </p>
+                          )}
+
+                          {/* Danh sách các tác phẩm / Kỷ lục trong từng mục */}
+                          {sec.items && sec.items.length > 0 && (
+                            <div className="space-y-3 pt-1">
+                              {sec.items.map((item, iIdx) => (
+                                <div
+                                  key={iIdx}
+                                  className="rounded-2xl p-4 border text-xs sm:text-sm transition-colors bg-neutral-50/80 hover:bg-white border-neutral-200 hover:border-amber-300 space-y-2 shadow-2xs"
+                                >
+                                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+                                    <span className="font-bold text-neutral-900 text-sm sm:text-base flex items-center gap-2">
+                                      <span className="size-2 rounded-full bg-red-600 shrink-0" />
+                                      <span>{isEn ? (item.nameEn || item.name) : item.name}</span>
+                                    </span>
+                                    {(item.badge || item.badgeEn) && (
+                                      <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-lg bg-amber-100 text-amber-900 border border-amber-300 w-fit">
+                                        {isEn ? (item.badgeEn || item.badge) : item.badge}
+                                      </span>
+                                    )}
+                                  </div>
+
+                                  {(item.artists || item.artistsEn) && (
+                                    <div className="text-xs font-semibold text-red-900 flex items-center gap-1.5">
+                                      <span>★ {isEn ? "Artist / Troupe:" : "Nghệ sĩ / Đơn vị:"}</span>
+                                      <span className="text-neutral-800">{isEn ? (item.artistsEn || item.artists) : item.artists}</span>
+                                    </div>
+                                  )}
+
+                                  <p className="text-xs text-neutral-700 leading-relaxed bg-white p-3 rounded-xl border border-neutral-200/80">
+                                    <span className="font-semibold text-neutral-900">
+                                      {isEn ? "Achievement & Significance: " : "Thành tích & Dấu ấn: "}
+                                    </span>
+                                    {isEn ? (item.achievementEn || item.achievement) : item.achievement}
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              }
+
+              // Standard layout for Subsection 4.1 & 4.2
               return (
                 <div
                   key={sub.id}
@@ -455,137 +568,38 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
                     {isEn ? (sub.descriptionEn || sub.description) : sub.description}
                   </p>
 
-                  {/* Artistic Quote from Master inside sub-section */}
-                  {sub.quote && (
-                    <div className="bg-gradient-to-r from-amber-100/90 via-orange-50/70 to-red-50/60 border-l-4 border-red-700 p-4 rounded-r-2xl border-y border-r border-amber-300/80 shadow-xs">
-                      <div className="flex items-start gap-3">
-                        <span className="text-3xl text-red-700 font-serif leading-none select-none shrink-0 mt-0.5">“</span>
-                        <div className="space-y-1.5 flex-1">
-                          <p className="text-xs sm:text-sm italic font-medium text-neutral-900 leading-relaxed font-serif">
-                            {isEn ? (sub.quoteEn || sub.quote) : sub.quote}
-                          </p>
-                          <div className="flex items-center justify-end gap-1.5 pt-1">
-                            <span className="h-px w-6 bg-red-400" />
-                            <span className="text-xs font-bold text-red-950">
-                              — {isEn ? (sub.quoteAuthorEn || sub.quoteAuthor) : sub.quoteAuthor}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Sub-section Content / Highlights */}
-                  {sub.structuredSections && sub.structuredSections.length > 0 ? (
-                    <div className="space-y-4">
-                      {sub.structuredSections.map((sec) => (
-                        <div
-                          key={sec.number}
-                          className="rounded-2xl p-4 sm:p-5 border-2 transition-all bg-white shadow-xs hover:shadow-md border-amber-200 hover:border-amber-400 space-y-3"
-                        >
-                          {/* Section Header */}
-                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-amber-100 pb-3">
-                            <div className="flex items-center gap-2.5">
-                              <span className="size-8 rounded-xl bg-gradient-to-br from-red-600 to-amber-600 text-white font-black text-sm flex items-center justify-center shrink-0 shadow-xs">
-                                {sec.number}
-                              </span>
-                              <div className="flex items-center gap-2 flex-wrap">
-                                <span className="text-xl shrink-0">{sec.icon ? <Icon name={sec.icon} /> : null}</span>
-                                <h6 className="font-circus text-base sm:text-lg text-neutral-900 leading-snug">
-                                  {isEn ? (sec.titleEn || sec.title) : sec.title}
-                                </h6>
-                              </div>
-                            </div>
-
-                            {(sec.categoryBadge || sec.categoryBadgeEn) && (
-                              <span className="text-[11px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider shrink-0 w-fit bg-amber-100 text-amber-900 border border-amber-300">
-                                {isEn ? (sec.categoryBadgeEn || sec.categoryBadge) : sec.categoryBadge}
-                              </span>
-                            )}
-                          </div>
-
-                          {/* Section Summary */}
-                          {(sec.summary || sec.summaryEn) && (
-                            <p className="text-xs sm:text-sm text-neutral-700 leading-relaxed bg-amber-50/50 p-3 rounded-xl border border-amber-200/60">
-                              {isEn ? (sec.summaryEn || sec.summary) : sec.summary}
-                            </p>
-                          )}
-
-                          {/* Section Sub-items (Records / Gold Medal Acts) */}
-                          {sec.items && sec.items.length > 0 && (
-                            <div className="space-y-2.5 pt-1">
-                              {sec.items.map((item, iIdx) => (
-                                <div
-                                  key={iIdx}
-                                  className="rounded-xl p-3 border text-xs transition-colors bg-white/95 border-neutral-200 hover:border-amber-300 space-y-1.5 shadow-2xs"
-                                >
-                                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-                                    <span className="font-bold text-neutral-900 text-xs sm:text-sm flex items-center gap-1.5">
-                                      <span className="size-2 rounded-full bg-red-600 shrink-0" />
-                                      <span>{isEn ? (item.nameEn || item.name) : item.name}</span>
-                                    </span>
-                                    {(item.badge || item.badgeEn) && (
-                                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-100 text-amber-900 border border-amber-200 w-fit">
-                                        {isEn ? (item.badgeEn || item.badge) : item.badge}
-                                      </span>
-                                    )}
-                                  </div>
-
-                                  {(item.artists || item.artistsEn) && (
-                                    <div className="text-[11px] font-semibold text-red-900 flex items-center gap-1">
-                                      <span>★ {isEn ? "Artist / Troupe:" : "Nghệ sĩ / Đơn vị:"}</span>
-                                      <span className="text-neutral-800">{isEn ? (item.artistsEn || item.artists) : item.artists}</span>
-                                    </div>
-                                  )}
-
-                                  <p className="text-xs text-neutral-700 leading-relaxed bg-neutral-50 p-2.5 rounded-lg border border-neutral-150">
-                                    <span className="font-semibold text-neutral-900">
-                                      {isEn ? "Achievement & Significance: " : "Thành tích & Dấu ấn: "}
-                                    </span>
-                                    {isEn ? (item.achievementEn || item.achievement) : item.achievement}
-                                  </p>
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    /* Sub-section Highlights for 4.1 & 4.2 */
+                  {/* Sub-section Highlights for 4.1 & 4.2 */}
+                  <div className="space-y-2">
+                    <span className="text-xs font-bold uppercase tracking-wider text-neutral-700 flex items-center gap-1.5">
+                      <Sparkles className="size-3.5 text-amber-600" />
+                      <span>{isEn ? "Sub-section Highlights" : "Dấu ấn tiểu mục trọng điểm"}</span>
+                    </span>
                     <div className="space-y-2">
-                      <span className="text-xs font-bold uppercase tracking-wider text-neutral-700 flex items-center gap-1.5">
-                        <Sparkles className="size-3.5 text-amber-600" />
-                        <span>{isEn ? "Sub-section Highlights" : "Dấu ấn tiểu mục trọng điểm"}</span>
-                      </span>
-                      <div className="space-y-2">
-                        {(isEn && sub.highlightsEn ? sub.highlightsEn : sub.highlights).map((hl, hIdx) => {
-                          const isSubHeader = hl.includes("KỶ LỤC") || hl.includes("GIẢI THƯỞNG") || hl.startsWith("•");
-                          return (
-                            <div
-                              key={hIdx}
-                              className={`flex items-start gap-2.5 text-xs p-2.5 rounded-xl border ${
-                                isSubHeader
-                                  ? "bg-amber-100/70 border-amber-300 text-amber-950 font-semibold"
-                                  : "bg-white border-neutral-200 text-neutral-800"
-                              }`}
-                            >
-                              <span className="size-4 rounded-full bg-red-700 text-white font-bold flex items-center justify-center shrink-0 text-[9px] mt-0.5">
-                                {hIdx + 1}
-                              </span>
-                              <span className="leading-relaxed whitespace-pre-line">{hl}</span>
-                            </div>
-                          );
-                        })}
-                      </div>
+                      {(isEn && sub.highlightsEn ? sub.highlightsEn : sub.highlights).map((hl, hIdx) => {
+                        const isSubHeader = hl.includes("KỶ LỤC") || hl.includes("GIẢI THƯỞNG") || hl.startsWith("•");
+                        return (
+                          <div
+                            key={hIdx}
+                            className={`flex items-start gap-2.5 text-xs p-2.5 rounded-xl border ${
+                              isSubHeader
+                                ? "bg-amber-100/70 border-amber-300 text-amber-950 font-semibold"
+                                : "bg-white border-neutral-200 text-neutral-800"
+                            }`}
+                          >
+                            <span className="size-4 rounded-full bg-red-700 text-white font-bold flex items-center justify-center shrink-0 text-[9px] mt-0.5">
+                              {hIdx + 1}
+                            </span>
+                            <span className="leading-relaxed whitespace-pre-line">{hl}</span>
+                          </div>
+                        );
+                      })}
                     </div>
-                  )}
-
                   </div>
-                );
-              })}
-            </div>
-          )}
+                </div>
+              );
+            })}
+          </div>
+        )}
 
           {/* Highlights for Milestones 1, 2, 3 */}
           {!isVietnamCentury && era.highlights && era.highlights.length > 0 && (
