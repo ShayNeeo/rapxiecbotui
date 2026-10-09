@@ -361,16 +361,12 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
                   </div>
                 </div>
 
-                {/* Citation for portrait */}
-                <a
-                  href="https://www.alamy.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-100 hover:bg-amber-200 text-amber-950 rounded-xl text-[11px] font-semibold border border-amber-300 transition-colors shadow-2xs cursor-pointer"
-                >
-                  <ExternalLink className="size-3 text-amber-700" />
-                  <span>{isEn ? "Portrait source: Alamy" : "Nguồn tranh: Alamy"}</span>
-                </a>
+                {/* Explanation note on engraving portrait */}
+                <p className="text-[11px] text-neutral-600 italic text-center leading-relaxed px-1">
+                  {isEn 
+                    ? "* Tranh phác họa lịch sử: Vào thời điểm Philip Astley sống và qua đời (1742 – 1814), công nghệ nhiếp ảnh/máy ảnh chưa ra đời nên chỉ lưu giữ được chân dung khắc đồng và phác họa."
+                    : "* Tranh phác họa lịch sử: Vào thời điểm Philip Astley sống và qua đời (1742 – 1814), công nghệ nhiếp ảnh/máy ảnh chưa ra đời nên chỉ lưu giữ được chân dung phác họa."}
+                </p>
               </div>
 
               {/* Biography & Historical Impact Content */}

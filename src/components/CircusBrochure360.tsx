@@ -295,7 +295,7 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
   }
 
   return (
-    <div className={`relative w-full rounded-3xl bg-gradient-to-b from-amber-950/85 via-neutral-900/95 to-black/95 p-4 sm:p-6 md:p-8 border-4 border-amber-400 shadow-2xl text-white ${className}`}>
+    <div className={`relative w-full rounded-3xl bg-gradient-to-b from-[#2b1008] via-[#3a160d] to-[#250d06] p-4 sm:p-6 md:p-8 border-4 border-amber-400/90 shadow-2xl text-white ${className}`}>
       {/* Top Header Bar */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-4 border-b border-amber-400/40">
         <div className="flex items-center gap-3">
@@ -310,21 +310,26 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
         </div>
       </div>
 
-      {/* Main 3D Card Stage with Perspective */}
+      {/* Main 3D Card Stage with Perspective - Warm, brighter ambient stage */}
       <div
         ref={stageRef}
-        className="relative my-6 select-none overflow-hidden rounded-2xl bg-gradient-radial from-amber-900/30 via-black/70 to-black/95 p-4 sm:p-8 flex items-center justify-center min-h-[420px] sm:min-h-[500px] md:min-h-[580px]"
+        className="relative my-6 select-none overflow-hidden rounded-2xl bg-gradient-to-b from-[#4a2215]/80 via-[#341810]/90 to-[#220d07] border border-amber-500/30 p-4 sm:p-8 flex items-center justify-center min-h-[420px] sm:min-h-[500px] md:min-h-[580px] shadow-inner"
         style={{ perspective: "1700px" }}
       >
+        {/* Subtle decorative warm ambient glow in center */}
+        <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+          <div className="w-[85%] h-[75%] rounded-full bg-amber-500/15 blur-3xl" />
+        </div>
+
         {/* Subtle decorative background rings */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
-          <div className="size-[340px] sm:size-[460px] md:size-[580px] rounded-full border border-dashed border-amber-400 animate-[spin_80s_linear_infinite]" />
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-30">
+          <div className="size-[340px] sm:size-[460px] md:size-[580px] rounded-full border border-dashed border-amber-400/60 animate-[spin_80s_linear_infinite]" />
           <div className="absolute size-[240px] sm:size-[340px] md:size-[440px] rounded-full border border-amber-300/40" />
         </div>
 
         {/* Floating Interactive Tooltip Pill on top left */}
         <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 z-30 pointer-events-none">
-          <div className="bg-black/85 backdrop-blur-xs border border-amber-400/50 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-[10px] sm:text-xs text-amber-200 flex items-center gap-1 sm:gap-1.5 shadow-lg">
+          <div className="bg-[#240e08]/90 backdrop-blur-md border border-amber-400/50 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[10px] sm:text-xs text-amber-200 flex items-center gap-1 sm:gap-1.5 shadow-lg">
             <Sparkles className="size-3 sm:size-3.5 text-amber-300 animate-spin" />
             <span className="font-semibold whitespace-nowrap">
               <span className="sm:hidden">
@@ -344,7 +349,7 @@ export const CircusBrochure360: React.FC<CircusBrochure360Props> = ({
         </div>
 
         {/* Floating Zoom & Detail Viewer Controls directly on the 3D Stage (top right) */}
-        <div className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-30 flex items-center gap-0.5 sm:gap-1 bg-black/85 backdrop-blur-md border border-amber-400/50 p-0.5 sm:p-1 rounded-lg sm:rounded-xl shadow-xl">
+        <div className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-30 flex items-center gap-0.5 sm:gap-1 bg-[#240e08]/90 backdrop-blur-md border border-amber-400/50 p-0.5 sm:p-1 rounded-lg sm:rounded-xl shadow-xl">
           <button
             onClick={() => setZoomLevel((z) => Math.max(0.6, Number((z - 0.2).toFixed(2))))}
             className="p-1 sm:p-1.5 hover:bg-white/20 rounded-md sm:rounded-lg text-amber-200 hover:text-white transition-colors cursor-pointer"
