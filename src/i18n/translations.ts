@@ -10,7 +10,7 @@ export const TRANSLATIONS = {
     nav: {
       stage: 'Sân Khấu Lớn',
       about: 'Về Chúng Tôi',
-      promo: 'Quảng Bá (Brochure)',
+      promo: 'Quảng Bá',
       history: 'Tư Liệu Lịch Sử',
       circus3d: 'Rạp Xiếc 3D',
       quiz: 'Quiz Kiến Thức',
@@ -41,7 +41,7 @@ export const TRANSLATIONS = {
       tech: 'Bảo Tàng Xiếc Số 3D',
       contactTitle: 'Thông tin liên hệ',
       aboutLink: 'Về Chúng Tôi (About Us)',
-      brochureLink: 'Quảng Bá (Brochure)',
+      brochureLink: 'Quảng Bá',
       historyLink: 'Khám Phá Tư Liệu Lịch Sử',
     },
   },
