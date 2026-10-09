@@ -42,7 +42,6 @@ import {
   FileText,
   AlertTriangle,
   Layers,
-  Sliders,
   Compass
 } from "lucide-react";
 
@@ -67,6 +66,14 @@ export interface MediaItem {
   isDriveSource?: boolean;
 }
 
+// Cố định tỉ lệ, vị trí và độ thu phóng các ảnh điền dã theo đúng căn chỉnh của người dùng
+export const FIELDWORK_PHOTO_FRAMING: Record<number, { offsetY: number; offsetX: number; zoom: number }> = {
+  0: { offsetY: 93, offsetX: 50, zoom: 184 }, // Ảnh 1 (khổ dọc): lấy góc sân khấu & chùm bóng phát sáng
+  1: { offsetY: 71, offsetX: 50, zoom: 106 }, // Ảnh 2: lấy bục biểu diễn xiếc thăng bằng trung tâm
+  2: { offsetY: 76, offsetX: 50, zoom: 104 }, // Ảnh 3: hạ thấp trọng tâm lấy trọn sân khấu phía dưới
+  3: { offsetY: 73, offsetX: 50, zoom: 107 }, // Ảnh 4: hạ thấp trọng tâm lấy trọn sân khấu và diễn viên
+};
+
 export const MODERN_CIRCUS_MEDIA: MediaItem[] = [
   {
     id: "media-dien-da-nhom-nghien-cuu-rap-xiec-thuc-dia",
@@ -83,7 +90,7 @@ export const MODERN_CIRCUS_MEDIA: MediaItem[] = [
       dienDaVungDatKyBiImg3
     ],
     year: "2025",
-    tags: ["Ảnh Điền Dã", "Nhóm Nghiên Cứu", "Tư Liệu Thực Địa", "Mơ Show", "Khán Đài Rạp Xiếc", "Nghệ Thuật Sân Khấu", "Trực Tiếp Tại Rạp"],
+    tags: ["Ảnh Điền Dã", "Nhóm Nghiên Cứu", "Tư Liệu Thực Địa", "Mơ Show", "Nghệ Thuật Sân Khấu", "Trực Tiếp Tại Rạp"],
     description: "Bộ ảnh tư liệu do nhóm nghiên cứu trực tiếp ghi nhận trong chuyến điền dã khảo sát tại rạp xiếc, xoay quanh các màn trình diễn đặc sắc trong show xiếc \"Mơ Show\".",
     descriptionEn: "A documentary photo series captured firsthand by the project research team during on-site field visits to the circus theater, spotlighting standout performances in the 'Mo Show' circus production."
   },
@@ -603,92 +610,9 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
     return 100;
   });
 
-  // Framing & positioning controls for Fieldwork Photos ("ảnh điền dã")
-  const [isAdjustingFieldwork, setIsAdjustingFieldwork] = useState(false);
-  const [fieldworkOffsetsY, setFieldworkOffsetsY] = useState<Record<number, number>>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('circus_archive_fieldwork_offsets_y');
-      if (saved) {
-        try {
-          return JSON.parse(saved);
-        } catch {}
-      }
-    }
-    return { 0: 50, 1: 50, 2: 50, 3: 50 };
-  });
-  const [fieldworkOffsetsX, setFieldworkOffsetsX] = useState<Record<number, number>>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('circus_archive_fieldwork_offsets_x');
-      if (saved) {
-        try {
-          return JSON.parse(saved);
-        } catch {}
-      }
-    }
-    return { 0: 50, 1: 50, 2: 50, 3: 50 };
-  });
-  const [fieldworkZooms, setFieldworkZooms] = useState<Record<number, number>>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('circus_archive_fieldwork_zooms');
-      if (saved) {
-        try {
-          return JSON.parse(saved);
-        } catch {}
-      }
-    }
-    return { 0: 100, 1: 100, 2: 100, 3: 100 };
-  });
-  const [fieldworkModes, setFieldworkModes] = useState<Record<number, 'contain' | 'cover'>>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('circus_archive_fieldwork_modes');
-      if (saved) {
-        try {
-          return JSON.parse(saved);
-        } catch {}
-      }
-    }
-    return { 0: 'contain', 1: 'contain', 2: 'contain', 3: 'contain' };
-  });
-
-  const handleUpdateFieldworkOffsetY = (index: number, val: number) => {
-    setFieldworkOffsetsY(prev => {
-      const updated = { ...prev, [index]: val };
-      localStorage.setItem('circus_archive_fieldwork_offsets_y', JSON.stringify(updated));
-      return updated;
-    });
-  };
-
-  const handleUpdateFieldworkOffsetX = (index: number, val: number) => {
-    setFieldworkOffsetsX(prev => {
-      const updated = { ...prev, [index]: val };
-      localStorage.setItem('circus_archive_fieldwork_offsets_x', JSON.stringify(updated));
-      return updated;
-    });
-  };
-
-  const handleUpdateFieldworkZoom = (index: number, val: number) => {
-    setFieldworkZooms(prev => {
-      const updated = { ...prev, [index]: val };
-      localStorage.setItem('circus_archive_fieldwork_zooms', JSON.stringify(updated));
-      return updated;
-    });
-  };
-
-  const handleUpdateFieldworkMode = (index: number, mode: 'contain' | 'cover') => {
-    circusAudio.playBambooStep();
-    setFieldworkModes(prev => {
-      const updated = { ...prev, [index]: mode };
-      localStorage.setItem('circus_archive_fieldwork_modes', JSON.stringify(updated));
-      return updated;
-    });
-  };
-
-  const handleResetFieldworkImage = (index: number) => {
-    circusAudio.playBambooStep();
-    handleUpdateFieldworkOffsetY(index, 50);
-    handleUpdateFieldworkOffsetX(index, 50);
-    handleUpdateFieldworkZoom(index, 100);
-    handleUpdateFieldworkMode(index, 'contain');
+  // Cố định cấu hình khung hình cho từng ảnh điền dã
+  const getFieldworkFraming = (index: number) => {
+    return FIELDWORK_PHOTO_FRAMING[index] ?? { offsetY: 50, offsetX: 50, zoom: 100 };
   };
 
   // Blank template modal & form state
@@ -1308,9 +1232,9 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
                       style={
                         item.id === "media-dien-da-nhom-nghien-cuu-rap-xiec-thuc-dia"
                           ? {
-                              objectPosition: `${fieldworkOffsetsX[0] ?? 50}% ${fieldworkOffsetsY[0] ?? 50}%`,
-                              transform: `scale(${(fieldworkZooms[0] ?? 100) / 100})`,
-                              transformOrigin: `${fieldworkOffsetsX[0] ?? 50}% ${fieldworkOffsetsY[0] ?? 50}%`,
+                              objectPosition: `${FIELDWORK_PHOTO_FRAMING[0].offsetX}% ${FIELDWORK_PHOTO_FRAMING[0].offsetY}%`,
+                              transform: `scale(${FIELDWORK_PHOTO_FRAMING[0].zoom / 100})`,
+                              transformOrigin: `${FIELDWORK_PHOTO_FRAMING[0].offsetX}% ${FIELDWORK_PHOTO_FRAMING[0].offsetY}%`,
                             }
                           : undefined
                       }
@@ -1456,59 +1380,24 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
                     className="size-full object-contain" 
                   />
                 ) : (
-                    <div className={`relative size-full flex items-center justify-center bg-neutral-950 overflow-hidden ${
-                      selectedMedia.id === "media-dien-da-nhom-nghien-cuu-rap-xiec-thuc-dia" && fieldworkModes[activeImageIndex] === 'cover'
-                        ? 'p-0'
-                        : 'p-2'
-                    }`}>
+                    <div className="relative size-full flex items-center justify-center bg-neutral-950 overflow-hidden p-2">
                       <img
                         src={(selectedMedia.galleryImages && selectedMedia.galleryImages[activeImageIndex]) || selectedMedia.thumbnail}
                         alt={isEn ? selectedMedia.titleEn : selectedMedia.title}
                         style={
                           selectedMedia.id === "media-dien-da-nhom-nghien-cuu-rap-xiec-thuc-dia"
-                            ? (fieldworkModes[activeImageIndex] === 'cover'
-                                ? {
-                                    objectPosition: `${fieldworkOffsetsX[activeImageIndex] ?? 50}% ${fieldworkOffsetsY[activeImageIndex] ?? 50}%`,
-                                    transform: `scale(${(fieldworkZooms[activeImageIndex] ?? 100) / 100})`,
-                                    transformOrigin: `${fieldworkOffsetsX[activeImageIndex] ?? 50}% ${fieldworkOffsetsY[activeImageIndex] ?? 50}%`,
-                                  }
-                                : {
-                                    objectPosition: `${fieldworkOffsetsX[activeImageIndex] ?? 50}% ${fieldworkOffsetsY[activeImageIndex] ?? 50}%`,
-                                    transform: `translate(${(50 - (fieldworkOffsetsX[activeImageIndex] ?? 50)) * 0.5}%, ${(50 - (fieldworkOffsetsY[activeImageIndex] ?? 50)) * 0.5}%) scale(${(fieldworkZooms[activeImageIndex] ?? 100) / 100})`,
-                                    transformOrigin: 'center center',
-                                  }
-                              )
+                            ? (() => {
+                                const f = getFieldworkFraming(activeImageIndex);
+                                return {
+                                  objectPosition: `${f.offsetX}% ${f.offsetY}%`,
+                                  transform: `translate(${(50 - f.offsetX) * 0.5}%, ${(50 - f.offsetY) * 0.5}%) scale(${f.zoom / 100})`,
+                                  transformOrigin: 'center center',
+                                };
+                              })()
                             : undefined
                         }
-                        className={
-                          selectedMedia.id === "media-dien-da-nhom-nghien-cuu-rap-xiec-thuc-dia" && fieldworkModes[activeImageIndex] === 'cover'
-                            ? "size-full object-cover transition-all duration-200 select-none shadow-2xl"
-                            : "max-h-[62vh] w-auto max-w-full object-contain rounded-lg shadow-2xl transition-all duration-200 select-none"
-                        }
+                        className="max-h-[62vh] w-auto max-w-full object-contain rounded-lg shadow-2xl transition-all duration-200 select-none"
                       />
-
-                      {/* Frame Adjustment Toggle Button for Fieldwork Photos ("Ảnh điền dã") */}
-                      {selectedMedia.id === "media-dien-da-nhom-nghien-cuu-rap-xiec-thuc-dia" && (
-                        <div className="absolute top-3 left-3 z-30">
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              circusAudio.playBambooStep();
-                              setIsAdjustingFieldwork((prev) => !prev);
-                            }}
-                            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-xl cursor-pointer backdrop-blur-md border ${
-                              isAdjustingFieldwork
-                                ? "bg-amber-400 text-neutral-950 border-amber-300 ring-2 ring-amber-300/80"
-                                : "bg-black/80 hover:bg-black text-amber-200 hover:text-white border-white/20"
-                            }`}
-                            title={isEn ? "Adjust Frame Position & Zoom" : "Căn chỉnh khung ảnh & thu phóng"}
-                          >
-                            <Sliders className="size-3.5 text-amber-500" />
-                            <span>{isEn ? (isAdjustingFieldwork ? "Done Adjusting" : "Adjust Frame") : (isAdjustingFieldwork ? "Xong Căn Chỉnh" : "Căn Chỉnh Khung Ảnh")}</span>
-                          </button>
-                        </div>
-                      )}
 
                     {/* Gallery Navigation Controls if Multiple Images */}
                     {selectedMedia.galleryImages && selectedMedia.galleryImages.length > 1 && (
@@ -1608,203 +1497,6 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
                   </div>
                 )}
               </div>
-
-              {/* Panel căn chỉnh khung ảnh cho từng ảnh điền dã */}
-              {isAdjustingFieldwork && selectedMedia.id === "media-dien-da-nhom-nghien-cuu-rap-xiec-thuc-dia" && (
-                <div className="bg-amber-50/95 border-b-2 border-amber-400/80 p-4 sm:p-5 shadow-lg space-y-4 animate-in fade-in duration-200 text-neutral-900">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-amber-200/80 pb-3">
-                    <div className="flex items-center gap-2">
-                      <Sliders className="size-4 text-red-700" />
-                      <h4 className="font-circus text-sm sm:text-base text-amber-950">
-                        {isEn ? `Framing & Position Controls • Photo ${activeImageIndex + 1}` : `Bảng Căn Chỉnh Khung Ảnh • Ảnh số ${activeImageIndex + 1}`}
-                      </h4>
-                    </div>
-
-                    {/* Direct Photo Switcher Tabs */}
-                    <div className="flex items-center gap-1.5 flex-wrap">
-                      <span className="text-xs font-bold text-neutral-700 mr-1">{isEn ? "Select Photo:" : "Chọn ảnh:"}</span>
-                      {[0, 1, 2, 3].map((idx) => (
-                        <button
-                          key={idx}
-                          type="button"
-                          onClick={() => {
-                            circusAudio.playBambooStep();
-                            setActiveImageIndex(idx);
-                          }}
-                          className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                            idx === activeImageIndex
-                              ? 'bg-red-700 text-yellow-300 shadow-md ring-2 ring-red-800/60 scale-105'
-                              : 'bg-white hover:bg-amber-100 text-amber-950 border border-amber-300'
-                          }`}
-                        >
-                          {isEn ? `Photo ${idx + 1}` : `Ảnh số ${idx + 1}`}
-                        </button>
-                      ))}
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => handleResetFieldworkImage(activeImageIndex)}
-                        className="px-3 py-1 text-xs font-semibold rounded-lg bg-white border border-amber-300 text-amber-900 hover:bg-amber-100 cursor-pointer shadow-2xs flex items-center gap-1"
-                      >
-                        <RotateCcw className="size-3" />
-                        <span>{isEn ? "Reset" : "Mặc định"}</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setIsAdjustingFieldwork(false)}
-                        className="px-3 py-1 text-xs font-bold rounded-lg bg-red-700 text-white hover:bg-red-800 cursor-pointer shadow-2xs"
-                      >
-                        {isEn ? "Done" : "Xong"}
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Frame Style Toggle (Contain vs Cover) */}
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-xs font-bold text-neutral-700">{isEn ? "Frame Style:" : "Kiểu khung ảnh:"}</span>
-                    <button
-                      type="button"
-                      onClick={() => handleUpdateFieldworkMode(activeImageIndex, 'contain')}
-                      className={`px-3 py-1 text-xs font-bold rounded-lg border transition-all cursor-pointer ${
-                        (fieldworkModes[activeImageIndex] ?? 'contain') === 'contain'
-                          ? 'bg-amber-300 text-neutral-900 border-amber-500 shadow-xs ring-1 ring-amber-400'
-                          : 'bg-white text-neutral-700 border-neutral-300 hover:bg-neutral-50'
-                      }`}
-                    >
-                      {isEn ? "Fit Frame (Full View)" : "Vừa Vặn (Xem trọn cảnh)"}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleUpdateFieldworkMode(activeImageIndex, 'cover')}
-                      className={`px-3 py-1 text-xs font-bold rounded-lg border transition-all cursor-pointer ${
-                        fieldworkModes[activeImageIndex] === 'cover'
-                          ? 'bg-amber-300 text-neutral-900 border-amber-500 shadow-xs ring-1 ring-amber-400'
-                          : 'bg-white text-neutral-700 border-neutral-300 hover:bg-neutral-50'
-                      }`}
-                    >
-                      {isEn ? "Fill Frame (Like Cover Photo)" : "Tràn Viền (Giống ảnh bìa)"}
-                    </button>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                    {/* Vertical Position */}
-                    <div className="space-y-1.5 bg-white p-3 rounded-2xl border border-amber-200 shadow-2xs">
-                      <div className="flex items-center justify-between font-bold text-neutral-800">
-                        <span>{isEn ? "Vertical Position (Up / Down):" : "Vị trí dọc (Kéo lên / Kéo xuống):"}</span>
-                        <span className="text-red-700 font-mono font-bold bg-red-50 px-2 py-0.5 rounded-md border border-red-200">{fieldworkOffsetsY[activeImageIndex] ?? 50}%</span>
-                      </div>
-                      <input
-                        type="range"
-                        min="0"
-                        max="100"
-                        value={fieldworkOffsetsY[activeImageIndex] ?? 50}
-                        onChange={(e) => handleUpdateFieldworkOffsetY(activeImageIndex, Number(e.target.value))}
-                        className="w-full accent-red-700 cursor-pointer"
-                      />
-                      <div className="flex items-center justify-between gap-1 text-[10px]">
-                        <button
-                          type="button"
-                          onClick={() => handleUpdateFieldworkOffsetY(activeImageIndex, 0)}
-                          className="px-2 py-0.5 rounded bg-neutral-100 hover:bg-amber-100 text-neutral-700 border border-neutral-200 cursor-pointer"
-                        >
-                          {isEn ? "Top (0%)" : "Đầu ảnh (0%)"}
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => handleUpdateFieldworkOffsetY(activeImageIndex, 50)}
-                          className="px-2 py-0.5 rounded bg-neutral-100 hover:bg-amber-100 text-neutral-700 border border-neutral-200 cursor-pointer font-bold"
-                        >
-                          {isEn ? "Center (50%)" : "Chính giữa (50%)"}
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => handleUpdateFieldworkOffsetY(activeImageIndex, 100)}
-                          className="px-2 py-0.5 rounded bg-neutral-100 hover:bg-amber-100 text-neutral-700 border border-neutral-200 cursor-pointer"
-                        >
-                          {isEn ? "Bottom (100%)" : "Đáy ảnh (100%)"}
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Horizontal Position */}
-                    <div className="space-y-1.5 bg-white p-3 rounded-2xl border border-amber-200 shadow-2xs">
-                      <div className="flex items-center justify-between font-bold text-neutral-800">
-                        <span>{isEn ? "Horizontal Position (Left / Right):" : "Vị trí ngang (Trái / Phải):"}</span>
-                        <span className="text-red-700 font-mono font-bold bg-red-50 px-2 py-0.5 rounded-md border border-red-200">{fieldworkOffsetsX[activeImageIndex] ?? 50}%</span>
-                      </div>
-                      <input
-                        type="range"
-                        min="0"
-                        max="100"
-                        value={fieldworkOffsetsX[activeImageIndex] ?? 50}
-                        onChange={(e) => handleUpdateFieldworkOffsetX(activeImageIndex, Number(e.target.value))}
-                        className="w-full accent-red-700 cursor-pointer"
-                      />
-                      <div className="flex items-center justify-between gap-1 text-[10px]">
-                        <button
-                          type="button"
-                          onClick={() => handleUpdateFieldworkOffsetX(activeImageIndex, 0)}
-                          className="px-2 py-0.5 rounded bg-neutral-100 hover:bg-amber-100 text-neutral-700 border border-neutral-200 cursor-pointer"
-                        >
-                          {isEn ? "Left (0%)" : "Sang trái (0%)"}
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => handleUpdateFieldworkOffsetX(activeImageIndex, 50)}
-                          className="px-2 py-0.5 rounded bg-neutral-100 hover:bg-amber-100 text-neutral-700 border border-neutral-200 cursor-pointer font-bold"
-                        >
-                          {isEn ? "Center (50%)" : "Chính giữa (50%)"}
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => handleUpdateFieldworkOffsetX(activeImageIndex, 100)}
-                          className="px-2 py-0.5 rounded bg-neutral-100 hover:bg-amber-100 text-neutral-700 border border-neutral-200 cursor-pointer"
-                        >
-                          {isEn ? "Right (100%)" : "Sang phải (100%)"}
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Zoom / Scale */}
-                    <div className="space-y-1.5 bg-white p-3 rounded-2xl border border-amber-200 shadow-2xs sm:col-span-2">
-                      <div className="flex items-center justify-between font-bold text-neutral-800">
-                        <span>{isEn ? "Zoom / Scale:" : "Thu phóng ảnh (Zoom):"}</span>
-                        <span className="text-red-700 font-mono font-bold bg-red-50 px-2 py-0.5 rounded-md border border-red-200">{fieldworkZooms[activeImageIndex] ?? 100}%</span>
-                      </div>
-                      <input
-                        type="range"
-                        min="100"
-                        max="220"
-                        value={fieldworkZooms[activeImageIndex] ?? 100}
-                        onChange={(e) => handleUpdateFieldworkZoom(activeImageIndex, Number(e.target.value))}
-                        className="w-full accent-red-700 cursor-pointer"
-                      />
-                      <div className="flex items-center justify-between gap-1 text-[10px]">
-                        {[100, 120, 150, 180, 220].map((zm) => (
-                          <button
-                            key={zm}
-                            type="button"
-                            onClick={() => handleUpdateFieldworkZoom(activeImageIndex, zm)}
-                            className="px-2.5 py-0.5 rounded bg-neutral-100 hover:bg-amber-100 text-neutral-700 border border-neutral-200 cursor-pointer font-medium"
-                          >
-                            {zm}%
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between pt-1 border-t border-amber-200/60 text-[11px] text-amber-900 font-medium">
-                    <span>
-                      {isEn 
-                        ? `* Settings are automatically saved for photo ${activeImageIndex + 1} / ${(selectedMedia.galleryImages?.length || 4)}.`
-                        : `* Vị trí và độ thu phóng sẽ được lưu tự động cho riêng ảnh số ${activeImageIndex + 1} / ${(selectedMedia.galleryImages?.length || 4)}.`}
-                    </span>
-                  </div>
-                </div>
-              )}
 
               {/* Text Info */}
               <div className="p-5 bg-neutral-900 text-white space-y-3">
