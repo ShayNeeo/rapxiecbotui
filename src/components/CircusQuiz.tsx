@@ -362,44 +362,26 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
       "People's Artist Hoang Cuc"
     ],
     correctIndex: 0,
-    explanation: "NSND Tâm Chính (sinh năm 1945 tại Thanh Hóa) là nữ nghệ sĩ xiếc Việt Nam đầu tiên được phong tặng danh hiệu Nghệ sĩ Nhân dân (đợt 2, năm 1988) và từng giữ cương vị Giám đốc Liên đoàn Xiếc Việt Nam (1987 - 2004). Bà là cánh chim đầu đàn, đưa xiếc Việt Nam vươn tầm quốc tế với tiết mục huyền thoại 'Cô hàng giải khát' thăng bằng trên con lăn.",
-    explanationEn: "People's Artist Tam Chinh (born 1945 in Thanh Hoa) was the first female Vietnamese circus artist honored as People's Artist (1988) and served as Director of the Vietnam Circus Federation (1987-2004). She remains a towering legend who elevated Vietnamese circus globally through her iconic roller-balancing routine 'The Refreshment Seller'.",
+    explanation: "NSND Tâm Chính (sinh năm 1945 tại Thanh Hóa) là nữ nghệ sĩ xiếc Việt Nam đầu tiên được phong tặng danh hiệu Nghệ sĩ Nhân dân (đợt 2, năm 1988) và từng giữ cương vị Giám đốc Liên đoàn Xiếc Việt Nam (1987 - 2004). Bà là cánh chim đầu đàn, đưa xiếc Việt Nam vươn tầm quốc tế với tài năng thăng bằng đỉnh cao và cống hiến trọn đời cho nghệ thuật xiếc dân tộc.",
+    explanationEn: "People's Artist Tam Chinh (born 1945 in Thanh Hoa) was the first female Vietnamese circus artist honored as People's Artist (1988) and served as Director of the Vietnam Circus Federation (1987-2004). She remains a towering pioneer who elevated Vietnamese circus globally through supreme balancing artistry and lifelong dedication.",
     triviaFact: "Từ cô thôn nữ nghèo làm đồng ở Thanh Hóa, bằng ý chí phi thường và khổ luyện vượt bậc, bà đã vươn lên trở thành huyền thoại rạng danh của xiếc Việt Nam và được tặng thưởng danh hiệu Anh hùng Lao động.",
     triviaFactEn: "From a rural farming girl in Thanh Hoa, through extraordinary grit, she rose to become a revered circus legend and Labor Hero of Vietnam.",
-    image: nsndTamChinhCoHangGiaiKhatImg,
-    imageAlt: "Tiết mục Cô hàng giải khát thăng bằng con lăn lừng danh của NSND Tâm Chính",
-    imageCaption: "NSND Tâm Chính • Tiết mục huyền thoại 'Cô hàng giải khát' thăng bằng trên con lăn",
-    imageCaptionEn: "People's Artist Tam Chinh • Legendary 'Refreshment Seller' roller-balancing act",
+    image: nsndTamChinhChanDungImg,
+    imageAlt: "Chân dung NSND Tâm Chính - Nữ nghệ sĩ xiếc Việt Nam đầu tiên được phong tặng danh hiệu NSND",
+    imageCaption: "NSND Tâm Chính • Cánh chim đầu đàn và cựu Giám đốc Liên đoàn Xiếc Việt Nam",
+    imageCaptionEn: "People's Artist Tam Chinh • Pioneer & Former Director of Vietnam Circus Federation",
     sourceUrl: "https://arttimes.vn/san-khau-dien-anh/chuyen-ve-nu-anh-hung-dau-tien-cua-nganh-xiec-viet-c17a24254.html",
     sourceTitle: "Thời báo Văn học Nghệ thuật: NSND Tâm Chính",
-    gallery: [
-      {
-        src: nsndTamChinhCoHangGiaiKhatImg,
-        alt: "NSND Tâm Chính biểu diễn tiết mục Cô hàng giải khát thăng bằng trên nhiều tầng con lăn",
-        caption: "Tiết mục 'Cô hàng giải khát' – Đỉnh cao thăng bằng con lăn vang danh quốc tế những năm 1960 - 1970",
-        captionEn: "'The Refreshment Seller' – Iconic roller-balancing sensation of the 1960s & 1970s",
-        sourceUrl: "https://arttimes.vn/san-khau-dien-anh/chuyen-ve-nu-anh-hung-dau-tien-cua-nganh-xiec-viet-c17a24254.html",
-        sourceTitle: "Arttimes.vn"
-      },
-      {
-        src: nsndTamChinhChanDungImg,
-        alt: "Chân dung NSND Tâm Chính - Nữ anh hùng đầu tiên của ngành xiếc Việt Nam",
-        caption: "NSND Tâm Chính • Cánh chim đầu đàn và cựu Giám đốc Liên đoàn Xiếc Việt Nam",
-        captionEn: "People's Artist Tam Chinh • Pioneer & Former Director of Vietnam Circus Federation",
-        sourceUrl: "https://arttimes.vn/san-khau-dien-anh/chuyen-ve-nu-anh-hung-dau-tien-cua-nganh-xiec-viet-c17a24254.html",
-        sourceTitle: "Arttimes.vn"
-      }
-    ],
     interestingFacts: [
       "Xuất thân từ cô thôn nữ làng quê nghèo: Sinh ra trong gia đình thuần nông tại Nga Sơn (Thanh Hóa), trước khi đến với xiếc bà chỉ quen việc cấy lúa, gánh phân, chưa từng biết xiếc là gì cho đến khi trúng tuyển vào Trường Xiếc năm 1959.",
-      "Sáng tạo tiết mục kinh điển 'Cô hàng giải khát': Lấy cảm hứng từ đời sống lao động, bà hóa thân thành cô gái bán nước giải khát thăng bằng tài tình trên nhiều tầng con lăn xếp chồng, vừa rót nước, bật nắp chai, xếp cốc mà không hề dao động.",
+      "Kỹ thuật thăng bằng đỉnh cao: Khổ luyện không ngừng để làm chủ kỹ thuật thăng bằng con lăn phức tạp trên nhiều tầng xếp chồng mà không hề dao động, khẳng định bản lĩnh của người phụ nữ Việt Nam.",
       "Vinh dự nhiều lần biểu diễn cho Bác Hồ xem: Bà vinh dự được biểu diễn phục vụ Bác Hồ tại Phủ Chủ tịch; Bác đã thân tình khen ngợi, tặng hoa và động viên các nghệ sĩ xiếc mang nghệ thuật phục vụ nhân dân.",
       "Lưu diễn quốc tế & giải thưởng danh giá: Tiết mục của bà đã đoạt Huy chương Bạc tại Liên hoan Xiếc quốc tế Warsaw (Ba Lan) năm 1980 và lưu diễn qua hàng chục quốc gia khắp năm châu.",
       "Gia đình 'đại gia đình xiếc' lừng danh: Chồng bà là NSƯT Lê Thể (bậc thầy hề xiếc và huấn luyện thú), các con cháu như NSƯT Thắng Bế, nghệ sĩ Phương Thảo đều nối nghiệp, trở thành gia tộc xiếc tiêu biểu của Việt Nam."
     ],
     interestingFactsEn: [
       "From rural farming roots to national glory: Born to a humble peasant family in Nga Son (Thanh Hoa), knew nothing of acrobatics until passing the circus entrance audition in 1959.",
-      "Iconic masterpiece 'The Refreshment Seller': Inspired by daily life, she enacted a beverage vendor maintaining flawless balance atop multi-tiered rolling cylinders while pouring drinks and serving glasses.",
+      "Supreme balancing mastery: Relentless discipline to master complex multi-tiered rolling cylinder balance acts without faltering, asserting Vietnamese women's resilience.",
       "Honored to perform before President Ho Chi Minh: Repeatedly performed at the Presidential Palace for President Ho Chi Minh, receiving his personal flowers and praise.",
       "Global acclaim & international Silver Medal: Captured the Silver Medal at the prestigious Warsaw International Circus Festival (Poland) in 1980, touring dozens of countries worldwide.",
       "Patriarch of a revered circus dynasty: Her husband Meritorious Artist Le The, and children/grandchildren (including Meritorious Artist Thang Be) carry forward an extraordinary multigenerational circus legacy."
