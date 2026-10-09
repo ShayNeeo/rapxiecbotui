@@ -458,126 +458,74 @@ export default function App() {
         )}
       </main>
 
-      {/* Footer */}
-      <footer className="no-print w-full bg-[#1e0707] text-amber-200/90 border-t-4 border-amber-400 py-7 sm:py-9 px-4 sm:px-6 text-center mt-auto">
-        <div className="max-w-2xl mx-auto space-y-4 sm:space-y-5">
-          <div className="flex items-center justify-center gap-2 font-circus text-base sm:text-lg text-amber-300 tracking-wider">
-            <span className="text-amber-400 text-sm">★</span>
-            <span>{isEn ? "POCKET CIRCUS VIETNAM" : "RẠP XIẾC BỎ TÚI VIỆT NAM"}</span>
-            <span className="text-amber-400 text-sm">★</span>
-          </div>
+      {/* Footer - Chỉ hiển thị ở trang sân khấu chính */}
+      {currentAct === 'stage' && (
+        <footer className="no-print w-full bg-[#1e0707] text-amber-200/90 border-t-4 border-amber-400 py-7 sm:py-9 px-4 sm:px-6 text-center mt-auto">
+          <div className="max-w-2xl mx-auto space-y-4 sm:space-y-5">
+            <div className="flex items-center justify-center gap-2 font-circus text-base sm:text-lg text-amber-300 tracking-wider">
+              <span className="text-amber-400 text-sm">★</span>
+              <span>{isEn ? "POCKET CIRCUS VIETNAM" : "RẠP XIẾC BỎ TÚI VIỆT NAM"}</span>
+              <span className="text-amber-400 text-sm">★</span>
+            </div>
 
-          <p className="text-amber-100 text-sm sm:text-[15px] font-medium leading-relaxed tracking-wide max-w-lg mx-auto">
-            {isEn ? "Nurturing Heritage • Connecting the Digital Beat" : "Nuôi dưỡng tinh hoa - Hoà cầu nhịp số"}
-          </p>
+            <p className="text-amber-100 text-sm sm:text-[15px] font-medium leading-relaxed tracking-wide max-w-lg mx-auto">
+              {isEn ? "Nurturing Heritage • Connecting the Digital Beat" : "Nuôi dưỡng tinh hoa - Hoà cầu nhịp số"}
+            </p>
 
-          {/* Quick Nav Links */}
-          <div className="flex flex-wrap items-center justify-center gap-2 pt-1 pb-1">
-            <button
-              onClick={() => {
-                circusAudio.playBambooStep();
-                navigateToAct('about');
-              }}
-              className="text-xs text-amber-300 hover:text-white bg-white/10 hover:bg-white/20 px-3 py-1 rounded-full border border-amber-400/30 transition-colors cursor-pointer"
-            >
-              {isEn ? "About Us" : "Về Chúng Tôi (About Us)"}
-            </button>
-            <button
-              onClick={() => {
-                circusAudio.playBambooStep();
-                navigateToAct('promo');
-              }}
-              className="text-xs text-amber-300 hover:text-white bg-white/10 hover:bg-white/20 px-3 py-1 rounded-full border border-amber-400/30 transition-colors cursor-pointer inline-flex items-center gap-1"
-              title={isEn ? "Open 360° Brochure" : "Xem Brochure 360°"}
-            >
-              <span>{isEn ? "360° Brochure" : "Brochure 360°"}</span>
-            </button>
-            <button
-              onClick={() => {
-                circusAudio.playBambooStep();
-                navigateToAct('archive');
-              }}
-              className="text-xs text-amber-300 hover:text-white bg-white/10 hover:bg-white/20 px-3 py-1 rounded-full border border-amber-400/30 transition-colors cursor-pointer inline-flex items-center gap-1"
-              title={isEn ? "Open Media Archive" : "Mở Kho Tư Liệu Số"}
-            >
-              <span>{isEn ? "Media Archive" : "Kho Tư Liệu Số"}</span>
-              <Film className="size-3 text-amber-300" />
-            </button>
-            <button
-              onClick={() => {
-                circusAudio.playBambooStep();
-                navigateToAct('history');
-              }}
-              className="text-xs text-amber-200/80 hover:text-white bg-white/5 hover:bg-white/10 px-3 py-1 rounded-full border border-amber-400/20 transition-colors cursor-pointer"
-            >
-              {isEn ? "Circus History" : "Lịch Sử Xiếc Việt"}
-            </button>
-            <a
-              href={CHATBOT_AI_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => circusAudio.playBambooStep()}
-              className="text-xs text-amber-300 hover:text-white bg-white/10 hover:bg-white/20 px-3 py-1 rounded-full border border-amber-400/30 transition-colors cursor-pointer inline-flex items-center gap-1"
-              title={isEn ? "Open Chatbot AI" : "Mở Chatbot AI"}
-            >
-              <span>Chatbot AI</span>
-              <ExternalLink className="size-3 text-amber-300" />
-            </a>
-          </div>
-
-          {/* Contact Information / Thông tin liên hệ */}
-          <div className="pt-3.5 border-t border-amber-400/20 max-w-lg mx-auto text-center space-y-2.5">
-            <h4 className="font-circus text-xs sm:text-sm text-amber-300 tracking-wider uppercase">
-              {isEn ? "Contact Information" : "Thông tin liên hệ"}
-            </h4>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm">
-              <div className="flex items-center gap-2 group">
-                <span 
-                  className="inline-flex items-center justify-center size-7 sm:size-7.5 rounded-lg bg-white/20 border-2 border-white text-white shadow-xs rotate-[-3deg] group-hover:rotate-0 transition-transform shrink-0"
-                  title="Email sticker"
-                >
-                  <Mail className="size-4 text-white" strokeWidth={2.2} />
-                </span>
+            {/* Contact Information / Thông tin liên hệ */}
+            <div className="pt-3.5 border-t border-amber-400/20 max-w-lg mx-auto text-center space-y-2.5">
+              <h4 className="font-circus text-xs sm:text-sm text-amber-300 tracking-wider uppercase">
+                {isEn ? "Contact Information" : "Thông tin liên hệ"}
+              </h4>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm">
+                <div className="flex items-center gap-2 group">
+                  <span 
+                    className="inline-flex items-center justify-center size-7 sm:size-7.5 rounded-lg bg-white/20 border-2 border-white text-white shadow-xs rotate-[-3deg] group-hover:rotate-0 transition-transform shrink-0"
+                    title="Email sticker"
+                  >
+                    <Mail className="size-4 text-white" strokeWidth={2.2} />
+                  </span>
+                  <a 
+                    href="mailto:rapxiecbotui@gmail.com" 
+                    className="text-white hover:text-amber-300 font-medium transition-colors underline-offset-4 hover:underline"
+                  >
+                    rapxiecbotui@gmail.com
+                  </a>
+                </div>
                 <a 
-                  href="mailto:rapxiecbotui@gmail.com" 
-                  className="text-white hover:text-amber-300 font-medium transition-colors underline-offset-4 hover:underline"
+                  href="https://www.facebook.com/people/R%E1%BA%A1p-Xi%E1%BA%BFc-B%E1%BB%8F-T%C3%BAi/61591831813277/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 group cursor-pointer"
                 >
-                  rapxiecbotui@gmail.com
+                  <span 
+                    className="inline-flex items-center justify-center size-7 sm:size-7.5 rounded-lg bg-white/20 border-2 border-white text-white shadow-xs rotate-[3deg] group-hover:rotate-0 group-hover:scale-105 transition-all shrink-0"
+                    title="Facebook logo"
+                  >
+                    <Facebook className="size-4 text-white fill-white" strokeWidth={0} />
+                  </span>
+                  <span className="text-white group-hover:text-amber-300 font-medium transition-colors underline-offset-4 group-hover:underline">
+                    {isEn ? "Pocket Circus Vietnam" : "Rạp Xiếc Bỏ Túi"}
+                  </span>
                 </a>
               </div>
-              <a 
-                href="https://www.facebook.com/people/R%E1%BA%A1p-Xi%E1%BA%BFc-B%E1%BB%8F-T%C3%BAi/61591831813277/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 group cursor-pointer"
-              >
-                <span 
-                  className="inline-flex items-center justify-center size-7 sm:size-7.5 rounded-lg bg-white/20 border-2 border-white text-white shadow-xs rotate-[3deg] group-hover:rotate-0 group-hover:scale-105 transition-all shrink-0"
-                  title="Facebook logo"
-                >
-                  <Facebook className="size-4 text-white fill-white" strokeWidth={0} />
-                </span>
-                <span className="text-white group-hover:text-amber-300 font-medium transition-colors underline-offset-4 group-hover:underline">
-                  {isEn ? "Pocket Circus Vietnam" : "Rạp Xiếc Bỏ Túi"}
-                </span>
-              </a>
+            </div>
+
+            {/* Public Visitor Counter / Thống kê lượng truy cập công khai */}
+            <div className="pt-2 max-w-lg mx-auto">
+              <VisitorCounter isEn={isEn} />
+            </div>
+
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 text-[11px] sm:text-xs text-amber-200/80 pt-3.5 border-t border-amber-400/20 font-medium">
+              <span>{isEn ? <><Icon name="bi bi-flag-fill" /> Folk Arts</> : <><Icon name="bi bi-flag-fill" /> Nghệ Thuật Dân Gian</>}</span>
+              <span className="text-amber-500/60">•</span>
+              <span>🎪 Pocket Circus Web</span>
+              <span className="text-amber-500/60">•</span>
+              <span>{isEn ? <><Icon name="bi bi-stars" /> 3D Digital Museum</> : <><Icon name="bi bi-stars" /> Bảo Tàng Xiếc Số 3D</>}</span>
             </div>
           </div>
-
-          {/* Public Visitor Counter / Thống kê lượng truy cập công khai */}
-          <div className="pt-2 max-w-lg mx-auto">
-            <VisitorCounter isEn={isEn} />
-          </div>
-
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 text-[11px] sm:text-xs text-amber-200/80 pt-3.5 border-t border-amber-400/20 font-medium">
-            <span>{isEn ? <><Icon name="bi bi-flag-fill" /> Folk Arts</> : <><Icon name="bi bi-flag-fill" /> Nghệ Thuật Dân Gian</>}</span>
-            <span className="text-amber-500/60">•</span>
-            <span>🎪 Pocket Circus Web</span>
-            <span className="text-amber-500/60">•</span>
-            <span>{isEn ? <><Icon name="bi bi-stars" /> 3D Digital Museum</> : <><Icon name="bi bi-stars" /> Bảo Tàng Xiếc Số 3D</>}</span>
-          </div>
-        </div>
-      </footer>
+        </footer>
+      )}
 
       {/* Neat Floating Corner Visitor Badge */}
       <FloatingVisitorBadge isEn={isEn} />
