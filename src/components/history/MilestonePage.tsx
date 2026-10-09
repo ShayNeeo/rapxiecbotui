@@ -185,27 +185,11 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
           <div className="space-y-3">
             {/* Featured Hero Cover Photo */}
             <div className="relative rounded-2xl overflow-hidden border-2 border-amber-300 shadow-md group bg-neutral-950 aspect-[16/9] sm:aspect-[21/9] max-h-[380px] w-full flex items-center justify-center">
-              {era.id === "classical-circus" ? (
-                <>
-                  <img
-                    src={milestoneCover}
-                    alt=""
-                    aria-hidden="true"
-                    className="absolute inset-0 size-full object-cover blur-2xl opacity-40 scale-125 pointer-events-none"
-                  />
-                  <img
-                    src={milestoneCover}
-                    alt={era.title}
-                    className="relative z-10 max-h-full max-w-full object-contain object-center group-hover:scale-102 transition-transform duration-500 drop-shadow-2xl"
-                  />
-                </>
-              ) : (
-                <img
-                  src={milestoneCover}
-                  alt={era.title}
-                  className="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-500"
-                />
-              )}
+              <img
+                src={milestoneCover}
+                alt={era.title}
+                className="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-500"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none z-10" />
 
               {/* Photo Controls on Top */}
@@ -213,9 +197,7 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
                 <span className="text-[11px] font-bold text-white bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 flex items-center gap-1.5 shadow-sm pointer-events-auto">
                   <ImageIcon className="size-3 text-amber-300" />
                   <span>
-                    {era.id === "classical-circus"
-                      ? (isEn ? "Philip Astley (1742 – 1814)" : "Philip Astley (1742 – 1814)")
-                      : (isEn ? (era.titleEn || era.title) : era.title)}
+                    {isEn ? (era.titleEn || era.title) : era.title}
                   </span>
                 </span>
 
@@ -226,11 +208,7 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
                       setActiveLightboxPhoto({
                         id: `cover-${era.id}`,
                         url: milestoneCover,
-                        caption: era.id === "classical-circus"
-                          ? (isEn 
-                              ? "Philip Astley, Esqr. (1742 – 1814) – English equestrian master, Father of Classical Circus" 
-                              : "Philip Astley, Esqr. (1742 – 1814) – Kỵ sĩ người Anh, Cha đẻ của Nghệ thuật Xiếc Cổ điển")
-                          : (isEn ? (era.titleEn || era.title) : era.title),
+                        caption: isEn ? (era.titleEn || era.title) : era.title,
                         eraId: era.id,
                       });
                     }}
@@ -246,12 +224,7 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
               <div className="absolute bottom-3 left-3 right-3 text-white flex flex-col sm:flex-row sm:items-end justify-between gap-2 pointer-events-none z-20">
                 <div className="space-y-0.5 pointer-events-auto max-w-xl">
                   <p className="text-xs sm:text-sm font-bold drop-shadow-md text-amber-100/95 leading-relaxed">
-                    <Icon name="bi bi-camera" />{" "}
-                    {era.id === "classical-circus"
-                      ? (isEn 
-                          ? "Philip Astley, Esqr. (1742 – 1814) – Father of Classical Circus" 
-                          : "Philip Astley, Esqr. (1742 – 1814) – Cha đẻ của Nghệ thuật Xiếc Cổ điển")
-                      : (isEn ? (era.titleEn || era.title) : era.title)}
+                    <Icon name="bi bi-camera" /> {isEn ? (era.titleEn || era.title) : era.title}
                   </p>
                 </div>
 
@@ -271,14 +244,14 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
                 )}
                 {era.id === "classical-circus" && (
                   <a
-                    href="https://www.alamy.com"
+                    href="https://36pho.com/xiec-o-ha-noi-xua-1936.html"
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
                     className="self-end inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/80 hover:bg-red-700 backdrop-blur-md text-amber-200 hover:text-white text-[11px] font-semibold transition-all border border-amber-400/40 hover:border-red-400 shadow-md cursor-pointer pointer-events-auto shrink-0"
-                    title={isEn ? "Source: Alamy" : "Nguồn ảnh: Alamy"}
+                    title={isEn ? "Source: 36pho.com" : "Nguồn ảnh: 36pho.com"}
                   >
-                    <span>{isEn ? "Source: Alamy" : "Nguồn ảnh: Alamy"}</span>
+                    <span>{isEn ? "Source: 36pho.com" : "Nguồn ảnh: 36pho.com"}</span>
                     <ExternalLink className="size-3" />
                   </a>
                 )}

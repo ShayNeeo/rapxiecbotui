@@ -21,7 +21,7 @@ export const DEFAULT_OVERVIEW_COVER = bannerImg;
 
 export const DEFAULT_MILESTONE_COVERS: Record<string, string> = {
   "ancient-circus": milestone1CoverImg,
-  "classical-circus": philipAstleyImg,
+  "classical-circus": milestone2CoverImg,
   "contemporary-circus": milestone3CoverImg,
   "vietnam-century-circus": milestone4CoverImg,
 };
@@ -42,21 +42,21 @@ export const DEFAULT_MILESTONE_PHOTOS: Record<string, HistoryPhoto[]> = {
   ],
   "classical-circus": [
     {
-      id: "photo-philip-astley-classical-circus",
-      url: philipAstleyImg,
-      caption: "Philip Astley (1742 – 1814) – Kỵ sĩ người Anh, Cha đẻ của Nghệ thuật Xiếc Cổ điển (1768)",
-      captionEn: "Philip Astley (1742 – 1814) – English equestrian master, Father of Classical Circus (1768)",
-      sourceUrl: "https://www.alamy.com",
-      eraId: "classical-circus",
-      isCover: true,
-      isDefault: true,
-    },
-    {
       id: "photo-milestone-2-cover",
       url: milestone2CoverImg,
       caption: "Tư liệu nghệ thuật xiếc cổ điển",
       captionEn: "Classical circus archival photo",
       sourceUrl: "https://36pho.com/xiec-o-ha-noi-xua-1936.html",
+      eraId: "classical-circus",
+      isCover: true,
+      isDefault: true,
+    },
+    {
+      id: "photo-philip-astley-classical-circus",
+      url: philipAstleyImg,
+      caption: "Philip Astley (1742 – 1814) – Kỵ sĩ người Anh, Cha đẻ của Nghệ thuật Xiếc Cổ điển (1768)",
+      captionEn: "Philip Astley (1742 – 1814) – English equestrian master, Father of Classical Circus (1768)",
+      sourceUrl: "https://www.alamy.com",
       eraId: "classical-circus",
       isCover: false,
       isDefault: true,
@@ -125,7 +125,10 @@ export function getMilestoneCover(eraId: string): string | null {
     if (saved) {
       const map = JSON.parse(saved);
       if (map[eraId] === "__REMOVED__") return null;
-      if (map[eraId] && !map[eraId].includes("milestone_2_classical_circus_cover.jpg")) {
+      if (eraId === "classical-circus" && map[eraId] && map[eraId].includes("philip_astley")) {
+        return defaultCover;
+      }
+      if (map[eraId]) {
         return map[eraId];
       }
     }
