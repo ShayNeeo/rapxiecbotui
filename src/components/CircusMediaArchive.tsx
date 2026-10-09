@@ -603,23 +603,51 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
     return 100;
   });
 
-  // Alignment setting for fieldwork photos ("ảnh điền dã")
-  const [fieldworkCenterMode, setFieldworkCenterMode] = useState<boolean>(() => {
+  // Framing & positioning controls for Fieldwork Photos ("ảnh điền dã")
+  const [isAdjustingFieldwork, setIsAdjustingFieldwork] = useState(false);
+  const [fieldworkOffsetsY, setFieldworkOffsetsY] = useState<Record<number, number>>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('circus_archive_fieldwork_centered');
-      if (saved !== null) return saved === 'true';
+      const saved = localStorage.getItem('circus_archive_fieldwork_offsets_y');
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch {}
+      }
     }
-    return true; // default centered
+    return { 0: 50, 1: 50, 2: 50, 3: 50 };
+  });
+  const [fieldworkZooms, setFieldworkZooms] = useState<Record<number, number>>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('circus_archive_fieldwork_zooms');
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch {}
+      }
+    }
+    return { 0: 100, 1: 100, 2: 100, 3: 100 };
   });
 
-  const toggleFieldworkCenter = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    circusAudio.playBambooStep();
-    setFieldworkCenterMode(prev => {
-      const next = !prev;
-      localStorage.setItem('circus_archive_fieldwork_centered', String(next));
-      return next;
+  const handleUpdateFieldworkOffsetY = (index: number, val: number) => {
+    setFieldworkOffsetsY(prev => {
+      const updated = { ...prev, [index]: val };
+      localStorage.setItem('circus_archive_fieldwork_offsets_y', JSON.stringify(updated));
+      return updated;
     });
+  };
+
+  const handleUpdateFieldworkZoom = (index: number, val: number) => {
+    setFieldworkZooms(prev => {
+      const updated = { ...prev, [index]: val };
+      localStorage.setItem('circus_archive_fieldwork_zooms', JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  const handleResetFieldworkImage = (index: number) => {
+    circusAudio.playBambooStep();
+    handleUpdateFieldworkOffsetY(index, 50);
+    handleUpdateFieldworkZoom(index, 100);
   };
 
   // Blank template modal & form state
@@ -1236,31 +1264,19 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
                     <img
                       src={item.thumbnail}
                       alt={isEn ? item.titleEn : item.title}
-                      className={`size-full group-hover:scale-105 transition-all duration-500 opacity-90 group-hover:opacity-100 ${
-                        item.id === "media-dien-da-nhom-nghien-cuu-rap-xiec-thuc-dia" && fieldworkCenterMode
-                          ? "object-cover object-center"
-                          : "object-cover"
-                      }`}
+                      style={
+                        item.id === "media-dien-da-nhom-nghien-cuu-rap-xiec-thuc-dia"
+                          ? {
+                              objectPosition: `center ${fieldworkOffsetsY[0] ?? 50}%`,
+                              transform: `scale(${(fieldworkZooms[0] ?? 100) / 100})`,
+                              transformOrigin: `center ${fieldworkOffsetsY[0] ?? 50}%`,
+                            }
+                          : undefined
+                      }
+                      className="size-full object-cover group-hover:scale-105 transition-all duration-500 opacity-90 group-hover:opacity-100"
                       loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-
-                    {/* Corner Centering Button for Fieldwork Photos ("Ảnh điền dã") */}
-                    {item.id === "media-dien-da-nhom-nghien-cuu-rap-xiec-thuc-dia" && (
-                      <button
-                        type="button"
-                        onClick={toggleFieldworkCenter}
-                        className={`absolute top-2.5 right-2.5 z-10 px-2 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1 shadow-md transition-all cursor-pointer backdrop-blur-md border ${
-                          fieldworkCenterMode
-                            ? "bg-amber-400 text-amber-950 border-amber-300 ring-2 ring-amber-300/60"
-                            : "bg-black/75 text-white/90 border-white/20 hover:bg-black/90"
-                        }`}
-                        title={isEn ? "Center fieldwork photo" : "Căn giữa ảnh điền dã"}
-                      >
-                        <Compass className="size-3 text-red-600 shrink-0" />
-                        <span>{fieldworkCenterMode ? (isEn ? "Centered" : "Đã Căn Giữa") : (isEn ? "Center" : "Căn Giữa")}</span>
-                      </button>
-                    )}
 
                     {/* Type Badge */}
                     <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
@@ -1399,33 +1415,44 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
                     className="size-full object-contain" 
                   />
                 ) : (
-                  <div className="relative size-full flex items-center justify-center p-2 bg-neutral-950">
-                    <img
-                      src={(selectedMedia.galleryImages && selectedMedia.galleryImages[activeImageIndex]) || selectedMedia.thumbnail}
-                      alt={isEn ? selectedMedia.titleEn : selectedMedia.title}
-                      className={`max-h-[62vh] w-auto max-w-full rounded-lg shadow-2xl transition-all duration-300 ${
-                        selectedMedia.id === "media-dien-da-nhom-nghien-cuu-rap-xiec-thuc-dia" && fieldworkCenterMode
-                          ? "object-contain object-center"
-                          : "object-contain"
-                      }`}
-                    />
+                    <div className="relative size-full flex items-center justify-center p-2 bg-neutral-950 overflow-hidden">
+                      <img
+                        src={(selectedMedia.galleryImages && selectedMedia.galleryImages[activeImageIndex]) || selectedMedia.thumbnail}
+                        alt={isEn ? selectedMedia.titleEn : selectedMedia.title}
+                        style={
+                          selectedMedia.id === "media-dien-da-nhom-nghien-cuu-rap-xiec-thuc-dia"
+                            ? {
+                                objectPosition: `center ${fieldworkOffsetsY[activeImageIndex] ?? 50}%`,
+                                transform: `scale(${(fieldworkZooms[activeImageIndex] ?? 100) / 100})`,
+                                transformOrigin: `center ${fieldworkOffsetsY[activeImageIndex] ?? 50}%`,
+                              }
+                            : undefined
+                        }
+                        className="max-h-[62vh] w-auto max-w-full object-contain rounded-lg shadow-2xl transition-all duration-300"
+                      />
 
-                    {/* Corner Centering Button inside Lightbox for Fieldwork Photos */}
-                    {selectedMedia.id === "media-dien-da-nhom-nghien-cuu-rap-xiec-thuc-dia" && (
-                      <button
-                        type="button"
-                        onClick={toggleFieldworkCenter}
-                        className={`absolute top-4 left-4 z-20 px-2.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-xl transition-all cursor-pointer backdrop-blur-md border ${
-                          fieldworkCenterMode
-                            ? "bg-amber-400 text-amber-950 border-amber-300 ring-2 ring-amber-300/60"
-                            : "bg-black/80 text-white/90 border-white/20 hover:bg-black"
-                        }`}
-                        title={isEn ? "Center fieldwork photo" : "Căn giữa ảnh điền dã"}
-                      >
-                        <Compass className="size-3.5 text-red-600 shrink-0" />
-                        <span>{fieldworkCenterMode ? (isEn ? "Centered" : "Đã Căn Giữa") : (isEn ? "Center Image" : "Căn Giữa Ảnh")}</span>
-                      </button>
-                    )}
+                      {/* Frame Adjustment Toggle Button for Fieldwork Photos ("Ảnh điền dã") */}
+                      {selectedMedia.id === "media-dien-da-nhom-nghien-cuu-rap-xiec-thuc-dia" && (
+                        <div className="absolute top-3 left-3 z-30">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              circusAudio.playBambooStep();
+                              setIsAdjustingFieldwork((prev) => !prev);
+                            }}
+                            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-xl cursor-pointer backdrop-blur-md border ${
+                              isAdjustingFieldwork
+                                ? "bg-amber-400 text-neutral-950 border-amber-300 ring-2 ring-amber-300/80"
+                                : "bg-black/80 hover:bg-black text-amber-200 hover:text-white border-white/20"
+                            }`}
+                            title={isEn ? "Adjust Frame Position & Zoom" : "Căn chỉnh khung ảnh & thu phóng"}
+                          >
+                            <Sliders className="size-3.5 text-amber-500" />
+                            <span>{isEn ? (isAdjustingFieldwork ? "Done Adjusting" : "Adjust Frame") : (isAdjustingFieldwork ? "Xong Căn Chỉnh" : "Căn Chỉnh Khung Ảnh")}</span>
+                          </button>
+                        </div>
+                      )}
 
                     {/* Gallery Navigation Controls if Multiple Images */}
                     {selectedMedia.galleryImages && selectedMedia.galleryImages.length > 1 && (
@@ -1525,6 +1552,87 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
                   </div>
                 )}
               </div>
+
+              {/* Panel căn chỉnh khung ảnh cho từng ảnh điền dã */}
+              {isAdjustingFieldwork && selectedMedia.id === "media-dien-da-nhom-nghien-cuu-rap-xiec-thuc-dia" && (
+                <div className="bg-amber-50/95 border-b-2 border-amber-400/80 p-4 sm:p-5 shadow-lg space-y-4 animate-in fade-in duration-200 text-neutral-900">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-amber-200/80 pb-3">
+                    <div className="flex items-center gap-2">
+                      <Sliders className="size-4 text-red-700" />
+                      <h4 className="font-circus text-sm sm:text-base text-amber-950">
+                        {isEn ? `Framing & Position Controls • Photo ${activeImageIndex + 1}` : `Bảng Căn Chỉnh Khung Ảnh • Ảnh số ${activeImageIndex + 1}`}
+                      </h4>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => handleResetFieldworkImage(activeImageIndex)}
+                        className="px-3 py-1 text-xs font-semibold rounded-lg bg-white border border-amber-300 text-amber-900 hover:bg-amber-100 cursor-pointer shadow-2xs flex items-center gap-1"
+                      >
+                        <RotateCcw className="size-3" />
+                        <span>{isEn ? "Reset" : "Mặc định"}</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setIsAdjustingFieldwork(false)}
+                        className="px-3 py-1 text-xs font-bold rounded-lg bg-red-700 text-white hover:bg-red-800 cursor-pointer shadow-2xs"
+                      >
+                        {isEn ? "Done" : "Xong"}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                    <div className="space-y-1.5">
+                      <div className="flex items-center justify-between font-bold text-neutral-800">
+                        <span>{isEn ? "Vertical Position (Up / Down):" : "Vị trí dọc (Kéo lên / Kéo xuống):"}</span>
+                        <span className="text-red-700 font-mono">{fieldworkOffsetsY[activeImageIndex] ?? 50}%</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={fieldworkOffsetsY[activeImageIndex] ?? 50}
+                        onChange={(e) => handleUpdateFieldworkOffsetY(activeImageIndex, Number(e.target.value))}
+                        className="w-full accent-red-700 cursor-pointer"
+                      />
+                      <div className="flex justify-between text-[10px] text-neutral-500">
+                        <span>{isEn ? "Top (0%)" : "Đầu ảnh (0%)"}</span>
+                        <span>{isEn ? "Center (50%)" : "Chính giữa (50%)"}</span>
+                        <span>{isEn ? "Bottom (100%)" : "Đáy ảnh (100%)"}</span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <div className="flex items-center justify-between font-bold text-neutral-800">
+                        <span>{isEn ? "Zoom / Scale:" : "Thu phóng ảnh (Zoom):"}</span>
+                        <span className="text-red-700 font-mono">{fieldworkZooms[activeImageIndex] ?? 100}%</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="100"
+                        max="220"
+                        value={fieldworkZooms[activeImageIndex] ?? 100}
+                        onChange={(e) => handleUpdateFieldworkZoom(activeImageIndex, Number(e.target.value))}
+                        className="w-full accent-red-700 cursor-pointer"
+                      />
+                      <div className="flex justify-between text-[10px] text-neutral-500">
+                        <span>100%</span>
+                        <span>150%</span>
+                        <span>220%</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-1 border-t border-amber-200/60 text-[11px] text-amber-900 font-medium">
+                    <span>
+                      {isEn 
+                        ? `* Settings are automatically saved for photo ${activeImageIndex + 1} / ${(selectedMedia.galleryImages?.length || 4)}.`
+                        : `* Vị trí và độ thu phóng sẽ được lưu tự động cho riêng ảnh số ${activeImageIndex + 1} / ${(selectedMedia.galleryImages?.length || 4)}.`}
+                    </span>
+                  </div>
+                </div>
+              )}
 
               {/* Text Info */}
               <div className="p-5 bg-neutral-900 text-white space-y-3">

@@ -899,17 +899,12 @@ export const CircusMap: React.FC<CircusMapProps> = ({
 
               {/* Venue Cover Image */}
               {activeVenue.imageUrl && (
-                <div className="relative w-full h-48 sm:h-64 rounded-2xl overflow-hidden border-2 border-amber-300/80 shadow-md group bg-neutral-950">
+                <div className="relative w-full rounded-2xl overflow-hidden border-2 border-amber-300/80 shadow-md group bg-neutral-950 flex items-center justify-center">
                   <img
                     src={activeVenue.imageUrl}
                     alt={isEn ? (activeVenue.nameEn || activeVenue.name) : activeVenue.name}
-                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    className="w-full max-h-[360px] sm:max-h-[460px] object-contain object-center group-hover:scale-102 transition-transform duration-300"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
-                  <div className="absolute bottom-2.5 left-3 flex items-center gap-1.5 text-white text-[11px] font-semibold bg-black/60 backdrop-blur-xs px-2.5 py-1 rounded-full border border-white/20">
-                    <ImageIcon className="size-3.5 text-amber-400" />
-                    <span>{isEn ? "Venue Photo" : "Ảnh Rạp Thực Tế"}</span>
-                  </div>
                 </div>
               )}
 
