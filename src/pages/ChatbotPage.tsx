@@ -19,7 +19,23 @@ import { Icon } from "@/src/components/Icon";
 import { useLanguage } from '@/src/context/LanguageContext'
 import { OFFICIAL_CIRCUS_LOGO } from '@/src/lib/logo'
 
-const DEFAULT_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || ''
+function isRealApiKey(key: string | undefined): boolean {
+  if (!key) return false
+  const trimmed = key.trim()
+  if (!trimmed) return false
+  if (
+    trimmed === 'your_gemini_api_key_here' ||
+    trimmed.startsWith('your_') ||
+    trimmed.includes('api_key_here') ||
+    trimmed === 'YOUR_API_KEY'
+  ) {
+    return false
+  }
+  return true
+}
+
+const rawEnvKey = import.meta.env.VITE_GEMINI_API_KEY || ''
+const DEFAULT_API_KEY = isRealApiKey(rawEnvKey) ? rawEnvKey.trim() : ''
 const DEFAULT_MODEL = import.meta.env.VITE_GEMINI_MODEL || 'gemini-2.5-flash'
 
 const STORAGE_KEY_SETTINGS = 'gemini_chat_settings_v2'
@@ -171,7 +187,15 @@ export const ChatbotPage: React.FC<ChatbotPageProps> = ({ onBackToPortal }) => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY_SETTINGS)
       if (saved) {
-        return JSON.parse(saved)
+        const parsed = JSON.parse(saved)
+        if (parsed && typeof parsed === 'object') {
+          // If stored apiKey is a dummy placeholder, reset it to empty
+          if (!isRealApiKey(parsed.apiKey)) {
+            parsed.apiKey = ''
+            localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(parsed))
+          }
+          return parsed
+        }
       }
     } catch {
       // Fallback
@@ -301,8 +325,8 @@ export const ChatbotPage: React.FC<ChatbotPageProps> = ({ onBackToPortal }) => {
       return
     }
 
-    // Mode 1: No API Key configured -> Use local knowledge base retrieval & synthesis
-    if (!settings.apiKey.trim()) {
+    // Mode 1: No valid API Key configured -> Use local knowledge base retrieval & synthesis
+    if (!isRealApiKey(settings.apiKey)) {
       setTimeout(async () => {
         const localSources = retrieveRelevantChunksLocally(textToSend, 3)
         const localReply = generateLocalCircusAnswer(textToSend, localSources, isEn ? 'en' : 'vi')
@@ -411,14 +435,45 @@ export const ChatbotPage: React.FC<ChatbotPageProps> = ({ onBackToPortal }) => {
             ? 'An unexpected error occurred while communicating with Gemini API.'
             : 'Đã xảy ra lỗi không mong muốn khi giao tiếp với máy chủ Gemini.'
 
-        setErrorMessage(errorText)
+        // Check if error is related to invalid API key
+        const isInvalidKey =
+          errorText.includes('API key not valid') ||
+          errorText.includes('API_KEY_INVALID') ||
+          errorText.includes('INVALID_ARGUMENT') ||
+          errorText.includes('API key is missing')
+
+        if (isInvalidKey) {
+          setErrorMessage(
+            isEn
+              ? 'Gemini API key is invalid or not found. Switched to Local Circus Knowledge Mode.'
+              : 'Khóa API Gemini chưa hợp lệ. Hệ thống đã chuyển sang Chế độ Tri thức Cục bộ.'
+          )
+          // Clean invalid key from settings and localStorage so subsequent queries use local mode smoothly
+          setSettings((prev) => {
+            const updated = { ...prev, apiKey: '' }
+            try {
+              localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(updated))
+            } catch {
+              /* ignore */
+            }
+            return updated
+          })
+        }
 
         // Fallback to local search if remote LLM fails
         const fallbackSources = retrieveRelevantChunksLocally(textToSend, 3)
         const fallbackReply = generateLocalCircusAnswer(textToSend, fallbackSources, isEn ? 'en' : 'vi')
-        const fullFallbackText = isEn
-          ? `${fallbackReply}\n\n*(Note: Gemini remote API message: ${errorText})*`
-          : `${fallbackReply}\n\n*(Lưu ý: API Gemini gặp thông báo: ${errorText})*`
+        
+        let fullFallbackText = fallbackReply
+        if (isInvalidKey) {
+          fullFallbackText += isEn
+            ? '\n\n*(💡 System note: The configured Gemini API key was invalid or expired, so the assistant has seamlessly retrieved accurate knowledge from our verified Pocket Circus database. You can update a new API key in Settings anytime!)*'
+            : '\n\n*(💡 Lưu ý từ hệ thống: Khóa Gemini API trước đó chưa hợp lệ hoặc đã hết hạn, trợ lý đã tự động kích hoạt bộ tri thức bản quyền của Rạp Xiếc Bỏ Túi để giải đáp chính xác cho bạn. Bạn có thể cập nhật khóa API mới trong Cài Đặt bất cứ lúc nào!)*'
+        } else {
+          fullFallbackText += isEn
+            ? `\n\n*(Note: Remote connection message: ${errorText})*`
+            : `\n\n*(Lưu ý: Thông báo kết nối: ${errorText})*`
+        }
 
         setMessages((prev) =>
           prev.map((msg) =>
@@ -498,7 +553,7 @@ export const ChatbotPage: React.FC<ChatbotPageProps> = ({ onBackToPortal }) => {
       <main className="flex-1 overflow-y-auto px-4 py-6 bg-gradient-to-b from-[#8a181b]/90 via-[#731215]/95 to-[#5a0c0f]">
         <div className="mx-auto max-w-4xl space-y-3">
           {/* Banner if API key is not configured */}
-          {!settings.apiKey.trim() && (
+          {!isRealApiKey(settings.apiKey) && (
             <div className="mb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 rounded-2xl border-2 border-amber-400/80 bg-amber-50/95 p-3.5 text-xs text-amber-950 shadow-md">
               <div className="flex items-center gap-2.5">
                 <Compass className="h-4 w-4 shrink-0 text-amber-700" />
