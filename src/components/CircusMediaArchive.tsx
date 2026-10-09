@@ -8,6 +8,12 @@ import vungDatKyBiImg2 from "@/src/assets/images/vung_dat_ky_bi_khong_gian_2.jpg
 import khaiMacTaiNangImg from "@/src/assets/images/khai_mac_tai_nang_xiec_du_non_ao_dai.jpg";
 import cauBeRungXanhImg from "@/src/assets/images/cau_be_tro_ve_tu_rung_xanh.jpg";
 import khoTuLieuCoverImg from "@/src/assets/images/kho_tu_lieu_so_cover_vung_dat_ky_bi.jpg";
+import nsndTamChinhChanDungImg from "@/src/assets/images/nsnd_tam_chinh_chan_dung.jpg";
+import dienDaVungDatKyBiImg1 from "@/src/assets/images/dien_da_vung_dat_ky_bi_1.jpg";
+import dienDaVungDatKyBiImg2 from "@/src/assets/images/dien_da_vung_dat_ky_bi_2.jpg";
+import dienDaVungDatKyBiImg3 from "@/src/assets/images/dien_da_vung_dat_ky_bi_3.jpg";
+import dienDaVungDatKyBiImg4 from "@/src/assets/images/dien_da_vung_dat_ky_bi_4.jpg";
+import dienDaVungDatKyBiImg5 from "@/src/assets/images/dien_da_vung_dat_ky_bi_5.jpg";
 import { Button } from "@/src/components/ui/button";
 import { 
   Film, 
@@ -61,6 +67,26 @@ export interface MediaItem {
 }
 
 export const MODERN_CIRCUS_MEDIA: MediaItem[] = [
+  {
+    id: "media-dien-da-nhom-nghien-cuu-rap-xiec-thuc-dia",
+    type: "image",
+    title: "Tư liệu thực địa: Bộ ảnh điền dã nghệ thuật xiếc đương đại của nhóm nghiên cứu",
+    titleEn: "Fieldwork Documentation: Contemporary Circus Field Research Photo Series by Project Team",
+    troupe: "Nhóm Nghiên Cứu 'Rạp Xiếc Bỏ Túi'",
+    category: "acrobatics",
+    thumbnail: dienDaVungDatKyBiImg4,
+    galleryImages: [
+      dienDaVungDatKyBiImg4,
+      dienDaVungDatKyBiImg1,
+      dienDaVungDatKyBiImg2,
+      dienDaVungDatKyBiImg3,
+      dienDaVungDatKyBiImg5
+    ],
+    year: "2025",
+    tags: ["Ảnh Điền Dã", "Nhóm Nghiên Cứu", "Tư Liệu Thực Địa", "Vùng Đất Kỳ Bí", "Khán Đài Rạp Xiếc", "Nghệ Thuật Sân Khấu", "Trực Tiếp Tại Rạp"],
+    description: "Bộ ảnh tư liệu quý giá do nhóm nghiên cứu trực tiếp thực hiện trong chuyến điền dã khảo sát tại rạp xiếc. Ghi lại chân thực không gian khán đài vòm tròn náo nức, ánh sáng kỳ ảo, các phân đoạn tạo hình nhào lộn uốn dẻo, múa rối đại cảnh và hiệu ứng hoa tuyết rơi ngập tràn khán phòng trong vở đại vũ kịch xiếc 'Vùng Đất Kỳ Bí'.",
+    descriptionEn: "A precious documentary photo series captured firsthand by the project research team during on-site field visits to the circus theater. The images capture the electric atmosphere of the circular amphitheater, mystical stage lighting, contortion and acrobatic formations, colossal puppet choreography, and snowfall effects during 'The Mystic Land' grand circus spectacle."
+  },
   {
     id: "media-cau-be-tro-ve-tu-rung-xanh-baovanhoa",
     type: "image",
@@ -481,6 +507,23 @@ export const MODERN_CIRCUS_MEDIA: MediaItem[] = [
     descriptionEn: "Heartfelt interview with People's Artist Tong Toan Thang on developing Vietnamese circus in modern times, alongside enthusiastic spectator testimonials.",
     year: "2024",
     tags: ["NSND Tống Toàn Thắng", "Liên Đoàn Xiếc", "Phỏng Vấn", "Giám Đốc Rạp Xiếc"]
+  },
+  {
+    id: "media-loi-tu-su-nsnd-nguyen-thi-tam-chinh-vtv",
+    type: "video",
+    title: "Lời tự sự: NSND Nguyễn Thị Tâm Chính - Huyền thoại 'Cô hàng giải khát' & Cả đời cống hiến cho Xiếc Việt",
+    titleEn: "Personal Reflections: People's Artist Nguyen Thi Tam Chinh - The Legend of 'The Refreshment Girl' & A Lifetime for Circus",
+    troupe: "NSND Tâm Chính / VTV Video",
+    category: "backstage",
+    thumbnail: nsndTamChinhChanDungImg,
+    videoUrl: "https://vtv.vn/video/loi-tu-su-nsnd-nguyen-thi-tam-chinh-681391.htm",
+    articleUrl: "https://vtv.vn/video/loi-tu-su-nsnd-nguyen-thi-tam-chinh-681391.htm",
+    articleSource: "VTV.vn",
+    duration: "25:00",
+    description: "Chương trình 'Lời tự sự' của Đài Truyền hình Việt Nam (VTV) khắc họa cuộc đời và sự nghiệp vẻ vang của NSND Nguyễn Thị Tâm Chính – Nữ nghệ sĩ xiếc Việt Nam đầu tiên được phong tặng danh hiệu NSND. Bà chia sẻ những kỷ niệm không thể nào quên với tiết mục huyền thoại 'Cô hàng giải khát', những năm tháng lưu diễn phục vụ chiến sĩ giữa bom đạn và tâm huyết xây dựng Liên đoàn Xiếc Việt Nam.",
+    descriptionEn: "VTV's 'Personal Reflections' program chronicles the legendary life of People's Artist Nguyen Thi Tam Chinh – the first female circus artist in Vietnam awarded the title of People's Artist. She reflects on her iconic act 'The Refreshment Girl', wartime frontline performances, and her dedication to leading the Vietnam Circus Federation.",
+    year: "2024",
+    tags: ["NSND Tâm Chính", "Lời Tự Sự", "VTV", "Cô Hàng Giải Khát", "Huyền Thoại Xiếc", "Nữ Nghệ Sĩ Đầu Tiên"]
   }
 ];
 
@@ -1459,6 +1502,19 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
                       >
                         <Play className="size-3.5 fill-white" />
                         <span>{isEn ? "Watch on YouTube" : "Xem Trên YouTube"}</span>
+                        <ExternalLink className="size-3" />
+                      </a>
+                    )}
+                    {selectedMedia.videoUrl && !(selectedMedia.videoUrl.includes("youtu.be") || selectedMedia.videoUrl.includes("youtube.com") || selectedMedia.videoUrl.startsWith("blob:")) && (
+                      <a
+                        href={selectedMedia.videoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-md cursor-pointer"
+                        title={isEn ? "Watch video source on VTV" : "Xem video gốc trên VTV"}
+                      >
+                        <Play className="size-3.5 fill-white" />
+                        <span>{isEn ? "Watch Video on VTV" : "Xem Video Trên VTV"}</span>
                         <ExternalLink className="size-3" />
                       </a>
                     )}

@@ -30,6 +30,20 @@ import cirqueDuSoleilStage2Img from "@/src/assets/images/cirque_du_soleil_stage_
 import aoThuatChimBoCauImg from "@/src/assets/images/ao_thuat_chim_bo_cau.jpg";
 import congVienThongNhatNhaNamImg from "@/src/assets/images/cong_vien_thong_nhat_nha_nam.jpg";
 import congVienThongNhatHoNuocImg from "@/src/assets/images/cong_vien_thong_nhat_ho_nuoc.jpg";
+import caKheoThinhLongImg from "@/src/assets/images/ca_kheo_dan_gian_thinh_long.jpg";
+import caKheoHaiHauImg from "@/src/assets/images/ca_kheo_hai_hau_hoi_lang.jpg";
+import langToiShowTungHungImg from "@/src/assets/images/lang_toi_show_tung_hung_thung_tre.jpg";
+import langToiShowUonDeoImg from "@/src/assets/images/lang_toi_show_uon_deo_cay_tre.jpg";
+import nsndTamChinhCoHangGiaiKhatImg from "@/src/assets/images/nsnd_tam_chinh_co_hang_giai_khat.jpg";
+import nsndTamChinhChanDungImg from "@/src/assets/images/nsnd_tam_chinh_chan_dung.jpg";
+import philipAstleySketchImg from "@/src/assets/images/philip_astley_portrait_sketch.jpg";
+import nsndTongToanThangHoangTuTranImg from "@/src/assets/images/nsnd_tong_toan_thang_hoang_tu_tran_1.jpg";
+import nsndTongToanThangKichXiecImg from "@/src/assets/images/nsnd_tong_toan_thang_kich_xiec_2.jpg";
+import treThungMayTreDanImg from "@/src/assets/images/tre_thung_may_tre_dan_1.jpg";
+import cayTreVietNamImg from "@/src/assets/images/cay_tre_viet_nam_2.jpg";
+import rapBatBigTopLuuDongImg from "@/src/assets/images/rap_bat_big_top_luu_dong.jpg";
+import quocCoQuocNghiepAoDaiDoImg from "@/src/assets/images/quoc_co_quoc_nghiep_ao_dai_do_1.jpg";
+import quocCoQuocNghiepSoMiTrangImg from "@/src/assets/images/quoc_co_quoc_nghiep_so_mi_trang_2.jpg";
 
 interface CircusQuizProps {
   onBack: () => void;
@@ -116,8 +130,34 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
     correctIndex: 1,
     explanation: "Xiếc Tre Việt Nam đã biến thân tre, bọng tre, thúng lượn thành đạo cụ nhào lộn và kiến trúc sân khấu diệu kỳ, làm say đắm khán giả tại hơn 50 quốc gia.",
     explanationEn: "Vietnamese Bamboo Circus turned raw bamboo stalks and woven basket boats into magical acrobatic props and stage architecture, captivating audiences in over 50 nations.",
+    gallery: [
+      {
+        src: treThungMayTreDanImg,
+        alt: "Thúng, mẹt, rổ rá tre đan truyền thống Việt Nam",
+        caption: "Thúng, mẹt tre đan mộc mạc – Từ vật dụng thân thuộc của thôn quê trở thành đạo cụ nhào lộn, tung hứng ngoạn mục",
+        captionEn: "Woven bamboo baskets and coracles – Familiar rustic village items transformed into spectacular acrobatic and juggling props"
+      },
+      {
+        src: cayTreVietNamImg,
+        alt: "Thân cây tre mộc mạc của làng quê Việt Nam",
+        caption: "Cây tre Việt Nam – Biểu tượng của sự dẻo dai, bền bỉ, tạo nên những dàn khung không gian sống động trên sân khấu xiếc",
+        captionEn: "Vietnamese bamboo poles – Symbols of resilience and flexibility, constructing dynamic living architectural spaces on stage"
+      }
+    ],
     triviaFact: "Cây tre Việt Nam vừa dẻo dai vừa chịu lực cực tốt, biểu trưng cho ý chí và sức mạnh bền bỉ của người Việt.",
-    triviaFactEn: "Vietnamese bamboo is remarkably flexible yet sturdy, symbolizing the enduring willpower of the Vietnamese soul."
+    triviaFactEn: "Vietnamese bamboo is remarkably flexible yet sturdy, symbolizing the enduring willpower of the Vietnamese soul.",
+    interestingFacts: [
+      "Nguyên liệu tự nhiên thuần Việt: Tất cả thân tre và thúng lượn được chọn lọc kỹ lưỡng từ các vùng quê Việt Nam, xử lý thủ công để giữ được độ đàn hồi và màu sắc tự nhiên mộc mạc.",
+      "Đạo cụ đa biến hóa phi thường: Trên sân khấu, cây tre không cố định mà biến thành cầu khỉ, dòng sông, ngôi nhà, ngọn đồi hay những chiếc xích đu nhào lộn trên không.",
+      "Sự kết hợp hoàn hảo giữa độ dẻo và sức chịu tải: Tre có độ uốn cong độc đáo và độ dai bền vượt trội, cho phép các nghệ sĩ biểu diễn những cú nhào lộn thót tim mà không cần đến giàn thép kim loại nặng nề.",
+      "Mang linh hồn làng quê ra thế giới: Cây tre và chiếc thúng đã đại diện cho tâm hồn người Việt, chinh phục hàng triệu khán giả quốc tế qua các chuyến lưu diễn toàn cầu của 'Làng Tôi', 'À Ố Show', 'Teh Dar'."
+    ],
+    interestingFactsEn: [
+      "Pure authentic Vietnamese material: Bamboo trunks and coracles are handpicked from traditional craft villages, seasoned naturally to preserve flexibility and organic texture.",
+      "Extraordinary metamorphic props: On stage, bamboo poles dynamically transform into monkey bridges, rivers, thatched roofs, hilltops, or high-flying trapeze swings.",
+      "Remarkable synergy of strength and elasticity: Bamboo's exceptional tensile strength allows daring acrobats to perform breathtaking stunts without relying on heavy industrial steel trusses.",
+      "Carrying Vietnam's village soul to the world: Bamboo and woven baskets carry the Vietnamese cultural spirit across the globe through international tours of 'My Village', 'A O Show', and 'Teh Dar'."
+    ]
   },
   {
     id: 3,
@@ -136,10 +176,46 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
       "Tightrope walking"
     ],
     correctIndex: 1,
-    explanation: "Người dân miền duyên hải sáng chế ra đôi cà kheo tre cao 2 - 3 mét để đi lội nước săn cá, quăng chài ngoài lộng biển sâu mà không bị ướt áo.",
-    explanationEn: "Coastal villagers crafted 2-3 meter bamboo stilts to wade through ocean surf, casting fishing nets in deep water without drenching their clothes.",
+    explanation: "Người dân miền duyên hải sáng chế ra đôi cà kheo tre cao 2 - 3 mét để đi lội nước săn cá, quăng chài ngoài lộng biển sâu mà không bị ướt áo. Từ một công cụ mưu sinh vượt sóng gió, cà kheo đã được nâng tầm thành một môn nghệ thuật xiếc dân gian độc đáo, vừa đòi hỏi kỹ năng giữ thăng bằng điêu luyện vừa rực rỡ sắc màu lễ hội.",
+    explanationEn: "Coastal villagers crafted 2-3 meter bamboo stilts to wade through ocean surf, casting fishing nets in deep water without drenching their clothes. Born out of seafaring livelihood, stilt-walking evolved into an extraordinary folk circus discipline demanding phenomenal balance and theatrical agility.",
     triviaFact: "Ngày nay, các đoàn nghệ nhân cà kheo Hải Hậu (Nam Định) thường xuyên tham gia biểu diễn tại các kỳ Festival Huế và lễ hội quốc tế.",
-    triviaFactEn: "Today, Hai Hau stilt-walking troupes regularly star in the Hue Festival and global cultural carnivals."
+    triviaFactEn: "Today, Hai Hau stilt-walking troupes regularly star in the Hue Festival and global cultural carnivals.",
+    image: caKheoThinhLongImg,
+    imageAlt: "Nghệ nhân đi cà kheo biểu diễn trang phục truyền thống rực rỡ tại lễ hội Thịnh Long",
+    imageCaption: "Đi cà kheo dân gian • Đỉnh cao thăng bằng từ công cụ mưu sinh miền biển",
+    imageCaptionEn: "Folk stilt-walking • Acrobatic balance born from coastal seafaring life",
+    sourceUrl: "https://vov.vn/du-lich/kham-pha-vu-dieu-ca-kheo-tren-song-cua-ngu-dan-vung-bien-thinh-long-ninh-binh-post1296597.vov",
+    sourceTitle: "VOV Du Lịch",
+    gallery: [
+      {
+        src: caKheoThinhLongImg,
+        alt: "Nghệ nhân biểu diễn cà kheo rực rỡ sắc màu tại vùng biển Thịnh Long",
+        caption: "Vũ điệu cà kheo trên sóng nước của ngư dân vùng biển Thịnh Long",
+        captionEn: "The coastal dance of stilt-walkers in Thinh Long waters",
+        sourceUrl: "https://vov.vn/du-lich/kham-pha-vu-dieu-ca-kheo-tren-song-cua-ngu-dan-vung-bien-thinh-long-ninh-binh-post1296597.vov",
+        sourceTitle: "VOV Du Lịch"
+      },
+      {
+        src: caKheoHaiHauImg,
+        alt: "Đoàn nghệ nhân cà kheo biểu diễn múa lân, thổi kèn, đánh trống rộn ràng tại lễ hội Hải Hậu",
+        caption: "Nghệ nhân cà kheo Hải Hậu biểu diễn múa lân, thổi kèn và múa rồng tại ngày hội văn hóa",
+        captionEn: "Hai Hau stilt-walkers performing lion dance, trumpets, and drums at folk festivals",
+        sourceUrl: "https://reatimes.vn/news-20214026.htm",
+        sourceTitle: "Tạp chí Reatimes"
+      }
+    ],
+    interestingFacts: [
+      "Xuất xứ từ kế mưu sinh 'đứng trên sóng dữ': Ngư dân vùng biển Hải Hậu, Quất Lâm (Nam Định) và ven biển Cát Hải (Hải Phòng) chế tác cà kheo từ tre già để lội nước sâu tới ngực, quăng chài, giăng lưới, vớt moi và câu tôm cá mà không sợ sóng cuốn trôi.",
+      "Kỹ thuật thăng bằng điêu luyện bậc thầy: Để điều khiển đôi 'chân tre' cao từ 1,5 đến hơn 3 mét vững vàng trên nền cát lún hoặc sóng dập dềnh, nghệ nhân phải buộc chặt chân vào bàn đạp và dùng toàn bộ cơ hông, đùi để chuyển trọng tâm nhịp nhàng.",
+      "Biến tấu thành nghệ thuật xiếc đường phố đặc sắc: Không chỉ bước đi thăng bằng, các nghệ nhân còn có thể đá bóng, nhào lộn, nhảy múa, múa lân - sư - rồng, thổi kèn đồng và đánh trống ngay trên đôi cà kheo cao ngút ngàn.",
+      "Rạng danh văn hóa Việt Nam tại các Festival quốc tế: Đoàn nghệ thuật cà kheo Hải Hậu đã trở thành thương hiệu văn hóa độc nhất vô nhị, từng lưu diễn biểu diễn phục vụ các kỳ Festival Huế, Lễ hội biển và giao lưu văn hóa quốc tế, gây ấn tượng mạnh với bạn bè năm châu."
+    ],
+    interestingFactsEn: [
+      "Origins in coastal seafaring survival: Fishermen in Hai Hau, Quat Lam (Nam Dinh) and Cat Hai (Hai Phong) crafted stilts from seasoned bamboo to wade deep into coastal tides, casting nets and harvesting sea mollusks above treacherous waves.",
+      "Masterful kinetic equilibrium: Balancing on 1.5 to 3+ meter bamboo 'stilts' over sinking sands or surging surf requires tightly lashing the feet to footrests and maneuvering hip and thigh momentum with pinpoint precision.",
+      "Evolution into high-energy street circus acrobatics: Beyond walking, master performers kick soccer balls, perform martial arts routines, dance lion and dragon puppets, and play brass horns and drums high in the air.",
+      "Celebrating Vietnamese folk heritage globally: Hai Hau's stilt-walking troupes have become a treasured cultural hallmark, headlining Hue Festivals and international cultural carnivals to immense global admiration."
+    ]
   },
   {
     id: 4,
@@ -160,8 +236,40 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
     correctIndex: 0,
     explanation: "NSƯT Quốc Cơ và NSƯT Quốc Nghiệp đã chinh phục thế giới với tiết mục 'Sức mạnh đôi tay' và màn chồng đầu thăng bằng bước lên 100 bậc thang trong 53 giây tại Tây Ban Nha.",
     explanationEn: "Meritorious Artists Quoc Co and Quoc Nghiep astonished the world with 'Power of the Hands' and scaling 100 cathedral steps in head-to-head balance in 53 seconds in Spain.",
+    gallery: [
+      {
+        src: quocCoQuocNghiepAoDaiDoImg,
+        alt: "Quốc Cơ - Quốc Nghiệp trong trang phục áo dài truyền thống rạng rỡ",
+        caption: "Quốc Cơ - Quốc Nghiệp rạng rỡ trong tà áo dài truyền thống – Mang bản sắc và niềm tự hào Việt Nam ra đấu trường quốc tế",
+        captionEn: "Quoc Co & Quoc Nghiep proudly in traditional Ao Dai – Bringing Vietnamese cultural identity and pride to the world stage",
+        sourceUrl: "https://www.kkday.com/vi/blog/54942/lang-toi-show-dam-minh-vao-tinh-hoa-lang-que-bac-bo/?srsltid=AU7gw4UfsDwTzb_8FeL41w-Sp0JqpsL-OQOB8NptK5x-VHqLrKEvJRGl",
+        sourceTitle: "KKday Blog"
+      },
+      {
+        src: quocCoQuocNghiepSoMiTrangImg,
+        alt: "Hai anh em nghệ sĩ xiếc Quốc Cơ và Quốc Nghiệp",
+        caption: "Hai anh em nghệ sĩ tài hoa Quốc Cơ – Quốc Nghiệp với tinh thần thép vượt qua vô vàn chấn thương hiểm nghèo",
+        captionEn: "The talented brothers Quoc Co – Quoc Nghiep with an iron will, overcoming countless perilous injuries",
+        sourceUrl: "https://thanhnien.vn/quoc-co-quoc-nghiep-gap-su-co-truoc-ngay-lap-ky-luc-guinness-o-y-18523020312023383.htm",
+        sourceTitle: "Báo Thanh Niên"
+      }
+    ],
     triviaFact: "Màn biểu diễn này đòi hỏi lực cơ cổ và sự cân bằng tuyệt đối đến từng mili-giây giữa hai người.",
-    triviaFactEn: "This performance requires formidable neck muscle strength and microsecond synchronized equilibrium."
+    triviaFactEn: "This performance requires formidable neck muscle strength and microsecond synchronized equilibrium.",
+    interestingFacts: [
+      "Bộ sưu tập kỷ lục Guinness chấn động thế giới: Lập kỷ lục bước lên 90 bậc thang trong 52 giây (2016) và phá kỷ lục của chính mình khi bước lên 100 bậc thang trong 53 giây tại Nhà thờ Girona (Tây Ban Nha, 2021).",
+      "Kỷ lục bịt mắt chồng đầu lịch sử tại Ý: Năm 2023 tại Milan (Ý), Quốc Cơ bịt mắt cõng Quốc Nghiệp chồng đầu bước lên bậc thang chỉ rộng 50cm, xác lập kỷ lục thế giới cuối cùng trước khi chính thức khép lại sự nghiệp thi đấu quốc tế.",
+      "Vượt qua sự cố chấn thương ngay trước ngày thi đấu: Trong buổi tập sát giờ lập kỷ lục tại Ý, Quốc Nghiệp từng bị ngã trượt khỏi bậc thang gây đau đớn dữ dội, nhưng với ý chí kiên cường, cả hai vẫn bước lên bục vinh quang.",
+      "Gia tộc võ thuật và truyền thống y học cổ truyền: Cả hai sinh ra trong gia đình có gốc gác võ sư và thầy thuốc y học cổ truyền tại Chợ Lớn (TP.HCM), rèn luyện thể lực thép và đạo đức nghề nghiệp từ năm 4-5 tuổi.",
+      "Những đại sứ quảng bá xiếc và văn hóa Việt Nam: Bất kỳ khi nào lưu diễn hay thi đấu quốc tế, hai anh em luôn chọn trang phục mang họa tiết dân tộc, góp phần đưa tinh thần kiên cường của con người Việt Nam lan tỏa khắp năm châu."
+    ],
+    interestingFactsEn: [
+      "Sensational Guinness World Records collection: Conquered 90 stairs in 52 seconds (2016) and broke their own record with 100 stairs in 53 seconds at Girona Cathedral (Spain, 2021).",
+      "Historic blindfolded head-to-head record in Italy: In 2023 in Milan (Italy), Quoc Co performed head-to-head stair climbing while completely blindfolded on a 50cm-wide beam, sealing their glorious career finale.",
+      "Triumphing over perilous falls on the eve of record day: During training in Italy right before the attempt, Quoc Nghiep suffered a severe slip and injury, yet their unshakeable fortitude carried them to victory.",
+      "Rooted in martial arts & Eastern medicine heritage: Born into a respected traditional healing and martial arts family in Cho Lon (HCMC), rigorous training began at age 4-5.",
+      "Proud ambassadors of Vietnamese circus & culture: Whether competing on Britain's Got Talent or setting Guinness feats, the brothers consistently showcased traditional cultural motifs to global audiences."
+    ]
   },
   {
     id: 5,
@@ -254,10 +362,48 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
       "People's Artist Hoang Cuc"
     ],
     correctIndex: 0,
-    explanation: "NSND Tâm Chính nổi danh với tiết mục thăng bằng trên con lăn và kiếm múa, là một trong những huyền thoại lớn nhất của nghệ thuật xiếc nước nhà.",
-    explanationEn: "People's Artist Tam Chinh gained renown for her roller-balancing and sword displays, standing as one of the country's greatest circus legends.",
-    triviaFact: "Bà sinh ra trong một gia đình có truyền thống nghệ thuật và cống hiến trọn đời cho sự phát triển của xiếc Việt Nam.",
-    triviaFactEn: "Born into an artistic family, she devoted her entire life to nurturing Vietnamese circus culture."
+    explanation: "NSND Tâm Chính (sinh năm 1945 tại Thanh Hóa) là nữ nghệ sĩ xiếc Việt Nam đầu tiên được phong tặng danh hiệu Nghệ sĩ Nhân dân (đợt 2, năm 1988) và từng giữ cương vị Giám đốc Liên đoàn Xiếc Việt Nam (1987 - 2004). Bà là cánh chim đầu đàn, đưa xiếc Việt Nam vươn tầm quốc tế với tiết mục huyền thoại 'Cô hàng giải khát' thăng bằng trên con lăn.",
+    explanationEn: "People's Artist Tam Chinh (born 1945 in Thanh Hoa) was the first female Vietnamese circus artist honored as People's Artist (1988) and served as Director of the Vietnam Circus Federation (1987-2004). She remains a towering legend who elevated Vietnamese circus globally through her iconic roller-balancing routine 'The Refreshment Seller'.",
+    triviaFact: "Từ cô thôn nữ nghèo làm đồng ở Thanh Hóa, bằng ý chí phi thường và khổ luyện vượt bậc, bà đã vươn lên trở thành huyền thoại rạng danh của xiếc Việt Nam và được tặng thưởng danh hiệu Anh hùng Lao động.",
+    triviaFactEn: "From a rural farming girl in Thanh Hoa, through extraordinary grit, she rose to become a revered circus legend and Labor Hero of Vietnam.",
+    image: nsndTamChinhCoHangGiaiKhatImg,
+    imageAlt: "Tiết mục Cô hàng giải khát thăng bằng con lăn lừng danh của NSND Tâm Chính",
+    imageCaption: "NSND Tâm Chính • Tiết mục huyền thoại 'Cô hàng giải khát' thăng bằng trên con lăn",
+    imageCaptionEn: "People's Artist Tam Chinh • Legendary 'Refreshment Seller' roller-balancing act",
+    sourceUrl: "https://arttimes.vn/san-khau-dien-anh/chuyen-ve-nu-anh-hung-dau-tien-cua-nganh-xiec-viet-c17a24254.html",
+    sourceTitle: "Thời báo Văn học Nghệ thuật: NSND Tâm Chính",
+    gallery: [
+      {
+        src: nsndTamChinhCoHangGiaiKhatImg,
+        alt: "NSND Tâm Chính biểu diễn tiết mục Cô hàng giải khát thăng bằng trên nhiều tầng con lăn",
+        caption: "Tiết mục 'Cô hàng giải khát' – Đỉnh cao thăng bằng con lăn vang danh quốc tế những năm 1960 - 1970",
+        captionEn: "'The Refreshment Seller' – Iconic roller-balancing sensation of the 1960s & 1970s",
+        sourceUrl: "https://arttimes.vn/san-khau-dien-anh/chuyen-ve-nu-anh-hung-dau-tien-cua-nganh-xiec-viet-c17a24254.html",
+        sourceTitle: "Arttimes.vn"
+      },
+      {
+        src: nsndTamChinhChanDungImg,
+        alt: "Chân dung NSND Tâm Chính - Nữ anh hùng đầu tiên của ngành xiếc Việt Nam",
+        caption: "NSND Tâm Chính • Cánh chim đầu đàn và cựu Giám đốc Liên đoàn Xiếc Việt Nam",
+        captionEn: "People's Artist Tam Chinh • Pioneer & Former Director of Vietnam Circus Federation",
+        sourceUrl: "https://arttimes.vn/san-khau-dien-anh/chuyen-ve-nu-anh-hung-dau-tien-cua-nganh-xiec-viet-c17a24254.html",
+        sourceTitle: "Arttimes.vn"
+      }
+    ],
+    interestingFacts: [
+      "Xuất thân từ cô thôn nữ làng quê nghèo: Sinh ra trong gia đình thuần nông tại Nga Sơn (Thanh Hóa), trước khi đến với xiếc bà chỉ quen việc cấy lúa, gánh phân, chưa từng biết xiếc là gì cho đến khi trúng tuyển vào Trường Xiếc năm 1959.",
+      "Sáng tạo tiết mục kinh điển 'Cô hàng giải khát': Lấy cảm hứng từ đời sống lao động, bà hóa thân thành cô gái bán nước giải khát thăng bằng tài tình trên nhiều tầng con lăn xếp chồng, vừa rót nước, bật nắp chai, xếp cốc mà không hề dao động.",
+      "Vinh dự nhiều lần biểu diễn cho Bác Hồ xem: Bà vinh dự được biểu diễn phục vụ Bác Hồ tại Phủ Chủ tịch; Bác đã thân tình khen ngợi, tặng hoa và động viên các nghệ sĩ xiếc mang nghệ thuật phục vụ nhân dân.",
+      "Lưu diễn quốc tế & giải thưởng danh giá: Tiết mục của bà đã đoạt Huy chương Bạc tại Liên hoan Xiếc quốc tế Warsaw (Ba Lan) năm 1980 và lưu diễn qua hàng chục quốc gia khắp năm châu.",
+      "Gia đình 'đại gia đình xiếc' lừng danh: Chồng bà là NSƯT Lê Thể (bậc thầy hề xiếc và huấn luyện thú), các con cháu như NSƯT Thắng Bế, nghệ sĩ Phương Thảo đều nối nghiệp, trở thành gia tộc xiếc tiêu biểu của Việt Nam."
+    ],
+    interestingFactsEn: [
+      "From rural farming roots to national glory: Born to a humble peasant family in Nga Son (Thanh Hoa), knew nothing of acrobatics until passing the circus entrance audition in 1959.",
+      "Iconic masterpiece 'The Refreshment Seller': Inspired by daily life, she enacted a beverage vendor maintaining flawless balance atop multi-tiered rolling cylinders while pouring drinks and serving glasses.",
+      "Honored to perform before President Ho Chi Minh: Repeatedly performed at the Presidential Palace for President Ho Chi Minh, receiving his personal flowers and praise.",
+      "Global acclaim & international Silver Medal: Captured the Silver Medal at the prestigious Warsaw International Circus Festival (Poland) in 1980, touring dozens of countries worldwide.",
+      "Patriarch of a revered circus dynasty: Her husband Meritorious Artist Le The, and children/grandchildren (including Meritorious Artist Thang Be) carry forward an extraordinary multigenerational circus legacy."
+    ]
   },
   {
     id: 8,
@@ -492,10 +638,48 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
       "Developing acrobatic tumbling and stage research"
     ],
     correctIndex: 0,
-    explanation: "NSND Tống Toàn Thắng nổi danh là 'Hoàng tử Trăn' với nghệ thuật huấn luyện xiếc thú điêu luyện, đồng thời là đạo diễn tài hoa dàn dựng nhiều chương trình xiếc sử thi, kịch xiếc đương đại lớn của Liên đoàn Xiếc Việt Nam.",
-    explanationEn: "People's Artist Tong Toan Thang earned fame as the 'Python Prince' for his master animal circus artistry, while also directing numerous landmark epic and contemporary circus revues as Director of the Vietnam Circus Federation.",
-    triviaFact: "Tiết mục diễn cùng trăn của ông đã đi lưu diễn ở hàng chục quốc gia khắp năm châu và đạt nhiều giải thưởng quốc tế cao quý.",
-    triviaFactEn: "His signature python performance toured across dozens of countries worldwide, earning numerous prestigious international awards."
+    explanation: "NSND Tống Toàn Thắng nổi danh khắp năm châu với biệt danh 'Hoàng tử Trăn' nhờ nghệ thuật huấn luyện xiếc trăn điêu luyện, hòa quyện giữa sức mạnh hoang dã và sự mềm mại, tinh tế của con người. Trên cương vị Giám đốc Liên đoàn Xiếc Việt Nam, ông còn là đạo diễn và nhà quản lý tiên phong, dàn dựng nhiều tác phẩm kịch xiếc đương đại và sử thi đồ sộ, đưa xiếc Việt Nam vươn tầm thời đại.",
+    explanationEn: "People's Artist Tong Toan Thang is celebrated internationally as the 'Python Prince' for his masterly python partnership blending primal majesty with refined human poise. As Director of the Vietnam Circus Federation, he is a visionary director staging monumental epic circuses and contemporary theatrical masterpieces.",
+    triviaFact: "Tiết mục biểu diễn cùng đại trăn của ông đã lưu diễn qua hàng chục quốc gia khắp năm châu, chinh phục khán giả tại nhiều kỳ Festival xiếc danh giá quốc tế.",
+    triviaFactEn: "His signature python act toured across dozens of countries worldwide, captivating audiences at prestigious international circus festivals.",
+    image: nsndTongToanThangHoangTuTranImg,
+    imageAlt: "NSND Tống Toàn Thắng trong tiết mục biểu diễn trăn huyền thoại Hoàng tử Trăn",
+    imageCaption: "NSND Tống Toàn Thắng • Huyền thoại 'Hoàng tử Trăn' của xiếc Việt Nam",
+    imageCaptionEn: "People's Artist Tong Toan Thang • Vietnam's legendary 'Python Prince'",
+    sourceUrl: "https://tuoitre.vn/nld/van-nghe/nsnd-tong-toan-thang-lan-toa-yeu-thuong-20231007210446817.htm",
+    sourceTitle: "Tuổi Trẻ Online: NSND Tống Toàn Thắng - Lan tỏa yêu thương",
+    gallery: [
+      {
+        src: nsndTongToanThangHoangTuTranImg,
+        alt: "NSND Tống Toàn Thắng biểu diễn cùng chú trăn khổng lồ trong trang phục Thạch Sanh dũng mãnh",
+        caption: "NSND Tống Toàn Thắng trong hình tượng 'Hoàng tử Trăn' dũng mãnh – Đỉnh cao xiếc thú Việt Nam",
+        captionEn: "The 'Python Prince' in his iconic stage persona – Zenith of Vietnamese animal circus",
+        sourceUrl: "https://tuoitre.vn/nld/van-nghe/nsnd-tong-toan-thang-lan-toa-yeu-thuong-20231007210446817.htm",
+        sourceTitle: "Tuổi Trẻ Online"
+      },
+      {
+        src: nsndTongToanThangKichXiecImg,
+        alt: "NSND Tống Toàn Thắng biểu diễn trong vở kịch xiếc đương đại trên sân khấu Rạp Xiếc Trung Ương",
+        caption: "Sáng tạo nghệ thuật không ngừng: Đưa xiếc trăn hòa quyện vào các vở kịch xiếc đương đại và sử thi",
+        captionEn: "Artistic innovation: Blending python artistry into contemporary circus dramas and epics",
+        sourceUrl: "https://tuoitre.vn/nld/van-nghe/nsnd-tong-toan-thang-lan-toa-yeu-thuong-20231007210446817.htm",
+        sourceTitle: "Tuổi Trẻ Online"
+      }
+    ],
+    interestingFacts: [
+      "Xuất phát điểm từ hình tượng Thạch Sanh (1990): Tiết mục biểu diễn cùng trăn được ông ấp ủ và ra mắt lần đầu năm 1990 dựa trên câu chuyện cổ tích Thạch Sanh đánh trăn tinh, biến nỗi sợ hãi loài bò sát thành một tác phẩm nghệ thuật cuốn hút đầy tính nhân văn.",
+      "Tình bạn gắn bó tri kỷ với loài trăn: Ông từng tự tay chăm sóc, tắm rửa, ủ ấm và bầu bạn cùng những chú trăn nặng từ 40 đến 80kg trong suốt hàng chục năm; trăn của ông luôn thuần thục và biểu diễn theo nhịp thở của người nghệ sĩ.",
+      "Vang danh quốc tế và 'thôi miên' khán giả năm châu: Tiết mục 'Hoàng tử Trăn' đã lưu diễn hơn 20 quốc gia (Pháp, Đức, Nga, Bỉ, Trung Quốc, Đài Loan...), từng vinh dự biểu diễn tại Festival Xiếc Quốc tế Monte Carlo và Nhà hát Xiếc Quốc gia Moscow.",
+      "Nhà quản lý & Đạo diễn tiên phong đổi mới: Trên cương vị Giám đốc Liên đoàn Xiếc Việt Nam, ông đã mở đường cho xu hướng kết hợp xiếc với cải lương, rock, múa ballet và dàn dựng các vở kịch xiếc đồ sộ như 'Thần Điêu Đại Hiệp', 'Huyền sử Đinh Bộ Lĩnh'...",
+      "Trái tim thiện nguyện lan tỏa yêu thương: Ông luôn duy trì các chương trình biểu diễn xiếc miễn phí phục vụ trẻ em mồ côi, trẻ em khuyết tật, bệnh nhi và bà con vùng sâu vùng xa, coi xiếc là sứ mệnh đem lại niềm tin và nụ cười cho cộng đồng."
+    ],
+    interestingFactsEn: [
+      "Born from the Thach Sanh folktale (1990): Conceived in 1990 inspired by the fairy tale of Thach Sanh battling the giant serpent, converting primal fear into a spellbinding, humane theatrical experience.",
+      "A lifelong bond of trust with pythons: Spent decades hand-raising, warming, and nurturing giant pythons weighing 40-80kg, establishing a gentle rapport synchronized with the artist's natural breath.",
+      "Global fame across 20+ countries: The 'Python Prince' captivated audiences across France, Germany, Russia, Belgium, and Taiwan, including prestigious showcases at Monte Carlo and Moscow State Circus.",
+      "Pioneering visionary & theater director: As Director of the Vietnam Circus Federation, spearheaded ground-breaking fusions of circus with traditional Cai Luong opera, rock music, and ballet.",
+      "A compassionate heart for the community: Tirelessly organizes free charity performances for orphaned children, cancer patients, and underserved communities, using circus to sow joy and hope."
+    ]
   },
   {
     id: 16,
@@ -574,10 +758,48 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
       "Khau Vai Love Story"
     ],
     correctIndex: 0,
-    explanation: "Các tác phẩm do Lune Production thực hiện (như Làng Tôi, À Ố Show) là những bước tiến tiên phong của xiếc đương đại Việt Nam, kết hợp kỹ thuật xiếc, múa, âm nhạc dân tộc và đạo cụ từ tre nứa để truyền tải văn hóa Việt Nam ra thế giới.",
-    explanationEn: "Productions created by Lune Production (such as 'My Village' and 'À Ố Show') are groundbreaking milestones of contemporary Vietnamese circus, marrying acrobatic stunts, dance, live traditional music, and rustic bamboo props.",
+    explanation: "Các tác phẩm do Lune Production thực hiện (như Làng Tôi, À Ố Show) là những bước tiến tiên phong của xiếc đương đại Việt Nam, kết hợp kỹ thuật xiếc, múa, âm nhạc dân tộc và đạo cụ từ tre nứa để truyền tải văn hóa Việt Nam ra thế giới. Vở diễn 'Làng Tôi' (My Village) tái hiện bức tranh sinh hoạt làng quê Bắc Bộ mộc mạc và đầy thi vị thông qua ngôn ngữ xiếc tre độc bản.",
+    explanationEn: "Productions created by Lune Production (such as 'My Village' and 'À Ố Show') are groundbreaking milestones of contemporary Vietnamese circus, marrying acrobatic stunts, dance, live traditional music, and rustic bamboo props. 'My Village' poetically resurrects the soul and daily rhythm of Northern Vietnamese rural life through the singular medium of bamboo circus.",
     triviaFact: "Vở diễn 'Làng Tôi' từng đi lưu diễn liên tục hàng trăm buổi tại các nhà hát kịch nghệ và opera danh giá khắp Châu Âu và Châu Á.",
-    triviaFactEn: "'My Village' toured hundreds of continuous dates across prestigious theaters and opera houses throughout Europe and Asia."
+    triviaFactEn: "'My Village' toured hundreds of continuous dates across prestigious theaters and opera houses throughout Europe and Asia.",
+    image: langToiShowTungHungImg,
+    imageAlt: "Nghệ sĩ tung hứng thúng tre và nhào lộn trên giàn tre trong vở xiếc Làng Tôi",
+    imageCaption: "Vở xiếc 'Làng Tôi' • Đỉnh cao xiếc tre đương đại đậm hồn quê Bắc Bộ",
+    imageCaptionEn: "My Village (Làng Tôi) • Pinnacle of Vietnamese contemporary bamboo circus",
+    sourceUrl: "https://www.kkday.com/vi/blog/54942/lang-toi-show-dam-minh-vao-tinh-hoa-lang-que-bac-bo/?srsltid=AU7gw4UfsDwTzb_8FeL41w-Sp0JqpsL-OQOB8NptK5x-VHqLrKEvJRGl",
+    sourceTitle: "KKday: Làng Tôi Show",
+    gallery: [
+      {
+        src: langToiShowTungHungImg,
+        alt: "Nghệ sĩ tung hứng thúng tre nhịp nhàng trên giàn tre dựng đứng trong vở Làng Tôi",
+        caption: "Nghệ sĩ tung hứng thúng tre và bay lượn trên giàn tre – Bức tranh mùa gặt rộn ràng",
+        captionEn: "Artistic juggling of woven bamboo coracles amid towering bamboo scaffoldings",
+        sourceUrl: "https://www.kkday.com/vi/blog/54942/lang-toi-show-dam-minh-vao-tinh-hoa-lang-que-bac-bo/?srsltid=AU7gw4UfsDwTzb_8FeL41w-Sp0JqpsL-OQOB8NptK5x-VHqLrKEvJRGl",
+        sourceTitle: "KKday: Làng Tôi Show"
+      },
+      {
+        src: langToiShowUonDeoImg,
+        alt: "Động tác uốn dẻo thăng bằng ngoạn mục trên thân tre uốn cong của các nghệ sĩ Làng Tôi",
+        caption: "Màn uốn dẻo thăng bằng thót tim trên thân tre giữa không trung đầy chất thơ",
+        captionEn: "Breathtaking contortion balance across curved bamboo poles suspended in air",
+        sourceUrl: "https://www.kkday.com/vi/blog/54942/lang-toi-show-dam-minh-vao-tinh-hoa-lang-que-bac-bo/?srsltid=AU7gw4UfsDwTzb_8FeL41w-Sp0JqpsL-OQOB8NptK5x-VHqLrKEvJRGl",
+        sourceTitle: "KKday: Làng Tôi Show"
+      }
+    ],
+    interestingFacts: [
+      "Ngôn ngữ sân khấu 'Xiếc Tre' độc nhất vô nhị: Toàn bộ cấu trúc sân khấu, từ cầu tre, mái nhà, dòng sông cho đến giàn giáo nhào lộn đều được tạo dựng linh hoạt từ những thân tre tầm vông mộc mạc, không dùng đinh ốc hay khung sắt hiện đại.",
+      "Âm nhạc sống truyền thống từ hơn 20 loại nhạc cụ dân tộc: Các nghệ sĩ vừa diễn xiếc vừa được đệm nhạc trực tiếp bởi dàn nhạc dân tộc với đàn bầu, đàn tranh, sáo trúc, cồng chiêng, trống da trâu và tiếng hát ru Bắc Bộ mộc mạc.",
+      "Lưu diễn quốc tế chinh phục hơn 300 suất diễn tại Châu Âu: Từ năm 2009 - 2012, 'Làng Tôi' đã lưu diễn qua Pháp, Hà Lan, Bỉ, Tây Ban Nha, Đức, Hy Lạp... nhận được những tràng pháo tay tán thưởng kéo dài hàng chục phút từ khán giả quốc tế.",
+      "Tái hiện sinh động nếp sống làng quê Việt: Vở diễn đưa khán giả qua từng cung bậc cảm xúc của ngày hội làng, tình yêu đôi lứa bên lũy tre xanh, mùa gặt bận rộn và tiếng ve kêu râm ran ngày hè.",
+      "Được dàn dựng bởi các đạo diễn tài hoa: Tác phẩm do bộ ba đạo diễn Nhất Lý, Tuấn Lê, Nguyễn Lân sáng tạo cùng nghệ sĩ xiếc Nguyễn Nhật Lý, định hình dòng 'Xiếc kể chuyện' (Cirque Nouveau) đỉnh cao của Việt Nam."
+    ],
+    interestingFactsEn: [
+      "Pioneering 'Bamboo Circus' theatrical vocabulary: The entire dynamic set - bridges, riverbanks, village roofs, and high-wire apparatus - is organically built using raw bamboo stalks without nails or metal bolts.",
+      "Live authentic acoustic score with 20+ ethnic instruments: Accompanied live on stage by master musicians playing Dan Bau (monochord), Dan Tranh (zither), bamboo flutes, gongs, and folk lullabies.",
+      "International triumph with 300+ shows across Europe: From 2009 to 2012, 'My Village' toured France, the Netherlands, Belgium, Spain, Germany, and Greece, receiving standing ovations at prestigious opera houses.",
+      "Vivid narrative of traditional Vietnamese village life: Effortlessly guides spectators through village festivities, pastoral romance beside bamboo groves, bustling harvests, and twilight tranquility.",
+      "Visionary creative team: Conceived and directed by Tuấn Lê, Nhất Lý, Nguyễn Lân, and circus artist Nhật Lý, establishing a world-class benchmark for contemporary Vietnamese storytelling circus."
+    ]
   },
   {
     id: 18,
@@ -598,8 +820,24 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
     correctIndex: 1,
     explanation: "'Big Top' là từ lóng tiếng Anh chỉ chiếc lều bạt màu sắc khổng lồ được các gánh xiếc dựng lên mỗi khi di chuyển đến một thành phố mới để biểu diễn.",
     explanationEn: "'Big Top' is the classic English term for the colossal, colorful traveling tent erected as an auditorium and arena for a touring circus.",
+    image: rapBatBigTopLuuDongImg,
+    imageAlt: "Rạp lều bạt Big Top sọc đỏ trắng truyền thống",
+    imageCaption: "Rạp lều bạt 'Big Top' sọc đỏ trắng lưu động – Biểu tượng bất hủ của các gánh xiếc trên toàn thế giới",
+    imageCaptionEn: "The classic red-and-white striped 'Big Top' touring tent – An immortal symbol of nomadic circus culture worldwide",
     triviaFact: "Lều Big Top lớn nhất lịch sử từng che phủ diện tích hơn 9.000 mét vuông với sức chứa lên tới 10.000 khán giả.",
-    triviaFactEn: "Historically, the largest circus Big Top tents covered over 9,000 square meters and accommodated up to 10,000 spectators."
+    triviaFactEn: "Historically, the largest circus Big Top tents covered over 9,000 square meters and accommodated up to 10,000 spectators.",
+    interestingFacts: [
+      "Biểu tượng mái vòm di động: Khái niệm rạp bạt lưu động 'Big Top' ra đời vào đầu thế kỷ 19 tại Mỹ (bởi Joshua Purdy Brown), giải phóng các đoàn xiếc khỏi các nhà hát cố định để đem niềm vui đi khắp muôn nơi.",
+      "Kỳ quan dựng rạp thần tốc: Các đoàn xiếc lớn thời kỳ hoàng kim có thể hạ trại, kéo căng hàng nghìn mét vuông bạt bạt và cột trụ khổng lồ chỉ trong vài giờ ngắn ngủi, rồi tháo dỡ trong đêm để lên chuyến tàu tiếp theo.",
+      "Màu sắc kinh điển đỏ - trắng hoặc xanh - vàng: Họa tiết sọc rực rỡ từ xa đã báo hiệu ngày hội xiếc náo nhiệt sắp bắt đầu, trở thành ký ức tuổi thơ của nhiều thế hệ khán giả toàn cầu.",
+      "Kiến trúc âm thanh và ánh sáng vòm tròn: Kết cấu mái chóp nón giúp hội tụ âm thanh tiếng trống, tiếng kèn và tạo độ cao lý tưởng (12 - 15m) cho các tiết mục đu bay và nhào lộn trên không."
+    ],
+    interestingFactsEn: [
+      "Nomadic Big Top dome icon: The portable canvas tent concept emerged in early 19th-century America (pioneered by Joshua Purdy Brown), liberating troupes from fixed theaters to tour the globe.",
+      "Lightning-fast setup marvel: Golden-age circus crews could erect giant poles and raise thousands of square meters of heavy canvas in mere hours, then pack down overnight to board the next train.",
+      "Classic red-and-white or yellow-blue stripes: The vibrant candy-striped canopy served as an unmistakable beacon visible from miles away, signaling the arrival of a wondrous carnival.",
+      "Conical acoustics & aerial height: The high conical vaulted ceiling amplified brass fanfare and circus drums while providing crucial 12-15 meter clearance for trapeze flyers and aerialists."
+    ]
   },
   {
     id: 19,
@@ -618,10 +856,30 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
       "Guy Laliberté"
     ],
     correctIndex: 1,
-    explanation: "Philip Astley (1742–1814) là một kỵ sĩ người Anh. Năm 1768, ông thành lập trường dạy cưỡi ngựa tại London và nhận ra rằng việc cho ngựa chạy theo đường tròn tạo ra lực ly tâm giúp ông dễ giữ thăng bằng trên lưng ngựa hơn. Ông sau đó thêm vào các tiết mục hề, nhào lộn, nhạc công để giải trí cho khán giả, đặt nền móng cho mô hình xiếc hiện đại.",
-    explanationEn: "Philip Astley (1742–1814), an English equestrian, established a riding school in London in 1768. Discovering centrifugal force helped him balance on horseback in a circular ring, he added acrobats, clowns, and musicians, birthing modern circus.",
-    triviaFact: "Đường kính 13 mét của vòng tròn sân khấu do Philip Astley tính toán năm 1768 vẫn là quy chuẩn quốc tế của mọi rạp xiếc ngày nay.",
-    triviaFactEn: "The 13-meter diameter ring engineered by Philip Astley in 1768 remains the standard dimension in circus arenas worldwide today."
+    explanation: "Philip Astley (1742–1814) là một kỵ sĩ tài ba và cựu sĩ quan kỵ binh người Anh, được suy tôn là 'Cha đẻ của ngành Xiếc hiện đại'. Năm 1768, ông thành lập trường cưỡi ngựa tại London và phát hiện rằng khi cho ngựa phi theo đường tròn, lực ly tâm sẽ hỗ trợ giữ thăng bằng hoàn hảo trên lưng ngựa. Ông đã kết hợp biểu diễn cưỡi ngựa với các tiết mục hề, nhào lộn, uốn dẻo và dàn nhạc kèn đồng, khai sinh ra mô hình rạp xiếc tròn chuẩn mực cho toàn thế giới.",
+    explanationEn: "Philip Astley (1742–1814), a decorated British cavalry officer and equestrian master, is celebrated as the 'Father of Modern Circus'. In 1768, he created a riding ring in London and discovered that circular motion generated centrifugal force enabling riders to maintain balance. By combining trick horse riding with acrobats, clowns, contortionists, and live brass music, he established the archetype of modern circus.",
+    triviaFact: "Đường kính 13 mét (42 feet) của vòng tròn sân khấu do Philip Astley tính toán năm 1768 vẫn là quy chuẩn quốc tế bất biến của mọi rạp xiếc khắp năm châu ngày nay.",
+    triviaFactEn: "The 13-meter (42-foot) circular ring diameter engineered by Philip Astley in 1768 remains the universal international standard of all circus arenas worldwide today.",
+    image: philipAstleySketchImg,
+    imageAlt: "Tranh khắc họa chân dung Philip Astley - Cha đẻ của xiếc hiện đại",
+    imageCaption: "Bản vẽ khắc chân dung Philip Astley (1742–1814) • Cha đẻ của ngành Xiếc hiện đại",
+    imageCaptionEn: "Historical etching portrait of Philip Astley (1742–1814) • Father of Modern Circus",
+    sourceUrl: "https://vi.wikipedia.org/wiki/Philip_Astley",
+    sourceTitle: "Wikipedia: Philip Astley",
+    interestingFacts: [
+      "Lý giải về bức vẽ minh họa: Philip Astley qua đời năm 1814 – trước khi công nghệ nhiếp ảnh bằng máy ảnh được phát minh (khoảng năm 1826 - 1839). Vì vậy, hậu thế không có bất kỳ bức ảnh chụp thật nào bằng máy ảnh của ông; mọi hình ảnh lưu truyền về chân dung ông cho tới nay đều là các bức tranh vẽ khắc gỗ và bản in thủ công thời bấy giờ.",
+      "Phát minh vĩ đại về sàn diễn tròn 13 mét: Ông là người đầu tiên chứng minh bằng thực nghiệm rằng đường kính tròn 42 feet (khoảng 13 mét) là kích thước lý tưởng nhất để lực ly tâm giữ cho người cưỡi đứng thăng bằng vững vàng trên lưng ngựa khi chạy nước đại.",
+      "Người đầu tiên mang 'chú hề' vào xiếc: Để giúp khán giả thư giãn giữa các màn nhào lộn kỵ mã căng thẳng, Astley đã mời các nghệ sĩ hề (clown) và người chơi đàn biểu diễn xen kẽ, sáng tạo nên cấu trúc tiết mục kinh điển của rạp xiếc.",
+      "Nhà hát xiếc đầu tiên 'Astley's Amphitheatre': Ông dựng nên rạp xiếc cố định đầu tiên tại London bên bờ sông Thames, sau đó mang mô hình này sang Paris (Pháp) và được vua Louis XV hết sức tán thưởng.",
+      "Di sản trường tồn hơn 250 năm: Từ phát kiến của Philip Astley năm 1768, nghệ thuật xiếc đã phát triển rực rỡ và lan tỏa thành loại hình giải trí đại chúng được yêu thích bậc nhất trên toàn cầu."
+    ],
+    interestingFactsEn: [
+      "Historical note on his portrait: Philip Astley passed away in 1814 - before the invention of camera photography (circa 1826–1839). Consequently, no actual photographic portraits exist; all historical representations of him are contemporary copper etchings and woodcuts.",
+      "The ingenious 13-meter circular ring: He proved empirically that a 42-foot (13-meter) circular ring generates optimal centrifugal force to sustain a rider standing erect upon a cantering horse.",
+      "First to integrate clowns and music into the ring: To provide comic relief between high-intensity equestrian stunts, Astley introduced clowns, jugglers, and live musicians, establishing the foundational circus format.",
+      "The first amphitheater - Astley's Amphitheatre: Erected the world's first permanent circus amphitheater near Westminster Bridge in London, later touring Paris with high acclaim from King Louis XV.",
+      "A 250+ year enduring legacy: Beginning in 1768, Astley's invention blossomed into one of the most beloved and universal performing arts in human history."
+    ]
   },
   {
     id: 20,
@@ -1027,14 +1285,30 @@ export const CircusQuiz: React.FC<CircusQuizProps> = ({
                     <span>
                       {currentQ.id === 1 
                         ? (isEn ? "Fascinating Historical Highlights about Master Ta Duy Hien:" : "Thông tin thú vị về Cụ Tạ Duy Hiển:")
+                        : currentQ.id === 2
+                        ? (isEn ? "The Soul of Vietnamese Bamboo Circus:" : "Hồn cốt Xiếc Tre & Đạo cụ Tre Đan Việt Nam:")
+                        : currentQ.id === 3
+                        ? (isEn ? "The Heritage of Coastal Bamboo Stilt-Walking:" : "Nghệ thuật xiếc dân gian đi cà kheo miền duyên hải:")
+                        : currentQ.id === 4
+                        ? (isEn ? "Guinness World Records & Resilience of Quoc Co - Quoc Nghiep:" : "Kỷ lục Guinness Thế giới & Bản lĩnh Quốc Cơ - Quốc Nghiệp:")
                         : currentQ.id === 6
                         ? (isEn ? "Highlights of Thong Nhat Park & National Circus Theater:" : "Thông tin thú vị về Công viên Thống Nhất & Rạp Xiếc:")
+                        : currentQ.id === 7
+                        ? (isEn ? "The Legendary Journey of People's Artist Tam Chinh:" : "Huyền thoại cuộc đời NSND Tâm Chính:")
                         : currentQ.id === 8
                         ? (isEn ? "The Art of Dove Illusions in Circus Magic:" : "Nghệ thuật ảo thuật biến hóa chim bồ câu:")
                         : currentQ.id === 14
                         ? (isEn ? "Highlights & Resilience of Quoc Co - Quoc Nghiep:" : "Thông tin thú vị về Quốc Cơ - Quốc Nghiệp:")
+                        : currentQ.id === 15
+                        ? (isEn ? "The Artistry & Dedication of People's Artist Tong Toan Thang:" : "Nghệ thuật & Cống hiến của NSND Tống Toàn Thắng:")
                         : currentQ.id === 16
                         ? (isEn ? "Fascinating Facts about Cirque du Soleil:" : "Thông tin thú vị về Cirque du Soleil:")
+                        : currentQ.id === 17
+                        ? (isEn ? "Fascinating Highlights of 'My Village' (Làng Tôi):" : "Thông tin thú vị về vở xiếc 'Làng Tôi':")
+                        : currentQ.id === 18
+                        ? (isEn ? "Fascinating Lore of Circus 'Big Top' Tents:" : "Chuyện thú vị về Rạp Lều Bạt 'Big Top' Lưu Động:")
+                        : currentQ.id === 19
+                        ? (isEn ? "Historical Facts about Philip Astley & the Birth of Modern Circus:" : "Thông tin lịch sử về Philip Astley & Nguồn gốc Xiếc hiện đại:")
                         : (isEn ? "Fascinating Highlights:" : "Thông tin thú vị thêm:")}
                     </span>
                   </h5>
