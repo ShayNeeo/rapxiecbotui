@@ -213,8 +213,6 @@ export const HISTORY_ERAS: HistoryEra[] = [
       }
     ],
     imageIcon: "bi bi-tree",
-    videoUrl: "https://youtu.be/df-9MrHOTaU?si=f9WHCBRHIVn5ECxn",
-    videoTitle: "Màn trình diễn đỉnh cao ở đêm chung kết Got Talent của hai anh em Quốc Cơ - Quốc Nghiệp",
     subsections: [
       {
         id: "early-troupes",
