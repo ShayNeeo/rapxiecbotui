@@ -21,6 +21,7 @@ import { OFFICIAL_CIRCUS_MAP } from "@/src/lib/map";
 import { CHATBOT_AI_URL } from "@/src/lib/constants";
 import { CircusMediaArchive } from "@/src/components/CircusMediaArchive";
 import { CircusHeritage } from "@/src/components/CircusHeritage";
+import { CircusJourney } from "@/src/components/CircusJourney";
 import { VisitorCounter } from "@/src/components/VisitorCounter";
 import { FloatingVisitorBadge } from "@/src/components/FloatingVisitorBadge";
 import { CircusCommentsSection } from "@/src/components/comments/CircusCommentsSection";
@@ -131,6 +132,7 @@ export default function App() {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isMediaArchiveOpen, setIsMediaArchiveOpen] = useState<boolean>(false);
   const [heritageSubTab, setHeritageSubTab] = useState<'history' | 'archive'>('history');
+  const [journeySubTab, setJourneySubTab] = useState<'quiz' | 'ticket'>('quiz');
 
   const navigate = useNavigate();
 
@@ -157,6 +159,12 @@ export default function App() {
       setHeritageSubTab('archive');
     } else if (act === 'history') {
       setHeritageSubTab('history');
+    }
+
+    if (act === 'quiz') {
+      setJourneySubTab('quiz');
+    } else if (act === 'ticket') {
+      setJourneySubTab('ticket');
     }
 
     if (currentAct === 'stage' && act !== 'stage') {
@@ -410,10 +418,20 @@ export default function App() {
           />
         )}
 
-        {currentAct === 'quiz' && (
-          <CircusQuiz
+        {(currentAct === 'journey' || currentAct === 'quiz' || currentAct === 'ticket') && (
+          <CircusJourney
             onBack={() => navigateToAct('stage')}
             onUnlockBadge={handleUnlockBadge}
+            initialSubTab={journeySubTab}
+            badges={badges}
+            logoUrl={logoUrl}
+            onUploadLogo={handleUploadLogo}
+            onResetLogo={handleResetLogo}
+            onNavigateToAct={(act) => navigateToAct(act as CircusActId)}
+            onOpenMediaArchive={() => {
+              handleUnlockBadge('circus-digital-archive');
+              navigateToAct('archive');
+            }}
           />
         )}
 
@@ -431,22 +449,6 @@ export default function App() {
           <CircusChat
             onBack={() => navigateToAct('stage')}
             onUnlockBadge={handleUnlockBadge}
-          />
-        )}
-
-        {currentAct === 'ticket' && (
-          <CircusTicket
-            onBack={() => navigateToAct('stage')}
-            badges={badges}
-            onUnlockBadge={handleUnlockBadge}
-            logoUrl={logoUrl}
-            onUploadLogo={handleUploadLogo}
-            onResetLogo={handleResetLogo}
-            onNavigateToAct={(act) => navigateToAct(act as CircusActId)}
-            onOpenMediaArchive={() => {
-              handleUnlockBadge('circus-digital-archive');
-              navigateToAct('archive');
-            }}
           />
         )}
 

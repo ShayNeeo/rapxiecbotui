@@ -11,6 +11,7 @@ export type CircusActId =
   | 'quiz'
   | 'map'
   | 'ticket'
+  | 'journey'
   | 'chat';
 
 export interface CircusBadge {

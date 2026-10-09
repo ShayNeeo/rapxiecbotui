@@ -21,7 +21,8 @@ import {
   Megaphone,
   Film,
   Languages,
-  Landmark
+  Landmark,
+  Milestone
 } from "lucide-react";
 import confetti from "canvas-confetti";
 import { OFFICIAL_CIRCUS_LOGO } from "@/src/lib/logo";
@@ -214,7 +215,11 @@ export const CircusHeader: React.FC<CircusHeaderProps> = ({
               icon: Box, 
               href: '/3d' 
             },
-            { id: 'quiz' as CircusActId, label: t.nav.quiz, icon: HelpCircle },
+            { 
+              id: 'journey' as CircusActId, 
+              label: t.nav.journey || (isEn ? 'Journey Milestones' : 'Dấu Ấn Hành Trình'), 
+              icon: Milestone 
+            },
             { id: 'map' as CircusActId, label: t.nav.map, icon: MapPin },
             { 
               id: 'chat' as CircusActId, 
@@ -222,10 +227,9 @@ export const CircusHeader: React.FC<CircusHeaderProps> = ({
               icon: MessageSquareText,
               href: CHATBOT_AI_URL,
             },
-            { id: 'ticket' as CircusActId, label: t.nav.ticket, icon: Ticket },
           ].map((tab) => {
             const Icon = tab.icon;
-            const isActive = currentAct === tab.id;
+            const isActive = currentAct === tab.id || (tab.id === 'journey' && (currentAct === 'quiz' || currentAct === 'ticket'));
 
             if (tab.href) {
               const isInternal = tab.href.startsWith('/');

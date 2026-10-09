@@ -18,6 +18,7 @@ export const TRANSLATIONS = {
       map: 'Bản Đồ',
       chat: 'Tư vấn viên AI',
       ticket: 'Vé Kỷ Niệm',
+      journey: 'Dấu Ấn Hành Trình',
     },
     actions: {
       fanfare: 'Kèn Chào',
@@ -65,6 +66,7 @@ export const TRANSLATIONS = {
       map: 'Venues Map',
       chat: 'AI Consultant',
       ticket: 'Collector’s Ticket',
+      journey: 'Journey Milestones',
     },
     actions: {
       fanfare: 'Fanfare',
