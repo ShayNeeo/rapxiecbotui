@@ -25,6 +25,7 @@ import moShowDienDaImg from "@/src/assets/images/mo_show_dien_da_nhom_nghien_cuu
 import aOShowImg from "@/src/assets/images/a_o_show_xiec_tre_viet_nam.jpg";
 import tehDarImg from "@/src/assets/images/teh_dar_show_xiec_tre_tay_nguyen.jpg";
 import langToiImg from "@/src/assets/images/lang_toi_my_village_xiec_tre.jpg";
+import bacHoThamGanhXiecImg from "@/src/assets/images/bac_ho_tham_ganh_xiec_trung_uong.jpg";
 
 interface CircusHistoryProps {
   onBack: () => void;
@@ -265,7 +266,13 @@ export const HISTORY_ERAS: HistoryEra[] = [
           "André Thận Troupe (Sa Đéc, 1917)",
           "Năm Tú Troupe (Mỹ Tho, 1918)",
           "Sáu Súng Troupe (Southern Vietnam, 1919)"
-        ]
+        ],
+        imageUrl: bacHoThamGanhXiecImg,
+        imageCaption: "Bác Hồ đến thăm và chụp ảnh lưu niệm cùng các nghệ sĩ gánh xiếc Trung ương – Nguồn cổ vũ tinh thần to lớn cho nghệ thuật xiếc cách mạng Việt Nam",
+        imageCaptionEn: "President Ho Chi Minh visiting and taking a commemorative photo with Central Circus artists – an immense spiritual encouragement for revolutionary Vietnamese circus art",
+        sourceUrl: "https://rapxiectrunguong.com/xiec-viet-nam-qua-cac-thoi-ky-li%CC%A3ch-su%CC%89/",
+        sourceName: "Rạp Xiếc Trung Ương",
+        sourceNameEn: "Central Circus Theatre"
       },
       {
         id: "academic-training",

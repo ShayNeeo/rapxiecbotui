@@ -146,6 +146,12 @@ export interface HistorySubsection {
   figuresEn?: string[];
   icon?: string;
   structuredSections?: HistoryDetailedSection[];
+  imageUrl?: string;
+  imageCaption?: string;
+  imageCaptionEn?: string;
+  sourceUrl?: string;
+  sourceName?: string;
+  sourceNameEn?: string;
   quote?: string;
   quoteAuthor?: string;
   quoteEn?: string;

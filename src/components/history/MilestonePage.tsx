@@ -849,6 +849,63 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
                     {isEn ? (sub.descriptionEn || sub.description) : sub.description}
                   </p>
 
+                  {/* Historical Photo if available in Subsection (e.g. Subsection 4.1 Bác Hồ thăm gánh xiếc) */}
+                  {sub.imageUrl && (
+                    <div className="space-y-2 pt-1">
+                      <div
+                        onClick={() => {
+                          circusAudio.playBambooStep();
+                          setActiveLightboxPhoto({
+                            id: `sub-photo-${sub.id}`,
+                            url: sub.imageUrl!,
+                            caption: isEn ? (sub.imageCaptionEn || sub.imageCaption || sub.titleEn || sub.title) : (sub.imageCaption || sub.title),
+                            eraId: era.id,
+                          });
+                        }}
+                        className="relative rounded-2xl overflow-hidden border-2 border-amber-300/80 shadow-md group bg-neutral-900 flex flex-col items-center cursor-pointer hover:border-amber-400 transition-all"
+                        title={isEn ? "Click to view full screen" : "Bấm để xem phóng to toàn màn hình"}
+                      >
+                        <img
+                          src={sub.imageUrl}
+                          alt={isEn ? (sub.imageCaptionEn || sub.imageCaption || "") : (sub.imageCaption || "")}
+                          className="w-full max-h-[460px] object-contain object-center group-hover:scale-[1.01] transition-transform duration-300"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                        
+                        {/* Zoom icon on bottom right */}
+                        <div className="absolute bottom-2.5 right-2.5 size-7 rounded-xl bg-black/60 text-white flex items-center justify-center backdrop-blur-md border border-white/20 shadow-md opacity-90">
+                          <Maximize2 className="size-3.5" />
+                        </div>
+
+                        {(sub.imageCaption || sub.imageCaptionEn) && (
+                          <div className="w-full bg-neutral-900/90 text-neutral-200 text-xs px-3.5 py-2.5 text-center italic border-t border-white/10">
+                            {isEn ? (sub.imageCaptionEn || sub.imageCaption) : sub.imageCaption}
+                          </div>
+                        )}
+                      </div>
+
+                      {sub.sourceUrl && (
+                        <div className="flex items-center justify-end">
+                          <a
+                            href={sub.sourceUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="inline-flex items-center gap-1.5 text-[11px] font-bold text-red-700 hover:text-red-900 bg-amber-50 hover:bg-amber-100 border border-amber-300 px-3 py-1.5 rounded-xl transition-all shadow-2xs hover:shadow-xs active:scale-95"
+                            title={isEn ? "Open source link" : "Mở nguồn ảnh bài viết"}
+                          >
+                            <ExternalLink className="size-3 text-red-600" />
+                            <span>
+                              {isEn
+                                ? `Source: ${sub.sourceNameEn || sub.sourceName || "Article"}`
+                                : `Nguồn ảnh: ${sub.sourceName || "Bài viết"}`}
+                            </span>
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
                   {/* Sub-section Highlights for 4.1 & 4.2 */}
                   <div className="space-y-2">
                     <span className="text-xs font-bold uppercase tracking-wider text-neutral-700 flex items-center gap-1.5">
