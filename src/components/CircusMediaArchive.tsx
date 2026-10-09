@@ -41,7 +41,8 @@ import {
   RotateCcw,
   FileText,
   AlertTriangle,
-  Layers
+  Layers,
+  Sliders
 } from "lucide-react";
 
 export interface MediaItem {
@@ -585,6 +586,52 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
     }
   });
   const [confirmDeleteMedia, setConfirmDeleteMedia] = useState<MediaItem | null>(null);
+  // Framing & positioning controls for the cover banner
+  const [isAdjustingCover, setIsAdjustingCover] = useState(false);
+  const [coverOffsetY, setCoverOffsetY] = useState<number>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('circus_archive_cover_offset_y');
+      if (saved) return Number(saved);
+    }
+    return 50;
+  });
+  const [coverZoom, setCoverZoom] = useState<number>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('circus_archive_cover_zoom');
+      if (saved) return Number(saved);
+    }
+    return 100;
+  });
+
+  const handleUpdateCoverOffsetY = (val: number) => {
+    setCoverOffsetY(val);
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('circus_archive_cover_offset_y', String(val));
+      } catch {}
+    }
+  };
+
+  const handleUpdateCoverZoom = (val: number) => {
+    setCoverZoom(val);
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('circus_archive_cover_zoom', String(val));
+      } catch {}
+    }
+  };
+
+  const handleResetCoverPosition = () => {
+    circusAudio.playBambooStep();
+    setCoverOffsetY(50);
+    setCoverZoom(100);
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.removeItem('circus_archive_cover_offset_y');
+        localStorage.removeItem('circus_archive_cover_zoom');
+      } catch {}
+    }
+  };
 
   // Blank template modal & form state
   const [showBlankTemplateModal, setShowBlankTemplateModal] = useState<boolean>(false);
@@ -989,22 +1036,42 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
           </div>
         </div>
 
-        {/* Featured Cover Banner / Ảnh bìa Kho Tư Liệu Số */}
+        {/* Featured Cover Banner Kho Tư Liệu Số with Framing Controls */}
         <div className="relative w-full h-40 sm:h-52 md:h-60 overflow-hidden border-b-2 border-amber-400 shrink-0 group select-none">
           <img
             src={khoTuLieuCoverImg}
             alt="Kho Tư Liệu Số - Vở đại vũ kịch xiếc Vùng Đất Kỳ Bí (Harper's Bazaar Vietnam)"
-            className="w-full h-full object-cover object-center group-hover:scale-103 transition-transform duration-700"
+            style={{
+              objectPosition: `center ${coverOffsetY}%`,
+              transform: `scale(${coverZoom / 100})`,
+            }}
+            className="w-full h-full object-cover transition-transform duration-200"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/25" />
+
+          {/* Action button on top left: Toggle frame adjustment controls */}
+          <div className="absolute top-3 left-4 z-20 flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                circusAudio.playBambooStep();
+                setIsAdjustingCover((prev) => !prev);
+              }}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-md cursor-pointer backdrop-blur-md ${
+                isAdjustingCover
+                  ? "bg-amber-400 text-neutral-950 ring-2 ring-amber-300"
+                  : "bg-black/70 hover:bg-black/90 text-amber-200 hover:text-white border border-white/20"
+              }`}
+              title={isEn ? "Adjust Cover Frame Position & Zoom" : "Căn chỉnh vị trí & kích cỡ khung ảnh bìa"}
+            >
+              <Sliders className="size-3.5 text-amber-400" />
+              <span>{isEn ? (isAdjustingCover ? "Done Adjusting" : "Adjust Frame") : (isAdjustingCover ? "Xong Căn Chỉnh" : "Căn Chỉnh Khung Ảnh")}</span>
+            </button>
+          </div>
 
           {/* Banner Content Overlay */}
           <div className="absolute bottom-3 left-4 sm:left-6 right-4 sm:right-6 flex flex-col sm:flex-row sm:items-end justify-between gap-3 text-white">
             <div className="space-y-1 max-w-xl">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-red-600/80 text-white text-[10px] sm:text-xs font-bold uppercase tracking-wider backdrop-blur-xs border border-red-400/50 shadow-xs">
-                <Sparkles className="size-3 text-amber-300" />
-                <span>{isEn ? "Featured Cover • Digital Archive" : "Ảnh Bìa Kho Tư Liệu • Vở 'Vùng Đất Kỳ Bí'"}</span>
-              </div>
               <h3 className="font-circus text-base sm:text-2xl text-amber-300 drop-shadow-md leading-tight">
                 {isEn ? "The Mystic Land - Modern Circus Breakthrough" : "Vở Đại Vũ Kịch Xiếc 'Vùng Đất Kỳ Bí'"}
               </h3>
@@ -1032,6 +1099,79 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
             </a>
           </div>
         </div>
+
+        {/* Panel căn chỉnh khung ảnh bìa khi người dùng bật chế độ chỉnh sửa */}
+        {isAdjustingCover && (
+          <div className="bg-amber-50/95 border-b-2 border-amber-400/80 p-4 sm:p-5 shadow-lg space-y-4 animate-in fade-in duration-200">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-amber-200/80 pb-3">
+              <div className="flex items-center gap-2">
+                <Sliders className="size-4 text-red-700" />
+                <h4 className="font-circus text-sm sm:text-base text-amber-950">
+                  {isEn ? "Cover Photo Framing & Position Controls" : "Bảng Căn Chỉnh Khung Ảnh Bìa"}
+                </h4>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleResetCoverPosition}
+                  className="px-3 py-1 text-xs font-semibold rounded-lg bg-white border border-amber-300 text-amber-900 hover:bg-amber-100 cursor-pointer shadow-2xs flex items-center gap-1"
+                >
+                  <RotateCcw className="size-3" />
+                  <span>{isEn ? "Reset" : "Mặc định"}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsAdjustingCover(false)}
+                  className="px-3 py-1 text-xs font-bold rounded-lg bg-red-700 text-white hover:bg-red-800 cursor-pointer shadow-2xs"
+                >
+                  {isEn ? "Close" : "Đóng"}
+                </button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between font-bold text-neutral-800">
+                  <span>{isEn ? "Vertical Position (Up / Down):" : "Vị trí dọc (Kéo lên / Kéo xuống):"}</span>
+                  <span className="text-red-700 font-mono">{coverOffsetY}%</span>
+                </div>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={coverOffsetY}
+                  onChange={(e) => handleUpdateCoverOffsetY(Number(e.target.value))}
+                  className="w-full accent-red-700 cursor-pointer"
+                />
+                <div className="flex justify-between text-[10px] text-neutral-500">
+                  <span>{isEn ? "Top (0%)" : "Đầu ảnh (0%)"}</span>
+                  <span>{isEn ? "Center (50%)" : "Chính giữa (50%)"}</span>
+                  <span>{isEn ? "Bottom (100%)" : "Đáy ảnh (100%)"}</span>
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between font-bold text-neutral-800">
+                  <span>{isEn ? "Zoom / Scale:" : "Thu phóng ảnh (Zoom):"}</span>
+                  <span className="text-red-700 font-mono">{coverZoom}%</span>
+                </div>
+                <input
+                  type="range"
+                  min="100"
+                  max="160"
+                  value={coverZoom}
+                  onChange={(e) => handleUpdateCoverZoom(Number(e.target.value))}
+                  className="w-full accent-red-700 cursor-pointer"
+                />
+                <div className="flex justify-between text-[10px] text-neutral-500">
+                  <span>100% ({isEn ? "Fit" : "Vừa khung"})</span>
+                  <span>130%</span>
+                  <span>160% ({isEn ? "Zoom In" : "Phóng to"})</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Subtitle / Intro Banner */}
         <div className="bg-amber-100/70 border-b border-amber-300/60 px-5 py-2.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs text-neutral-700 shrink-0">

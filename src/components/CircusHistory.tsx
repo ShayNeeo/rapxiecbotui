@@ -375,16 +375,6 @@ export const HISTORY_ERAS: HistoryEra[] = [
                 badgeEn: "Guinness 2021 (Spain)"
               },
               {
-                name: "Giải Vương miện Bạc (Silver Clown) tại Liên hoan Xiếc Quốc tế Monte Carlo (Monaco, 1989)",
-                nameEn: "Silver Clown Award ('Oscar of Circus') at Monte Carlo International Festival (Monaco, 1989)",
-                artists: "NSƯT Tiến Cường & NSƯT Trần Mạnh Cường",
-                artistsEn: "Merited Artists Tien Cuong & Tran Manh Cuong",
-                achievement: "Giải thưởng được coi là \"Oscar của ngành Xiếc\" với tiết mục \"Đu xà đôi\".",
-                achievementEn: "Regarded as the 'Oscar of Circus Arts' worldwide for the historic act \"Double Trapeze\".",
-                badge: "Silver Clown 1989 (Monaco)",
-                badgeEn: "Silver Clown 1989 (Monaco)"
-              },
-              {
                 name: "Huy chương Vàng & Giải thưởng Giám khảo Quốc tế: Tiết mục \"Sức mạnh đôi tay\"",
                 nameEn: "International Gold Medal & Special Jury Prize: \"Strength of Hands\"",
                 artists: "NSƯT Giang Quốc Cơ & NSƯT Giang Quốc Nghiệp",
@@ -405,50 +395,30 @@ export const HISTORY_ERAS: HistoryEra[] = [
                 badgeEn: "Gold Demain (France) & Princess (Russia)"
               },
               {
-                name: "Huy chương Vàng Quốc tế: Tiết mục \"Đế kiếm trên dây thép chao\"",
-                nameEn: "International Gold Medal: \"Sword Balancing on Slack Wire\"",
-                artists: "NSƯT Hoàng An / Tạ Duy Nhẫn",
-                artistsEn: "Merited Artists Hoang An / Ta Duy Nhan",
-                achievement: "Đạt Huy chương Vàng tại Liên hoan Xiếc Quốc tế Ngũ Kiều - Wuqiao (Trung Quốc) và Rome (Ý).",
-                achievementEn: "Gold Medal at Wuqiao International Circus Festival (China) and Rome International Circus Festival (Italy).",
-                badge: "HCV Ngũ Kiều (Trung Quốc) & Rome (Ý)",
-                badgeEn: "Gold Wuqiao (China) & Rome (Italy)"
-              },
-              {
-                name: "Huy chương Vàng Quốc tế: Tiết mục \"Tạo hình trên dây da\"",
-                nameEn: "International Gold Medal: \"Aerial Straps Gymnastics\"",
-                artists: "NSƯT Nguyễn Văn Thái & NSƯT Trịnh Toàn",
-                artistsEn: "Merited Artists Nguyen Van Thai & Trinh Toan",
-                achievement: "Đạt Huy chương Vàng tại Festival Mondial du Cirque de Demain (Pháp).",
-                achievementEn: "Gold Medal at Festival Mondial du Cirque de Demain (Paris, France).",
-                badge: "HCV Festival Demain (Pháp)",
-                badgeEn: "Gold Festival Demain (France)"
-              },
-              {
-                name: "Huy chương Vàng Quốc tế: Tiết mục \"Uốn dẻo gánh gốm\"",
-                nameEn: "International Gold Medal: \"Ceramic Pot Contortion\"",
-                artists: "NSƯT Phạm Thị Hướng & NSƯT Đinh Thị Thúy Hằng",
-                artistsEn: "Merited Artists Pham Thi Huong & Dinh Thi Thuy Hang",
-                achievement: "Đạt Huy chương Vàng tại Liên hoan Xiếc \"Công chúa Xiếc\" (Nga) và Havana (Cuba).",
-                achievementEn: "Gold Medal at Princess of Circus Festival (Russia) & Havana International Circus Festival (Cuba).",
-                badge: "HCV Công Chúa Xiếc (Nga) & Havana (Cuba)",
-                badgeEn: "Gold Princess (Russia) & Havana (Cuba)"
+                name: "Giải Vương miện Đồng: Tiết mục \"Tạo hình trên dây dọc\" (Cat Woman)",
+                nameEn: "Bronze Crown Award: \"Vertical Aerial Straps Acrobatics\" (Cat Woman)",
+                artists: "Nghệ sĩ Lưu Thị Hường (Liên đoàn Xiếc Việt Nam)",
+                artistsEn: "Artist Luu Thi Huong (Vietnam Circus Federation)",
+                achievement: "Đạt giải Vương miện Đồng danh giá tại Liên hoan Xiếc Quốc tế \"Công chúa Xiếc\" (Liên bang Nga, 2025) với kỹ thuật tạo hình điêu luyện và bản lĩnh làm chủ không gian trên không xuất sắc.",
+                achievementEn: "Won prestigious Bronze Crown at the 'Princess of Circus' World International Festival (Russia, 2025) with masterful aerial acrobatics and breathtaking stage presence.",
+                badge: "Vương miện Đồng 2025 (Nga)",
+                badgeEn: "Bronze Crown 2025 (Russia)"
               }
             ]
           }
         ],
         highlights: [
           "Mục 1: Nghệ thuật Xiếc đương đại Việt Nam - Sân khấu kết hợp múa rối (MƠ SHOW) và xiếc tre văn hóa Việt (À Ố SHOW, Làng Tôi, Teh Dar).",
-          "Mục 2: Các kỷ lục thế giới và giải thưởng quốc tế đỉnh cao - 3 Kỷ lục Guinness của Quốc Cơ - Quốc Nghiệp, Giải Vương miện Bạc Monte Carlo và 5 giải HCV thế giới."
+          "Mục 2: Các kỷ lục thế giới và giải thưởng quốc tế đỉnh cao - 3 Kỷ lục Guinness của Quốc Cơ - Quốc Nghiệp và các giải HCV thế giới danh giá."
         ],
         highlightsEn: [
           "Section 1: Vietnamese Contemporary Circus - Fusing puppetry (MƠ SHOW) and bamboo cultural theater (À Ố SHOW, My Village, Teh Dar).",
-          "Section 2: World Records & Prestigious International Awards - 3 Guinness World Records by Giang Brothers, Silver Clown at Monte Carlo, and 5 top World Gold Medals."
+          "Section 2: World Records & Prestigious International Awards - 3 Guinness World Records by Giang Brothers and prestigious World Gold Medals."
         ],
         figures: [
           "NSND Tống Toàn Thắng (Giám đốc Liên đoàn Xiếc Việt Nam)",
           "NSƯT Quốc Cơ & NSƯT Quốc Nghiệp (3 Kỷ lục Guinness thế giới)",
-          "NSƯT Tiến Cường & NSƯT Trần Mạnh Cường (Vương miện Bạc Monte Carlo)",
+          "Nghệ sĩ Lưu Thị Hường (Vương miện Đồng Liên bang Nga 2025)",
           "NSƯT Bùi Thu Hường & NSƯT Nguyễn Thị Hà (HCV Pháp & Nga)",
           "MƠ SHOW, À Ố SHOW, Làng Tôi, Teh Dar (Lune Production)",
           "Đạo diễn Tuấn Lê & Liên đoàn Xiếc Việt Nam"
@@ -456,7 +426,7 @@ export const HISTORY_ERAS: HistoryEra[] = [
         figuresEn: [
           "People's Artist Tống Toàn Thắng (Director, Vietnam Circus Federation)",
           "Quốc Cơ & Quốc Nghiệp (3 Guinness World Records)",
-          "Tiến Cường & Trần Mạnh Cường (Monte Carlo Silver Clown)",
+          "Artist Luu Thi Huong (Bronze Crown Russia 2025)",
           "Bùi Thu Hường & Nguyễn Thị Hà (Gold in France & Russia)",
           "MƠ SHOW, À Ố SHOW, My Village, Teh Dar (Lune Production)",
           "Director Tuan Le & Vietnam Circus Federation"

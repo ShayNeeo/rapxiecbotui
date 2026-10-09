@@ -18,7 +18,9 @@ import {
   Compass, 
   Layers, 
   Volume2,
-  ExternalLink 
+  ExternalLink,
+  Sliders,
+  RotateCcw
 } from "lucide-react";
 
 interface Circus3DProps {
@@ -606,6 +608,53 @@ export const Circus3D: React.FC<Circus3DProps> = ({
     });
   };
 
+  // Framing & positioning controls for the cover banner
+  const [isAdjustingCover, setIsAdjustingCover] = useState(false);
+  const [coverOffsetY, setCoverOffsetY] = useState<number>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('circus_3d_cover_offset_y');
+      if (saved) return Number(saved);
+    }
+    return 50;
+  });
+  const [coverZoom, setCoverZoom] = useState<number>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('circus_3d_cover_zoom');
+      if (saved) return Number(saved);
+    }
+    return 100;
+  });
+
+  const handleUpdateCoverOffsetY = (val: number) => {
+    setCoverOffsetY(val);
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('circus_3d_cover_offset_y', String(val));
+      } catch {}
+    }
+  };
+
+  const handleUpdateCoverZoom = (val: number) => {
+    setCoverZoom(val);
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('circus_3d_cover_zoom', String(val));
+      } catch {}
+    }
+  };
+
+  const handleResetCoverPosition = () => {
+    circusAudio.playBambooStep();
+    setCoverOffsetY(50);
+    setCoverZoom(100);
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.removeItem('circus_3d_cover_offset_y');
+        localStorage.removeItem('circus_3d_cover_zoom');
+      } catch {}
+    }
+  };
+
   return (
     <div className="w-full max-w-5xl mx-auto space-y-6 pb-12 select-none">
       {/* Top Controls */}
@@ -643,42 +692,138 @@ export const Circus3D: React.FC<Circus3DProps> = ({
         </div>
       </div>
 
-      {/* Cover Photo Banner: Rạp Xiếc 3D */}
-      <div className="relative w-full h-44 sm:h-56 md:h-64 rounded-3xl overflow-hidden border-2 border-amber-400 shadow-xl shrink-0 group select-none">
-        <img
-          src={rapXiec3dCoverImg}
-          alt="Không Gian Rạp Xiếc 3D"
-          className="w-full h-full object-cover object-center group-hover:scale-103 transition-transform duration-700"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/25" />
-        <div className="absolute bottom-4 left-5 sm:left-7 right-5 sm:right-7 flex flex-col sm:flex-row sm:items-end justify-between gap-3 text-white">
-          <div className="space-y-1.5 max-w-xl">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-red-600/80 text-white text-[10px] sm:text-xs font-bold uppercase tracking-wider backdrop-blur-xs border border-red-400/50 shadow-xs">
-              <Sparkles className="size-3 text-amber-300" />
-              <span>{isEn ? "Cover Photo • 3D Arena" : "Ảnh Bìa • Không Gian Rạp Xiếc 3D"}</span>
-            </span>
-            <h2 className="font-circus text-xl sm:text-3xl text-amber-300 drop-shadow-md leading-tight">
-              {isEn ? "3D CIRCUS ARENA & PERFORMANCE STAGE" : "KHÔNG GIAN RẠP XIẾC 3D ĐA CHIỀU"}
-            </h2>
-            <p className="text-xs sm:text-sm text-neutral-200 line-clamp-2 drop-shadow-sm font-light">
-              {isEn
-                ? "Experience the grand circus dome, circular sand arena, floating sea creatures, and vibrant lighting from every angle."
-                : "Trải nghiệm rạp xiếc mái vòm hoành tráng, đấu trường cát trung tâm và hiệu ứng ánh sáng huyền ảo 360 độ từ mọi góc nhìn."}
-            </p>
+      {/* Cover Photo Banner: Rạp Xiếc 3D with Framing Controls */}
+      <div className="space-y-2">
+        <div className="relative w-full h-44 sm:h-56 md:h-64 rounded-3xl overflow-hidden border-2 border-amber-400 shadow-xl shrink-0 group select-none">
+          <img
+            src={rapXiec3dCoverImg}
+            alt="Không Gian Rạp Xiếc 3D"
+            style={{
+              objectPosition: `center ${coverOffsetY}%`,
+              transform: `scale(${coverZoom / 100})`,
+            }}
+            className="w-full h-full object-cover transition-transform duration-200"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/25" />
+
+          {/* Action button on top left: Toggle frame adjustment controls */}
+          <div className="absolute top-3 left-3 z-20 flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                circusAudio.playBambooStep();
+                setIsAdjustingCover((prev) => !prev);
+              }}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-md cursor-pointer backdrop-blur-md ${
+                isAdjustingCover
+                  ? "bg-amber-400 text-neutral-950 ring-2 ring-amber-300"
+                  : "bg-black/70 hover:bg-black/90 text-amber-200 hover:text-white border border-white/20"
+              }`}
+              title={isEn ? "Adjust Cover Frame Position & Zoom" : "Căn chỉnh vị trí & kích cỡ khung ảnh bìa"}
+            >
+              <Sliders className="size-3.5 text-amber-400" />
+              <span>{isEn ? (isAdjustingCover ? "Done Adjusting" : "Adjust Frame") : (isAdjustingCover ? "Xong Căn Chỉnh" : "Căn Chỉnh Khung Ảnh")}</span>
+            </button>
           </div>
 
-          <Link
-            to={CIRCUS_3D_URL}
-            onClick={() => {
-              circusAudio.playFanfare();
-              onUnlockBadge('circus-3d-explorer');
-            }}
-            className="shrink-0 flex items-center gap-2 bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 text-red-950 font-circus font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer border border-amber-200"
-          >
-            <span>{isEn ? "Enter Dedicated 3D Arena" : "Mở Không Gian 3D Toàn Cảnh"}</span>
-            <ExternalLink className="size-4" />
-          </Link>
+          <div className="absolute bottom-4 left-5 sm:left-7 right-5 sm:right-7 flex flex-col sm:flex-row sm:items-end justify-between gap-3 text-white">
+            <div className="space-y-1.5 max-w-xl">
+              <h2 className="font-circus text-xl sm:text-3xl text-amber-300 drop-shadow-md leading-tight">
+                {isEn ? "3D CIRCUS ARENA & PERFORMANCE STAGE" : "KHÔNG GIAN RẠP XIẾC 3D ĐA CHIỀU"}
+              </h2>
+              <p className="text-xs sm:text-sm text-neutral-200 line-clamp-2 drop-shadow-sm font-light">
+                {isEn
+                  ? "Experience the grand circus dome, circular sand arena, floating sea creatures, and vibrant lighting from every angle."
+                  : "Trải nghiệm rạp xiếc mái vòm hoành tráng, đấu trường cát trung tâm và hiệu ứng ánh sáng huyền ảo 360 độ từ mọi góc nhìn."}
+              </p>
+            </div>
+
+            <Link
+              to={CIRCUS_3D_URL}
+              onClick={() => {
+                circusAudio.playFanfare();
+                onUnlockBadge('circus-3d-explorer');
+              }}
+              className="shrink-0 flex items-center gap-2 bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 text-red-950 font-circus font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer border border-amber-200"
+            >
+              <span>{isEn ? "Enter Dedicated 3D Arena" : "Mở Không Gian 3D Toàn Cảnh"}</span>
+              <ExternalLink className="size-4" />
+            </Link>
+          </div>
         </div>
+
+        {/* Panel căn chỉnh khung ảnh bìa khi người dùng bật chế độ chỉnh sửa */}
+        {isAdjustingCover && (
+          <div className="bg-amber-50/95 border-2 border-amber-400/80 rounded-2xl p-4 sm:p-5 shadow-lg space-y-4 animate-in fade-in duration-200">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-amber-200/80 pb-3">
+              <div className="flex items-center gap-2">
+                <Sliders className="size-4 text-red-700" />
+                <h4 className="font-circus text-sm sm:text-base text-amber-950">
+                  {isEn ? "Cover Photo Framing & Position Controls" : "Bảng Căn Chỉnh Khung Ảnh Bìa"}
+                </h4>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleResetCoverPosition}
+                  className="px-3 py-1 text-xs font-semibold rounded-lg bg-white border border-amber-300 text-amber-900 hover:bg-amber-100 cursor-pointer shadow-2xs flex items-center gap-1"
+                >
+                  <RotateCcw className="size-3" />
+                  <span>{isEn ? "Reset" : "Mặc định"}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsAdjustingCover(false)}
+                  className="px-3 py-1 text-xs font-bold rounded-lg bg-red-700 text-white hover:bg-red-800 cursor-pointer shadow-2xs"
+                >
+                  {isEn ? "Close" : "Đóng"}
+                </button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between font-bold text-neutral-800">
+                  <span>{isEn ? "Vertical Position (Up / Down):" : "Vị trí dọc (Kéo lên / Kéo xuống):"}</span>
+                  <span className="text-red-700 font-mono">{coverOffsetY}%</span>
+                </div>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={coverOffsetY}
+                  onChange={(e) => handleUpdateCoverOffsetY(Number(e.target.value))}
+                  className="w-full accent-red-700 cursor-pointer"
+                />
+                <div className="flex justify-between text-[10px] text-neutral-500">
+                  <span>{isEn ? "Top (0%)" : "Đầu ảnh (0%)"}</span>
+                  <span>{isEn ? "Center (50%)" : "Chính giữa (50%)"}</span>
+                  <span>{isEn ? "Bottom (100%)" : "Đáy ảnh (100%)"}</span>
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between font-bold text-neutral-800">
+                  <span>{isEn ? "Zoom / Scale:" : "Thu phóng ảnh (Zoom):"}</span>
+                  <span className="text-red-700 font-mono">{coverZoom}%</span>
+                </div>
+                <input
+                  type="range"
+                  min="100"
+                  max="160"
+                  value={coverZoom}
+                  onChange={(e) => handleUpdateCoverZoom(Number(e.target.value))}
+                  className="w-full accent-red-700 cursor-pointer"
+                />
+                <div className="flex justify-between text-[10px] text-neutral-500">
+                  <span>100% ({isEn ? "Fit" : "Vừa khung"})</span>
+                  <span>130%</span>
+                  <span>160% ({isEn ? "Zoom In" : "Phóng to"})</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Main 3D Canvas Box */}
