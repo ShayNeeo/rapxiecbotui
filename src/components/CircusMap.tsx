@@ -19,6 +19,7 @@ import {
   ExternalLink,
   Upload,
   RotateCcw,
+  Sliders,
   Image as ImageIcon
 } from "lucide-react";
 
@@ -351,6 +352,53 @@ export const CircusMap: React.FC<CircusMapProps> = ({
     return '#FFFDF0';
   });
 
+  // Framing & positioning controls for the cover image
+  const [isAdjustingCover, setIsAdjustingCover] = useState(false);
+  const [coverOffsetY, setCoverOffsetY] = useState<number>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('circus_map_cover_offset_y');
+      if (saved) return Number(saved);
+    }
+    return 50; // default 50% (centered)
+  });
+  const [coverZoom, setCoverZoom] = useState<number>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('circus_map_cover_zoom');
+      if (saved) return Number(saved);
+    }
+    return 100; // default 100%
+  });
+
+  const handleUpdateCoverOffsetY = (val: number) => {
+    setCoverOffsetY(val);
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('circus_map_cover_offset_y', String(val));
+      } catch {}
+    }
+  };
+
+  const handleUpdateCoverZoom = (val: number) => {
+    setCoverZoom(val);
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('circus_map_cover_zoom', String(val));
+      } catch {}
+    }
+  };
+
+  const handleResetCoverPosition = () => {
+    circusAudio.playBambooStep();
+    setCoverOffsetY(50);
+    setCoverZoom(100);
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.removeItem('circus_map_cover_offset_y');
+        localStorage.removeItem('circus_map_cover_zoom');
+      } catch {}
+    }
+  };
+
   const handleSetMapTone = (hex: string) => {
     setMapBgColor(hex);
     if (typeof window !== 'undefined') {
@@ -390,7 +438,7 @@ export const CircusMap: React.FC<CircusMapProps> = ({
     ? CIRCUS_VENUES
     : CIRCUS_VENUES.filter((v) => v.region === selectedRegion);
 
-  const activeVenue = CIRCUS_VENUES.find((v) => v.id === activeVenueId) || filteredVenues[0] || CIRCUS_VENUES[0];
+  const activeVenue = filteredVenues.find((v) => v.id === activeVenueId) || filteredVenues[0];
 
   const handleSelectVenue = (venue: CircusVenue) => {
     setActiveVenueId(venue.id);
@@ -500,50 +548,148 @@ export const CircusMap: React.FC<CircusMapProps> = ({
         </div>
       </div>
 
-      {/* Featured Cover Banner / Ảnh bìa Bản Đồ Rạp Xiếc */}
-      <div className="relative w-full h-44 sm:h-56 md:h-64 rounded-3xl overflow-hidden border-2 border-amber-400 shadow-xl shrink-0 group select-none">
-        <img
-          src={banDoCoverImg}
-          alt="Bản Đồ Rạp Xiếc Việt Nam"
-          className="w-full h-full object-cover object-center group-hover:scale-103 transition-transform duration-700"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/20" />
-        <div className="absolute bottom-4 left-5 sm:left-7 right-5 sm:right-7 flex flex-col sm:flex-row sm:items-end justify-between gap-3 text-white">
-          <div className="space-y-1.5 max-w-xl">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-red-600/80 text-white text-[10px] sm:text-xs font-bold uppercase tracking-wider backdrop-blur-xs border border-red-400/50 shadow-xs">
-              <Sparkles className="size-3 text-amber-300" />
-              <span>{isEn ? "Cover Photo • Theatres Map" : "Ảnh Bìa • Bản Đồ Rạp Xiếc"}</span>
-            </span>
-            <h2 className="font-circus text-xl sm:text-3xl text-amber-300 drop-shadow-md leading-tight">
-              {isEn ? "VIETNAM CIRCUS VENUES & THEATRES MAP" : "BẢN ĐỒ HỆ THỐNG RẠP XIẾC VIỆT NAM"}
-            </h2>
-            <p className="text-xs sm:text-sm text-neutral-200 line-clamp-2 drop-shadow-sm font-light">
-              {isEn
-                ? "Discover the arena stages, performing troupes, and circus heritage villages across North, Central, and South Vietnam."
-                : "Khám phá khán đài sân khấu vòm tròn, các nhà hát nghệ thuật và làng nghề xiếc truyền thống trải dài ba miền Bắc - Trung - Nam."}
-            </p>
+      {/* Featured Cover Banner with Frame Alignment Controls */}
+      <div className="space-y-2">
+        <div className="relative w-full h-44 sm:h-56 md:h-64 rounded-3xl overflow-hidden border-2 border-amber-400 shadow-xl shrink-0 group select-none">
+          <img
+            src={banDoCoverImg}
+            alt="Bản Đồ Rạp Xiếc Việt Nam"
+            style={{
+              objectPosition: `center ${coverOffsetY}%`,
+              transform: `scale(${coverZoom / 100})`,
+            }}
+            className="w-full h-full object-cover transition-transform duration-200"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/20" />
+
+          {/* Action buttons on top left: Toggle frame adjustment controls */}
+          <div className="absolute top-3 left-3 z-20 flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                circusAudio.playBambooStep();
+                setIsAdjustingCover((prev) => !prev);
+              }}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-md cursor-pointer backdrop-blur-md ${
+                isAdjustingCover
+                  ? "bg-amber-400 text-neutral-950 ring-2 ring-amber-300"
+                  : "bg-black/70 hover:bg-black/90 text-amber-200 hover:text-white border border-white/20"
+              }`}
+              title={isEn ? "Adjust Cover Frame Position & Zoom" : "Căn chỉnh vị trí & kích cỡ khung ảnh bìa"}
+            >
+              <Sliders className="size-3.5 text-amber-400" />
+              <span>{isEn ? (isAdjustingCover ? "Done Adjusting" : "Adjust Frame") : (isAdjustingCover ? "Xong Căn Chỉnh" : "Căn Chỉnh Khung Ảnh")}</span>
+            </button>
           </div>
-          <div className="text-xs text-amber-200/90 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-xl border border-amber-400/40 flex items-center gap-2 shrink-0">
-            <Navigation className="size-3.5 text-amber-400" />
-            <span>{filteredVenues.length} {isEn ? "Theaters & Heritage Sites" : "Rạp & Điểm Di Sản"}</span>
+
+          <div className="absolute bottom-4 left-5 sm:left-7 right-5 sm:right-7 flex flex-col sm:flex-row sm:items-end justify-between gap-3 text-white">
+            <div className="space-y-1.5 max-w-xl">
+              <h2 className="font-circus text-xl sm:text-3xl text-amber-300 drop-shadow-md leading-tight">
+                {isEn ? "VIETNAM CIRCUS VENUES & THEATRES MAP" : "BẢN ĐỒ HỆ THỐNG RẠP XIẾC VIỆT NAM"}
+              </h2>
+              <p className="text-xs sm:text-sm text-neutral-200 line-clamp-2 drop-shadow-sm font-light">
+                {isEn
+                  ? "Discover the arena stages, performing troupes, and circus heritage villages across North, Central, and South Vietnam."
+                  : "Khám phá khán đài sân khấu vòm tròn, các nhà hát nghệ thuật và làng nghề xiếc truyền thống trải dài ba miền Bắc - Trung - Nam."}
+              </p>
+            </div>
+            <div className="text-xs text-amber-200/90 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-xl border border-amber-400/40 flex items-center gap-2 shrink-0">
+              <Navigation className="size-3.5 text-amber-400" />
+              <span>{filteredVenues.length} {isEn ? "Theaters & Heritage Sites" : "Rạp & Điểm Di Sản"}</span>
+            </div>
           </div>
+
+          {/* Source link cited in a neat corner */}
+          <a
+            href="https://bazaarvietnam.vn/vung-dat-ky-bi-vo-xiec-viral-dau-nam-2025-thay-doi-nhan-dinh-nao-cua-khan-gia-ve-xiec-viet/"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => {
+              e.stopPropagation();
+              circusAudio.playBambooStep();
+            }}
+            className="absolute top-3 right-3 z-20 inline-flex items-center gap-1.5 text-[10px] text-amber-200/90 hover:text-white bg-black/75 hover:bg-black/90 px-2.5 py-1 rounded-full border border-white/20 transition-all backdrop-blur-xs shadow-md"
+            title={isEn ? "Source: Harper's Bazaar Vietnam" : "Nguồn ảnh: Bazaar Vietnam"}
+          >
+            <span>{isEn ? "Source: Bazaar Vietnam" : "Nguồn: Bazaar Vietnam"}</span>
+            <ExternalLink className="size-2.5 text-amber-300" />
+          </a>
         </div>
 
-        {/* Source link cited in a neat corner */}
-        <a
-          href="https://bazaarvietnam.vn/vung-dat-ky-bi-vo-xiec-viral-dau-nam-2025-thay-doi-nhan-dinh-nao-cua-khan-gia-ve-xiec-viet/"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={(e) => {
-            e.stopPropagation();
-            circusAudio.playBambooStep();
-          }}
-          className="absolute top-3 right-3 z-20 inline-flex items-center gap-1.5 text-[10px] text-amber-200/90 hover:text-white bg-black/75 hover:bg-black/90 px-2.5 py-1 rounded-full border border-white/20 transition-all backdrop-blur-xs shadow-md"
-          title={isEn ? "Source: Harper's Bazaar Vietnam" : "Nguồn ảnh: Bazaar Vietnam"}
-        >
-          <span>{isEn ? "Source: Bazaar Vietnam" : "Nguồn: Bazaar Vietnam"}</span>
-          <ExternalLink className="size-2.5 text-amber-300" />
-        </a>
+        {/* Panel căn chỉnh khung ảnh bìa khi người dùng bật chế độ chỉnh sửa */}
+        {isAdjustingCover && (
+          <div className="bg-amber-50/95 border-2 border-amber-400/80 rounded-2xl p-4 sm:p-5 shadow-lg space-y-4 animate-in fade-in duration-200">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-amber-200/80 pb-3">
+              <div className="flex items-center gap-2">
+                <Sliders className="size-4 text-red-700" />
+                <h4 className="font-circus text-sm sm:text-base text-amber-950">
+                  {isEn ? "Cover Photo Framing & Position Controls" : "Bảng Căn Chỉnh Khung Ảnh Bìa"}
+                </h4>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleResetCoverPosition}
+                  className="px-3 py-1 text-xs font-semibold rounded-lg bg-white border border-amber-300 text-amber-900 hover:bg-amber-100 cursor-pointer shadow-2xs flex items-center gap-1"
+                >
+                  <RotateCcw className="size-3" />
+                  <span>{isEn ? "Reset" : "Mặc định"}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsAdjustingCover(false)}
+                  className="px-3 py-1 text-xs font-bold rounded-lg bg-red-700 text-white hover:bg-red-800 cursor-pointer shadow-2xs"
+                >
+                  {isEn ? "Close" : "Đóng"}
+                </button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+              {/* Căn chỉnh vị trí dọc (Trượt lên / xuống) */}
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between font-bold text-neutral-800">
+                  <span>{isEn ? "Vertical Position (Up / Down):" : "Vị trí dọc (Kéo lên / Kéo xuống):"}</span>
+                  <span className="text-red-700 font-mono">{coverOffsetY}%</span>
+                </div>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={coverOffsetY}
+                  onChange={(e) => handleUpdateCoverOffsetY(Number(e.target.value))}
+                  className="w-full accent-red-700 cursor-pointer"
+                />
+                <div className="flex justify-between text-[10px] text-neutral-500">
+                  <span>{isEn ? "Top (0%)" : "Đầu ảnh (0%)"}</span>
+                  <span>{isEn ? "Center (50%)" : "Chính giữa (50%)"}</span>
+                  <span>{isEn ? "Bottom (100%)" : "Đáy ảnh (100%)"}</span>
+                </div>
+              </div>
+
+              {/* Căn chỉnh độ phóng to / thu nhỏ (Zoom) */}
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between font-bold text-neutral-800">
+                  <span>{isEn ? "Zoom / Scale:" : "Thu phóng ảnh (Zoom):"}</span>
+                  <span className="text-red-700 font-mono">{coverZoom}%</span>
+                </div>
+                <input
+                  type="range"
+                  min="100"
+                  max="160"
+                  value={coverZoom}
+                  onChange={(e) => handleUpdateCoverZoom(Number(e.target.value))}
+                  className="w-full accent-red-700 cursor-pointer"
+                />
+                <div className="flex justify-between text-[10px] text-neutral-500">
+                  <span>100% ({isEn ? "Fit" : "Vừa khung"})</span>
+                  <span>130%</span>
+                  <span>160% ({isEn ? "Zoom In" : "Phóng to"})</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Main Map & Venue Display Grid */}
@@ -760,6 +906,57 @@ export const CircusMap: React.FC<CircusMapProps> = ({
                   </g>
                 );
               })}
+
+              {/* Empty state notice overlay when selected region has no circus venues (Miền Trung) */}
+              {filteredVenues.length === 0 && (
+                <g transform="translate(368, 435)" className="select-none pointer-events-none">
+                  <rect
+                    x="-180"
+                    y="-45"
+                    width="360"
+                    height="90"
+                    rx="20"
+                    fill="#ffffff"
+                    fillOpacity="0.94"
+                    stroke="#f59e0b"
+                    strokeWidth="2.5"
+                    filter="drop-shadow(0 4px 12px rgba(0,0,0,0.15))"
+                  />
+                  <text
+                    x="0"
+                    y="-12"
+                    textAnchor="middle"
+                    fill="#991b1b"
+                    fontSize="16"
+                    fontWeight="bold"
+                    fontFamily="serif"
+                  >
+                    {isEn ? "Central Vietnam Region" : "Khu Vực Miền Trung"}
+                  </text>
+                  <text
+                    x="0"
+                    y="14"
+                    textAnchor="middle"
+                    fill="#78350f"
+                    fontSize="11.5"
+                    fontWeight="500"
+                    fontFamily="sans-serif"
+                  >
+                    {isEn ? "No fixed circus venues recorded in this region" : "Chưa có rạp xiếc cố định nào được ghi nhận"}
+                  </text>
+                  <text
+                    x="0"
+                    y="30"
+                    textAnchor="middle"
+                    fill="#b45309"
+                    fontSize="10"
+                    fontStyle="italic"
+                    fontFamily="sans-serif"
+                  >
+                    {isEn ? "(Position data is currently blank)" : "(Dữ liệu vị trí rạp xiếc hiện đang để trống)"}
+                  </text>
+                </g>
+              )}
             </svg>
           </div>
         </div>
@@ -767,122 +964,156 @@ export const CircusMap: React.FC<CircusMapProps> = ({
         {/* Selected Venue Details & Venue Directory (5 cols) */}
         <div className="lg:col-span-5 space-y-6">
           
-          {/* Active Venue Spotlight Card */}
-          <div className="bg-white rounded-3xl p-6 sm:p-7 border-4 border-amber-400 shadow-xl space-y-5 relative overflow-hidden">
-            {bookmarkedVenue === activeVenue.name && (
-              <div className="absolute inset-0 bg-amber-500/95 z-20 flex flex-col items-center justify-center p-6 text-center text-amber-950 animate-in fade-in duration-200">
-                <Bookmark className="size-12 text-red-700 animate-bounce mb-2" />
-                <h4 className="font-circus text-xl">
-                  {isEn ? "SAVED TO CIRCUS NOTEBOOK!" : "ĐÃ LƯU VÀO SỔ TAY XIẾC!"}
-                </h4>
-                <p className="text-xs text-amber-900 mt-1 max-w-sm">
-                  {isEn
-                    ? `You bookmarked ${activeVenue.nameEn || activeVenue.name}. Keep exploring! Badge Unlocked!`
-                    : `Bạn đã lưu địa chỉ rạp ${activeVenue.name} vào hành trang xiếc. Tiếp tục khám phá các điểm diễn khác nhé!`}
-                </p>
-                <span className="text-[10px] text-amber-950 mt-2 font-mono bg-amber-200 px-3 py-1 rounded-full">
-                  {isEn ? "Record ID: " : "Mã lưu trữ: "}RXVN-{Math.floor(1000 + Math.random() * 9000)}
-                </span>
-              </div>
-            )}
-
-            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 border-b border-neutral-100 pb-4">
-              <div className="flex items-start gap-3">
-                <div className="size-14 rounded-2xl bg-amber-100 border-2 border-amber-300 flex items-center justify-center text-3xl shadow-xs shrink-0 mt-0.5">
-                  <Icon name={activeVenue.icon} />
-                </div>
-                <div>
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-[10px] uppercase font-bold tracking-wider bg-red-100 text-red-800 px-2 py-0.5 rounded-full">
-                      {isEn ? `${activeVenue.region === 'Bắc' ? 'North' : activeVenue.region === 'Trung' ? 'Central' : 'South'} • ${activeVenue.cityEn || activeVenue.city}` : `Miền ${activeVenue.region} • ${activeVenue.city}`}
-                    </span>
-                    <span className="text-[10px] font-bold text-amber-900 bg-amber-100 px-2 py-0.5 rounded-full">
-                      {isEn ? `Est: ${activeVenue.establishedYear}` : `Năm thành lập: ${activeVenue.establishedYear}`}
-                    </span>
-                  </div>
-                  <h3 className="font-circus text-lg sm:text-xl text-neutral-900 leading-snug mt-1">
-                    {isEn ? (activeVenue.nameEn || activeVenue.name) : activeVenue.name}
-                  </h3>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-1.5 text-xs text-neutral-600 bg-amber-50 sm:bg-transparent px-2.5 py-1 sm:px-0 sm:py-0 rounded-lg shrink-0 self-start">
-                <CheckCircle2 className="size-4 text-emerald-600 shrink-0" />
-                <span className="font-medium text-xs">
-                  {isEn ? "Vietnam Circus Venue" : "Di tích & Rạp biểu diễn xiếc Việt Nam"}
-                </span>
-              </div>
-            </div>
-
-            {/* Address Info */}
-            <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 flex items-start gap-3 text-xs sm:text-sm">
-              <MapPin className="size-5 text-red-600 shrink-0 mt-0.5" />
-              <div>
-                <span className="font-bold text-neutral-900 block text-xs uppercase tracking-wider mb-0.5">
-                  {isEn ? "Address:" : "Địa chỉ:"}
-                </span>
-                <span className="text-neutral-800 leading-relaxed font-medium">
-                  {isEn ? (activeVenue.addressEn || activeVenue.address) : activeVenue.address}
-                </span>
-              </div>
-            </div>
-
-            {/* Historical Description */}
-            <div className="space-y-1.5">
-              <span className="text-xs font-bold uppercase tracking-wider text-neutral-500 flex items-center gap-1.5">
-                <Building2 className="size-3.5 text-amber-600" />
-                <span>{isEn ? "Introduction & Artistic Significance" : "Giới Thiệu & Ý Nghĩa Nghệ Thuật"}</span>
-              </span>
-              <p className="text-neutral-700 text-xs sm:text-sm leading-relaxed bg-neutral-50 p-3.5 rounded-2xl border border-neutral-200">
-                {isEn ? (activeVenue.descriptionEn || activeVenue.description) : activeVenue.description}
-              </p>
-            </div>
-
-            {/* Signature Highlights */}
-            <div className="space-y-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-neutral-500 flex items-center gap-1.5">
-                <Sparkles className="size-3.5 text-amber-500" />
-                <span>{isEn ? "Scale & Signature Highlights" : "Quy Mô & Điểm Nhấn Đặc Trưng"}</span>
-              </span>
-              <div className="flex flex-wrap gap-2">
-                {(isEn && activeVenue.highlightsEn ? activeVenue.highlightsEn : activeVenue.highlights).map((hl, idx) => (
-                  <span
-                    key={idx}
-                    className="text-xs font-medium px-2.5 py-1 rounded-xl bg-amber-100/70 text-amber-950 border border-amber-200"
-                  >
-                    ★ {hl}
+          {/* Active Venue Spotlight Card / Empty State for Region */}
+          {activeVenue ? (
+            <div className="bg-white rounded-3xl p-6 sm:p-7 border-4 border-amber-400 shadow-xl space-y-5 relative overflow-hidden">
+              {bookmarkedVenue === activeVenue.name && (
+                <div className="absolute inset-0 bg-amber-500/95 z-20 flex flex-col items-center justify-center p-6 text-center text-amber-950 animate-in fade-in duration-200">
+                  <Bookmark className="size-12 text-red-700 animate-bounce mb-2" />
+                  <h4 className="font-circus text-xl">
+                    {isEn ? "SAVED TO CIRCUS NOTEBOOK!" : "ĐÃ LƯU VÀO SỔ TAY XIẾC!"}
+                  </h4>
+                  <p className="text-xs text-amber-900 mt-1 max-w-sm">
+                    {isEn
+                      ? `You bookmarked ${activeVenue.nameEn || activeVenue.name}. Keep exploring! Badge Unlocked!`
+                      : `Bạn đã lưu địa chỉ rạp ${activeVenue.name} vào hành trang xiếc. Tiếp tục khám phá các điểm diễn khác nhé!`}
+                  </p>
+                  <span className="text-[10px] text-amber-950 mt-2 font-mono bg-amber-200 px-3 py-1 rounded-full">
+                    {isEn ? "Record ID: " : "Mã lưu trữ: "}RXVN-{Math.floor(1000 + Math.random() * 9000)}
                   </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Bottom Action */}
-            <div className="flex flex-col sm:flex-row items-center justify-end gap-2.5 pt-3 border-t border-neutral-100">
-              {activeVenue.mapUrl && (
-                <a
-                  href={activeVenue.mapUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-red-600 to-amber-600 hover:from-red-500 hover:to-amber-500 text-white font-bold text-xs shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95 shrink-0"
-                  title={`Directions to ${activeVenue.name} on Google Maps`}
-                >
-                  <Navigation className="size-4" />
-                  <span>{isEn ? "Directions (Google Maps)" : "Chỉ Đường (Google Maps)"}</span>
-                  <ExternalLink className="size-3.5" />
-                </a>
+                </div>
               )}
 
-              <Button
-                variant="carnival"
-                size="sm"
-                onClick={() => handleBookmarkVenue(activeVenue.name)}
-                className="w-full sm:w-auto flex items-center justify-center gap-1.5 cursor-pointer shadow-md"
-              >
-                <Bookmark className="size-3.5" />
-                <span>{isEn ? "Bookmark Venue in Notebook" : "Lưu Địa Chỉ Vào Sổ Tay Xiếc"}</span>
-              </Button>
+              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 border-b border-neutral-100 pb-4">
+                <div className="flex items-start gap-3">
+                  <div className="size-14 rounded-2xl bg-amber-100 border-2 border-amber-300 flex items-center justify-center text-3xl shadow-xs shrink-0 mt-0.5">
+                    <Icon name={activeVenue.icon} />
+                  </div>
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-[10px] uppercase font-bold tracking-wider bg-red-100 text-red-800 px-2 py-0.5 rounded-full">
+                        {isEn ? `${activeVenue.region === 'Bắc' ? 'North' : activeVenue.region === 'Trung' ? 'Central' : 'South'} • ${activeVenue.cityEn || activeVenue.city}` : `Miền ${activeVenue.region} • ${activeVenue.city}`}
+                      </span>
+                      <span className="text-[10px] font-bold text-amber-900 bg-amber-100 px-2 py-0.5 rounded-full">
+                        {isEn ? `Est: ${activeVenue.establishedYear}` : `Năm thành lập: ${activeVenue.establishedYear}`}
+                      </span>
+                    </div>
+                    <h3 className="font-circus text-lg sm:text-xl text-neutral-900 leading-snug mt-1">
+                      {isEn ? (activeVenue.nameEn || activeVenue.name) : activeVenue.name}
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1.5 text-xs text-neutral-600 bg-amber-50 sm:bg-transparent px-2.5 py-1 sm:px-0 sm:py-0 rounded-lg shrink-0 self-start">
+                  <CheckCircle2 className="size-4 text-emerald-600 shrink-0" />
+                  <span className="font-medium text-xs">
+                    {isEn ? "Vietnam Circus Venue" : "Di tích & Rạp biểu diễn xiếc Việt Nam"}
+                  </span>
+                </div>
+              </div>
+
+              {/* Address Info */}
+              <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 flex items-start gap-3 text-xs sm:text-sm">
+                <MapPin className="size-5 text-red-600 shrink-0 mt-0.5" />
+                <div>
+                  <span className="font-bold text-neutral-900 block text-xs uppercase tracking-wider mb-0.5">
+                    {isEn ? "Address:" : "Địa chỉ:"}
+                  </span>
+                  <span className="text-neutral-800 leading-relaxed font-medium">
+                    {isEn ? (activeVenue.addressEn || activeVenue.address) : activeVenue.address}
+                  </span>
+                </div>
+              </div>
+
+              {/* Historical Description */}
+              <div className="space-y-1.5">
+                <span className="text-xs font-bold uppercase tracking-wider text-neutral-500 flex items-center gap-1.5">
+                  <Building2 className="size-3.5 text-amber-600" />
+                  <span>{isEn ? "Introduction & Artistic Significance" : "Giới Thiệu & Ý Nghĩa Nghệ Thuật"}</span>
+                </span>
+                <p className="text-neutral-700 text-xs sm:text-sm leading-relaxed bg-neutral-50 p-3.5 rounded-2xl border border-neutral-200">
+                  {isEn ? (activeVenue.descriptionEn || activeVenue.description) : activeVenue.description}
+                </p>
+              </div>
+
+              {/* Signature Highlights */}
+              <div className="space-y-2">
+                <span className="text-xs font-bold uppercase tracking-wider text-neutral-500 flex items-center gap-1.5">
+                  <Sparkles className="size-3.5 text-amber-500" />
+                  <span>{isEn ? "Scale & Signature Highlights" : "Quy Mô & Điểm Nhấn Đặc Trưng"}</span>
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {(isEn && activeVenue.highlightsEn ? activeVenue.highlightsEn : activeVenue.highlights).map((hl, idx) => (
+                    <span
+                      key={idx}
+                      className="text-xs font-medium px-2.5 py-1 rounded-xl bg-amber-100/70 text-amber-950 border border-amber-200"
+                    >
+                      ★ {hl}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Bottom Action */}
+              <div className="flex flex-col sm:flex-row items-center justify-end gap-2.5 pt-3 border-t border-neutral-100">
+                {activeVenue.mapUrl && (
+                  <a
+                    href={activeVenue.mapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-red-600 to-amber-600 hover:from-red-500 hover:to-amber-500 text-white font-bold text-xs shadow-md hover:shadow-lg transition-all hover:scale-105 active:scale-95 shrink-0"
+                    title={`Directions to ${activeVenue.name} on Google Maps`}
+                  >
+                    <Navigation className="size-4" />
+                    <span>{isEn ? "Directions (Google Maps)" : "Chỉ Đường (Google Maps)"}</span>
+                    <ExternalLink className="size-3.5" />
+                  </a>
+                )}
+
+                <Button
+                  variant="carnival"
+                  size="sm"
+                  onClick={() => handleBookmarkVenue(activeVenue.name)}
+                  className="w-full sm:w-auto flex items-center justify-center gap-1.5 cursor-pointer shadow-md"
+                >
+                  <Bookmark className="size-3.5" />
+                  <span>{isEn ? "Bookmark Venue in Notebook" : "Lưu Địa Chỉ Vào Sổ Tay Xiếc"}</span>
+                </Button>
+              </div>
             </div>
-          </div>
+          ) : (
+            /* Empty state for regions without venues (Miền Trung) */
+            <div className="bg-white rounded-3xl p-8 border-4 border-dashed border-amber-300 shadow-lg text-center space-y-4">
+              <div className="size-16 rounded-2xl bg-amber-100 text-amber-800 mx-auto flex items-center justify-center shadow-xs">
+                <Compass className="size-8" />
+              </div>
+              <div className="space-y-1.5 max-w-md mx-auto">
+                <h3 className="font-circus text-xl text-neutral-900">
+                  {isEn ? "Central Vietnam Region" : "Khu Vực Miền Trung"}
+                </h3>
+                <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed">
+                  {isEn
+                    ? "Currently, there are no permanent fixed circus theaters established in the Central region. The map displays an empty state for this region."
+                    : "Hiện tại khu vực miền Trung chưa có rạp xiếc cố định nào được ghi nhận. Bản đồ để trống dữ liệu vị trí rạp xiếc cho khu vực này."}
+                </p>
+              </div>
+              <div className="pt-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setSelectedRegion('Tất Cả');
+                    setActiveVenueId('rap-xiec-phu-tho');
+                    circusAudio.playBambooStep();
+                  }}
+                  className="bg-amber-50 text-amber-950 border-amber-300 hover:bg-amber-100 cursor-pointer text-xs font-bold"
+                >
+                  <Compass className="size-3.5 mr-1 text-red-600" />
+                  <span>{isEn ? "View All Regions" : "Xem Toàn Quốc (Bắc & Nam)"}</span>
+                </Button>
+              </div>
+            </div>
+          )}
 
           {/* Selector List of Venues */}
           <div className="bg-white rounded-3xl p-5 border-2 border-amber-200 shadow-sm space-y-3">
