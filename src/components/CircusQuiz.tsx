@@ -277,13 +277,13 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
     questionEn: "What is the international standard diameter of a circular circus ring arena?",
     options: [
       "10 mét",
-      "13 mét (42 feet)",
+      "13 mét",
       "18 mét",
       "25 mét"
     ],
     optionsEn: [
       "10 meters",
-      "13 meters (42 feet)",
+      "13 meters",
       "18 meters",
       "25 meters"
     ],
