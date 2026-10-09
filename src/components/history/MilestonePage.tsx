@@ -529,6 +529,43 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
                                     </span>
                                     {isEn ? (item.achievementEn || item.achievement) : item.achievement}
                                   </p>
+
+                                  {/* Illustration Photo & Source Link */}
+                                  {item.imageUrl && (
+                                    <div className="pt-2 space-y-2">
+                                      <div className="relative rounded-2xl overflow-hidden border-2 border-amber-300/80 shadow-md group bg-neutral-900 flex flex-col items-center">
+                                        <img
+                                          src={item.imageUrl}
+                                          alt={isEn ? (item.imageCaptionEn || item.nameEn || item.name) : (item.imageCaption || item.name)}
+                                          className="w-full max-h-[460px] object-contain object-center group-hover:scale-[1.01] transition-transform duration-300"
+                                        />
+                                        {(item.imageCaption || item.imageCaptionEn) && (
+                                          <div className="w-full bg-neutral-900/90 text-neutral-200 text-xs px-3.5 py-2 text-center italic border-t border-white/10">
+                                            {isEn ? (item.imageCaptionEn || item.imageCaption) : item.imageCaption}
+                                          </div>
+                                        )}
+                                      </div>
+
+                                      {item.sourceUrl && (
+                                        <div className="flex items-center justify-end">
+                                          <a
+                                            href={item.sourceUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center gap-1.5 text-[11px] font-bold text-red-700 hover:text-red-900 bg-amber-50 hover:bg-amber-100 border border-amber-300 px-3 py-1.5 rounded-xl transition-all shadow-2xs hover:shadow-xs active:scale-95"
+                                            title={isEn ? "Open source link" : "Mở nguồn ảnh bài báo"}
+                                          >
+                                            <ExternalLink className="size-3 text-red-600" />
+                                            <span>
+                                              {isEn
+                                                ? `Source: ${item.sourceNameEn || item.sourceName || "Article"}`
+                                                : `Nguồn ảnh: ${item.sourceName || "Bài báo"}`}
+                                            </span>
+                                          </a>
+                                        </div>
+                                      )}
+                                    </div>
+                                  )}
                                 </div>
                               ))}
                             </div>

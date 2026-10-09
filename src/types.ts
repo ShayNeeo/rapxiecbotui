@@ -98,6 +98,12 @@ export interface HistoryDetailedItem {
   achievementEn?: string;
   badge?: string;
   badgeEn?: string;
+  imageUrl?: string;
+  imageCaption?: string;
+  imageCaptionEn?: string;
+  sourceUrl?: string;
+  sourceName?: string;
+  sourceNameEn?: string;
 }
 
 export interface HistoryDetailedSection {
