@@ -899,11 +899,20 @@ export const CircusMap: React.FC<CircusMapProps> = ({
 
               {/* Venue Cover Image */}
               {activeVenue.imageUrl && (
-                <div className="relative w-full rounded-2xl overflow-hidden border-2 border-amber-300/80 shadow-md group bg-neutral-950 flex items-center justify-center">
+                <div className="relative w-full rounded-2xl overflow-hidden border-2 border-amber-300/80 shadow-md group flex items-center justify-center">
+                  {/* Subtle blurred ambient backdrop matching the image colors to seamlessly fill wider aspect ratios without black bars */}
+                  <div
+                    className="absolute inset-0 bg-cover bg-center blur-xl scale-110 opacity-30 pointer-events-none"
+                    style={{ backgroundImage: `url(${activeVenue.imageUrl})` }}
+                  />
+                  {/* Gradient overlay on backdrop */}
+                  <div className="absolute inset-0 bg-amber-950/10 pointer-events-none" />
+
+                  {/* Main crisp full image */}
                   <img
                     src={activeVenue.imageUrl}
                     alt={isEn ? (activeVenue.nameEn || activeVenue.name) : activeVenue.name}
-                    className="w-full max-h-[360px] sm:max-h-[460px] object-contain object-center group-hover:scale-102 transition-transform duration-300"
+                    className="relative z-10 w-full h-auto max-h-[380px] sm:max-h-[480px] object-contain object-center group-hover:scale-[1.01] transition-transform duration-300 drop-shadow-md"
                   />
                 </div>
               )}
