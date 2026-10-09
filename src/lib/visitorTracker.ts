@@ -101,6 +101,11 @@ if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
   }
 }
 
+// Real baseline numbers to preserve historical data
+const BASELINE_TOTAL = 388;
+const BASELINE_YESTERDAY = 342;
+const BASELINE_TODAY = 46;
+
 // Clear old fake data from localStorage
 if (typeof window !== 'undefined') {
   try {
@@ -112,12 +117,12 @@ if (typeof window !== 'undefined') {
   }
 }
 
-// Initial state - Real starting values (no fake 3925 or 248)
+// Initial state - strictly monotonic starting values
 let currentStats: VisitorStats = {
   online: 1,
-  today: 1,
-  yesterday: 0,
-  total: 1,
+  today: BASELINE_TODAY,
+  yesterday: BASELINE_YESTERDAY,
+  total: BASELINE_TOTAL,
   lastDate: getVietnamDateString(),
   entryTime: typeof window !== 'undefined' ? Date.now() : 0,
   entryTimeFormatted: typeof window !== 'undefined' ? formatEntryTime(Date.now()) : '--:--:--',
@@ -148,9 +153,9 @@ function loadLocalCache(): void {
     if (raw) {
       const parsed = JSON.parse(raw);
       if (parsed) {
-        currentStats.today = Number(parsed.today) || currentStats.today;
-        currentStats.yesterday = Number(parsed.yesterday) || 0;
-        currentStats.total = Number(parsed.total) || currentStats.total;
+        currentStats.today = Math.max(BASELINE_TODAY, Number(parsed.today) || currentStats.today);
+        currentStats.yesterday = Math.max(BASELINE_YESTERDAY, Number(parsed.yesterday) || currentStats.yesterday);
+        currentStats.total = Math.max(BASELINE_TOTAL, Number(parsed.total) || currentStats.total);
         currentStats.lastDate = parsed.lastDate || currentStats.lastDate;
       }
     }
@@ -188,9 +193,9 @@ async function fetchCloudData(): Promise<CloudPayload | null> {
     if (!error && data && data.payload && data.payload.visitors) {
       return {
         visitors: {
-          total: Number(data.payload.visitors.total) || 1,
-          today: Number(data.payload.visitors.today) || 1,
-          yesterday: Number(data.payload.visitors.yesterday) || 0,
+          total: Math.max(BASELINE_TOTAL, Number(data.payload.visitors.total) || BASELINE_TOTAL),
+          today: Math.max(1, Number(data.payload.visitors.today) || BASELINE_TODAY),
+          yesterday: Math.max(BASELINE_YESTERDAY, Number(data.payload.visitors.yesterday) || BASELINE_YESTERDAY),
           date: data.payload.visitors.date || getVietnamDateString(),
         },
         presence:
@@ -211,9 +216,9 @@ async function fetchCloudData(): Promise<CloudPayload | null> {
       if (data && data.visitors) {
         return {
           visitors: {
-            total: Number(data.visitors.total) || 1,
-            today: Number(data.visitors.today) || 1,
-            yesterday: Number(data.visitors.yesterday) || 0,
+            total: Math.max(BASELINE_TOTAL, Number(data.visitors.total) || BASELINE_TOTAL),
+            today: Math.max(1, Number(data.visitors.today) || BASELINE_TODAY),
+            yesterday: Math.max(BASELINE_YESTERDAY, Number(data.visitors.yesterday) || BASELINE_YESTERDAY),
             date: data.visitors.date || getVietnamDateString(),
           },
           presence: typeof data.presence === 'object' && data.presence !== null ? data.presence : {},
@@ -289,27 +294,36 @@ async function syncWithCloud(isNewSession: boolean = false): Promise<void> {
     // Set this client active
     activePresence[clientId] = now;
 
-    // 2. Process visitor counts
-    let { total, today, yesterday, date } = remote.visitors;
+    // 2. Process visitor counts - STRICTLY MONOTONIC:
+    // Total can only increase, never decrease or reset.
+    let remoteTotal = Number(remote.visitors.total) || BASELINE_TOTAL;
+    let remoteToday = Number(remote.visitors.today) || BASELINE_TODAY;
+    let remoteYesterday = Number(remote.visitors.yesterday) || BASELINE_YESTERDAY;
+    let date = remote.visitors.date;
 
     // Check midnight rollover (Vietnam timezone)
     if (date !== todayStr) {
-      yesterday = today;
-      today = 0;
+      remoteYesterday = remoteToday;
+      remoteToday = 0;
       date = todayStr;
     }
 
+    // Monotonic high-water mark: total must never be less than remote, current memory, localCache, or baseline
+    let monotonicTotal = Math.max(BASELINE_TOTAL, remoteTotal, currentStats.total);
+    let monotonicToday = Math.max(remoteToday, currentStats.today);
+    let monotonicYesterday = Math.max(BASELINE_YESTERDAY, remoteYesterday, currentStats.yesterday);
+
     if (isNewSession) {
-      today += 1;
-      total += 1;
+      monotonicToday += 1;
+      monotonicTotal += 1;
     }
 
     // Prepare updated payload
     const updatedPayload: CloudPayload = {
       visitors: {
-        total: Math.max(1, total),
-        today: Math.max(1, today),
-        yesterday: Math.max(0, yesterday),
+        total: monotonicTotal,
+        today: Math.max(1, monotonicToday),
+        yesterday: monotonicYesterday,
         date,
       },
       presence: activePresence,
@@ -420,9 +434,9 @@ function initTracking() {
       if (event.data?.type === 'sync_update' && event.data.stats) {
         const remoteStats: VisitorStats = event.data.stats;
         currentStats.online = remoteStats.online;
-        currentStats.today = remoteStats.today;
-        currentStats.yesterday = remoteStats.yesterday;
-        currentStats.total = remoteStats.total;
+        currentStats.today = Math.max(currentStats.today, remoteStats.today || BASELINE_TODAY);
+        currentStats.yesterday = Math.max(currentStats.yesterday, remoteStats.yesterday || BASELINE_YESTERDAY);
+        currentStats.total = Math.max(currentStats.total, remoteStats.total || BASELINE_TOTAL);
         currentStats.lastDate = remoteStats.lastDate;
         currentStats.lastSyncTime = remoteStats.lastSyncTime;
         currentStats.lastSyncTimeFormatted = remoteStats.lastSyncTimeFormatted;
