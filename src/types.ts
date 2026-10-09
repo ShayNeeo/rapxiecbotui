@@ -6,6 +6,7 @@ export type CircusActId =
   | 'promo'
   | 'archive'
   | 'history'
+  | 'heritage'
   | 'circus3d'
   | 'quiz'
   | 'map'

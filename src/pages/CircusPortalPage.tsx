@@ -20,6 +20,7 @@ import { OFFICIAL_CIRCUS_LOGO } from "@/src/lib/logo";
 import { OFFICIAL_CIRCUS_MAP } from "@/src/lib/map";
 import { CHATBOT_AI_URL } from "@/src/lib/constants";
 import { CircusMediaArchive } from "@/src/components/CircusMediaArchive";
+import { CircusHeritage } from "@/src/components/CircusHeritage";
 import { VisitorCounter } from "@/src/components/VisitorCounter";
 import { FloatingVisitorBadge } from "@/src/components/FloatingVisitorBadge";
 import { CircusCommentsSection } from "@/src/components/comments/CircusCommentsSection";
@@ -129,6 +130,7 @@ export default function App() {
   });
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isMediaArchiveOpen, setIsMediaArchiveOpen] = useState<boolean>(false);
+  const [heritageSubTab, setHeritageSubTab] = useState<'history' | 'archive'>('history');
 
   const navigate = useNavigate();
 
@@ -149,6 +151,12 @@ export default function App() {
       saveStageScrollY();
       navigate('/chatbot');
       return;
+    }
+
+    if (act === 'archive') {
+      setHeritageSubTab('archive');
+    } else if (act === 'history') {
+      setHeritageSubTab('history');
     }
 
     if (currentAct === 'stage' && act !== 'stage') {
@@ -386,20 +394,12 @@ export default function App() {
           />
         )}
 
-        {currentAct === 'archive' && (
-          <CircusMediaArchive
-            isOpen={true}
-            isFullPage={true}
-            onClose={() => navigateToAct('stage')}
-            onNavigateTo={(act) => navigateToAct(act as CircusActId)}
-            onUnlockBadge={handleUnlockBadge}
-          />
-        )}
-
-        {currentAct === 'history' && (
-          <CircusHistory
+        {(currentAct === 'heritage' || currentAct === 'history' || currentAct === 'archive') && (
+          <CircusHeritage
             onBack={() => navigateToAct('stage')}
             onUnlockBadge={handleUnlockBadge}
+            initialSubTab={heritageSubTab}
+            onNavigateTo={(act) => navigateToAct(act as CircusActId)}
           />
         )}
 

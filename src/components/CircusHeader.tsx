@@ -20,7 +20,8 @@ import {
   Users,
   Megaphone,
   Film,
-  Languages
+  Languages,
+  Landmark
 } from "lucide-react";
 import confetti from "canvas-confetti";
 import { OFFICIAL_CIRCUS_LOGO } from "@/src/lib/logo";
@@ -203,11 +204,10 @@ export const CircusHeader: React.FC<CircusHeaderProps> = ({
               icon: Megaphone,
             },
             { 
-              id: 'archive' as CircusActId, 
-              label: isEn ? 'Media Archive' : 'Kho Tư Liệu Số', 
-              icon: Film,
+              id: 'heritage' as CircusActId, 
+              label: t.nav.heritage || (isEn ? 'Circus Heritage' : 'Di Sản Xiếc Việt'), 
+              icon: Landmark,
             },
-            { id: 'history' as CircusActId, label: t.nav.history, icon: BookOpen },
             { 
               id: 'circus3d' as CircusActId, 
               label: t.nav.circus3d, 
