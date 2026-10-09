@@ -48,6 +48,11 @@ export const Circus3D: React.FC<Circus3DProps> = ({
   } | null>(null);
   const animatedGroupRef = useRef<THREE.Group | null>(null);
   const trapezeRef = useRef<THREE.Group | null>(null);
+  const trapezeArtistRef = useRef<THREE.Group | null>(null);
+  const somersaultArtistRef = useRef<THREE.Group | null>(null);
+  const tightropeArtistRef = useRef<THREE.Group | null>(null);
+  const jugglerArtistRef = useRef<THREE.Group | null>(null);
+  const jugglerRingsRef = useRef<THREE.Mesh[]>([]);
   const animFrameIdRef = useRef<number | null>(null);
   const isDraggingRef = useRef(false);
   const prevMousePosRef = useRef({ x: 0, y: 0 });
@@ -230,8 +235,160 @@ export const Circus3D: React.FC<Circus3DProps> = ({
     bar.rotation.z = Math.PI / 2;
     bar.position.set(0, -8, 0);
     trapeze.add(ropeLeft, ropeRight, bar);
+
+    // ==========================================
+    // 🎭 3D PERFORMING CIRCUS ARTISTS (NGHỆ SĨ XIẾC)
+    // ==========================================
+    const skinMat = new THREE.MeshStandardMaterial({ color: 0xffd1b3, roughness: 0.5 });
+    const costumeRedMat = new THREE.MeshStandardMaterial({ color: 0xef4444, roughness: 0.3, metalness: 0.2 });
+    const costumeGoldMat = new THREE.MeshStandardMaterial({ color: 0xfbbf24, metalness: 0.7, roughness: 0.2 });
+    const costumeBlueMat = new THREE.MeshStandardMaterial({ color: 0x3b82f6, roughness: 0.4 });
+    const costumeWhiteMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.3 });
+    const hairMat = new THREE.MeshStandardMaterial({ color: 0x1f2937, roughness: 0.8 });
+
+    // 1. 🌟 NGHỆ SĨ ĐU BAY (Trapeze Aerial Flyer - Treo mình lộn ngược trên thanh đu)
+    const trapezeArtist = new THREE.Group();
+    trapezeArtist.position.set(0, -8.1, 0);
+
+    // Legs hooked over the trapeze bar
+    const legGeo = new THREE.CylinderGeometry(0.16, 0.12, 1.6, 8);
+    const leftThigh = new THREE.Mesh(legGeo, costumeGoldMat);
+    leftThigh.position.set(-0.55, 0.6, 0.2);
+    leftThigh.rotation.x = Math.PI / 3;
+    const rightThigh = new THREE.Mesh(legGeo, costumeGoldMat);
+    rightThigh.position.set(0.55, 0.6, 0.2);
+    rightThigh.rotation.x = Math.PI / 3;
+
+    // Torso hanging down
+    const torsoGeo = new THREE.CylinderGeometry(0.42, 0.32, 2.0, 10);
+    const trapezeTorso = new THREE.Mesh(torsoGeo, costumeRedMat);
+    trapezeTorso.position.set(0, -1.0, 0);
+
+    // Head
+    const headGeo = new THREE.SphereGeometry(0.38, 12, 12);
+    const trapezeHead = new THREE.Mesh(headGeo, skinMat);
+    trapezeHead.position.set(0, -2.4, 0);
+    const trapezeHair = new THREE.Mesh(new THREE.SphereGeometry(0.4, 10, 10, 0, Math.PI * 2, 0, Math.PI / 2), hairMat);
+    trapezeHair.position.set(0, -2.4, 0);
+    trapezeHair.rotation.x = Math.PI;
+
+    // Arms outstretched gracefully downwards in the air
+    const armGeo = new THREE.CylinderGeometry(0.12, 0.09, 1.7, 8);
+    const leftArm = new THREE.Mesh(armGeo, skinMat);
+    leftArm.position.set(-0.85, -1.5, 0);
+    leftArm.rotation.z = -0.55;
+    const rightArm = new THREE.Mesh(armGeo, skinMat);
+    rightArm.position.set(0.85, -1.5, 0);
+    rightArm.rotation.z = 0.55;
+
+    trapezeArtist.add(leftThigh, rightThigh, trapezeTorso, trapezeHead, trapezeHair, leftArm, rightArm);
+    trapeze.add(trapezeArtist);
+    trapezeArtistRef.current = trapezeArtist;
+
     worldGroup.add(trapeze);
     trapezeRef.current = trapeze;
+
+    // 2. 🤸 NGHỆ SĨ NHÀO LỘN TRUNG TÂM (Central Somersault Acrobats)
+    const somersaultGroup = new THREE.Group();
+    somersaultGroup.position.set(0, 1.8, 0);
+
+    // Acrobatic Performer
+    const tumbler = new THREE.Group();
+    const tTorso = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.3, 1.8, 10), costumeGoldMat);
+    const tHead = new THREE.Mesh(new THREE.SphereGeometry(0.35, 12, 12), skinMat);
+    tHead.position.set(0, 1.25, 0);
+    const tHair = new THREE.Mesh(new THREE.SphereGeometry(0.37, 10, 10, 0, Math.PI * 2, 0, Math.PI / 2), hairMat);
+    tHair.position.set(0, 1.3, 0);
+
+    const tLeftArm = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.08, 1.4, 8), costumeRedMat);
+    tLeftArm.position.set(-0.65, 0.5, 0);
+    tLeftArm.rotation.z = 0.7;
+    const tRightArm = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.08, 1.4, 8), costumeRedMat);
+    tRightArm.position.set(0.65, 0.5, 0);
+    tRightArm.rotation.z = -0.7;
+
+    const tLeftLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.1, 1.6, 8), costumeWhiteMat);
+    tLeftLeg.position.set(-0.35, -1.2, 0);
+    const tRightLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.1, 1.6, 8), costumeWhiteMat);
+    tRightLeg.position.set(0.35, -1.2, 0);
+
+    tumbler.add(tTorso, tHead, tHair, tLeftArm, tRightArm, tLeftLeg, tRightLeg);
+    somersaultGroup.add(tumbler);
+    worldGroup.add(somersaultGroup);
+    somersaultArtistRef.current = somersaultGroup;
+
+    // 3. ⚖️ NGHỆ SĨ ĐI TRÊN DÂY CAO (Tightrope High-Wire Walker with Balancing Pole)
+    const tightropeWalker = new THREE.Group();
+    tightropeWalker.position.set(0, 15.05, 0);
+
+    const trTorso = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.26, 1.7, 10), costumeBlueMat);
+    trTorso.position.set(0, 1.8, 0);
+    const trHead = new THREE.Mesh(new THREE.SphereGeometry(0.32, 12, 12), skinMat);
+    trHead.position.set(0, 2.9, 0);
+
+    // Tightrope Legs balancing on wire
+    const trLegL = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.08, 1.6, 8), costumeWhiteMat);
+    trLegL.position.set(-0.15, 0.8, 0.3);
+    trLegL.rotation.x = -0.15;
+    const trLegR = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.08, 1.6, 8), costumeWhiteMat);
+    trLegR.position.set(0.15, 0.8, -0.3);
+    trLegR.rotation.x = 0.15;
+
+    // Long Balancing Pole across tightrope
+    const balancePoleGeo = new THREE.CylinderGeometry(0.06, 0.06, 11, 8);
+    const balancePoleMat = new THREE.MeshStandardMaterial({ color: 0xf59e0b, metalness: 0.8, roughness: 0.2 });
+    const balancePole = new THREE.Mesh(balancePoleGeo, balancePoleMat);
+    balancePole.rotation.z = Math.PI / 2;
+    balancePole.position.set(0, 2.0, 0);
+
+    tightropeWalker.add(trTorso, trHead, trLegL, trLegR, balancePole);
+    worldGroup.add(tightropeWalker);
+    tightropeArtistRef.current = tightropeWalker;
+
+    // 4. 🤹 NGHỆ SĨ TUNG HỨNG VÒNG SÁNG (Stage Ring Juggler)
+    const jugglerGroup = new THREE.Group();
+    jugglerGroup.position.set(-5.5, 0.3, 3.5);
+
+    const jTorso = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.28, 1.7, 10), costumeRedMat);
+    jTorso.position.set(0, 1.7, 0);
+    const jHead = new THREE.Mesh(new THREE.SphereGeometry(0.32, 12, 12), skinMat);
+    jHead.position.set(0, 2.8, 0);
+    const jHat = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.45, 0.6, 10), costumeBlueMat);
+    jHat.position.set(0, 3.2, 0);
+
+    const jLegL = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.09, 1.5, 8), costumeWhiteMat);
+    jLegL.position.set(-0.25, 0.75, 0);
+    const jLegR = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.09, 1.5, 8), costumeWhiteMat);
+    jLegR.position.set(0.25, 0.75, 0);
+
+    const jArmL = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.08, 1.3, 8), skinMat);
+    jArmL.position.set(-0.55, 1.9, 0.5);
+    jArmL.rotation.x = -Math.PI / 4;
+    const jArmR = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.08, 1.3, 8), skinMat);
+    jArmR.position.set(0.55, 1.9, 0.5);
+    jArmR.rotation.x = -Math.PI / 4;
+
+    jugglerGroup.add(jTorso, jHead, jHat, jLegL, jLegR, jArmL, jArmR);
+
+    // Glowing Juggling Torus Rings
+    const ringGeo = new THREE.TorusGeometry(0.35, 0.07, 8, 24);
+    const ringColors = [0xfacc15, 0xef4444, 0x3b82f6, 0x10b981];
+    const rings: THREE.Mesh[] = [];
+    for (let k = 0; k < 4; k++) {
+      const ringM = new THREE.Mesh(ringGeo, new THREE.MeshStandardMaterial({
+        color: ringColors[k],
+        emissive: ringColors[k],
+        emissiveIntensity: 0.6,
+        roughness: 0.2
+      }));
+      ringM.rotation.x = Math.PI / 3;
+      ringM.position.set(0, 3.2 + k * 0.8, 0.5);
+      jugglerGroup.add(ringM);
+      rings.push(ringM);
+    }
+    jugglerRingsRef.current = rings;
+    worldGroup.add(jugglerGroup);
+    jugglerArtistRef.current = jugglerGroup;
 
     // Audience Benches Amphitheater Rings
     for (let r = 17; r <= 23; r += 2) {
@@ -251,9 +408,62 @@ export const Circus3D: React.FC<Circus3DProps> = ({
     const animate = () => {
       const elapsedTime = clock.getElapsedTime();
 
-      // Swing trapeze smoothly
+      // 1. 🪢 Trapeze Swing & Flyer Aerial Dynamics
       if (trapezeRef.current) {
-        trapezeRef.current.rotation.z = Math.sin(elapsedTime * 2.2) * 0.4;
+        const swingAngle = Math.sin(elapsedTime * 2.0) * 0.45;
+        trapezeRef.current.rotation.z = swingAngle;
+        
+        // Flyer body gently bends with G-force at the peaks of the swing
+        if (trapezeArtistRef.current) {
+          trapezeArtistRef.current.rotation.z = Math.sin(elapsedTime * 2.0 + 0.3) * 0.2;
+          trapezeArtistRef.current.rotation.x = Math.cos(elapsedTime * 4.0) * 0.15;
+        }
+      }
+
+      // 2. 🤸 Central Acrobatic Somersaults & Gymnastics Jump
+      if (somersaultArtistRef.current) {
+        // High vertical spring jumps up from pedestal
+        const jumpPhase = (elapsedTime * 2.5) % Math.PI;
+        const jumpHeight = Math.abs(Math.sin(jumpPhase)) * 3.8;
+        somersaultArtistRef.current.position.y = 1.8 + jumpHeight;
+
+        // Dynamic forward somersault flip in mid-air
+        somersaultArtistRef.current.rotation.x = elapsedTime * 4.8;
+        // Subtle celebratory pirouette spin
+        somersaultArtistRef.current.rotation.y = Math.sin(elapsedTime * 2.0) * 0.6;
+      }
+
+      // 3. ⚖️ High-Wire Tightrope Walker Walking & Balancing
+      if (tightropeArtistRef.current) {
+        // Pacing back and forth across high wire (-8 to +8)
+        const walkPos = Math.sin(elapsedTime * 0.7) * 7.5;
+        tightropeArtistRef.current.position.x = walkPos;
+
+        // Small rhythmic step bobbing
+        tightropeArtistRef.current.position.y = 15.05 + Math.abs(Math.sin(elapsedTime * 4.0)) * 0.18;
+
+        // Realistic balancing pole counter-wobble
+        const wobble = Math.sin(elapsedTime * 3.2) * 0.18;
+        tightropeArtistRef.current.rotation.z = wobble;
+        // Facing direction of motion
+        tightropeArtistRef.current.rotation.y = Math.cos(elapsedTime * 0.7) >= 0 ? 0 : Math.PI;
+      }
+
+      // 4. 🤹 Juggler Ring Cascade Trajectories
+      if (jugglerArtistRef.current && jugglerRingsRef.current.length > 0) {
+        // Slight upper body sway
+        jugglerArtistRef.current.rotation.y = Math.sin(elapsedTime * 2.5) * 0.2;
+
+        jugglerRingsRef.current.forEach((ring, idx) => {
+          const ringSpeed = 4.2;
+          const phase = elapsedTime * ringSpeed + (idx * Math.PI) / 2;
+          const arcX = Math.cos(phase) * 1.35;
+          const arcY = Math.abs(Math.sin(phase)) * 2.2 + 2.8;
+          ring.position.x = arcX;
+          ring.position.y = arcY;
+          ring.rotation.z += 0.08;
+          ring.rotation.x = Math.PI / 3 + Math.sin(phase) * 0.2;
+        });
       }
 
       // Rotate golden star
@@ -580,38 +790,49 @@ export const Circus3D: React.FC<Circus3DProps> = ({
         </div>
       </div>
 
-      {/* Explanatory Architecture Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-white rounded-2xl p-4 border-2 border-amber-200 shadow-xs">
+      {/* Explanatory Architecture & Live Performers Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+        <div className="bg-white rounded-2xl p-3.5 border-2 border-amber-200 shadow-xs">
           <div className="text-amber-700 font-bold text-xs uppercase flex items-center gap-1.5 mb-1">
-            <span>{isEn ? "🎪 Classical Octagonal Big Top" : "🎪 Mái Lều Bát Giác Cổ Điển"}</span>
+            <span>{isEn ? "🎪 Octagonal Big Top" : "🎪 Mái Lều Bát Giác"}</span>
           </div>
           <p className="text-neutral-600 text-xs leading-relaxed">
             {isEn
-              ? "Iconic red-and-gold striped canopy of touring circus tents, topped with proud golden stars and high-tension guy wires."
-              : "Mái bạt sọc đỏ vàng biểu tượng của rạp xiếc lưu động, đỉnh gắn ngôi sao vàng kiêu hãnh và hệ thống dây kéo chịu lực cao."}
+              ? "Iconic red-and-gold striped canopy of touring circus tents, topped with a revolving golden star and sweeping colored spotlights."
+              : "Mái bạt sọc đỏ vàng biểu tượng của rạp xiếc lưu động, đỉnh gắn ngôi sao vàng xoay tròn và đèn rọi sân khấu đa sắc."}
           </p>
         </div>
 
-        <div className="bg-white rounded-2xl p-4 border-2 border-amber-200 shadow-xs">
+        <div className="bg-white rounded-2xl p-3.5 border-2 border-amber-200 shadow-xs">
           <div className="text-red-700 font-bold text-xs uppercase flex items-center gap-1.5 mb-1">
-            <span>{isEn ? "⭕ 13-Meter Circus Ring" : "⭕ Vòng Tròn Sân Khấu 13 Mét"}</span>
+            <span>{isEn ? "🤸 Somersault Acrobats" : "🤸 Nhào Lộn Bục Trung Tâm"}</span>
           </div>
           <p className="text-neutral-600 text-xs leading-relaxed">
             {isEn
-              ? "Standardized 13-meter diameter shared by rings worldwide, perfectly engineered for optimal centrifugal force during equestrian and acrobatics."
-              : "Đường kính chuẩn mực 13m của mọi rạp xiếc thế giới, thiết kế tối ưu lực ly tâm cho các màn biểu diễn ngựa và nhào lộn."}
+              ? "Dynamic acrobat springing high into mid-air with continuous forward somersaults and aerial gymnastics turns."
+              : "Nghệ sĩ xiếc bật nhảy nhào lộn liên tục trên không từ bục trung tâm, phô diễn kỹ năng lộn vòng và xoay tròn điêu luyện."}
           </p>
         </div>
 
-        <div className="bg-white rounded-2xl p-4 border-2 border-amber-200 shadow-xs">
-          <div className="text-amber-800 font-bold text-xs uppercase flex items-center gap-1.5 mb-1">
-            <span>{isEn ? "🪢 Aerial Rig & Flying Trapeze" : "🪢 Khung Đu Bay & Dây Thép Cao"}</span>
+        <div className="bg-white rounded-2xl p-3.5 border-2 border-amber-200 shadow-xs">
+          <div className="text-blue-700 font-bold text-xs uppercase flex items-center gap-1.5 mb-1">
+            <span>{isEn ? "⚖️ High-Wire Tightrope" : "⚖️ Đi Dây Căng Thăng Bằng"}</span>
           </div>
           <p className="text-neutral-600 text-xs leading-relaxed">
             {isEn
-              ? "High-altitude crossbeams at 15 meters granting performers room for heart-stopping aerial balancing and somersault trapeze."
-              : "Hệ thống dây vắt ngang ở độ cao 15 mét tạo không gian cho các tiết mục thăng bằng mạo hiểm và đu bay nhào lộn trên không."}
+              ? "Tightrope walker paced at 15 meters altitude with a long golden balancing pole wobbling rhythmically across the arena."
+              : "Nghệ sĩ đi thong thả trên sợi dây thép ở độ cao 15m với cây gậy giữ thăng bằng nhịp nhàng qua lại giữa không trung."}
+          </p>
+        </div>
+
+        <div className="bg-white rounded-2xl p-3.5 border-2 border-amber-200 shadow-xs">
+          <div className="text-amber-800 font-bold text-xs uppercase flex items-center gap-1.5 mb-1">
+            <span>{isEn ? "🪢 Flying Trapeze & Rings" : "🪢 Đu Bay & Tung Hứng Vòng"}</span>
+          </div>
+          <p className="text-neutral-600 text-xs leading-relaxed">
+            {isEn
+              ? "Aerial flyer hanging inverted as the trapeze swings wide overhead, while the ringmaster juggles glowing neon rings below."
+              : "Diễn viên đu bay treo mình lộn ngược đung đưa trên cao, phối hợp cùng nghệ sĩ tung hứng các vòng sáng phát quang bên dưới."}
           </p>
         </div>
       </div>
