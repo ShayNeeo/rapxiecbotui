@@ -26,6 +26,7 @@ import aOShowImg from "@/src/assets/images/a_o_show_xiec_tre_viet_nam.jpg";
 import tehDarImg from "@/src/assets/images/teh_dar_show_xiec_tre_tay_nguyen.jpg";
 import langToiImg from "@/src/assets/images/lang_toi_my_village_xiec_tre.jpg";
 import bacHoThamGanhXiecImg from "@/src/assets/images/bac_ho_tham_ganh_xiec_trung_uong.jpg";
+import xiecNonSongThongNhatImg from "@/src/assets/images/xiec_non_song_ngay_thong_nhat_dantri.jpg";
 
 interface CircusHistoryProps {
   onBack: () => void;
@@ -310,7 +311,13 @@ export const HISTORY_ERAS: HistoryEra[] = [
           "Artist Tạ Duy Ánh (Former Director, Vietnam Circus Federation)",
           "Moscow State Circus School (USSR)",
           "Generations of artists trained in Eastern Europe"
-        ]
+        ],
+        imageUrl: xiecNonSongThongNhatImg,
+        imageCaption: "Khán giả và nghệ sĩ hào hùng trong chương trình xiếc sử thi \"Non sông ngày thống nhất\" – Tái hiện khí thế hào hùng phục vụ đất nước",
+        imageCaptionEn: "Spectacular scene from the circus epic \"Nation on the Day of Reunification\" – Celebrating historical triumphs and revolutionary dedication",
+        sourceUrl: "https://dantri.com.vn/giai-tri/khan-gia-mac-ao-co-do-sao-vang-co-vu-xiec-non-song-ngay-thong-nhat-20250426124457540.htm",
+        sourceName: "Báo Dân trí",
+        sourceNameEn: "Dân Trí Newspaper"
       },
       {
         id: "modern-artistic-era",
