@@ -1,6 +1,7 @@
 import bannerImg from "@/src/assets/images/kham_pha_lich_su_cover_muc_tim.jpg";
 import milestone1CoverImg from "@/src/assets/images/milestone_1_ancient_circus_cover.jpg";
 import milestone2CoverImg from "@/src/assets/images/milestone_2_classical_circus_cover.jpg";
+import philipAstleyImg from "@/src/assets/images/philip_astley_classical_circus.jpg";
 import milestone3CoverImg from "@/src/assets/images/milestone_3_contemporary_circus_cover.jpg";
 import milestone4CoverImg from "@/src/assets/images/milestone_4_vietnam_century_circus_cover.jpg";
 
@@ -20,7 +21,7 @@ export const DEFAULT_OVERVIEW_COVER = bannerImg;
 
 export const DEFAULT_MILESTONE_COVERS: Record<string, string> = {
   "ancient-circus": milestone1CoverImg,
-  "classical-circus": milestone2CoverImg,
+  "classical-circus": philipAstleyImg,
   "contemporary-circus": milestone3CoverImg,
   "vietnam-century-circus": milestone4CoverImg,
 };
@@ -41,13 +42,23 @@ export const DEFAULT_MILESTONE_PHOTOS: Record<string, HistoryPhoto[]> = {
   ],
   "classical-circus": [
     {
-      id: "photo-milestone-2-cover",
-      url: milestone2CoverImg,
-      caption: "Nguồn gốc xiếc cổ điển",
-      captionEn: "Classical circus origins",
-      sourceUrl: "https://36pho.com/xiec-o-ha-noi-xua-1936.html",
+      id: "photo-philip-astley-classical-circus",
+      url: philipAstleyImg,
+      caption: "Philip Astley (1742 – 1814) – Kỵ sĩ người Anh, Cha đẻ của Nghệ thuật Xiếc Cổ điển (1768)",
+      captionEn: "Philip Astley (1742 – 1814) – English equestrian master, Father of Classical Circus (1768)",
+      sourceUrl: "https://www.alamy.com",
       eraId: "classical-circus",
       isCover: true,
+      isDefault: true,
+    },
+    {
+      id: "photo-milestone-2-cover",
+      url: milestone2CoverImg,
+      caption: "Tư liệu nghệ thuật xiếc cổ điển",
+      captionEn: "Classical circus archival photo",
+      sourceUrl: "https://36pho.com/xiec-o-ha-noi-xua-1936.html",
+      eraId: "classical-circus",
+      isCover: false,
       isDefault: true,
     }
   ],
@@ -114,7 +125,9 @@ export function getMilestoneCover(eraId: string): string | null {
     if (saved) {
       const map = JSON.parse(saved);
       if (map[eraId] === "__REMOVED__") return null;
-      if (map[eraId]) return map[eraId];
+      if (map[eraId] && !map[eraId].includes("milestone_2_classical_circus_cover.jpg")) {
+        return map[eraId];
+      }
     }
   } catch {}
   return defaultCover;
@@ -153,7 +166,13 @@ export function getMilestonePhotos(eraId: string): HistoryPhoto[] {
     if (saved) {
       const allCustom: HistoryPhoto[] = JSON.parse(saved);
       const customForEra = allCustom.filter((p) => p.eraId === eraId);
-      return customForEra.length > 0 ? customForEra : defaultList;
+      if (customForEra.length > 0) {
+        if (eraId === "classical-circus" && !customForEra.some(p => p.id === "photo-philip-astley-classical-circus" || p.url.includes("philip_astley"))) {
+          return [defaultList[0], ...customForEra];
+        }
+        return customForEra;
+      }
+      return defaultList;
     }
   } catch {}
 

@@ -19,6 +19,12 @@ import kyLucGuinnessQuocCoQuocNghiep2018Img from "@/src/assets/images/ky_luc_gui
 import kyLucGuinnessQuocCoQuocNghiep2021Img from "@/src/assets/images/ky_luc_guinness_quoc_co_quoc_nghiep_2021.jpg";
 import sucManhDoiTayQuocCoQuocNghiepImg from "@/src/assets/images/suc_manh_doi_tay_quoc_co_quoc_nghiep.jpg";
 import tietMucDuNonImg from "@/src/assets/images/tiet_muc_du_non_xiec_viet_nam.jpg";
+import philipAstleyImg from "@/src/assets/images/philip_astley_classical_circus.jpg";
+import moShowQdndImg from "@/src/assets/images/mo_show_xiec_ket_hop_mua_roi_qdnd.jpg";
+import moShowDienDaImg from "@/src/assets/images/mo_show_dien_da_nhom_nghien_cuu.jpg";
+import aOShowImg from "@/src/assets/images/a_o_show_xiec_tre_viet_nam.jpg";
+import tehDarImg from "@/src/assets/images/teh_dar_show_xiec_tre_tay_nguyen.jpg";
+import langToiImg from "@/src/assets/images/lang_toi_my_village_xiec_tre.jpg";
 
 interface CircusHistoryProps {
   onBack: () => void;
@@ -102,7 +108,10 @@ export const HISTORY_ERAS: HistoryEra[] = [
     ],
     quote: "Philip Astley đã sáng tạo nên vòng diễn tròn 13 mét định hình rạp xiếc cổ điển cho toàn nhân loại suốt hơn 250 năm qua.",
     quoteEn: "Philip Astley created the 13-meter circular ring that defined classical circus for all humanity for over 250 years.",
-    imageIcon: "bi bi-vinyl"
+    imageIcon: "bi bi-vinyl",
+    imageUrl: philipAstleyImg,
+    imageCaption: "Philip Astley, Esqr. (1742 – 1814) – Kỵ sĩ người Anh, người sáng lập và Cha đẻ của Nghệ thuật Xiếc Cổ điển (1768)",
+    imageCaptionEn: "Philip Astley, Esqr. (1742 – 1814) – English equestrian master, founder and Father of Classical Circus (1768)"
   },
   {
     id: "contemporary-circus",
@@ -326,7 +335,32 @@ export const HISTORY_ERAS: HistoryEra[] = [
                 achievement: "Sự kết hợp hoàn hảo giữa sân khấu múa rối truyền thống và nghệ thuật xiếc đương đại đỉnh cao, tạo nên dấu ấn độc bản trong đời sống sân khấu biểu diễn Việt Nam.",
                 achievementEn: "A magnificent synthesis of traditional puppetry and contemporary circus acrobatics, creating a unique signature in Vietnamese performing arts.",
                 badge: "Hòa quyện Xiếc & Múa rối",
-                badgeEn: "Circus & Puppetry Fusion"
+                badgeEn: "Circus & Puppetry Fusion",
+                imageUrl: moShowQdndImg,
+                imageCaption: "Cảnh diễn kỳ ảo trong chương trình Mơ Show – Sự kết hợp độc đáo giữa ngôn ngữ xiếc nhào lộn và nghệ thuật tạo hình múa rối",
+                imageCaptionEn: "A whimsical scene from MƠ SHOW – A unique synthesis of circus acrobatics and puppetry visuals",
+                sourceUrl: "https://www.qdnd.vn/van-hoa/van-hoc-nghe-thuat/buoc-vao-the-gioi-mong-mo-tai-mo-show-1045458",
+                sourceName: "Báo Quân đội nhân dân",
+                sourceNameEn: "People's Army Newspaper (QDND)",
+                images: [
+                  {
+                    url: moShowQdndImg,
+                    caption: "Cảnh diễn kỳ ảo trong chương trình Mơ Show – Sự kết hợp độc đáo giữa ngôn ngữ xiếc nhào lộn và nghệ thuật tạo hình múa rối",
+                    captionEn: "A whimsical scene from MƠ SHOW – A unique synthesis of circus acrobatics and puppetry visuals",
+                    sourceUrl: "https://www.qdnd.vn/van-hoa/van-hoc-nghe-thuat/buoc-vao-the-gioi-mong-mo-tai-mo-show-1045458",
+                    sourceName: "Báo Quân đội nhân dân",
+                    sourceNameEn: "People's Army Newspaper (QDND)",
+                    badge: "Tư liệu báo chí",
+                    badgeEn: "Press Media"
+                  },
+                  {
+                    url: moShowDienDaImg,
+                    caption: "Góc nhìn từ khán đài trong chuyến điền dã của nhóm nghiên cứu ghi nhận không gian biểu diễn đa giác quan của Mơ Show",
+                    captionEn: "Audience perspective captured during our research team's fieldwork documenting the multisensory theater space of MƠ SHOW",
+                    badge: "Ảnh điền dã của nhóm nghiên cứu",
+                    badgeEn: "Research Team Fieldwork Photo"
+                  }
+                ]
               },
               {
                 name: "Xiếc tre đậm chất Việt Nam: À Ố SHOW, Làng Tôi (My Village), Teh Dar",
@@ -336,7 +370,45 @@ export const HISTORY_ERAS: HistoryEra[] = [
                 achievement: "Đưa cây tre, thúng lượn, cồng chiêng và âm nhạc dân tộc chu du lưu diễn thành công tại hơn 50 quốc gia khắp 5 châu lục, biểu diễn tại những nhà hát danh giá nhất thế giới.",
                 achievementEn: "Elevating bamboo poles, woven baskets, and ethnic gongs with live folk music across 50+ countries worldwide, touring renowned international opera houses.",
                 badge: "Lưu diễn 50+ Quốc Gia",
-                badgeEn: "Touring 50+ Nations"
+                badgeEn: "Touring 50+ Nations",
+                imageUrl: aOShowImg,
+                imageCaption: "Tiết mục tạo hình độc đáo với thuyền thúng và tre nứa trong vở diễn À Ố Show (Lune Production) tại Nhà hát Thành phố",
+                imageCaptionEn: "Spectacular acrobatics with woven bamboo baskets in À Ố Show (Lune Production) at Saigon Opera House",
+                sourceUrl: "https://www.klook.com/activity/7980-a-o-show-ticket-at-saigon-opera-house-ho-chi-minh-city/?dd_referrer=https%3A%2F%2Fwww.google.com%2F",
+                sourceName: "Klook",
+                sourceNameEn: "Klook",
+                images: [
+                  {
+                    url: aOShowImg,
+                    caption: "Tiết mục tạo hình độc đáo với thuyền thúng và tre nứa trong vở diễn À Ố Show (Lune Production) tại Nhà hát Thành phố",
+                    captionEn: "Spectacular acrobatics with woven bamboo baskets in À Ố Show (Lune Production) at Saigon Opera House",
+                    sourceUrl: "https://www.klook.com/activity/7980-a-o-show-ticket-at-saigon-opera-house-ho-chi-minh-city/?dd_referrer=https%3A%2F%2Fwww.google.com%2F",
+                    sourceName: "Klook",
+                    sourceNameEn: "Klook",
+                    badge: "À Ố Show (Sài Gòn)",
+                    badgeEn: "À Ố Show (Saigon)"
+                  },
+                  {
+                    url: langToiImg,
+                    caption: "Vở diễn Làng Tôi (My Village - Lune Production) – Bức tranh làng quê Việt Nam thanh bình qua những cây tre uốn lượn và nhào lộn điêu luyện",
+                    captionEn: "My Village (Làng Tôi - Lune Production) – The poetic soul of Vietnamese countryside depicted through bending bamboo and acrobatic finesse",
+                    sourceUrl: "https://www.tripadvisor.com.vn/Attraction_Review-g293925-d13436795-Reviews-Teh_Dar_Lune_Production-Ho_Chi_Minh_City.html",
+                    sourceName: "TripAdvisor",
+                    sourceNameEn: "TripAdvisor",
+                    badge: "Làng Tôi (My Village)",
+                    badgeEn: "My Village Show"
+                  },
+                  {
+                    url: tehDarImg,
+                    caption: "Vở diễn Teh Dar (Lune Production) – Tái hiện không gian huyền bí Tây Nguyên hoang dã với tre nứa và kỹ thuật nhào lộn đỉnh cao",
+                    captionEn: "Teh Dar Show (Lune Production) – Recreating wild Central Highlands culture with bamboo and acrobatic mastery",
+                    sourceUrl: "https://www.klook.com/vi/activity/10213-teh-dar-show-ticket-hoi-an/",
+                    sourceName: "Klook",
+                    sourceNameEn: "Klook",
+                    badge: "Teh Dar (Hội An)",
+                    badgeEn: "Teh Dar (Hoi An)"
+                  }
+                ]
               }
             ]
           },

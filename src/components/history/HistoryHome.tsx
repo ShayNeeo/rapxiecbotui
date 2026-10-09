@@ -199,16 +199,32 @@ export const HistoryHome: React.FC<HistoryHomeProps> = ({
               >
                 {/* Milestone Cover Photo or Section to Add Cover Photo */}
                 {currentCover ? (
-                  <div className="relative h-44 sm:h-52 w-full overflow-hidden bg-neutral-950">
-                    <img
-                      src={currentCover}
-                      alt={era.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="relative h-44 sm:h-52 w-full overflow-hidden bg-neutral-950 flex items-center justify-center">
+                    {era.id === "classical-circus" ? (
+                      <>
+                        <img
+                          src={currentCover}
+                          alt=""
+                          aria-hidden="true"
+                          className="absolute inset-0 size-full object-cover blur-xl opacity-40 scale-125 pointer-events-none"
+                        />
+                        <img
+                          src={currentCover}
+                          alt={era.title}
+                          className="relative z-10 max-h-full max-w-full object-contain object-center group-hover:scale-105 transition-transform duration-500 drop-shadow-md"
+                        />
+                      </>
+                    ) : (
+                      <img
+                        src={currentCover}
+                        alt={era.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none z-10" />
                     
                     {/* Badge on Image */}
-                    <div className="absolute top-3 left-3 flex items-center gap-2">
+                    <div className="absolute top-3 left-3 flex items-center gap-2 z-20">
                       <span className="size-8 rounded-xl bg-amber-400 border border-amber-500 text-neutral-950 font-black text-xs flex items-center justify-center shadow-md">
                         <Icon name={era.imageIcon} />
                       </span>
@@ -218,11 +234,13 @@ export const HistoryHome: React.FC<HistoryHomeProps> = ({
                     </div>
 
                     {/* Bottom Indicator */}
-                    <div className="absolute bottom-2.5 left-3 right-3 text-[11px] text-amber-200/90 font-medium truncate drop-shadow flex items-center justify-between gap-1.5">
+                    <div className="absolute bottom-2.5 left-3 right-3 text-[11px] text-amber-200/90 font-medium truncate drop-shadow flex items-center justify-between gap-1.5 z-20">
                       <div className="flex items-center gap-1.5 truncate">
                         <ImageIcon className="size-3 shrink-0" />
                         <span className="truncate">
-                          {isEn ? (era.titleEn || era.title) : era.title}
+                          {era.id === "classical-circus" 
+                            ? (isEn ? "Philip Astley (1742 – 1814) • Father of Classical Circus" : "Philip Astley (1742 – 1814) • Cha đẻ Xiếc Cổ điển")
+                            : (isEn ? (era.titleEn || era.title) : era.title)}
                         </span>
                       </div>
                       {era.id === "ancient-circus" && (
@@ -240,14 +258,14 @@ export const HistoryHome: React.FC<HistoryHomeProps> = ({
                       )}
                       {era.id === "classical-circus" && (
                         <a
-                          href="https://36pho.com/xiec-o-ha-noi-xua-1936.html"
+                          href="https://www.alamy.com"
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}
                           className="text-[10px] text-amber-300 hover:text-white underline decoration-amber-400/60 flex items-center gap-1 shrink-0 bg-black/60 px-2 py-0.5 rounded backdrop-blur-xs"
-                          title={isEn ? "Source: 36pho.com" : "Nguồn ảnh: 36pho.com"}
+                          title={isEn ? "Source: Historical portrait engraving - Alamy" : "Nguồn ảnh: Tranh khắc lịch sử (Alamy)"}
                         >
-                          <span>{isEn ? "Source: 36pho.com" : "Nguồn: 36pho.com"}</span>
+                          <span>{isEn ? "Source: Alamy" : "Nguồn: Alamy"}</span>
                           <ExternalLink className="size-2.5" />
                         </a>
                       )}

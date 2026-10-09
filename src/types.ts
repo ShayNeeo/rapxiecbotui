@@ -89,6 +89,17 @@ export interface CircusVenue {
   imageUrl?: string;
 }
 
+export interface HistoryItemImage {
+  url: string;
+  caption?: string;
+  captionEn?: string;
+  sourceUrl?: string;
+  sourceName?: string;
+  sourceNameEn?: string;
+  badge?: string;
+  badgeEn?: string;
+}
+
 export interface HistoryDetailedItem {
   name: string;
   nameEn?: string;
@@ -104,6 +115,7 @@ export interface HistoryDetailedItem {
   sourceUrl?: string;
   sourceName?: string;
   sourceNameEn?: string;
+  images?: HistoryItemImage[];
 }
 
 export interface HistoryDetailedSection {
@@ -173,4 +185,7 @@ export interface HistoryEra {
   sections?: { heading: string; headingEn?: string; items: string[]; itemsEn?: string[] }[];
   videoUrl?: string;
   videoTitle?: string;
+  imageUrl?: string;
+  imageCaption?: string;
+  imageCaptionEn?: string;
 }

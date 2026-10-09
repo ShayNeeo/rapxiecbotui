@@ -31,6 +31,7 @@ import {
 } from "@/src/lib/historyImages";
 import { PhotoLightboxModal } from "@/src/components/history/PhotoLightboxModal";
 import { AddPhotoDialog } from "@/src/components/history/AddPhotoDialog";
+import philipAstleyImg from "@/src/assets/images/philip_astley_classical_circus.jpg";
 
 interface MilestonePageProps {
   era: HistoryEra;
@@ -184,19 +185,37 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
           <div className="space-y-3">
             {/* Featured Hero Cover Photo */}
             <div className="relative rounded-2xl overflow-hidden border-2 border-amber-300 shadow-md group bg-neutral-950 aspect-[16/9] sm:aspect-[21/9] max-h-[380px] w-full flex items-center justify-center">
-              <img
-                src={milestoneCover}
-                alt={era.title}
-                className="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+              {era.id === "classical-circus" ? (
+                <>
+                  <img
+                    src={milestoneCover}
+                    alt=""
+                    aria-hidden="true"
+                    className="absolute inset-0 size-full object-cover blur-2xl opacity-40 scale-125 pointer-events-none"
+                  />
+                  <img
+                    src={milestoneCover}
+                    alt={era.title}
+                    className="relative z-10 max-h-full max-w-full object-contain object-center group-hover:scale-102 transition-transform duration-500 drop-shadow-2xl"
+                  />
+                </>
+              ) : (
+                <img
+                  src={milestoneCover}
+                  alt={era.title}
+                  className="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-500"
+                />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none z-10" />
 
               {/* Photo Controls on Top */}
-              <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+              <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none z-20">
                 <span className="text-[11px] font-bold text-white bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 flex items-center gap-1.5 shadow-sm pointer-events-auto">
                   <ImageIcon className="size-3 text-amber-300" />
                   <span>
-                    {isEn ? (era.titleEn || era.title) : era.title}
+                    {era.id === "classical-circus"
+                      ? (isEn ? "Philip Astley (1742 – 1814)" : "Philip Astley (1742 – 1814)")
+                      : (isEn ? (era.titleEn || era.title) : era.title)}
                   </span>
                 </span>
 
@@ -207,7 +226,11 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
                       setActiveLightboxPhoto({
                         id: `cover-${era.id}`,
                         url: milestoneCover,
-                        caption: isEn ? (era.titleEn || era.title) : era.title,
+                        caption: era.id === "classical-circus"
+                          ? (isEn 
+                              ? "Philip Astley, Esqr. (1742 – 1814) – English equestrian master, Father of Classical Circus" 
+                              : "Philip Astley, Esqr. (1742 – 1814) – Kỵ sĩ người Anh, Cha đẻ của Nghệ thuật Xiếc Cổ điển")
+                          : (isEn ? (era.titleEn || era.title) : era.title),
                         eraId: era.id,
                       });
                     }}
@@ -220,10 +243,15 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
               </div>
 
               {/* Caption & Source Citation on Bottom */}
-              <div className="absolute bottom-3 left-3 right-3 text-white flex flex-col sm:flex-row sm:items-end justify-between gap-2 pointer-events-none">
+              <div className="absolute bottom-3 left-3 right-3 text-white flex flex-col sm:flex-row sm:items-end justify-between gap-2 pointer-events-none z-20">
                 <div className="space-y-0.5 pointer-events-auto max-w-xl">
                   <p className="text-xs sm:text-sm font-bold drop-shadow-md text-amber-100/95 leading-relaxed">
-                    <Icon name="bi bi-camera" /> {isEn ? (era.titleEn || era.title) : era.title}
+                    <Icon name="bi bi-camera" />{" "}
+                    {era.id === "classical-circus"
+                      ? (isEn 
+                          ? "Philip Astley, Esqr. (1742 – 1814) – Father of Classical Circus" 
+                          : "Philip Astley, Esqr. (1742 – 1814) – Cha đẻ của Nghệ thuật Xiếc Cổ điển")
+                      : (isEn ? (era.titleEn || era.title) : era.title)}
                   </p>
                 </div>
 
@@ -243,14 +271,14 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
                 )}
                 {era.id === "classical-circus" && (
                   <a
-                    href="https://36pho.com/xiec-o-ha-noi-xua-1936.html"
+                    href="https://www.alamy.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
                     className="self-end inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/80 hover:bg-red-700 backdrop-blur-md text-amber-200 hover:text-white text-[11px] font-semibold transition-all border border-amber-400/40 hover:border-red-400 shadow-md cursor-pointer pointer-events-auto shrink-0"
-                    title={isEn ? "Source: 36pho.com" : "Nguồn ảnh: 36pho.com"}
+                    title={isEn ? "Source: Alamy" : "Nguồn ảnh: Alamy"}
                   >
-                    <span>{isEn ? "Source: 36pho.com" : "Nguồn ảnh: 36pho.com"}</span>
+                    <span>{isEn ? "Source: Alamy" : "Nguồn ảnh: Alamy"}</span>
                     <ExternalLink className="size-3" />
                   </a>
                 )}
@@ -322,6 +350,126 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
             {isEn ? (era.summaryEn || era.summary) : era.summary}
           </p>
         </div>
+
+        {/* Dedicated Historical Figure Card for Philip Astley (Milestone 2) */}
+        {era.id === "classical-circus" && (
+          <div className="bg-gradient-to-br from-amber-50 via-white to-amber-100/40 rounded-3xl p-5 sm:p-7 border-2 border-amber-400/80 shadow-md my-6 space-y-6">
+            <div className="flex flex-col md:flex-row gap-6 items-start">
+              {/* Portrait Engraving Box */}
+              <div className="w-full md:w-56 shrink-0 flex flex-col items-center gap-3">
+                <div 
+                  onClick={() => {
+                    circusAudio.playBambooStep();
+                    setActiveLightboxPhoto({
+                      id: "philip-astley-portrait",
+                      url: philipAstleyImg,
+                      caption: isEn 
+                        ? "Philip Astley, Esqr. (1742 – 1814) – English equestrian master, Father of Classical Circus"
+                        : "Philip Astley, Esqr. (1742 – 1814) – Kỵ sĩ người Anh, Cha đẻ của Nghệ thuật Xiếc Cổ điển",
+                      eraId: "classical-circus"
+                    });
+                  }}
+                  className="relative group/portrait w-full max-w-[220px] aspect-[2/3] rounded-2xl overflow-hidden border-2 border-amber-400 bg-neutral-950 shadow-md cursor-pointer hover:shadow-xl transition-all"
+                  title={isEn ? "Click to view full portrait" : "Bấm để xem tranh chân dung phóng to"}
+                >
+                  <img
+                    src={philipAstleyImg}
+                    alt="Philip Astley, Esqr. (1742 – 1814)"
+                    className="w-full h-full object-cover object-center group-hover/portrait:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60 group-hover/portrait:opacity-90 transition-opacity" />
+                  <div className="absolute bottom-2.5 inset-x-2 flex items-center justify-between text-white text-[11px] font-bold">
+                    <span className="bg-black/60 px-2 py-0.5 rounded-md backdrop-blur-xs border border-white/20">
+                      1742 – 1814
+                    </span>
+                    <span className="size-6 rounded-full bg-amber-400 text-neutral-950 flex items-center justify-center shadow-xs">
+                      <Maximize2 className="size-3" />
+                    </span>
+                  </div>
+                </div>
+
+                {/* Citation for portrait */}
+                <a
+                  href="https://www.alamy.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-100 hover:bg-amber-200 text-amber-950 rounded-xl text-[11px] font-semibold border border-amber-300 transition-colors shadow-2xs cursor-pointer"
+                >
+                  <ExternalLink className="size-3 text-amber-700" />
+                  <span>{isEn ? "Portrait source: Alamy" : "Nguồn tranh: Alamy"}</span>
+                </a>
+              </div>
+
+              {/* Biography & Historical Impact Content */}
+              <div className="flex-1 space-y-4">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-[10px] font-black uppercase tracking-wider bg-red-700 text-white px-2.5 py-0.5 rounded-full shadow-2xs">
+                      {isEn ? "Father of Modern Circus" : "Cha Đẻ Của Nghệ Thuật Xiếc Cổ Điển"}
+                    </span>
+                    <span className="text-[11px] font-bold text-amber-900 bg-amber-200/60 px-2.5 py-0.5 rounded-full border border-amber-300">
+                      London • 1768
+                    </span>
+                  </div>
+                  <h3 className="font-circus text-xl sm:text-2xl text-neutral-900">
+                    Philip Astley, Esqr. (1742 – 1814)
+                  </h3>
+                  <p className="text-xs sm:text-sm text-neutral-700 font-medium italic">
+                    {isEn 
+                      ? "British cavalry officer, master horseman, and founder of the modern circus ring."
+                      : "Sĩ quan kỵ binh Hoàng gia Anh, bậc thầy huấn luyện tuấn mã và người phát minh ra sàn diễn xiếc tròn."}
+                  </p>
+                </div>
+
+                <div className="space-y-2.5">
+                  <h4 className="text-xs font-black uppercase tracking-wider text-amber-950 flex items-center gap-1.5">
+                    <Sparkles className="size-3.5 text-red-600" />
+                    <span>{isEn ? "Revolutionary Contributions to Circus History:" : "3 Cống hiến mang tính cách mạng cho lịch sử xiếc:"}</span>
+                  </h4>
+
+                  {/* 3 Key points */}
+                  <div className="grid grid-cols-1 gap-2.5 text-xs">
+                    <div className="p-3 rounded-xl bg-white/90 border border-amber-200/90 shadow-2xs space-y-1">
+                      <div className="font-bold text-red-800 flex items-center gap-1.5">
+                        <span className="size-4 rounded-full bg-red-700 text-white text-[9px] flex items-center justify-center font-black">1</span>
+                        <span>{isEn ? "Standard 13-meter (42 ft) Ring Diameter" : "Vòng tròn diễn tiêu chuẩn 13 mét (42 feet)"}</span>
+                      </div>
+                      <p className="text-neutral-700 leading-relaxed pl-5.5">
+                        {isEn
+                          ? "Astley calculated that riding inside a 13-meter diameter ring harnesses centrifugal force, enabling equestrians to maintain equilibrium while standing upright on galloping steeds—establishing the immortal standard for traditional circus rings."
+                          : "Astley tính toán cho ngựa chạy theo vòng tròn đường kính đúng 13 mét để tận dụng lực ly tâm, giúp người cưỡi giữ thăng bằng vững vàng trên lưng ngựa khi phi nước đại. Đây là tiêu chuẩn bất biến của mọi rạp xiếc thế giới suốt hơn 250 năm."}
+                      </p>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-white/90 border border-amber-200/90 shadow-2xs space-y-1">
+                      <div className="font-bold text-red-800 flex items-center gap-1.5">
+                        <span className="size-4 rounded-full bg-red-700 text-white text-[9px] flex items-center justify-center font-black">2</span>
+                        <span>{isEn ? "Multi-Act Variety Synthesis (Modern Circus Format)" : "Mô hình nghệ thuật biểu diễn tổng hợp (Xiếc hiện đại)"}</span>
+                      </div>
+                      <p className="text-neutral-700 leading-relaxed pl-5.5">
+                        {isEn
+                          ? "To sustain audience engagement between equestrian demonstrations, Astley innovatively introduced acrobats, jugglers, tightrope walkers, and humorous clown acts, synthesizing ancient individual feats into the comprehensive circus spectacle."
+                          : "Để tạo sự đa dạng và duy trì hứng khởi cho khán giả giữa các màn phi ngựa, Astley là người đầu tiên đưa nhào lộn, tung hứng, đi thăng bằng trên dây và hề xiếc (clown) xen kẽ vào chương trình, khai sinh ra diện mạo một buổi trình diễn xiếc hoàn chỉnh."}
+                      </p>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-white/90 border border-amber-200/90 shadow-2xs space-y-1">
+                      <div className="font-bold text-red-800 flex items-center gap-1.5">
+                        <span className="size-4 rounded-full bg-red-700 text-white text-[9px] flex items-center justify-center font-black">3</span>
+                        <span>{isEn ? "First Permanent Covered Circus – Astley's Amphitheatre" : "Rạp xiếc có mái che đầu tiên – Astley's Amphitheatre"}</span>
+                      </div>
+                      <p className="text-neutral-700 leading-relaxed pl-5.5">
+                        {isEn
+                          ? "Constructed near Westminster Bridge in London (1768), followed by Paris (1782), setting the foundation for covered amphitheaters and touring Big Top tent circuses worldwide."
+                          : "Được xây dựng bên bờ sông Thames gần Cầu Westminster (London), sau đó mở rộng sang Paris, mở đường cho kỷ nguyên các rạp xiếc mái vòm kiên cố và rạp bạt lưu động (Big Top) trên khắp năm châu."}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Archival Reference Links (for Contemporary Circus / etc.) */}
         {era.referenceLinks && era.referenceLinks.length > 0 && (
@@ -530,10 +678,106 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
                                     {isEn ? (item.achievementEn || item.achievement) : item.achievement}
                                   </p>
 
-                                  {/* Illustration Photo & Source Link */}
-                                  {item.imageUrl && (
+                                  {/* Illustration Photos (Multiple or Single) */}
+                                  {item.images && item.images.length > 0 ? (
+                                    <div className="pt-2 space-y-3">
+                                      <div className={`grid gap-3.5 ${
+                                        item.images.length === 2 
+                                          ? "grid-cols-1 sm:grid-cols-2" 
+                                          : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+                                      }`}>
+                                        {item.images.map((img, imgIdx) => (
+                                          <div
+                                            key={imgIdx}
+                                            className="rounded-2xl border-2 border-amber-300/80 bg-neutral-900/95 overflow-hidden flex flex-col justify-between shadow-md hover:border-amber-400 transition-all group/subimg"
+                                          >
+                                            <div
+                                              onClick={() => {
+                                                circusAudio.playBambooStep();
+                                                setActiveLightboxPhoto({
+                                                  id: `sub3-item-${item.name}-${imgIdx}`,
+                                                  url: img.url,
+                                                  caption: isEn ? (img.captionEn || img.caption || item.nameEn || item.name) : (img.caption || item.name),
+                                                  eraId: era.id,
+                                                });
+                                              }}
+                                              className="relative overflow-hidden cursor-pointer aspect-[16/10] bg-neutral-950 flex items-center justify-center"
+                                              title={isEn ? "Click to view full screen" : "Bấm để xem phóng to toàn màn hình"}
+                                            >
+                                              <img
+                                                src={img.url}
+                                                alt={isEn ? (img.captionEn || img.caption || "") : (img.caption || "")}
+                                                className="w-full h-full object-cover group-hover/subimg:scale-103 transition-transform duration-500"
+                                              />
+                                              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-50 group-hover/subimg:opacity-80 transition-opacity pointer-events-none" />
+
+                                              {/* Badge on top */}
+                                              {img.badge && (
+                                                <div className="absolute top-2.5 left-2.5 z-10 pointer-events-none">
+                                                  <span className="text-[10px] font-bold text-white bg-black/70 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/20 shadow-xs">
+                                                    {isEn ? (img.badgeEn || img.badge) : img.badge}
+                                                  </span>
+                                                </div>
+                                              )}
+
+                                              {/* Zoom icon on bottom right */}
+                                              <div className="absolute bottom-2.5 right-2.5 size-7 rounded-xl bg-black/60 text-white flex items-center justify-center backdrop-blur-md border border-white/20 shadow-md z-10 pointer-events-none">
+                                                <Maximize2 className="size-3.5" />
+                                              </div>
+                                            </div>
+
+                                            {/* Caption & Source Area */}
+                                            <div className="p-3 bg-neutral-900/90 text-neutral-200 text-xs space-y-2 border-t border-white/10 flex-1 flex flex-col justify-between">
+                                              <p className="italic text-neutral-300 leading-relaxed text-[11px] sm:text-xs">
+                                                {isEn ? (img.captionEn || img.caption) : img.caption}
+                                              </p>
+
+                                              {img.sourceUrl ? (
+                                                <div className="flex items-center justify-end pt-1">
+                                                  <a
+                                                    href={img.sourceUrl}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    onClick={(e) => e.stopPropagation()}
+                                                    className="inline-flex items-center gap-1.5 text-[11px] font-bold text-red-700 hover:text-red-900 bg-amber-50 hover:bg-amber-100 border border-amber-300 px-3 py-1.5 rounded-xl transition-all shadow-2xs hover:shadow-xs active:scale-95"
+                                                    title={isEn ? "Open source link" : "Mở nguồn ảnh bài báo"}
+                                                  >
+                                                    <ExternalLink className="size-3 text-red-600" />
+                                                    <span>
+                                                      {isEn
+                                                        ? `Source: ${img.sourceNameEn || img.sourceName || "Article"}`
+                                                        : `Nguồn ảnh: ${img.sourceName || "Bài báo"}`}
+                                                    </span>
+                                                  </a>
+                                                </div>
+                                              ) : (
+                                                <div className="flex items-center justify-end pt-1">
+                                                  <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-300 bg-emerald-950/70 border border-emerald-500/40 px-2.5 py-1 rounded-xl shadow-2xs">
+                                                    <Sparkles className="size-3 text-emerald-400" />
+                                                    <span>{isEn ? "Research Team Fieldwork Photo" : "Ảnh điền dã của nhóm nghiên cứu"}</span>
+                                                  </span>
+                                                </div>
+                                              )}
+                                            </div>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  ) : item.imageUrl ? (
                                     <div className="pt-2 space-y-2">
-                                      <div className="relative rounded-2xl overflow-hidden border-2 border-amber-300/80 shadow-md group bg-neutral-900 flex flex-col items-center">
+                                      <div
+                                        onClick={() => {
+                                          circusAudio.playBambooStep();
+                                          setActiveLightboxPhoto({
+                                            id: `sub3-item-${item.name}`,
+                                            url: item.imageUrl!,
+                                            caption: isEn ? (item.imageCaptionEn || item.imageCaption || item.nameEn || item.name) : (item.imageCaption || item.name),
+                                            eraId: era.id,
+                                          });
+                                        }}
+                                        className="relative rounded-2xl overflow-hidden border-2 border-amber-300/80 shadow-md group bg-neutral-900 flex flex-col items-center cursor-pointer"
+                                        title={isEn ? "Click to view full screen" : "Bấm để xem phóng to"}
+                                      >
                                         <img
                                           src={item.imageUrl}
                                           alt={isEn ? (item.imageCaptionEn || item.nameEn || item.name) : (item.imageCaption || item.name)}
@@ -565,7 +809,7 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
                                         </div>
                                       )}
                                     </div>
-                                  )}
+                                  ) : null}
                                 </div>
                               ))}
                             </div>
