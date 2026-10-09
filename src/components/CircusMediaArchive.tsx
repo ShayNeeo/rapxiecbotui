@@ -13,7 +13,6 @@ import dienDaVungDatKyBiImg1 from "@/src/assets/images/dien_da_vung_dat_ky_bi_1.
 import dienDaVungDatKyBiImg2 from "@/src/assets/images/dien_da_vung_dat_ky_bi_2.jpg";
 import dienDaVungDatKyBiImg3 from "@/src/assets/images/dien_da_vung_dat_ky_bi_3.jpg";
 import dienDaVungDatKyBiImg4 from "@/src/assets/images/dien_da_vung_dat_ky_bi_4.jpg";
-import dienDaVungDatKyBiImg5 from "@/src/assets/images/dien_da_vung_dat_ky_bi_5.jpg";
 import { Button } from "@/src/components/ui/button";
 import { 
   Film, 
@@ -79,8 +78,7 @@ export const MODERN_CIRCUS_MEDIA: MediaItem[] = [
       dienDaVungDatKyBiImg4,
       dienDaVungDatKyBiImg1,
       dienDaVungDatKyBiImg2,
-      dienDaVungDatKyBiImg3,
-      dienDaVungDatKyBiImg5
+      dienDaVungDatKyBiImg3
     ],
     year: "2025",
     tags: ["Ảnh Điền Dã", "Nhóm Nghiên Cứu", "Tư Liệu Thực Địa", "Vùng Đất Kỳ Bí", "Khán Đài Rạp Xiếc", "Nghệ Thuật Sân Khấu", "Trực Tiếp Tại Rạp"],
