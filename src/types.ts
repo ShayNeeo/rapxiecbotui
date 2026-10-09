@@ -86,6 +86,7 @@ export interface CircusVenue {
   latRatio: number; // 0 to 1 for visual SVG pin positioning
   lonRatio: number;
   mapUrl?: string;
+  imageUrl?: string;
 }
 
 export interface HistoryDetailedItem {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Icon } from "@/src/components/Icon";
 import { QuizQuestion } from "@/src/types";
 import { circusAudio } from "@/src/utils/audio";
@@ -933,20 +933,24 @@ export const CircusQuiz: React.FC<CircusQuizProps> = ({
     }
   };
 
+  const questionCardRef = useRef<HTMLDivElement>(null);
+
   const handleNextQuestion = () => {
     circusAudio.playBambooStep();
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-    if (typeof document !== 'undefined') {
-      if (document.documentElement) document.documentElement.scrollTop = 0;
-      if (document.body) document.body.scrollTop = 0;
-    }
     if (currentIndex < questions.length - 1) {
       setCurrentIndex((prev) => prev + 1);
       setSelectedAnswer(null);
       setIsAnswered(false);
+      // Giữ nguyên giao diện ở phần câu hỏi tiện cho người chơi trả lời liên tục
+      setTimeout(() => {
+        if (questionCardRef.current) {
+          questionCardRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }, 50);
     } else {
       // Completed quiz (20 questions)
       setIsCompleted(true);
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
       circusAudio.playFanfare();
       confetti({
         particleCount: 80,
@@ -986,52 +990,21 @@ export const CircusQuiz: React.FC<CircusQuizProps> = ({
     setIsCompleted(false);
   };
 
-  // Framing & positioning controls for the cover banner
-  const [isAdjustingCover, setIsAdjustingCover] = useState(false);
-  const [coverOffsetY, setCoverOffsetY] = useState<number>(() => {
+  // Fixed framing & positioning for the cover banner (persisted from user calibration)
+  const [coverOffsetY] = useState<number>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('circus_quiz_cover_offset_y');
       if (saved) return Number(saved);
     }
     return 50;
   });
-  const [coverZoom, setCoverZoom] = useState<number>(() => {
+  const [coverZoom] = useState<number>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('circus_quiz_cover_zoom');
       if (saved) return Number(saved);
     }
     return 100;
   });
-
-  const handleUpdateCoverOffsetY = (val: number) => {
-    setCoverOffsetY(val);
-    if (typeof window !== 'undefined') {
-      try {
-        localStorage.setItem('circus_quiz_cover_offset_y', String(val));
-      } catch {}
-    }
-  };
-
-  const handleUpdateCoverZoom = (val: number) => {
-    setCoverZoom(val);
-    if (typeof window !== 'undefined') {
-      try {
-        localStorage.setItem('circus_quiz_cover_zoom', String(val));
-      } catch {}
-    }
-  };
-
-  const handleResetCoverPosition = () => {
-    circusAudio.playBambooStep();
-    setCoverOffsetY(50);
-    setCoverZoom(100);
-    if (typeof window !== 'undefined') {
-      try {
-        localStorage.removeItem('circus_quiz_cover_offset_y');
-        localStorage.removeItem('circus_quiz_cover_zoom');
-      } catch {}
-    }
-  };
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-6 pb-12 select-none">
@@ -1078,26 +1051,6 @@ export const CircusQuiz: React.FC<CircusQuizProps> = ({
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/20" />
 
-          {/* Action button on top left: Toggle frame adjustment controls */}
-          <div className="absolute top-3 left-3 z-20 flex items-center gap-2">
-            <button
-              type="button"
-              onClick={() => {
-                circusAudio.playBambooStep();
-                setIsAdjustingCover((prev) => !prev);
-              }}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-md cursor-pointer backdrop-blur-md ${
-                isAdjustingCover
-                  ? "bg-amber-400 text-neutral-950 ring-2 ring-amber-300"
-                  : "bg-black/70 hover:bg-black/90 text-amber-200 hover:text-white border border-white/20"
-              }`}
-              title={isEn ? "Adjust Cover Frame Position & Zoom" : "Căn chỉnh vị trí & kích cỡ khung ảnh bìa"}
-            >
-              <Sliders className="size-3.5 text-amber-400" />
-              <span>{isEn ? (isAdjustingCover ? "Done Adjusting" : "Adjust Frame") : (isAdjustingCover ? "Xong Căn Chỉnh" : "Căn Chỉnh Khung Ảnh")}</span>
-            </button>
-          </div>
-
           <div className="absolute bottom-4 left-5 sm:left-7 right-5 sm:right-7 flex flex-col sm:flex-row sm:items-end justify-between gap-3 text-white">
             <div className="space-y-1.5 max-w-xl">
               <h2 className="font-circus text-xl sm:text-3xl text-amber-300 drop-shadow-md leading-tight">
@@ -1131,84 +1084,11 @@ export const CircusQuiz: React.FC<CircusQuizProps> = ({
             <ExternalLink className="size-2.5 text-amber-300" />
           </a>
         </div>
-
-        {/* Panel căn chỉnh khung ảnh bìa khi người dùng bật chế độ chỉnh sửa */}
-        {isAdjustingCover && (
-          <div className="bg-amber-50/95 border-2 border-amber-400/80 rounded-2xl p-4 sm:p-5 shadow-lg space-y-4 animate-in fade-in duration-200">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-amber-200/80 pb-3">
-              <div className="flex items-center gap-2">
-                <Sliders className="size-4 text-red-700" />
-                <h4 className="font-circus text-sm sm:text-base text-amber-950">
-                  {isEn ? "Cover Photo Framing & Position Controls" : "Bảng Căn Chỉnh Khung Ảnh Bìa"}
-                </h4>
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={handleResetCoverPosition}
-                  className="px-3 py-1 text-xs font-semibold rounded-lg bg-white border border-amber-300 text-amber-900 hover:bg-amber-100 cursor-pointer shadow-2xs flex items-center gap-1"
-                >
-                  <RotateCcw className="size-3" />
-                  <span>{isEn ? "Reset" : "Mặc định"}</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setIsAdjustingCover(false)}
-                  className="px-3 py-1 text-xs font-bold rounded-lg bg-red-700 text-white hover:bg-red-800 cursor-pointer shadow-2xs"
-                >
-                  {isEn ? "Close" : "Đóng"}
-                </button>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between font-bold text-neutral-800">
-                  <span>{isEn ? "Vertical Position (Up / Down):" : "Vị trí dọc (Kéo lên / Kéo xuống):"}</span>
-                  <span className="text-red-700 font-mono">{coverOffsetY}%</span>
-                </div>
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={coverOffsetY}
-                  onChange={(e) => handleUpdateCoverOffsetY(Number(e.target.value))}
-                  className="w-full accent-red-700 cursor-pointer"
-                />
-                <div className="flex justify-between text-[10px] text-neutral-500">
-                  <span>{isEn ? "Top (0%)" : "Đầu ảnh (0%)"}</span>
-                  <span>{isEn ? "Center (50%)" : "Chính giữa (50%)"}</span>
-                  <span>{isEn ? "Bottom (100%)" : "Đáy ảnh (100%)"}</span>
-                </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between font-bold text-neutral-800">
-                  <span>{isEn ? "Zoom / Scale:" : "Thu phóng ảnh (Zoom):"}</span>
-                  <span className="text-red-700 font-mono">{coverZoom}%</span>
-                </div>
-                <input
-                  type="range"
-                  min="100"
-                  max="160"
-                  value={coverZoom}
-                  onChange={(e) => handleUpdateCoverZoom(Number(e.target.value))}
-                  className="w-full accent-red-700 cursor-pointer"
-                />
-                <div className="flex justify-between text-[10px] text-neutral-500">
-                  <span>100% ({isEn ? "Fit" : "Vừa khung"})</span>
-                  <span>130%</span>
-                  <span>160% ({isEn ? "Zoom In" : "Phóng to"})</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
 
       {!isCompleted ? (
         /* Active Question Card */
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border-4 border-amber-400 shadow-xl space-y-6">
+        <div ref={questionCardRef} className="bg-white rounded-3xl p-6 sm:p-8 border-4 border-amber-400 shadow-xl space-y-6">
           {/* Progress and Question Number */}
           <div className="flex items-center justify-between border-b border-amber-100 pb-3">
             <span className="text-xs font-bold uppercase tracking-wider text-red-800 flex items-center gap-1.5">

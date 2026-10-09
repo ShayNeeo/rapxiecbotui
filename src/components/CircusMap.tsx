@@ -6,6 +6,12 @@ import { useLanguage } from "@/src/context/LanguageContext";
 import confetti from "canvas-confetti";
 import { OFFICIAL_CIRCUS_MAP } from "@/src/lib/map";
 import banDoCoverImg from "@/src/assets/images/ban_do_rap_xiec_cover_vung_dat_ky_bi.jpg";
+import rapXiecPhuThoImg from "@/src/assets/images/rap_xiec_phu_tho_real.jpg";
+import rapXiecGiaDinhImg from "@/src/assets/images/rap_xiec_gia_dinh_real.jpg";
+import rapXiecTrungUongImg from "@/src/assets/images/rap_xiec_trung_uong_ha_noi_real.jpg";
+import nhaHatThanhPhoImg from "@/src/assets/images/nha_hat_thanh_pho_hcm_real.jpg";
+import nhaHatXiecTapKyHanoiImg from "@/src/assets/images/nha_hat_xiec_tap_ky_ha_noi_real.jpg";
+import rapXiecDamSenImg from "@/src/assets/images/rap_xiec_dam_sen_real.jpg";
 import { Icon, SvgIconGlyph } from "@/src/components/Icon";
 import {
   ArrowLeft,
@@ -62,6 +68,7 @@ const CIRCUS_VENUES: CircusVenue[] = [
     latRatio: 0.81,
     lonRatio: 0.53,
     mapUrl: "https://maps.app.goo.gl/GFoJWHMCsHR8g4qT7?g_st=ipc",
+    imageUrl: rapXiecPhuThoImg,
   },
   {
     id: "rap-xiec-cong-vien-gia-dinh",
@@ -94,6 +101,7 @@ const CIRCUS_VENUES: CircusVenue[] = [
     latRatio: 0.77,
     lonRatio: 0.57,
     mapUrl: "https://maps.app.goo.gl/A8933G8p7LjdwKXV8?g_st=ipc",
+    imageUrl: rapXiecGiaDinhImg,
   },
   {
     id: "rap-xiec-trung-uong",
@@ -126,6 +134,7 @@ const CIRCUS_VENUES: CircusVenue[] = [
     latRatio: 0.17,
     lonRatio: 0.44,
     mapUrl: "https://maps.app.goo.gl/zi3RkNzbFGENHH737?g_st=ipc",
+    imageUrl: rapXiecTrungUongImg,
   },
   {
     id: "doan-xiec-ha-noi",
@@ -156,6 +165,7 @@ const CIRCUS_VENUES: CircusVenue[] = [
     latRatio: 0.15,
     lonRatio: 0.41,
     mapUrl: "https://maps.app.goo.gl/MkSpPy2LpmKy2Zi5A?g_st=ipc",
+    imageUrl: nhaHatXiecTapKyHanoiImg,
   },
   {
     id: "nha-hat-thanh-pho",
@@ -188,6 +198,7 @@ const CIRCUS_VENUES: CircusVenue[] = [
     latRatio: 0.82,
     lonRatio: 0.59,
     mapUrl: "https://maps.app.goo.gl/WWLX2kTfvQx3e65L8?g_st=ip",
+    imageUrl: nhaHatThanhPhoImg,
   },
   {
     id: "rap-xiec-dam-sen",
@@ -218,6 +229,7 @@ const CIRCUS_VENUES: CircusVenue[] = [
     latRatio: 0.83,
     lonRatio: 0.51,
     mapUrl: "https://maps.app.goo.gl/RAFRuHhQpeE1mLsQ7?g_st=ipc",
+    imageUrl: rapXiecDamSenImg,
   },
 ];
 
@@ -884,6 +896,22 @@ export const CircusMap: React.FC<CircusMapProps> = ({
                   </span>
                 </div>
               </div>
+
+              {/* Venue Cover Image */}
+              {activeVenue.imageUrl && (
+                <div className="relative w-full h-48 sm:h-64 rounded-2xl overflow-hidden border-2 border-amber-300/80 shadow-md group bg-neutral-950">
+                  <img
+                    src={activeVenue.imageUrl}
+                    alt={isEn ? (activeVenue.nameEn || activeVenue.name) : activeVenue.name}
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
+                  <div className="absolute bottom-2.5 left-3 flex items-center gap-1.5 text-white text-[11px] font-semibold bg-black/60 backdrop-blur-xs px-2.5 py-1 rounded-full border border-white/20">
+                    <ImageIcon className="size-3.5 text-amber-400" />
+                    <span>{isEn ? "Venue Photo" : "Ảnh Rạp Thực Tế"}</span>
+                  </div>
+                </div>
+              )}
 
               {/* Address Info */}
               <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 flex items-start gap-3 text-xs sm:text-sm">

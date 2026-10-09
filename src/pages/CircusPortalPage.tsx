@@ -165,13 +165,21 @@ export default function App() {
       setJourneySubTab('quiz');
     } else if (act === 'ticket') {
       setJourneySubTab('ticket');
+      setTimeout(() => {
+        const el = document.getElementById('bo-suu-tap-huy-hieu');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 150);
     }
 
     if (currentAct === 'stage' && act !== 'stage') {
       // Saving current surfing location before visiting
       saveStageScrollY();
       setCurrentAct(act);
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      if (act !== 'ticket') {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      }
       if (typeof document !== 'undefined') {
         if (document.documentElement) document.documentElement.scrollTop = 0;
         if (document.body) document.body.scrollTop = 0;

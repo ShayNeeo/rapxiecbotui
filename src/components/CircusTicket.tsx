@@ -698,7 +698,7 @@ export const CircusTicket: React.FC<CircusTicketProps> = ({
       </div>
 
       {/* Collector Badges Section - Renamed to 'Bộ sưu tập huy hiệu khán giả yêu xiếc' */}
-      <div className="no-print collector-badges-container w-full max-w-3xl mx-auto bg-white rounded-3xl p-6 sm:p-8 border-2 border-amber-200 shadow-sm">
+      <div id="bo-suu-tap-huy-hieu" className="no-print collector-badges-container w-full max-w-3xl mx-auto bg-white rounded-3xl p-6 sm:p-8 border-2 border-amber-200 shadow-sm scroll-mt-20">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
             <h3 className="font-circus text-xl sm:text-2xl text-neutral-900 flex items-center gap-2">
