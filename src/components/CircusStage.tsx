@@ -26,7 +26,8 @@ import {
   Film,
   Camera,
   Video,
-  Rotate3d
+  Rotate3d,
+  Landmark
 } from "lucide-react";
 import { OFFICIAL_CIRCUS_LOGO } from "@/src/lib/logo";
 import { CHATBOT_AI_URL, CIRCUS_3D_URL } from "@/src/lib/constants";
@@ -465,17 +466,20 @@ export const CircusStage: React.FC<CircusStageProps> = ({
           </div>
         </div>
 
-        {/* Featured Bullet Point: Kho Tư Liệu Số with Cover Photo & Source Link */}
+        {/* Featured Bullet Point: Di Sản Xiếc Việt with Cover Photo & Source Link */}
         <div 
-          onClick={handleOpenMedia}
+          onClick={() => {
+            circusAudio.playBambooStep();
+            onSelectAct('heritage');
+          }}
           className="relative bg-gradient-to-r from-amber-950 via-red-950 to-neutral-900 text-white rounded-2xl p-4 sm:p-5 border-2 border-amber-400 shadow-md hover:shadow-2xl hover:border-amber-300 transition-all cursor-pointer flex flex-col md:flex-row items-start md:items-center justify-between gap-4 group overflow-hidden"
-          title={isEn ? "Open Modern Circus Digital Media Archive & Blank Templates" : "Mở Kho Tư Liệu Số & Mẫu Tự Thêm Ảnh / Tiêu Đề"}
+          title={isEn ? "Explore Vietnamese Circus Heritage (History & Media Archive)" : "Khám Phá Di Sản Xiếc Việt (Lịch Sử & Kho Tư Liệu Số)"}
         >
           {/* Background Cover Photo with Theatrical Atmosphere */}
           <div className="absolute inset-0 z-0">
             <img 
               src={khoTuLieuCoverImg} 
-              alt="Kho Tư Liệu Số - Vùng Đất Kỳ Bí (Bazaar Vietnam)" 
+              alt="Di Sản Xiếc Việt - Vùng Đất Kỳ Bí (Bazaar Vietnam)" 
               className="w-full h-full object-cover object-center opacity-30 group-hover:opacity-45 group-hover:scale-105 transition-all duration-700"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-neutral-950/95 via-red-950/85 to-neutral-950/80" />
@@ -483,29 +487,29 @@ export const CircusStage: React.FC<CircusStageProps> = ({
 
           <div className="relative z-10 flex items-start sm:items-center gap-3.5">
             <div className="size-12 sm:size-13 rounded-2xl bg-gradient-to-br from-amber-400 to-yellow-500 text-amber-950 flex items-center justify-center font-bold shadow-lg shrink-0 group-hover:scale-105 group-hover:rotate-3 transition-transform">
-              <Film className="size-6" />
+              <Landmark className="size-6" />
             </div>
             <div className="space-y-1">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-amber-300 bg-amber-400/20 px-2.5 py-0.5 rounded-full border border-amber-400/50 backdrop-blur-xs">
-                  ★ {isEn ? "COVER PHOTO • DIGITAL ARCHIVE" : "ẢNH BÌA • KHO TƯ LIỆU SỐ"} ★
+                  ★ {isEn ? "HERITAGE SPOTLIGHT" : "TIÊU ĐIỂM DI SẢN"} ★
                 </span>
                 <span className="text-xs text-amber-200/90 font-medium flex items-center gap-1">
-                  {isEn ? "Photos & Videos" : "Hình Ảnh & Video Sắc Nét"}
+                  {isEn ? "History • Media Archive" : "Lịch Sử Trăm Năm & Kho Tư Liệu Số"}
                 </span>
               </div>
               <h3 className="font-circus text-lg sm:text-xl text-amber-300 group-hover:text-yellow-200 transition-colors flex items-center gap-2">
-                <span>{isEn ? "Digital Media Archive: Modern Circus Vietnam" : "Kho Tư Liệu Số: Xiếc Việt Nam Hiện Đại"}</span>
+                <span>{isEn ? "Vietnamese Circus Heritage" : "Di Sản Xiếc Việt: Lịch Sử & Kho Tư Liệu Số"}</span>
                 <Sparkles className="size-4 text-amber-400 animate-pulse" />
               </h3>
               <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed max-w-3xl">
                 {isEn ? (
                   <>
-                    <strong>Digital Media Archive:</strong> Where viewers can admire vivid pictures and dynamic short videos.
+                    <strong>Circus Heritage:</strong> Journey through 100+ years of circus milestones and explore rich digital media archives, videos, and creative photo templates.
                   </>
                 ) : (
                   <>
-                    <strong>Kho tư liệu số:</strong> Nơi người xem có thể chiêm ngưỡng nhiều hình ảnh sắc nét và video ngắn sống động.
+                    <strong>Di sản xiếc Việt:</strong> Hành trình khám phá 100 năm lịch sử xiếc cùng kho tư liệu số đa phương tiện, hình ảnh sắc nét và mẫu tạo ảnh sáng tạo.
                   </>
                 )}
               </p>
@@ -513,7 +517,7 @@ export const CircusStage: React.FC<CircusStageProps> = ({
           </div>
 
           <div className="relative z-10 shrink-0 self-stretch sm:self-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-yellow-400 group-hover:from-amber-300 group-hover:to-yellow-300 text-amber-950 font-circus font-normal text-xs sm:text-sm tracking-wide shadow-md group-hover:shadow-lg transition-all">
-            <span>{isEn ? "Explore Media Archive" : "Khám Phá Kho Tư Liệu"}</span>
+            <span>{isEn ? "Explore Heritage" : "Khám Phá Di Sản"}</span>
             <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
           </div>
 
@@ -636,71 +640,24 @@ export const CircusStage: React.FC<CircusStageProps> = ({
             </div>
           </div>
 
-          {/* Module 3: Kho Tư Liệu Số (Digital Media Archive) */}
-          <div
-            onClick={handleOpenMedia}
-            className="group relative bg-white rounded-2xl overflow-hidden border-2 border-amber-400 hover:border-red-600 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between ring-1 ring-amber-400/40"
-            title={isEn ? "Open Modern Circus Digital Media Archive & Templates" : "Nhấn để mở Kho Tư Liệu Số & Mẫu Bỏ Ảnh/Tiêu Đề"}
-          >
-            {/* Cover Image on top */}
-            <FramedImage
-              imageKey="homepage-archive"
-              src={khoTuLieuCoverImg}
-              alt={isEn ? "Digital Media Archive" : "Kho Tư Liệu Số"}
-              title={isEn ? "Digital Media Archive" : "Kho Tư Liệu Số"}
-              badge={
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-950/80 text-amber-300 backdrop-blur-xs border border-amber-400/50">
-                  🎞️ {isEn ? "Media Archive" : "Kho Tư Liệu Số"}
-                </span>
-              }
-            />
-
-            {/* Content below image */}
-            <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-amber-900 bg-amber-100 px-2 py-0.5 rounded-full border border-amber-300">
-                    {isEn ? "Photos & Videos" : "Ảnh & Video"}
-                  </span>
-                  <span className="text-[11px] text-red-700 font-semibold flex items-center gap-1">
-                    <Film className="size-3" />
-                    {isEn ? "Blank Templates" : "Mẫu Tự Tạo"}
-                  </span>
-                </div>
-                <h3 className="font-circus text-lg text-neutral-900 group-hover:text-red-700 transition-colors flex items-center gap-1.5">
-                  <span>{isEn ? "Digital Media Archive" : "Kho Tư Liệu Số"}</span>
-                  <Sparkles className="size-4 text-amber-500 opacity-80 group-hover:opacity-100" />
-                </h3>
-                <p className="text-xs text-neutral-600 leading-relaxed line-clamp-3">
-                  {isEn
-                    ? "Where viewers can admire vivid pictures, dynamic short videos, and use templates to insert custom photos and titles."
-                    : "Nơi người xem có thể chiêm ngưỡng nhiều hình ảnh sắc nét, video ngắn sống động và dùng phần mẫu để bỏ ảnh và tiêu đề vào."}
-                </p>
-              </div>
-              <div className="pt-3 border-t border-amber-200/60 flex items-center justify-between text-xs font-bold text-red-700 group-hover:translate-x-1 transition-transform">
-                <span>{isEn ? "Open Media Archive" : "Xem Kho Tư Liệu"}</span>
-                <ArrowRight className="size-4" />
-              </div>
-            </div>
-          </div>
-
-          {/* Module 4: Lịch Sử Xiếc Việt */}
+          {/* Module 3: Di Sản Xiếc Việt (Lịch Sử & Kho Tư Liệu Số) */}
           <div
             onClick={() => {
-              onSelectAct('history');
               circusAudio.playBambooStep();
+              onSelectAct('heritage');
             }}
-            className="group relative bg-white rounded-2xl overflow-hidden border-2 border-amber-300 hover:border-red-600 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
+            className="group relative bg-white rounded-2xl overflow-hidden border-2 border-amber-400 hover:border-red-600 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between ring-1 ring-amber-400/40"
+            title={isEn ? "Explore Vietnamese Circus Heritage (History & Media Archive)" : "Khám Phá Di Sản Xiếc Việt (Lịch Sử & Kho Tư Liệu Số)"}
           >
             {/* Cover Image on top */}
             <FramedImage
-              imageKey="homepage-history"
+              imageKey="homepage-heritage"
               src={circusHistoryCoverImg}
-              alt={isEn ? "Circus History" : "Lịch Sử Xiếc Việt"}
-              title={isEn ? "Circus History" : "Lịch Sử Xiếc Việt"}
+              alt={isEn ? "Circus Heritage" : "Di Sản Xiếc Việt"}
+              title={isEn ? "Circus Heritage" : "Di Sản Xiếc Việt"}
               badge={
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-red-950/80 text-amber-200 backdrop-blur-xs border border-amber-400/40">
-                  📜 {isEn ? "History" : "Lịch Sử Trăm Năm"}
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-red-950/80 text-amber-300 backdrop-blur-xs border border-amber-400/50">
+                  🏛️ {isEn ? "Circus Heritage" : "Di Sản Xiếc Việt"}
                 </span>
               }
             >
@@ -726,23 +683,25 @@ export const CircusStage: React.FC<CircusStageProps> = ({
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-red-700 bg-red-50 px-2 py-0.5 rounded-full border border-red-200">
-                    2000 TCN - 2026
+                    {isEn ? "History & Media" : "Lịch Sử & Tư Liệu"}
                   </span>
-                  <span className="text-[11px] text-amber-800 font-semibold">
-                    {isEn ? "4 Milestones" : "4 Cột Mốc Di Sản"}
+                  <span className="text-[11px] text-amber-800 font-semibold flex items-center gap-1">
+                    <Landmark className="size-3 text-amber-700" />
+                    {isEn ? "Heritage" : "Di Sản"}
                   </span>
                 </div>
-                <h3 className="font-circus text-lg text-neutral-900 group-hover:text-red-700 transition-colors">
-                  {isEn ? "Circus History" : "Khám Phá Tư Liệu Lịch Sử"}
+                <h3 className="font-circus text-lg text-neutral-900 group-hover:text-red-700 transition-colors flex items-center gap-1.5">
+                  <span>{isEn ? "Circus Heritage" : "Di Sản Xiếc Việt"}</span>
+                  <Sparkles className="size-4 text-amber-500 opacity-80 group-hover:opacity-100" />
                 </h3>
                 <p className="text-xs text-neutral-600 leading-relaxed line-clamp-3">
                   {isEn
-                    ? "From Ancient Rome, Egypt & Chinese Hundred Games, Philip Astley's 1768 Classical Circus to 100 years of Vietnamese circus and proud Guinness records."
-                    : "Hành trình từ xiếc Cổ đại, Xiếc Cổ điển Philip Astley 1768, Xiếc Đương đại thế giới đến 100 năm Xiếc Việt (1922) và Kỷ lục Guinness."}
+                    ? "Explore 100+ years of Vietnamese circus history across 4 major milestones, alongside rich digital media archives, sharp images, and videos."
+                    : "Khám phá 100 năm lịch sử xiếc Việt qua 4 cột mốc vàng son, cùng kho tư liệu số đa phương tiện với hình ảnh, video và tư liệu quý giá."}
                 </p>
               </div>
-              <div className="mt-4 pt-3 border-t border-amber-200/60 flex items-center justify-between text-xs font-bold text-red-700 group-hover:translate-x-1 transition-transform">
-                <span>{isEn ? "Discover Historical Documents" : "Khám Phá Tư Liệu Lịch Sử"}</span>
+              <div className="pt-3 border-t border-amber-200/60 flex items-center justify-between text-xs font-bold text-red-700 group-hover:translate-x-1 transition-transform">
+                <span>{isEn ? "Explore Heritage" : "Khám Phá Di Sản"}</span>
                 <ArrowRight className="size-4" />
               </div>
             </div>
