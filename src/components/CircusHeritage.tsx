@@ -107,6 +107,7 @@ export const CircusHeritage: React.FC<CircusHeritageProps> = ({
           <CircusMediaArchive
             isOpen={true}
             isFullPage={true}
+            hideTopHeader={true}
             onClose={onBack}
             onNavigateTo={onNavigateTo}
             onUnlockBadge={onUnlockBadge}

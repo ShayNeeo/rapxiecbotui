@@ -524,41 +524,6 @@ const HistoryNavigation: React.FC<{
 
   return (
     <div className="space-y-4">
-      {/* Top Header: Back & Progress Counter */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => {
-            circusAudio.playBambooStep();
-            window.location.hash = "";
-            onBack();
-          }}
-          className="flex items-center gap-2 bg-white shadow-xs cursor-pointer border-amber-300 hover:bg-amber-50 w-fit"
-        >
-          <ArrowLeft className="size-4 text-amber-900" />
-          <span className="font-semibold text-amber-950">{isEn ? "Back to Main Stage" : "Về Sân Khấu Chính"}</span>
-        </Button>
-
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 text-xs font-semibold text-amber-950 bg-amber-100/90 px-4 py-1.5 rounded-full border border-amber-300 shadow-xs">
-            <BookOpen className="size-3.5 text-amber-700" />
-            <span>
-              {isEn
-                ? `Exploration Progress: ${readEras.length}/${HISTORY_ERAS.length} milestones`
-                : `Tiến trình khám phá: ${readEras.length}/${HISTORY_ERAS.length} mốc lịch sử`}
-            </span>
-          </div>
-
-          {readEras.length === HISTORY_ERAS.length && (
-            <div className="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-300 animate-pulse">
-              <CheckCircle2 className="size-3.5 text-emerald-600" />
-              <span>{isEn ? "Circus Scholar Unlocked!" : "Đã mở khóa Sử Học Rạp Xiếc!"}</span>
-            </div>
-          )}
-        </div>
-      </div>
-
       {/* Sticky Milestone Navigation Bar across all pages */}
       <div className="bg-white rounded-3xl p-3 sm:p-4 border-2 border-amber-200 shadow-sm sticky top-2 z-20 backdrop-blur-md bg-white/95">
         <div className="flex items-center justify-between text-xs font-bold text-neutral-500 mb-2 px-1">

@@ -538,6 +538,7 @@ interface CircusMediaArchiveProps {
   isOpen?: boolean;
   onClose: () => void;
   isFullPage?: boolean;
+  hideTopHeader?: boolean;
   onNavigateTo?: (act: string) => void;
   onUnlockBadge?: (badgeId: string) => void;
 }
@@ -546,6 +547,7 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
   isOpen = true,
   onClose,
   isFullPage = false,
+  hideTopHeader = false,
   onNavigateTo,
   onUnlockBadge,
 }) => {
@@ -915,7 +917,7 @@ export const CircusMediaArchive: React.FC<CircusMediaArchiveProps> = ({
       }
       onClick={isFullPage ? undefined : onClose}
     >
-      {isFullPage && (
+      {isFullPage && !hideTopHeader && (
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-2 border-b-2 border-amber-300/80">
           <Button
             variant="outline"
