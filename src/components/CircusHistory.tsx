@@ -290,11 +290,7 @@ export const HISTORY_ERAS: HistoryEra[] = [
           "Artist Tạ Duy Ánh (Former Director, Vietnam Circus Federation)",
           "Moscow State Circus School (USSR)",
           "Generations of artists trained in Eastern Europe"
-        ],
-        quote: "Họ say \"men\" nghề, hết lòng cống hiến phục vụ đồng bào, bộ đội. Gian khổ vô cùng những cũng cực kỳ thăng hoa.",
-        quoteAuthor: "Nghệ sỹ Tạ Duy Ánh",
-        quoteEn: "They were intoxicated with theatrical passion, devoting their entire hearts to serving fellow countrymen and soldiers. Boundless in hardship, yet exceedingly sublime in artistry.",
-        quoteAuthorEn: "Artist Tạ Duy Ánh"
+        ]
       },
       {
         id: "modern-artistic-era",
@@ -466,11 +462,7 @@ export const HISTORY_ERAS: HistoryEra[] = [
           "Bùi Thu Hường & Nguyễn Thị Hà (Gold in France & Russia)",
           "MƠ SHOW, À Ố SHOW, My Village, Teh Dar (Lune Production)",
           "Director Tuan Le & Vietnam Circus Federation"
-        ],
-        quote: "Kỹ thuật xiếc thì ở đâu cũng giống nhau, để làm nên bản sắc riêng thì xiếc Việt Nam phải giữ được hồn dân tộc.",
-        quoteAuthor: "Nghệ sĩ nhân dân Tống Toàn Thắng",
-        quoteEn: "Circus technique is the same everywhere; to forge its own identity, Vietnamese circus must preserve the national soul.",
-        quoteAuthorEn: "People's Artist Tống Toàn Thắng"
+        ]
       }
     ]
   }
