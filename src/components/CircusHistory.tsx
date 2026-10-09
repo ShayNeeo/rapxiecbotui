@@ -13,6 +13,12 @@ import {
 import { HistoryHome } from "@/src/components/history/HistoryHome";
 import { MilestonePage } from "@/src/components/history/MilestonePage";
 import { Icon } from "@/src/components/Icon";
+import giaiVuongMienDongLuuThiHuongImg from "@/src/assets/images/giai_vuong_mien_dong_luu_thi_huong_nga.jpg";
+import kyLucGuinnessQuocCoQuocNghiep2016Img from "@/src/assets/images/ky_luc_guinness_quoc_co_quoc_nghiep_2016.jpg";
+import kyLucGuinnessQuocCoQuocNghiep2018Img from "@/src/assets/images/ky_luc_guinness_quoc_co_quoc_nghiep_2018.jpg";
+import kyLucGuinnessQuocCoQuocNghiep2021Img from "@/src/assets/images/ky_luc_guinness_quoc_co_quoc_nghiep_2021.jpg";
+import sucManhDoiTayQuocCoQuocNghiepImg from "@/src/assets/images/suc_manh_doi_tay_quoc_co_quoc_nghiep.jpg";
+import tietMucDuNonImg from "@/src/assets/images/tiet_muc_du_non_xiec_viet_nam.jpg";
 
 interface CircusHistoryProps {
   onBack: () => void;
@@ -352,7 +358,13 @@ export const HISTORY_ERAS: HistoryEra[] = [
                 achievement: "Lập tại Nhà thờ Chính tòa Girona (Tây Ban Nha) với 90 bậc thang trong 52 giây.",
                 achievementEn: "Set at Girona Cathedral (Spain) with 90 stairs climbed head-to-head in 52 seconds.",
                 badge: "Guinness 2016 (Tây Ban Nha)",
-                badgeEn: "Guinness 2016 (Spain)"
+                badgeEn: "Guinness 2016 (Spain)",
+                imageUrl: kyLucGuinnessQuocCoQuocNghiep2016Img,
+                imageCaption: "NSƯT Quốc Cơ và NSƯT Quốc Nghiệp giương cao cờ Tổ quốc sau khi xác lập kỷ lục Guinness thế giới tại Nhà thờ Chính tòa Girona, Tây Ban Nha (2016)",
+                imageCaptionEn: "Merited Artists Quoc Co & Quoc Nghiep wave the Vietnamese flag at Girona Cathedral, Spain after breaking the Guinness World Record (2016)",
+                sourceUrl: "https://vnexpress.net/quoc-co-quoc-nghiep-lap-ky-luc-guinness-moi-4407164.html",
+                sourceName: "VnExpress",
+                sourceNameEn: "VnExpress"
               },
               {
                 name: "Kỷ lục Guinness 2 (2018): Chồng đầu bịt mắt đi lên/xuống bậc thang",
@@ -362,7 +374,13 @@ export const HISTORY_ERAS: HistoryEra[] = [
                 achievement: "Lập tại Ý với thành tích bước lên và xuống 10 bậc thang trong 53 giây khi bịt mắt.",
                 achievementEn: "Set in Italy, ascending and descending 10 stairs in 53 seconds while completely blindfolded.",
                 badge: "Guinness 2018 (Ý)",
-                badgeEn: "Guinness 2018 (Italy)"
+                badgeEn: "Guinness 2018 (Italy)",
+                imageUrl: kyLucGuinnessQuocCoQuocNghiep2018Img,
+                imageCaption: "NSƯT Quốc Cơ bịt mắt chồng đầu NSƯT Quốc Nghiệp xác lập kỷ lục Guinness thế giới lần 2 tại Rome, Ý (2018)",
+                imageCaptionEn: "Merited Artist Quoc Co blindfolded while balancing Quoc Nghiep head-to-head, setting their 2nd Guinness World Record in Rome, Italy (2018)",
+                sourceUrl: "https://vtv.vn/doi-song/quoc-co-quoc-nghiep-lap-ky-luc-guinness-the-gioi-lan-2-20181205185317681.htm",
+                sourceName: "VTV News",
+                sourceNameEn: "VTV News"
               },
               {
                 name: "Kỷ lục Guinness 3 (2021): Chồng đầu đi trên giàn gót nhọn / Cột cân bằng",
@@ -372,7 +390,13 @@ export const HISTORY_ERAS: HistoryEra[] = [
                 achievement: "Lập tại Tây Ban Nha khi chồng đầu đi lên 10 bậc thang rộng 50cm trong thời gian kỷ lục.",
                 achievementEn: "Set in Spain, balancing head-to-head across 10 narrow 50cm-wide pedestals in record-shattering time.",
                 badge: "Guinness 2021 (Tây Ban Nha)",
-                badgeEn: "Guinness 2021 (Spain)"
+                badgeEn: "Guinness 2021 (Spain)",
+                imageUrl: kyLucGuinnessQuocCoQuocNghiep2021Img,
+                imageCaption: "NSƯT Quốc Cơ và NSƯT Quốc Nghiệp rạng rỡ bên chứng nhận kỷ lục Guinness thế giới cuối cùng tại Milan, Ý",
+                imageCaptionEn: "Merited Artists Quoc Co & Quoc Nghiep with their final Guinness World Record certificate in Milan, Italy",
+                sourceUrl: "https://vnexpress.net/quoc-co-quoc-nghiep-thanh-cong-voi-ky-luc-guinness-cuoi-4566419.html",
+                sourceName: "VnExpress",
+                sourceNameEn: "VnExpress"
               },
               {
                 name: "Huy chương Vàng & Giải thưởng Giám khảo Quốc tế: Tiết mục \"Sức mạnh đôi tay\"",
@@ -382,17 +406,29 @@ export const HISTORY_ERAS: HistoryEra[] = [
                 achievement: "Đạt Huy chương Vàng tại Circus de Massy (Pháp, 2011) và Giải thưởng Đặc biệt của Ban Giám khảo tại Monte Carlo lần thứ 41 (Monaco, 2017).",
                 achievementEn: "Gold Medal at Circus de Massy (France, 2011) & Special Jury Prize at the 41st Monte Carlo Circus Festival (Monaco, 2017).",
                 badge: "HCV Pháp 2011 & Monte Carlo 2017",
-                badgeEn: "Gold France 2011 & Monte Carlo 2017"
+                badgeEn: "Gold France 2011 & Monte Carlo 2017",
+                imageUrl: sucManhDoiTayQuocCoQuocNghiepImg,
+                imageCaption: "Tiết mục \"Sức mạnh đôi tay\" huyền thoại của NSƯT Quốc Cơ & NSƯT Quốc Nghiệp làm rung động khán giả và ban giám khảo xiếc quốc tế",
+                imageCaptionEn: "The legendary \"Strength of Hands\" performance by Quoc Co & Quoc Nghiep shaking the international circus arena",
+                sourceUrl: "https://www.sggp.org.vn/suc-manh-doi-tay-viet-lam-rung-dong-xiec-the-gioi-post104474.html",
+                sourceName: "Báo Sài Gòn Giải Phóng (SGGP)",
+                sourceNameEn: "SGGP Newspaper"
               },
               {
                 name: "Huy chương Vàng Quốc tế: Tiết mục \"Đu nón\" / \"Thăng bằng trên dây dải\"",
                 nameEn: "International Gold Medal: \"Conical Hat Trapeze\" / \"Slack Wire Balance\"",
                 artists: "NSƯT Bùi Thu Hường, NSƯT Nguyễn Thị Hà và các nữ nghệ sĩ Liên đoàn Xiếc Việt Nam",
                 artistsEn: "Merited Artists Bui Thu Huong, Nguyen Thi Ha & Female Artists of Vietnam Circus Federation",
-                achievement: "Đạt Huy chương Vàng tại Festival Mondial du Cirque de Demain (Pháp) và Liên hoan \"Công chúa Xiếc\" (Nga).",
-                achievementEn: "Gold Medal at Festival Mondial du Cirque de Demain (France) & \"Princess of Circus\" World Festival (Russia).",
+                achievement: "Đạt Huy chương Vàng tại Festival Mondial du Cirque de Demain (Pháp), Liên hoan \"Công chúa Xiếc\" (Nga) và Liên hoan Xiếc Quốc tế \"Con Voi Vàng\".",
+                achievementEn: "Gold Medal at Festival Mondial du Cirque de Demain (France), \"Princess of Circus\" (Russia), and \"Golden Elephant\" International Circus Festival.",
                 badge: "HCV Demain (Pháp) & Công Chúa Xiếc (Nga)",
-                badgeEn: "Gold Demain (France) & Princess (Russia)"
+                badgeEn: "Gold Demain (France) & Princess (Russia)",
+                imageUrl: tietMucDuNonImg,
+                imageCaption: "Tiết mục \"Đu nón\" đậm đà bản sắc Việt Nam và thăng hoa kỹ thuật đỉnh cao của Liên đoàn Xiếc Việt Nam tại đấu trường quốc tế",
+                imageCaptionEn: "The iconic \"Conical Hat Trapeze\" performance showcasing Vietnamese cultural grace and supreme aerial acrobatics internationally",
+                sourceUrl: "https://vietnam.vnanet.vn/vietnamese/print/xiec-viet-xuat-sac-gianh-3-giai-thuong-tai-lien-hoan-xiec-quoc-te-con-voi%E2%80%8B-vang-432432.html",
+                sourceName: "Báo Ảnh Việt Nam (VNA)",
+                sourceNameEn: "Vietnam Pictorial (VNA)"
               },
               {
                 name: "Giải Vương miện Đồng: Tiết mục \"Tạo hình trên dây dọc\" (Cat Woman)",
@@ -402,7 +438,13 @@ export const HISTORY_ERAS: HistoryEra[] = [
                 achievement: "Đạt giải Vương miện Đồng danh giá tại Liên hoan Xiếc Quốc tế \"Công chúa Xiếc\" (Liên bang Nga, 2025) với kỹ thuật tạo hình điêu luyện và bản lĩnh làm chủ không gian trên không xuất sắc.",
                 achievementEn: "Won prestigious Bronze Crown at the 'Princess of Circus' World International Festival (Russia, 2025) with masterful aerial acrobatics and breathtaking stage presence.",
                 badge: "Vương miện Đồng 2025 (Nga)",
-                badgeEn: "Bronze Crown 2025 (Russia)"
+                badgeEn: "Bronze Crown 2025 (Russia)",
+                imageUrl: giaiVuongMienDongLuuThiHuongImg,
+                imageCaption: "Nghệ sĩ Lưu Thị Hường và NSND Tống Toàn Thắng trên bục vinh danh giải Vương miện Đồng tại Liên hoan Xiếc Quốc tế \"Công chúa Xiếc\" (Liên bang Nga)",
+                imageCaptionEn: "Artist Luu Thi Huong and People's Artist Tong Toan Thang honored with the Bronze Crown at the 'Princess of Circus' International Festival (Russia)",
+                sourceUrl: "https://baovanhoa.vn/nghe-thuat/viet-nam-doat-vuong-mien-dong-lien-hoan-xiec-quoc-te-tai-nga-139668.html",
+                sourceName: "Báo Văn Hóa",
+                sourceNameEn: "Culture Newspaper (Báo Văn Hóa)"
               }
             ]
           }
