@@ -314,39 +314,7 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
           </div>
         )}
 
-        {/* Optional Secondary Photo Gallery if user added extra photos */}
-        {photos.length > 0 && (
-          <div className="space-y-2 pt-2 border-t border-amber-200/60">
-            <div className="flex items-center justify-between text-xs font-bold text-neutral-700">
-              <span className="flex items-center gap-1.5 text-amber-900">
-                <ImageIcon className="size-3.5 text-amber-700" />
-                <span>{isEn ? "Additional Milestone Documents" : "Tư liệu bổ sung khác"} ({photos.length})</span>
-              </span>
-              <button
-                onClick={handleOpenGalleryDialog}
-                className="text-amber-800 hover:text-red-700 flex items-center gap-1 cursor-pointer"
-              >
-                <Plus className="size-3" />
-                <span>{isEn ? "Add more" : "Thêm ảnh"}</span>
-              </button>
-            </div>
 
-            <div className="flex items-center gap-2.5 overflow-x-auto pb-1 pt-0.5">
-              {photos.map((p, idx) => (
-                <div
-                  key={p.id}
-                  onClick={() => {
-                    circusAudio.playBambooStep();
-                    setActiveLightboxPhoto(p);
-                  }}
-                  className="group relative shrink-0 rounded-xl overflow-hidden border-2 border-amber-200 hover:border-amber-400 w-28 h-20 bg-neutral-900 cursor-pointer shadow-2xs"
-                >
-                  <img src={p.url} alt={p.caption} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
 
         {/* Milestone Summary Description */}
         <div>
@@ -613,75 +581,38 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
                     </div>
                   )}
 
-                  {/* Figures / Ensembles for Sub-section */}
-                  {sub.figures && sub.figures.length > 0 && (
-                    <div className="space-y-1.5 pt-2">
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-600 flex items-center gap-1">
-                        <Award className="size-3 text-amber-600" />
-                        <span>{isEn ? "Pioneers & Landmark Troupes" : "Nhân vật, Tác phẩm & Tổ chức tiêu biểu"}</span>
-                      </span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {(isEn && sub.figuresEn ? sub.figuresEn : sub.figures).map((fig, fIdx) => (
-                          <span
-                            key={fIdx}
-                            className="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-red-100/70 text-red-900 border border-red-200"
-                          >
-                            ★ {fig}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        {/* Highlights for Milestones 1, 2, 3 */}
-        {!isVietnamCentury && era.highlights && era.highlights.length > 0 && (
-          <div className="space-y-3 mt-6 pt-6 border-t-2 border-amber-200">
-            <h4 className="font-bold text-xs uppercase tracking-wider text-neutral-900 flex items-center gap-2">
-              <Sparkles className="size-4 text-amber-500" />
-              <span>{isEn ? "Key Historical Milestones" : "Nội dung tư liệu & Dấu ấn lịch sử"}</span>
-            </h4>
-            <div className="space-y-2.5">
-              {(isEn && era.highlightsEn ? era.highlightsEn : era.highlights).map((hl, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-start gap-3 text-xs sm:text-sm text-neutral-800 p-3 sm:p-3.5 rounded-xl bg-neutral-50/90 border border-neutral-250 hover:bg-neutral-100/70 transition-colors shadow-2xs"
-                >
-                  <span className="size-5 rounded-full bg-red-700 text-white font-bold flex items-center justify-center shrink-0 text-[10px] mt-0.5">
-                    {idx + 1}
-                  </span>
-                  <span className="leading-relaxed">{hl}</span>
-                </div>
-              ))}
+                  </div>
+                );
+              })}
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Key Figures & Archival Takeaway */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-6 mt-6 border-t border-amber-200">
-          <div className="space-y-2">
-            <h4 className="font-bold text-xs uppercase tracking-wider text-neutral-800 flex items-center gap-1.5">
-              <Award className="size-3.5 text-amber-500" />
-              <span>{isEn ? "Pioneers & Representative Figures" : "Nhân vật & Tổ chức đại diện"}</span>
-            </h4>
-            <div className="flex flex-wrap gap-1.5">
-              {(isEn && era.keyFiguresEn ? era.keyFiguresEn : era.keyFigures).map((fig, idx) => (
-                <span
-                  key={idx}
-                  className="text-xs font-semibold px-2.5 py-1 rounded-xl bg-amber-50 text-amber-950 border border-amber-200 shadow-2xs"
-                >
-                  ★ {fig}
-                </span>
-              ))}
+          {/* Highlights for Milestones 1, 2, 3 */}
+          {!isVietnamCentury && era.highlights && era.highlights.length > 0 && (
+            <div className="space-y-3 mt-6 pt-6 border-t-2 border-amber-200">
+              <h4 className="font-bold text-xs uppercase tracking-wider text-neutral-900 flex items-center gap-2">
+                <Sparkles className="size-4 text-amber-500" />
+                <span>{isEn ? "Key Historical Milestones" : "Nội dung tư liệu & Dấu ấn lịch sử"}</span>
+              </h4>
+              <div className="space-y-2.5">
+                {(isEn && era.highlightsEn ? era.highlightsEn : era.highlights).map((hl, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-start gap-3 text-xs sm:text-sm text-neutral-800 p-3 sm:p-3.5 rounded-xl bg-neutral-50/90 border border-neutral-250 hover:bg-neutral-100/70 transition-colors shadow-2xs"
+                  >
+                    <span className="size-5 rounded-full bg-red-700 text-white font-bold flex items-center justify-center shrink-0 text-[10px] mt-0.5">
+                      {idx + 1}
+                    </span>
+                    <span className="leading-relaxed">{hl}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
+          {/* Archival Takeaway */}
           {(era.quote || era.quoteEn) && (
-            <div className="space-y-1.5 flex flex-col justify-end">
+            <div className="space-y-1.5 pt-6 mt-6 border-t border-amber-200">
               <h4 className="font-bold text-xs uppercase tracking-wider text-neutral-500 flex items-center gap-1">
                 <BookmarkCheck className="size-3 text-amber-600" />
                 <span>{isEn ? "Archival Takeaway" : "Đúc kết ý nghĩa lịch sử"}</span>
@@ -691,7 +622,6 @@ export const MilestonePage: React.FC<MilestonePageProps> = ({
               </blockquote>
             </div>
           )}
-        </div>
 
         {/* Featured Quotes from Masters (for Era 4) */}
         {era.featuredQuotes && era.featuredQuotes.length > 0 && (
