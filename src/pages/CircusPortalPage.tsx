@@ -157,7 +157,7 @@ export default function App() {
 
     if (act === 'archive') {
       setHeritageSubTab('archive');
-    } else if (act === 'history') {
+    } else if (act === 'history' || act === 'heritage') {
       setHeritageSubTab('history');
     }
 
