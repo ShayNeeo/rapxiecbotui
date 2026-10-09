@@ -32,6 +32,15 @@ export interface CircusPerformance {
   highScore: number;
 }
 
+export interface QuizImageItem {
+  src: string;
+  alt: string;
+  caption: string;
+  captionEn?: string;
+  sourceUrl?: string;
+  sourceTitle?: string;
+}
+
 export interface QuizQuestion {
   id: number;
   question: string;
@@ -43,6 +52,15 @@ export interface QuizQuestion {
   explanationEn?: string;
   triviaFact: string;
   triviaFactEn?: string;
+  image?: string;
+  imageAlt?: string;
+  imageCaption?: string;
+  imageCaptionEn?: string;
+  sourceUrl?: string;
+  sourceTitle?: string;
+  gallery?: QuizImageItem[];
+  interestingFacts?: string[];
+  interestingFactsEn?: string[];
 }
 
 export interface CircusVenue {

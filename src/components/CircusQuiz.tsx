@@ -20,6 +20,16 @@ import {
   ExternalLink
 } from "lucide-react";
 import quizCoverImg from "@/src/assets/images/quiz_kien_thuc_cover_vung_dat_ky_bi.jpg";
+import taDuyHienPortraitImg from "@/src/assets/images/ta_duy_hien_portrait.jpg";
+import taDuyHienBacHoImg from "@/src/assets/images/ta_duy_hien_bac_ho.jpg";
+import quocCoQuocNghiepImg from "@/src/assets/images/quoc_co_quoc_nghiep_suc_manh_doi_tay.jpg";
+import quocCoQuocNghiepBacThangImg from "@/src/assets/images/quoc_co_quoc_nghiep_chong_dau_bac_thang.jpg";
+import quocCoQuocNghiepBgtImg from "@/src/assets/images/quoc_co_quoc_nghiep_britains_got_talent.jpg";
+import cirqueDuSoleilStage1Img from "@/src/assets/images/cirque_du_soleil_stage_1.jpg";
+import cirqueDuSoleilStage2Img from "@/src/assets/images/cirque_du_soleil_stage_2.jpg";
+import aoThuatChimBoCauImg from "@/src/assets/images/ao_thuat_chim_bo_cau.jpg";
+import congVienThongNhatNhaNamImg from "@/src/assets/images/cong_vien_thong_nhat_nha_nam.jpg";
+import congVienThongNhatHoNuocImg from "@/src/assets/images/cong_vien_thong_nhat_ho_nuoc.jpg";
 
 interface CircusQuizProps {
   onBack: () => void;
@@ -29,8 +39,8 @@ interface CircusQuizProps {
 const QUIZ_QUESTIONS: QuizQuestion[] = [
   {
     id: 1,
-    question: "Ai được tôn vinh là 'Cha đẻ - Ông tổ ngành Xiếc hiện đại Việt Nam' thành lập gánh xiếc đầu tiên năm 1921?",
-    questionEn: "Who is revered as the 'Father and Founder of Modern Vietnamese Circus', establishing the first troupe in 1921?",
+    question: "Ai được tôn vinh là 'Cha đẻ - Ông tổ ngành Xiếc hiện đại Việt Nam' thành lập gánh xiếc đầu tiên năm 1921–1922?",
+    questionEn: "Who is revered as the 'Father and Founder of Modern Vietnamese Circus', establishing the first troupe in 1921–1922?",
     options: [
       "Cụ Tạ Duy Hiển",
       "Cụ Nguyễn Khuyến",
@@ -44,10 +54,48 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
       "People's Artist Dao Duc"
     ],
     correctIndex: 0,
-    explanation: "Ngày 5/12/1921, cụ Tạ Duy Hiển đã thành lập gánh xiếc tư nhân đầu tiên tại Chợ Hôm (Hà Nội), quy tụ thú nuôi, xe đạp và nhào lộn, mở đầu lịch sử xiếc hiện đại Việt Nam.",
-    explanationEn: "On Dec 5, 1921, Master Ta Duy Hien founded the first private circus at Hom Market (Hanoi), featuring trained animals, trick cycling, and acrobatics, inaugurating modern Vietnamese circus.",
-    triviaFact: "Cụ Tạ Duy Hiển từng đóng bè đưa cả đoàn xiếc chu du biểu diễn xuyên Đông Dương và Hồng Kông.",
-    triviaFactEn: "Master Ta Duy Hien built custom wooden rafts to navigate entire circus troupes across Indochina and Hong Kong."
+    explanation: "NSND Tạ Duy Hiển (1889 – 1967) được suy tôn là người đặt nền móng và sáng lập ngành Xiếc Việt Nam hiện đại. Năm 1922, ông tập hợp con cháu gia đình họ Tạ thành lập Gánh xiếc Việt Nam – gánh xiếc chuyên nghiệp đầu tiên do chính người Việt Nam làm chủ. Chương trình ra mắt ngày 5/12/1922 tại phố Hàng Da (Hà Nội) với dàn nghệ sĩ hùng hậu và đoàn xiếc thú phong phú đã chính thức mở ra trang sử vẻ vang cho xiếc nước nhà.",
+    explanationEn: "People's Artist Ta Duy Hien (1889–1967) is revered as the father and pioneer of modern Vietnamese circus. In 1922, he rallied family artists to form the Vietnam Circus Troupe - the first professional troupe fully conceived and managed by Vietnamese. Their grand premiere on Dec 5, 1922 at Hang Da Market (Hanoi) opened a radiant new epoch for national circus arts.",
+    triviaFact: "Sau khi cụ qua đời năm 1967, Chủ tịch Hồ Chí Minh đã gửi thư chia buồn: 'Được biết cụ Tạ Duy Hiển vừa qua đời. Bác rất thương tiếc. Bác thân ái gởi lời chia buồn đến gia quyến cụ Tạ và Đoàn xiếc Nhân dân Trung ương'. Năm 1984, cụ được truy tặng danh hiệu Nghệ sĩ Nhân dân (đợt 1).",
+    triviaFactEn: "Upon his passing in 1967, President Ho Chi Minh sent a heartfelt letter of condolences. He was posthumously honored as People's Artist in the inaugural batch (1984).",
+    image: taDuyHienPortraitImg,
+    imageAlt: "Chân dung NSND Tạ Duy Hiển - Người sáng lập ngành Xiếc Việt Nam hiện đại",
+    imageCaption: "NSND Tạ Duy Hiển (1889 - 1967) • Ông tổ ngành Xiếc Việt Nam",
+    imageCaptionEn: "People's Artist Ta Duy Hien (1889 - 1967) • Founder of Modern Vietnamese Circus",
+    sourceUrl: "https://vi.wikipedia.org/wiki/T%E1%BA%A1_Duy_Hi%E1%BB%83n",
+    sourceTitle: "Wikipedia: Tạ Duy Hiển",
+    gallery: [
+      {
+        src: taDuyHienPortraitImg,
+        alt: "Chân dung NSND Tạ Duy Hiển - Ông tổ ngành Xiếc Việt Nam",
+        caption: "NSND Tạ Duy Hiển (1889 - 1967) • Ông tổ ngành Xiếc Việt Nam",
+        captionEn: "People's Artist Ta Duy Hien (1889 - 1967) • Founder of Modern Vietnamese Circus",
+        sourceUrl: "https://vi.wikipedia.org/wiki/T%E1%BA%A1_Duy_Hi%E1%BB%83n",
+        sourceTitle: "Wikipedia: Tạ Duy Hiển"
+      },
+      {
+        src: taDuyHienBacHoImg,
+        alt: "Bác Hồ đến thăm đoàn xiếc của Nghệ sĩ xiếc Tạ Duy Hiển",
+        caption: "Bác Hồ đến thăm đoàn xiếc của Nghệ sĩ xiếc Tạ Duy Hiển",
+        captionEn: "President Ho Chi Minh visiting the circus troupe of Master Ta Duy Hien",
+        sourceUrl: "https://nguoinoitieng.tv/nghe-nghiep/nghe-si-xiec/ta-duy-hien/xv",
+        sourceTitle: "Nguoinoitieng.tv: Nghệ sĩ xiếc Tạ Duy Hiển"
+      }
+    ],
+    interestingFacts: [
+      "Bậc thầy dạy thú: Cụ Tạ Duy Hiển có biệt tài thuần dưỡng thú dữ xuất chúng; ông huấn luyện thuần thục từ khỉ, chó, gấu cho đến hổ, sư tử, voi, ngựa... khiến muôn loài thú dữ đều vâng lời.",
+      "Đưa hồn cốt dân tộc vào xiếc: Sáng tạo những tiết mục độc nhất vô nhị như 'Phi ngựa đánh đàn tứ', 'Uốn dẻo trên trống cái', 'Voi quắp dùi gõ trống' trên nền các bản nhạc cổ truyền dân tộc như Bình bán, Lưu thủy, Hành vân...",
+      "Lưu diễn quốc tế & mở rộng tầm vóc: Gánh xiếc của cụ lưu diễn xuyên Đông Dương (Việt Nam, Lào, Campuchia), sang Thái Lan, Miến Điện (Myanmar), Hồng Kông và miền Nam Trung Quốc. Năm 1933, cụ mua lại trọn vẹn dàn thú của gánh xiếc Amstrong (Anh) khi gánh này giải thể tại Việt Nam.",
+      "Hiến trọn cơ nghiệp cho Tổ quốc: Sau Cách mạng, cụ ủng hộ tiền của cho kháng chiến. Năm 1958, cụ đem toàn bộ gánh xiếc gia nhập Đoàn xiếc Trung ương (tiền thân Liên đoàn Xiếc Việt Nam hiện nay) và trực tiếp giữ chức Trưởng đoàn.",
+      "Đúc tượng đồng lưu danh muôn thuở: Cụ được đúc tượng đồng đặt trang trọng ngay giữa tiền sảnh rạp bạt của Liên đoàn Xiếc Việt Nam tại Hà Nội để các thế hệ nghệ sĩ và khán giả đời đời nhớ ơn."
+    ],
+    interestingFactsEn: [
+      "Master animal trainer: Wonderfully gifted at domesticating and taming wild beasts, training tigers, lions, bears, elephants, and horses to perform with grace.",
+      "Rooted in national culture: Pioneered unique acts such as 'Horseback rider playing traditional Tu lute', 'Contortion atop traditional drums', and 'Elephant drumming with its trunk' accompanied by Vietnamese classical melodies.",
+      "International tours & expansion: Toured throughout Indochina, Thailand, Myanmar, Hong Kong, and Southern China. In 1933, he acquired the entire animal ensemble of Britain's Amstrong Circus.",
+      "Dedicated entire troupe to the nation: Supported the revolution generously. In 1958, he merged his entire troupe into the Central National Circus Troupe (now Vietnam Circus Federation) as its troupe leader.",
+      "Commemorated with a bronze statue: A bronze statue honoring him stands prominently in the main foyer of the Vietnam Circus Federation theater in Hanoi."
+    ]
   },
   {
     id: 2,
@@ -154,10 +202,40 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
       "Yen So Park"
     ],
     correctIndex: 2,
-    explanation: "Rạp Xiếc Trung Ương nằm tại phố Trần Nhân Tông, ngay trong khuôn viên Công viên Thống Nhất (Hà Nội), với sức chứa hơn 1.200 chỗ ngồi hiện đại.",
-    explanationEn: "The National Circus Theater is located on Tran Nhan Tong Street inside Thong Nhat Park (Hanoi), accommodating over 1,200 spectators.",
-    triviaFact: "Đây là 'thánh đường' xiếc quốc gia, nơi tổ chức các kỳ Liên hoan Xiếc Quốc tế tại Việt Nam.",
-    triviaFactEn: "It is the national sanctuary of circus art, frequently hosting International Circus Festivals in Vietnam."
+    explanation: "Rạp Xiếc Trung Ương nằm tại phố Trần Nhân Tông, ngay trong khuôn viên Công viên Thống Nhất (Hà Nội), với sức chứa hơn 1.200 chỗ ngồi hiện đại. Đây là công viên cây xanh lớn bậc nhất trung tâm Thủ đô, sở hữu hồ Bảy Mẫu thoáng đãng và những hàng cây rợp bóng mát, tạo nên không gian văn hóa nghệ thuật và sinh hoạt cộng đồng lý tưởng.",
+    explanationEn: "The Vietnam National Circus domed theater is situated on Tran Nhan Tong Street inside Thong Nhat Park (Hanoi), seating over 1,200 spectators. As one of the capital's largest green lungs featuring Bay Mau Lake and lush walking paths, it offers an idyllic artistic and communal haven.",
+    triviaFact: "Đây là 'thánh đường' xiếc quốc gia, nơi tổ chức các kỳ Liên hoan Xiếc Quốc tế lớn tại Việt Nam.",
+    triviaFactEn: "It is the national sanctuary of circus art, frequently hosting prestigious International Circus Festivals in Vietnam.",
+    image: congVienThongNhatNhaNamImg,
+    imageAlt: "Nhà nấm nghỉ chân thơ mộng trong Công viên Thống Nhất Hà Nội",
+    imageCaption: "Công viên Thống Nhất • 'Lá phổi xanh' thanh bình ôm trọn Rạp Xiếc Trung Ương",
+    imageCaptionEn: "Thong Nhat Park • Tranquil green sanctuary embracing the National Circus",
+    gallery: [
+      {
+        src: congVienThongNhatNhaNamImg,
+        alt: "Nhà nấm nghỉ chân vàng tươi rợp bóng cây trong Công viên Thống Nhất",
+        caption: "Kiến trúc nhà nấm nghỉ chân đặc trưng giữa tán cây xanh Công viên Thống Nhất",
+        captionEn: "Iconic mushroom rest pavilion beneath lush canopy in Thong Nhat Park"
+      },
+      {
+        src: congVienThongNhatHoNuocImg,
+        alt: "Con đường ven hồ Bảy Mẫu êm đềm với hàng phi lao và ghế đá trong công viên",
+        caption: "Bờ hồ Bảy Mẫu êm đềm rợp bóng cây râm mát – Không gian dạo chơi lý tưởng",
+        captionEn: "Tranquil Bay Mau lake promenade shaded by whispering pine trees"
+      }
+    ],
+    interestingFacts: [
+      "Xây dựng bằng lao động công ích lịch sử (1958 - 1961): Công viên được hình thành từ ngày thứ Bảy lao động xã hội chủ nghĩa của hàng vạn người dân và thanh thiếu niên Thủ đô, mang tên 'Thống Nhất' thể hiện khát vọng non sông liền một dải.",
+      "'Lá phổi xanh' rộng hơn 50 hecta: Bao bọc hồ Bảy Mẫu thơ mộng, công viên là không gian xanh lý tưởng cho người dân tập dưỡng sinh, chạy bộ, picnic và thư giãn giữa lòng Hà Nội.",
+      "Thánh đường của nghệ thuật xiếc đỉnh cao: Tòa nhà Rạp Xiếc Trung Ương hình vòm tròn với mái chóp cao vút nằm tiếp giáp mặt phố Trần Nhân Tông, là công trình xiếc kiên cố và hiện đại bậc nhất cả nước, nơi quy tụ dàn nghệ sĩ tài hoa của Liên đoàn Xiếc Việt Nam.",
+      "Không gian mở không rào chắn: Những năm gần đây, hàng rào bao quanh công viên phía đường Trần Nhân Tông đã được tháo dỡ để kết nối trực tiếp với tuyến phố đi bộ, tạo nên quần thể văn hóa - nghệ thuật - du lịch sống động cho người dân và du khách."
+    ],
+    interestingFactsEn: [
+      "Built through historic civic solidarity (1958 - 1961): Created through voluntary weekend labor by tens of thousands of Hanoi citizens, named 'Thong Nhat' (Reunification) symbolizing the yearning for national unity.",
+      "Green sanctuary spanning over 50 hectares: Encompassing scenic Bay Mau Lake, the park serves as an essential urban haven for jogging, outdoor yoga, and family picnics in central Hanoi.",
+      "National citadel of circus arts: The domed National Circus Theater on Tran Nhan Tong Street stands as Vietnam's premier permanent circus auditorium, housing landmark performances by the Vietnam Circus Federation.",
+      "Open parkland concept: In recent years, park fences along Tran Nhan Tong Street were removed to integrate seamlessly with the pedestrian promenade, forging a vibrant open cultural and arts precinct."
+    ]
   },
   {
     id: 7,
@@ -198,10 +276,26 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
       "Peacocks"
     ],
     correctIndex: 1,
-    explanation: "Chim bồ câu trắng thuần thục, lanh lợi và là biểu tượng toàn cầu của hòa bình, may mắn và vẻ đẹp tinh khiết trên sân khấu xiếc.",
-    explanationEn: "White doves are gentle, agile, and globally recognized symbols of peace, fortune, and poetic grace in stage illusions.",
-    triviaFact: "Nghệ sĩ xiếc huấn luyện bồ câu bằng tình yêu thương và sự kiên trì trong suốt nhiều tháng liền.",
-    triviaFactEn: "Circus illusionists train doves through months of patience and gentle mutual trust."
+    explanation: "Chim bồ câu trắng thuần thục, lanh lợi và là biểu tượng toàn cầu của hòa bình, may mắn và vẻ đẹp tinh khiết trên sân khấu xiếc. Trong các màn ảo thuật cổ điển lẫn hiện đại, hình ảnh chú chim bồ câu trắng tung cánh bay vút ra từ chiếc mũ dạ, nón lá hay chiếc khăn lụa luôn tạo nên khoảnh khắc bất ngờ và thơ mộng đầy cảm xúc cho người xem.",
+    explanationEn: "White doves are gentle, agile, and globally recognized symbols of peace, fortune, and poetic grace in stage illusions. Across classical and contemporary magic, a snow-white dove bursting into flight from a top hat, conical hat, or silk scarf produces an enchanting and poetic spectacle.",
+    triviaFact: "Nghệ sĩ xiếc huấn luyện bồ câu bằng tình yêu thương và sự kiên trì trong suốt nhiều tháng liền, tạo nên sự gắn kết thấu hiểu tuyệt đối giữa người và chim.",
+    triviaFactEn: "Circus illusionists train doves through months of patience and gentle mutual trust, forging a profound communicative bond between artist and bird.",
+    image: aoThuatChimBoCauImg,
+    imageAlt: "Chim bồ câu trắng tung cánh bay lên từ chiếc mũ ảo thuật trên sân khấu xiếc",
+    imageCaption: "Biến hóa chim bồ câu trắng • Biểu tượng kinh điển của nghệ thuật ảo thuật & xiếc",
+    imageCaptionEn: "White dove production • The timeless hallmark of magical illusions & circus arts",
+    interestingFacts: [
+      "Biểu tượng kinh điển của ảo thuật thế giới: Tiết mục biến hóa bồ câu được khởi xướng và nâng tầm thành đỉnh cao bởi ảo thuật gia lừng danh Channing Pollock vào thập niên 1950, trở thành chuẩn mực mẫu mực cho mọi nghệ sĩ ảo thuật quốc tế.",
+      "Huấn luyện bằng tình thương và sự kiên nhẫn: Chim bồ câu được chọn thường là bồ câu trắng Java (Java Dove) vì bản tính hiền hòa, thông minh và không hoảng sợ trước ánh đèn sân khấu hay tiếng vỗ tay rộn rã của khán giả.",
+      "Kỹ thuật giấu chim tinh tế: Trang phục và đạo cụ của nghệ sĩ được thiết kế công phu với các túi lụa đặc biệt thoáng khí, đảm bảo chim luôn thoải mái, an toàn tuyệt đối và có thể sải cánh bay vút nhẹ nhàng khi xuất hiện.",
+      "Gắn liền với văn hóa biểu diễn Việt Nam: Ở Việt Nam, các nghệ sĩ ảo thuật xiếc còn sáng tạo kết hợp biến chim bồ câu từ chiếc nón lá, làn hoa hoặc chiếc quạt nan truyền thống, mang đậm bản sắc văn hóa dân tộc."
+    ],
+    interestingFactsEn: [
+      "Timeless classic of global illusions: Popularized and elevated to world-class elegance by legendary magician Channing Pollock in the 1950s, setting the gold standard for stage dove magic.",
+      "Trained with devotion & gentleness: Artists predominantly work with Java Doves due to their docile temperament, high intelligence, and calm composure under theatrical spotlights and loud applause.",
+      "Gentle and humane prop engineering: Costumes and props feature custom breathable silk pockets designed for maximum comfort and safety, allowing birds to burst into flight unharmed.",
+      "Vietnamese cultural adaptations: Vietnamese illusionists creatively produce doves from traditional conical hats (nón lá), woven flower baskets, and bamboo fans, blending classic wizardry with folk heritage."
+    ]
   },
   {
     id: 9,
@@ -333,7 +427,53 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
     explanation: "Hai nghệ sĩ ưu tú Quốc Cơ – Quốc Nghiệp lừng danh thế giới với tiết mục 'Sức mạnh đôi tay' và các kỷ lục Guinness thăng bằng chồng đầu đi lên bậc thang mà không dùng dây bảo hiểm.",
     explanationEn: "Meritorious Artists Quoc Co and Quoc Nghiep achieved international fame with 'Power of the Hands' and Guinness World Records for ascending stairs in head-to-head balance without safety ropes.",
     triviaFact: "Họ từng bước lên 100 bậc thang của Nhà thờ chính tòa Girona (Tây Ban Nha) chỉ trong 53 giây trong tư thế chồng đầu thăng bằng.",
-    triviaFactEn: "They scaled 100 steps of Girona Cathedral (Spain) in just 53 seconds while maintaining flawless head-to-head balance."
+    triviaFactEn: "They scaled 100 steps of Girona Cathedral (Spain) in just 53 seconds while maintaining flawless head-to-head balance.",
+    image: quocCoQuocNghiepImg,
+    imageAlt: "Quốc Cơ - Quốc Nghiệp biểu diễn tiết mục Sức mạnh đôi tay thăng bằng chồng đầu",
+    imageCaption: "NSƯT Quốc Cơ - Quốc Nghiệp • Đỉnh cao thăng bằng chồng đầu 'Sức mạnh đôi tay'",
+    imageCaptionEn: "Meritorious Artists Quoc Co & Quoc Nghiep • Iconic head-to-head balance in 'Power of the Hands'",
+    sourceUrl: "https://tuoitre.vn/nld/van-nghe/quoc-co-quoc-nghiep-chung-toi-tung-danh-nhau-khi-tap-luyen-20190617091049955.htm",
+    sourceTitle: "Tuổi Trẻ Online: Quốc Cơ - Quốc Nghiệp",
+    gallery: [
+      {
+        src: quocCoQuocNghiepImg,
+        alt: "NSƯT Quốc Cơ - Quốc Nghiệp biểu diễn tiết mục Sức mạnh đôi tay",
+        caption: "NSƯT Quốc Cơ - Quốc Nghiệp • Màn trình diễn đỉnh cao 'Sức mạnh đôi tay'",
+        captionEn: "Meritorious Artists Quoc Co & Quoc Nghiep • 'Power of the Hands'",
+        sourceUrl: "https://tuoitre.vn/nld/van-nghe/quoc-co-quoc-nghiep-chung-toi-tung-danh-nhau-khi-tap-luyen-20190617091049955.htm",
+        sourceTitle: "Tuổi Trẻ Online"
+      },
+      {
+        src: quocCoQuocNghiepBacThangImg,
+        alt: "Quốc Cơ - Quốc Nghiệp thăng bằng chồng đầu bước lên bậc thang không bảo hiểm",
+        caption: "Quốc Cơ - Quốc Nghiệp • Thăng bằng chồng đầu bước lên bậc thang không dây bảo hiểm",
+        captionEn: "Quoc Co & Quoc Nghiep • Head-to-head stair climbing without safety ropes",
+        sourceUrl: "https://dantri.com.vn/van-hoa/noi-am-anh-kinh-hoang-cua-quoc-co-quoc-nghiep-moi-lan-gap-tai-nan-2017111014350192.htm",
+        sourceTitle: "Báo Dân Trí"
+      },
+      {
+        src: quocCoQuocNghiepBgtImg,
+        alt: "Quốc Cơ - Quốc Nghiệp tại bán kết Britain's Got Talent 2018",
+        caption: "Quốc Cơ - Quốc Nghiệp • Tỏa sáng tại bán kết & chung kết Britain's Got Talent 2018",
+        captionEn: "Quoc Co & Quoc Nghiep • Britain's Got Talent 2018 Semi-finals & Finals",
+        sourceUrl: "https://www.24h.com.vn/doi-song-showbiz/quoc-co-quoc-nghiep-he-lo-tiet-muc-moi-cho-vong-ban-ket-britains-got-talent-2018-c729a963418.html",
+        sourceTitle: "24h.com.vn"
+      }
+    ],
+    interestingFacts: [
+      "Xuất thân gia đình nhà nòi võ thuật & y học cổ truyền: Cả hai sinh ra trong gia đình có truyền thống võ thuật và lương y người Hoa tại Chợ Lớn (TP.HCM). Ông nội là lương y kiêm võ sư danh tiếng, cha cũng là võ sư, giúp hai anh em có nền tảng thể lực và ý chí phi thường từ thuở ấu thơ.",
+      "Tập luyện gian khổ đẫm mồ hôi & nước mắt: Để đạt đến sự đồng điệu tuyệt đối trong động tác chồng đầu, hai anh em từng luyện tập hàng chục năm ròng rã, thậm chí có những lúc va chạm, cãi vã và suýt bỏ cuộc trước áp lực tột cùng.",
+      "Đối mặt hiểm nguy & nỗi ám ảnh tai nạn rợn người: Trong quá trình biểu diễn không dây bảo hộ, Quốc Nghiệp từng gặp tai nạn ngã từ trên cao cắm đầu xuống đất khiến đốt sống cổ bị tổn thương nặng nề, nhiều lần bác sĩ cảnh báo nguy cơ bại liệt nếu tiếp tục, nhưng cả hai vẫn kiên cường trở lại sân khấu.",
+      "Khoảnh khắc sinh tử tại chung kết Britain's Got Talent 2018: Sau sự cố ngã chấn thương ngay trong buổi tập sát giờ thi, hai anh em vẫn quyết định thực hiện cú nhảy sinh tử qua các bục cao không dây bảo hộ, khiến ban giám khảo Simon Cowell và hàng triệu khán giả quốc tế bật dậy thán phục.",
+      "Bộ sưu tập kỷ lục Guinness vô tiền khoáng hậu: Liên tục xác lập các kỷ lục thế giới về thăng bằng chồng đầu đi lên bậc thang (90 bậc, 100 bậc tại Girona - Tây Ban Nha và kỷ lục bịt mắt chồng đầu đi lên xuống bậc thang tại Milan - Ý), khẳng định vị thế đỉnh cao của xiếc Việt Nam."
+    ],
+    interestingFactsEn: [
+      "Martial arts & traditional medicine heritage: Born into a respected traditional medicine and martial arts family in Cho Lon (HCMC), inherited profound physical resilience and discipline from their grandfather and father.",
+      "Decades of grueling training: Perfecting absolute synchronization in head-to-head pyramids required decades of relentless practice, enduring conflicts and mental exhaustion before achieving seamless harmony.",
+      "Defying life-threatening injuries & doctor warnings: Performing without safety ropes led to harrowing falls where Quoc Nghiep suffered severe cervical spine trauma; despite medical warnings of paralysis, their passion brought them back.",
+      "Heroic leap at Britain's Got Talent 2018 Finals: Hours after a traumatic rehearsal fall, they boldly performed the iconic leap across raised platforms without safety nets, moving Simon Cowell and millions of global viewers to their feet.",
+      "Legendary Guinness World Records legacy: Repeatedly established and shattered world records for stair-climbing balance in Girona (Spain) and blindfolded head-to-head balance in Milan (Italy), crowning Vietnamese circus on the world stage."
+    ]
   },
   {
     id: 15,
@@ -377,7 +517,45 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
     explanation: "Cirque du Soleil được thành lập vào năm 1984 tại Baie-Saint-Paul (Quebec, Canada) bởi Guy Laliberté và Gilles Ste-Croix. Đây được xem là biểu tượng đỉnh cao của nghệ thuật xiếc đương đại thế giới.",
     explanationEn: "Cirque du Soleil was founded in 1984 in Baie-Saint-Paul (Quebec, Canada) by Guy Laliberté and Gilles Ste-Croix. It is celebrated worldwide as a landmark summit of contemporary circus without animal acts.",
     triviaFact: "Cirque du Soleil đã biểu diễn phục vụ hơn 365 triệu khán giả tại hơn 90 quốc gia trên khắp thế giới.",
-    triviaFactEn: "Cirque du Soleil has performed before more than 365 million spectators across over 90 countries worldwide."
+    triviaFactEn: "Cirque du Soleil has performed before more than 365 million spectators across over 90 countries worldwide.",
+    image: cirqueDuSoleilStage1Img,
+    imageAlt: "Biểu diễn sân khấu đỉnh cao của đoàn xiếc Cirque du Soleil",
+    imageCaption: "Cirque du Soleil • Đỉnh cao nghệ thuật xiếc đương đại thế giới",
+    imageCaptionEn: "Cirque du Soleil • Global zenith of contemporary circus arts",
+    sourceUrl: "https://tuoitre.vn/doan-xiec-toan-cau-cirque-du-soleil-nop-don-pha-san-vi-covid-19-20200630153223791.htm",
+    sourceTitle: "Tuổi Trẻ Online: Đoàn xiếc toàn cầu Cirque du Soleil",
+    gallery: [
+      {
+        src: cirqueDuSoleilStage1Img,
+        alt: "Vở diễn nghệ thuật kỳ ảo của Cirque du Soleil với thiết kế sân khấu hoành tráng",
+        caption: "Cirque du Soleil • Không gian sân khấu kỳ ảo và kỹ xảo ánh sáng đỉnh cao",
+        captionEn: "Cirque du Soleil • Surreal stage architecture & transcendent lighting",
+        sourceUrl: "https://tuoitre.vn/doan-xiec-toan-cau-cirque-du-soleil-nop-don-pha-san-vi-covid-19-20200630153223791.htm",
+        sourceTitle: "Tuổi Trẻ Online"
+      },
+      {
+        src: cirqueDuSoleilStage2Img,
+        alt: "Màn biểu diễn tháp người nhào lộn đặc trưng trong các show diễn của Cirque du Soleil",
+        caption: "Cirque du Soleil • Kỹ thuật nhào lộn và vũ đạo kết hợp âm nhạc kịch tính",
+        captionEn: "Cirque du Soleil • Acrobatic pyramids & theatrical choreography",
+        sourceUrl: "https://tuoitre.vn/doan-xiec-toan-cau-cirque-du-soleil-nop-don-pha-san-vi-covid-19-20200630153223791.htm",
+        sourceTitle: "Tuổi Trẻ Online"
+      }
+    ],
+    interestingFacts: [
+      "Khởi đầu từ nghệ sĩ đường phố (1984): Đoàn xiếc ban đầu chỉ là một nhóm nghệ sĩ biểu diễn đường phố tại một thị trấn nhỏ ở Quebec (Canada), đi cà kheo, nuốt lửa và chơi nhạc rong.",
+      "Cuộc cách mạng 'Xiếc không động vật': Cirque du Soleil đã tiên phong loại bỏ hoàn toàn các tiết mục xiếc thú truyền thống, thay vào đó tập trung vào kỹ năng con người, nghệ thuật kể chuyện sân khấu, âm nhạc sống và phục trang may đo thủ công tinh xảo.",
+      "Quy mô toàn cầu khổng lồ: Từng quy tụ hơn 4.900 nhân viên đến từ gần 50 quốc gia, đồng thời tổ chức hàng chục show diễn lưu diễn và cố định cùng lúc tại Las Vegas, Macau, Tokyo...",
+      "Vượt qua cuộc khủng hoảng lịch sử: Trong đại dịch COVID-19 năm 2020, đoàn từng phải hủy toàn bộ 44 chương trình trên khắp thế giới và nộp đơn bảo hộ phá sản, trước khi tái cấu trúc tài chính thành công và trở lại rực rỡ với khán giả toàn cầu.",
+      "Âm nhạc độc bản và trang phục tự thiết kế: Mỗi chương trình đều có album nhạc sống sáng tác riêng biệt và xưởng chế tác trang phục tại Montreal với hàng triệu mét vải được nhuộm thủ công."
+    ],
+    interestingFactsEn: [
+      "Born from street performers (1984): Originally started as a spirited troupe of stilt-walkers, fire-breathers, and buskers in Baie-Saint-Paul, Quebec, Canada.",
+      "The 'Animal-Free' circus revolution: Revolutionized modern circus by completely eliminating animal exploitation, replacing it with human acrobatic feats, theatrical narratives, original live music, and bespoke haute-couture costume design.",
+      "Massive global empire: At its height, employed over 4,900 individuals from nearly 50 nationalities, staging dozens of touring and permanent residencies concurrently across Las Vegas, Macau, and Tokyo.",
+      "Resilience through historic crisis: During the 2020 COVID-19 pandemic, cancelled all 44 concurrent shows worldwide and filed for bankruptcy protection, before successfully restructuring and making a triumphant global comeback.",
+      "Original live score & custom couture: Every single production features exclusive live orchestral musical scores and hand-dyed bespoke costumes crafted in Montreal workshops."
+    ]
   },
   {
     id: 17,
@@ -727,25 +905,149 @@ export const CircusQuiz: React.FC<CircusQuizProps> = ({
 
           {/* Answer Explanation & Fun Fact Banner */}
           {isAnswered && (
-            <div className="bg-amber-50/90 border-2 border-amber-300 rounded-2xl p-4 space-y-2 animate-in fade-in slide-in-from-bottom-2 duration-300">
-              <div className="flex items-center gap-2">
-                <span className={`text-xs font-black uppercase px-2.5 py-0.5 rounded-full ${
-                  selectedAnswer === currentQ.correctIndex
-                    ? 'bg-emerald-600 text-white'
-                    : 'bg-red-600 text-white'
-                }`}>
-                  {selectedAnswer === currentQ.correctIndex 
-                    ? (isEn ? "Correct! +10 Points" : "Chính Xác! +10 Điểm") 
-                    : (isEn ? "Not quite!" : "Chưa Đúng Rồi!")}
-                </span>
-                <span className="text-xs text-neutral-600 font-medium">
-                  {isEn ? "Detailed Explanation:" : "Lời giải thích chi tiết:"}
-                </span>
+            <div className="bg-amber-50/95 border-2 border-amber-300 rounded-2xl p-4 sm:p-5 space-y-3.5 animate-in fade-in slide-in-from-bottom-2 duration-300 shadow-sm">
+              <div className="flex items-center justify-between gap-2 flex-wrap">
+                <div className="flex items-center gap-2">
+                  <span className={`text-xs font-black uppercase px-2.5 py-0.5 rounded-full ${
+                    selectedAnswer === currentQ.correctIndex
+                      ? 'bg-emerald-600 text-white shadow-xs'
+                      : 'bg-red-600 text-white shadow-xs'
+                  }`}>
+                    {selectedAnswer === currentQ.correctIndex 
+                      ? (isEn ? "Correct! +10 Points" : "Chính Xác! +10 Điểm") 
+                      : (isEn ? "Not quite!" : "Chưa Đúng Rồi!")}
+                  </span>
+                  <span className="text-xs text-neutral-800 font-bold">
+                    {isEn ? "Detailed Explanation:" : "Lời giải thích chi tiết:"}
+                  </span>
+                </div>
+
+                {currentQ.sourceUrl && (
+                  <a
+                    href={currentQ.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-[11px] font-bold text-red-800 hover:text-white bg-red-100 hover:bg-red-700 px-3 py-1 rounded-full border border-red-300 transition-all shadow-2xs group cursor-pointer"
+                    title={currentQ.sourceTitle || (isEn ? "Read source article" : "Xem nguồn bài viết")}
+                  >
+                    <span>{currentQ.sourceTitle ? `${isEn ? 'Source: ' : 'Nguồn: '}${currentQ.sourceTitle}` : (isEn ? "Source: Wikipedia" : "Nguồn: Wikipedia")}</span>
+                    <ExternalLink className="size-3 text-red-600 group-hover:text-white transition-colors" />
+                  </a>
+                )}
               </div>
 
-              <p className="text-xs sm:text-sm text-neutral-800 leading-relaxed">
-                {isEn ? (currentQ.explanationEn || currentQ.explanation) : currentQ.explanation}
-              </p>
+              {/* Illustration Images & Explanation */}
+              {currentQ.gallery && currentQ.gallery.length > 0 ? (
+                <div className="space-y-3">
+                  <div className={`grid grid-cols-1 ${currentQ.gallery.length === 2 ? 'sm:grid-cols-2' : 'sm:grid-cols-2 md:grid-cols-3'} gap-3.5`}>
+                    {currentQ.gallery.map((imgItem, gIdx) => (
+                      <div 
+                        key={gIdx}
+                        className="flex flex-col bg-white/95 rounded-xl border border-amber-300/90 overflow-hidden shadow-sm hover:shadow-md transition-shadow group"
+                      >
+                        <div className="relative aspect-4/3 w-full overflow-hidden bg-amber-950/15">
+                          <img
+                            src={imgItem.src}
+                            alt={imgItem.alt}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            loading="lazy"
+                          />
+                        </div>
+                        <div className="p-2.5 flex-1 flex flex-col justify-between bg-gradient-to-b from-amber-50/60 to-amber-100/40">
+                          <p className="text-[11px] font-semibold text-neutral-800 leading-snug mb-2">
+                            {isEn ? (imgItem.captionEn || imgItem.caption) : imgItem.caption}
+                          </p>
+                          {imgItem.sourceUrl && (
+                            <a
+                              href={imgItem.sourceUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-[11px] font-bold text-red-700 hover:text-red-900 underline underline-offset-2 self-start mt-auto"
+                            >
+                              <span>{isEn ? `Source: ${imgItem.sourceTitle || 'Link'}` : `Nguồn: ${imgItem.sourceTitle || 'Link'}`}</span>
+                              <ExternalLink className="size-3 shrink-0" />
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="bg-white/90 p-3.5 sm:p-4 rounded-xl border border-amber-300/80 shadow-xs">
+                    <p className="text-xs sm:text-sm text-neutral-800 leading-relaxed font-normal">
+                      {isEn ? (currentQ.explanationEn || currentQ.explanation) : currentQ.explanation}
+                    </p>
+                  </div>
+                </div>
+              ) : currentQ.image ? (
+                <div className="flex flex-col sm:flex-row gap-4 items-center sm:items-start bg-white/90 p-3.5 sm:p-4 rounded-xl border border-amber-300/80 shadow-xs">
+                  <div className="shrink-0 w-32 sm:w-36 overflow-hidden rounded-xl border-2 border-amber-400 shadow-md bg-amber-950/10 group">
+                    <img
+                      src={currentQ.image}
+                      alt={currentQ.imageAlt || currentQ.question}
+                      className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                    />
+                    {(currentQ.imageCaption || currentQ.imageCaptionEn) && (
+                      <div className="p-1.5 bg-[#2b0808] text-[10px] text-amber-200 text-center font-medium leading-tight">
+                        {isEn ? (currentQ.imageCaptionEn || currentQ.imageCaption) : currentQ.imageCaption}
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex-1 space-y-2 text-center sm:text-left">
+                    <p className="text-xs sm:text-sm text-neutral-800 leading-relaxed font-normal">
+                      {isEn ? (currentQ.explanationEn || currentQ.explanation) : currentQ.explanation}
+                    </p>
+                    {currentQ.sourceUrl && (
+                      <div className="pt-1">
+                        <a
+                          href={currentQ.sourceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-xs text-red-700 hover:text-red-900 font-semibold underline underline-offset-2"
+                        >
+                          <span>{currentQ.sourceTitle ? (isEn ? `Source: ${currentQ.sourceTitle}` : `Nguồn: ${currentQ.sourceTitle}`) : (isEn ? "Source: Reference" : "Nguồn bài viết")}</span>
+                          <ExternalLink className="size-3 ml-0.5" />
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <p className="text-xs sm:text-sm text-neutral-800 leading-relaxed">
+                  {isEn ? (currentQ.explanationEn || currentQ.explanation) : currentQ.explanation}
+                </p>
+              )}
+
+              {/* Interesting Facts Highlights */}
+              {currentQ.interestingFacts && currentQ.interestingFacts.length > 0 && (
+                <div className="bg-amber-100/80 border border-amber-300 rounded-xl p-3.5 sm:p-4 space-y-2.5">
+                  <h5 className="font-circus text-xs text-red-950 flex items-center gap-1.5 uppercase tracking-wide">
+                    <Sparkles className="size-3.5 text-amber-600" />
+                    <span>
+                      {currentQ.id === 1 
+                        ? (isEn ? "Fascinating Historical Highlights about Master Ta Duy Hien:" : "Thông tin thú vị về Cụ Tạ Duy Hiển:")
+                        : currentQ.id === 6
+                        ? (isEn ? "Highlights of Thong Nhat Park & National Circus Theater:" : "Thông tin thú vị về Công viên Thống Nhất & Rạp Xiếc:")
+                        : currentQ.id === 8
+                        ? (isEn ? "The Art of Dove Illusions in Circus Magic:" : "Nghệ thuật ảo thuật biến hóa chim bồ câu:")
+                        : currentQ.id === 14
+                        ? (isEn ? "Highlights & Resilience of Quoc Co - Quoc Nghiep:" : "Thông tin thú vị về Quốc Cơ - Quốc Nghiệp:")
+                        : currentQ.id === 16
+                        ? (isEn ? "Fascinating Facts about Cirque du Soleil:" : "Thông tin thú vị về Cirque du Soleil:")
+                        : (isEn ? "Fascinating Highlights:" : "Thông tin thú vị thêm:")}
+                    </span>
+                  </h5>
+                  <ul className="space-y-2 text-xs text-neutral-800">
+                    {(isEn && currentQ.interestingFactsEn ? currentQ.interestingFactsEn : currentQ.interestingFacts).map((fact, fIdx) => (
+                      <li key={fIdx} className="flex items-start gap-2 leading-relaxed">
+                        <span className="text-red-600 font-bold text-xs shrink-0 mt-0.5">★</span>
+                        <span>{fact}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
 
               <div className="text-xs text-amber-900 bg-amber-200/60 p-2.5 rounded-xl border border-amber-300/80 flex items-start gap-2">
                 <Sparkles className="size-4 text-amber-700 shrink-0 mt-0.5" />
